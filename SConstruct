@@ -9,7 +9,44 @@
 #
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
+import os
 
-SConscript([
-    "Core/SConscript",
-])
+def get_cpu_nums():
+    # Linux, Unix and MacOS:
+    if hasattr( os, "sysconf" ):
+        if os.sysconf_names.has_key( "SC_NPROCESSORS_ONLN" ):
+            # Linux & Unix:
+            ncpus = os.sysconf( "SC_NPROCESSORS_ONLN" )
+        if isinstance(ncpus, int) and ncpus > 0:
+            return ncpus
+        else: # OSX:
+            return int( os.popen2( "sysctl -n hw.ncpu")[1].read() )
+    # Windows:
+    if os.environ.has_key( "NUMBER_OF_PROCESSORS" ):
+        ncpus = int( os.environ[ "NUMBER_OF_PROCESSORS" ] );
+    if ncpus > 0:
+        return ncpus
+    return 1 # Default
+
+AddOption(
+        '--debug_build',
+        dest='debug_build',
+        action='store_true',
+        metavar='DIR',
+        default=False,
+        help='Build in debug mode'
+    )
+
+mainenv = Environment(DEBUG_BUILD = GetOption('debug_build'),TARGET_ARCH='x86_64')
+
+
+###################################################
+# Determine number of CPUs
+num_cpus = get_cpu_nums()
+print ("Building with %d parallel jobs" % num_cpus)
+mainenv.SetOption( "num_jobs", num_cpus )
+
+SConscript('Dependencies/SConscript',
+           duplicate = 0,
+           exports = 'mainenv')
+

@@ -1,5 +1,321 @@
 
 
 import subprocess
+import platform
+import os
+import re
+
 output = subprocess.check_output(["git", "submodule", "init"])
 output = subprocess.check_output(["git", "submodule", "update"])
+
+Import('mainenv')
+
+libType = "ReleaseBuild"
+libPostfix = ""
+if(mainenv['DEBUG_BUILD']):
+    libType = 'DebugBuild'
+    libPostfix = "d"
+
+#include(GNUInstallDirs)
+
+AddOption(
+    '--no-glew-util',
+    dest='utilities',
+    action='store_true',
+    metavar='DIR',
+    default=False,
+    help='Build utilities'
+)
+
+AddOption(
+    '--regal',
+    dest='regal',
+    action='store_true',
+    metavar='DIR',
+    default=False,
+    help='Build Regal mode'
+)
+
+AddOption(
+    '--osmesa',
+    dest='osmesa',
+    action='store_true',
+    metavar='DIR',
+    default=False,
+    help='Build osmesa mode'
+)
+
+AddOption(
+    '--no-msvc',
+    dest='msvc',
+    action='store_true',
+    metavar='DIR',
+    default=False,
+    help='Build osmesa mode'
+)
+
+env = Environment(UTILITIES   = not GetOption('utilities'),
+                  REGAL       = GetOption('regal'),
+                  OSMESA      = GetOption('osmesa') )
+
+if( "darwin" in platform.system().lower() ):
+    AddOption(
+        '--build-bundle',
+        dest='bundle',
+        action='store_true',
+        metavar='DIR',
+        default=False,
+        help='Build Framework bundle for OSX'
+    )
+    env.Append(BUNDLE = GetOption('bundle') )
+
+if( "windows" in platform.system().lower() ):
+    AddOption(
+        '--no-msvc',
+        dest='msvc',
+        action='store_true',
+        metavar='DIR',
+        default=False,
+        help='Build osmesa mode'
+    )
+    env.Append(MSVC = not GetOption('msvc') )
+
+env.Append(GLEW_DIR = os.path.abspath(Dir('glew').abspath).replace('\\', '/') )
+
+versionfile = open(env['GLEW_DIR'] + "/config/version")
+lines = versionfile.readlines()
+lines = [x.strip() for x in lines] 
+for line in lines:
+    if(line.startswith('GLEW_MAJOR')):
+        m = re.search('GLEW_MAJOR\s*=\s*([0-9]+)', line)
+        env.Append(GLEW_MAJOR = m.group(0) )
+    if(line.startswith('GLEW_MINOR')):
+        m = re.search('GLEW_MINOR\s*=\s*([0-9]+)', line)
+        env.Append(GLEW_MINOR = m.group(0) )
+    if(line.startswith('GLEW_MICRO')):
+        m = re.search('GLEW_MICRO\s*=\s*([0-9]+)', line)
+        env.Append(GLEW_MICRO = m.group(0) )
+env.Append(GLEW_VERSION = env['GLEW_MAJOR'] + '.' + env['GLEW_MINOR'] + '.' + env['GLEW_MICRO'] )
+
+#set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+#set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+#set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+#find_package (OpenGL REQUIRED)
+
+# X11 required when builing visualinfo and glewinfo,
+# but not for Windows or Apple OSX platforms
+if ( env['UTILITIES'] == True and "window" not in platform.system().lower() and "darwin" not in platform.system().lower()):
+    #find_package (X11)
+    print("include X11")
+
+if ("window" in platform.system().lower() ):
+    env.Append(GLEW_LIB_NAME = 'glew32')
+else:
+    env.Append(GLEW_LIB_NAME = 'GLEW')
+    #set (DLL_PREFIX lib)
+
+#set (GLEW_LIBRARIES ${OPENGL_LIBRARIES})
+env.Append(CCFLAGS = [
+    '-DGLEW_NO_GLU',
+])
+
+
+#### Regal mode ####
+if (env['REGAL'] == True):
+    if ("window" in platform.system().lower() ):
+        #set (REGAL_LIB_NAME regal32)
+        print("set windows libname")
+    else:
+        #set (REGAL_LIB_NAME Regal)
+        print("set linux libname")
+    env.Append(CCFLAGS = [
+        '-DGLEW_REGAL',
+    ])
+    #set (GLEW_LIBRARIES ${REGAL_LIB_NAME})
+
+
+#### OSMesa mode ####
+if (env['OSMESA'] == True):
+    if ("window" in platform.system().lower() ):
+        #set (OSMESA_LIB_NAME osmesa)
+        print("set windows libname")
+    else:
+        #set (OSMESA_LIB_NAME OSMesa)
+        print("set linux libname")
+    env.Append(CCFLAGS = [
+        '-DGLEW_OSMESA',
+    ])
+ 
+    #set (GLEW_LIBRARIES ${OSMESA_LIB_NAME} ${OPENGL_LIBRARIES})
+    #set (X11_LIBRARIES)
+
+#### GLEW ####
+env.Append(CPPPATH = [env['GLEW_DIR'] + "/include"])
+
+publicHeaders = [
+    env['GLEW_DIR'] + "/include/GL/wglew.h",
+    env['GLEW_DIR'] + "/include/GL/glew.h",
+    env['GLEW_DIR'] + "/include/GL/glxew.h",
+]
+sourceFiles =  [ "glew/src/glew.c" ]
+print(str(sourceFiles))
+if ("window" in platform.system().lower() ):
+    sourceFiles += [ env['GLEW_DIR'] + "/build/glew.rc" ]
+
+    if ('MSVC' in env and env['MSVC'] == True):
+        env.Append(CPPDEFINES = [ "VC_EXTRALEAN" ])
+        env.Append(CCFLAGS=     [ "/GS-" ])
+    else:
+        env.Append(CCFLAGS=[
+            "-fno-builtin",
+            "-fno-stack-protector",
+        ])
+
+envStatic = env.Clone()
+
+if ("window" in platform.system().lower() ):
+    sourceFiles += [ env['GLEW_DIR'] + "/build/glew.rc" ]
+
+    if ('MSVC' in env and env['MSVC'] == True):
+        env.Append(LDFLAGS=[
+            "/BASE:0x62AA0000",
+            "/nodefaultlib",
+            "/noentry",
+        ])
+    else:
+        env.Append(LDFLAGS=[
+            "-nostdlib",
+        ])
+
+
+env.Append(CPPDEFINES = [
+    "GLEW_BUILD",
+])
+sharedLib = env.SharedLibrary(env['GLEW_LIB_NAME'], sourceFiles)
+
+envStatic.Append(CPPDEFINES = [
+    "GLEW_STATIC",
+])
+staticLib = envStatic.StaticLibrary(env['GLEW_LIB_NAME'], sourceFiles)
+
+"""
+if (BUILD_FRAMEWORK)
+  set_target_properties(glew PROPERTIES
+    FRAMEWORK TRUE
+    FRAMEWORK_VERSION ${GLEW_VERSION}
+    MACOSX_FRAMEWORK_IDENTIFIER net.sourceforge.glew
+    MACOSX_FRAMEWORK_SHORT_VERSION_STRING ${GLEW_VERSION}
+    MACOSX_FRAMEWORK_BUNDLE_VERSION ${GLEW_VERSION}
+    XCODE_ATTRIBUTE_INSTALL_PATH "@rpath"
+    PUBLIC_HEADER "${GLEW_PUBLIC_HEADERS_FILES}"
+    OUTPUT_NAME GLEW
+  )
+endif()"""
+"""
+if(CMAKE_VERSION VERSION_LESS 2.8.12)
+  set(MAYBE_EXPORT "")
+else()
+  target_compile_definitions(glew_s INTERFACE "GLEW_STATIC")
+  foreach(t glew glew_s)
+    target_include_directories(${t} PUBLIC $<INSTALL_INTERFACE:include>)
+  endforeach()
+  set(MAYBE_EXPORT EXPORT glew-targets)
+endif()
+
+set(targets_to_install "")
+if(NOT DEFINED BUILD_SHARED_LIBS OR BUILD_SHARED_LIBS)
+  list(APPEND targets_to_install glew)
+endif()
+
+if(NOT DEFINED BUILD_SHARED_LIBS OR NOT BUILD_SHARED_LIBS)
+  list(APPEND targets_to_install glew_s)
+endif()
+
+install ( TARGETS ${targets_to_install}
+          ${MAYBE_EXPORT}
+          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+          FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX}
+)
+
+if (BUILD_UTILS)
+  set (GLEWINFO_SRC_FILES ${GLEW_DIR}/src/glewinfo.c)
+  if (WIN32)
+    list (APPEND GLEWINFO_SRC_FILES ${GLEW_DIR}/build/glewinfo.rc)
+  endif ()
+  add_executable (glewinfo ${GLEWINFO_SRC_FILES})
+  target_link_libraries (glewinfo glew)
+  if (NOT WIN32)
+    target_link_libraries(glewinfo ${X11_LIBRARIES})
+  endif ()
+
+  set (VISUALINFO_SRC_FILES ${GLEW_DIR}/src/visualinfo.c)
+  if (WIN32)
+    list (APPEND VISUALINFO_SRC_FILES ${GLEW_DIR}/build/visualinfo.rc)
+  endif ()
+  add_executable (visualinfo ${VISUALINFO_SRC_FILES})
+  target_link_libraries (visualinfo glew)
+  if (NOT WIN32)
+    target_link_libraries(visualinfo ${X11_LIBRARIES})
+  endif ()
+
+  install ( TARGETS glewinfo visualinfo
+            DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif ()
+
+set (prefix ${CMAKE_INSTALL_PREFIX})
+set (exec_prefix ${CMAKE_INSTALL_PREFIX})
+set (libdir ${CMAKE_INSTALL_FULL_LIBDIR})
+set (includedir ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+set (version ${GLEW_VERSION})
+set (libname ${GLEW_LIB_NAME})
+set (cflags)
+set (requireslib glu)
+
+#  Mac OSX has no glu.pc unless optional X11/GLX is installed
+if (APPLE)
+  set (requireslib)
+endif ()
+
+configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)
+
+install(FILES ${GLEW_DIR}/glew.pc
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+)
+
+if(WIN32 AND MSVC AND (NOT MSVC_VERSION LESS 1600) AND (NOT CMAKE_VERSION VERSION_LESS "3.1"))
+    install(
+        FILES $<TARGET_PDB_FILE:glew>
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        CONFIGURATIONS Debug RelWithDebInfo
+    )
+endif()
+
+install (FILES
+    ${GLEW_DIR}/include/GL/wglew.h
+    ${GLEW_DIR}/include/GL/glew.h
+    ${GLEW_DIR}/include/GL/glxew.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/GL)
+
+if(MAYBE_EXPORT)
+  install(EXPORT glew-targets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/glew
+    NAMESPACE GLEW::)
+  install(FILES
+      ${CMAKE_CURRENT_SOURCE_DIR}/glew-config.cmake
+      ${CMAKE_CURRENT_SOURCE_DIR}/CopyImportedTargetProperties.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/glew)
+endif()
+
+if(NOT TARGET uninstall)
+  configure_file(
+      ${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in
+      ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
+      IMMEDIATE @ONLY)
+
+  add_custom_target(uninstall
+      COMMAND ${CMAKE_COMMAND} -P
+      ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+endif()
+"""
