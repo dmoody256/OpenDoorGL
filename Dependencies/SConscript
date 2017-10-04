@@ -152,7 +152,6 @@ if (env['OSMESA'] == True):
 env.Append(CPPPATH = [env['GLEW_DIR'] + "/include"])
 
 env.VariantDir('glew/build', 'glew/src', duplicate=0)
-env.VariantDir('glew/build', 'glew/build', duplicate=0)
 publicHeaders = [
     "include/GL/wglew.h",
     "include/GL/glew.h",
