@@ -1,0 +1,5 @@
+
+
+import subprocess
+output = subprocess.check_output(["git", "submodule", "init"])
+output = subprocess.check_output(["git", "submodule", "update"])
