@@ -5,8 +5,6 @@ import platform
 import os
 import re
 
-output = subprocess.check_output(["git", "submodule", "init"])
-output = subprocess.check_output(["git", "submodule", "update"])
 
 Import('mainenv')
 
@@ -153,15 +151,17 @@ if (env['OSMESA'] == True):
 #### GLEW ####
 env.Append(CPPPATH = [env['GLEW_DIR'] + "/include"])
 
+env.VariantDir('glew/build', 'glew/src', duplicate=0)
+env.VariantDir('glew/build', 'glew/build', duplicate=0)
 publicHeaders = [
-    env['GLEW_DIR'] + "/include/GL/wglew.h",
-    env['GLEW_DIR'] + "/include/GL/glew.h",
-    env['GLEW_DIR'] + "/include/GL/glxew.h",
+    "include/GL/wglew.h",
+    "include/GL/glew.h",
+    "include/GL/glxew.h",
 ]
-sourceFiles =  [ "glew/src/glew.c" ]
-print(str(sourceFiles))
+sourceFiles =  [ "glew/build/glew.c" ]
+
 if ("window" in platform.system().lower() ):
-    sourceFiles += [ env['GLEW_DIR'] + "/build/glew.rc" ]
+    sourceFiles += [ "glew/build/glew.rc" ]
 
     if ('MSVC' in env and env['MSVC'] == True):
         env.Append(CPPDEFINES = [ "VC_EXTRALEAN" ])
@@ -192,12 +192,12 @@ if ("window" in platform.system().lower() ):
 env.Append(CPPDEFINES = [
     "GLEW_BUILD",
 ])
-sharedLib = env.SharedLibrary(env['GLEW_LIB_NAME'], sourceFiles)
+sharedLib = env.SharedLibrary("build/" + env['GLEW_LIB_NAME'], sourceFiles)
 
 envStatic.Append(CPPDEFINES = [
     "GLEW_STATIC",
 ])
-staticLib = envStatic.StaticLibrary(env['GLEW_LIB_NAME'], sourceFiles)
+staticLib = envStatic.StaticLibrary("build/" + env['GLEW_LIB_NAME'], sourceFiles)
 
 """
 if (BUILD_FRAMEWORK)
