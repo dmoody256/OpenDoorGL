@@ -191,12 +191,12 @@ if ("window" in platform.system().lower() ):
 env.Append(CPPDEFINES = [
     "GLEW_BUILD",
 ])
-sharedLib = env.SharedLibrary("build/" + env['GLEW_LIB_NAME'], sourceFiles)
+sharedLib = env.SharedLibrary("glew/build/" + env['GLEW_LIB_NAME'], sourceFiles)
 
 envStatic.Append(CPPDEFINES = [
     "GLEW_STATIC",
 ])
-staticLib = envStatic.StaticLibrary("build/" + env['GLEW_LIB_NAME'], sourceFiles)
+staticLib = envStatic.StaticLibrary("glew/build/" + env['GLEW_LIB_NAME'], sourceFiles)
 
 """
 if (BUILD_FRAMEWORK)
