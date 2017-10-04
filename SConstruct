@@ -38,7 +38,7 @@ AddOption(
     )
 
 mainenv = Environment(DEBUG_BUILD = GetOption('debug_build'),TARGET_ARCH='x86_64')
-
+mainenv.baseProjectDir = os.path.abspath(Dir('.').abspath).replace('\\', '/')
 
 ###################################################
 # Determine number of CPUs
@@ -47,6 +47,10 @@ print ("Building with %d parallel jobs" % num_cpus)
 mainenv.SetOption( "num_jobs", num_cpus )
 
 SConscript('Dependencies/SConscript',
+           duplicate = 0,
+           exports = 'mainenv')
+
+SConscript('Core/SConscript',
            duplicate = 0,
            exports = 'mainenv')
 

@@ -5,6 +5,9 @@ import platform
 import os
 import re
 
+output = subprocess.check_output(["git", "submodule", "init"])
+output = subprocess.check_output(["git", "submodule", "update"])
+
 
 Import('mainenv')
 
@@ -153,9 +156,9 @@ env.Append(CPPPATH = [env['GLEW_DIR'] + "/include"])
 
 env.VariantDir('glew/build', 'glew/src', duplicate=0)
 publicHeaders = [
-    "include/GL/wglew.h",
-    "include/GL/glew.h",
-    "include/GL/glxew.h",
+    "glew/include/GL/wglew.h",
+    "glew/include/GL/glew.h",
+    "glew/include/GL/glxew.h",
 ]
 sourceFiles =  [ "glew/build/glew.c" ]
 
@@ -198,6 +201,9 @@ envStatic.Append(CPPDEFINES = [
 ])
 staticLib = envStatic.StaticLibrary("glew/build/" + env['GLEW_LIB_NAME'], sourceFiles)
 
+env.Install("lib", staticLib)
+env.Install("lib", sharedLib)
+env.Install("include/GL", publicHeaders)
 """
 if (BUILD_FRAMEWORK)
   set_target_properties(glew PROPERTIES

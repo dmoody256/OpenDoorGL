@@ -26,24 +26,9 @@ import SCons.Action
 
 
 def CreateNewEnv():
-
-    AddOption(
-        '--debug_build',
-        dest='debug_build',
-        action='store_true',
-        metavar='DIR',
-        default=False,
-        help='Build in debug mode'
-    )
-    env = Environment(DEBUG_BUILD = GetOption('debug_build'),TARGET_ARCH='x86_64')
-
-    ###################################################
-    # Determine number of CPUs
-    num_cpus = get_cpu_nums()
-    print ("Building with %d parallel jobs" % num_cpus)
-    env.SetOption( "num_jobs", num_cpus )
-
 	
+    Import('mainenv')
+    env = Environment(DEBUG_BUILD = mainenv['DEBUG_BUILD'])
     env.baseProjectDir = os.path.abspath(Dir('.').abspath).replace('\\', '/')
     env.VariantDir('build', 'Source', duplicate=0)
 
@@ -109,7 +94,8 @@ def ConfigPlatformEnv(env):
             debugFlag = "-g"
 
         env.Append(CPPPATH=[
-            "/usr/include",
+            mainenv.baseProjectDir + "/Dependencies/include",
+            mainenv.baseProjectDir + "/Dependencies/glm",
         ])
 
         env.Append(CCFLAGS=[
@@ -326,22 +312,7 @@ class ProgressCounter(object):
                     print(self.OKGREEN + "[" + percentString + "%] " + self.ENDC + "Skipping, already built " + filename )
 
 
-def get_cpu_nums():
-    # Linux, Unix and MacOS:
-    if hasattr( os, "sysconf" ):
-        if os.sysconf_names.has_key( "SC_NPROCESSORS_ONLN" ):
-            # Linux & Unix:
-            ncpus = os.sysconf( "SC_NPROCESSORS_ONLN" )
-        if isinstance(ncpus, int) and ncpus > 0:
-            return ncpus
-        else: # OSX:
-            return int( os.popen2( "sysctl -n hw.ncpu")[1].read() )
-    # Windows:
-    if os.environ.has_key( "NUMBER_OF_PROCESSORS" ):
-        ncpus = int( os.environ[ "NUMBER_OF_PROCESSORS" ] );
-    if ncpus > 0:
-        return ncpus
-    return 1 # Default
+
 
 def bf_to_str(bf):
     """Convert an element of GetBuildFailures() to a string
