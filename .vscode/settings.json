@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "SConstruct": "python",
+        "SConscript": "python",
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
