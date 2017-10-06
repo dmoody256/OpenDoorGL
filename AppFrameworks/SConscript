@@ -1,0 +1,78 @@
+
+
+import subprocess
+import platform
+import os
+import re
+
+Import('mainenv')
+
+libType = "ReleaseBuild"
+debugFlag = ""
+if(mainenv['DEBUG_BUILD']):
+    libType = 'DebugBuild'
+    debugFlag = "-g"
+    
+
+AddOption(
+    '--glfw3',
+    dest='glfw3',
+    action='store_true',
+    metavar='DIR',
+    default=False,
+    help='Build App using GLFW3'
+)
+
+env = Environment() 
+
+env.Append(CPPPATH=[
+    mainenv.baseProjectDir + "/AppFrameworks",
+    mainenv.baseProjectDir + "/Core/Source",
+    mainenv.baseProjectDir + "/Dependencies/include",
+    mainenv.baseProjectDir + "/Dependencies/glm",
+])
+
+env.Append(CCFLAGS=[
+    debugFlag,
+])
+
+env.Append(CXXFLAGS= [
+    "-std=c++11",
+])
+
+env.Append(LDFLAGS= [
+    debugFlag,
+])
+
+env.Append(LIBPATH=[
+    "/usr/lib/gnome-settings-daemon-3.0/",
+    mainenv.baseProjectDir + "/Core/build",
+    mainenv.baseProjectDir + "/Dependencies/lib",
+])
+
+env.Append(LIBS=[
+    "OpenDoorGL",
+    "GLEW",
+    "glfw3",
+    "GL",
+    "X11",
+    "Xi",
+    "Xrandr",
+    "Xxf86vm",
+    "Xinerama",
+    "Xcursor", 
+    "rt",
+    "m",
+    "pthread",
+    "dl",
+])
+
+
+if(GetOption('glfw3') == True):
+    env.Append(GLFW3 = True)
+    env.Append(CPPPATH = [
+        "GLFW",
+    ])
+sourceFiles =  [ "GLFW/odgl_GLFW3.cpp" ]
+
+prog = env.Program("appName", sourceFiles)

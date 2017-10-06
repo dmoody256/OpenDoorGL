@@ -4,12 +4,11 @@
 #include <GL/glew.h>
 #include <string>
 
-#include "odgl_RenderObject.h"
-#include "odgl_View.h"
+#include "odgl_GeometricObject.h"
 
 namespace OpenDoorGL{
 
-    class Cube : public RenderObject{
+    class Cube : public GeometricObject{
     public:
         Cube();
         ~Cube();

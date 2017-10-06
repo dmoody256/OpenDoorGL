@@ -38,6 +38,8 @@ def CreateNewEnv():
         "build/odgl_View.cpp",
         "build/odgl_ShaderManager.cpp",
         "build/odgl_Image.cpp",
+        "build/odgl_GeometricObject.cpp",
+        "build/odgl_Group.cpp",
     ]
     headerFiles = [
         "Source/odgl_Cube.h",

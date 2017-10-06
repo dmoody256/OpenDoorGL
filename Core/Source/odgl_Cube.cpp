@@ -4,7 +4,7 @@
 
 namespace OpenDoorGL{
 
-    Cube::Cube() : RenderObject(){
+    Cube::Cube() : GeometricObject(){
         _vertices.resize(6*2*3*3, 0);
         _textureCoords.resize(6*2*3*2,0);
 

@@ -54,3 +54,6 @@ SConscript('Core/SConscript',
            duplicate = 0,
            exports = 'mainenv')
 
+SConscript('AppFrameworks/SConscript',
+           duplicate = 0,
+           exports = 'mainenv')
