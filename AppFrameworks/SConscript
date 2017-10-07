@@ -34,20 +34,21 @@ env.Append(CPPPATH=[
 
 env.Append(CCFLAGS=[
     debugFlag,
+    "-H",
 ])
 
 env.Append(CXXFLAGS= [
     "-std=c++11",
 ])
 
-env.Append(LDFLAGS= [
+env.Append(LINKFLAGS= [
     debugFlag,
 ])
 
 env.Append(LIBPATH=[
     "/usr/lib/gnome-settings-daemon-3.0/",
     mainenv.baseProjectDir + "/Core/build",
-    mainenv.baseProjectDir + "/Dependencies/lib",
+    mainenv.baseProjectDir + "/build/lib/",
 ])
 
 env.Append(LIBS=[

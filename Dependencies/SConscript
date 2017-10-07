@@ -4,18 +4,21 @@ import subprocess
 import platform
 import os
 import re
+import glob
 
 output = subprocess.check_output(["git", "submodule", "init"])
 output = subprocess.check_output(["git", "submodule", "update"])
-
+output = subprocess.check_output(["./runCmake.sh"])
 
 Import('mainenv')
 
 libType = "ReleaseBuild"
 libPostfix = ""
+debugFlag = ""
 if(mainenv['DEBUG_BUILD']):
+    debugFlag = "-g"
     libType = 'DebugBuild'
-    libPostfix = "d"
+    libPostfix = ""
 
 #include(GNUInstallDirs)
 
@@ -119,6 +122,8 @@ else:
 #set (GLEW_LIBRARIES ${OPENGL_LIBRARIES})
 env.Append(CCFLAGS = [
     '-DGLEW_NO_GLU',
+    debugFlag,
+    "-H",
 ])
 
 
@@ -201,9 +206,21 @@ envStatic.Append(CPPDEFINES = [
 ])
 staticLib = envStatic.StaticLibrary("glew/build/" + env['GLEW_LIB_NAME'], sourceFiles)
 
+
 env.Install("lib", staticLib)
 env.Install("lib", sharedLib)
-env.Install("include/GL", publicHeaders)
+env.Install("include/GLEW", publicHeaders)
+targets = []
+
+for root, dirs, files in os.walk("./lib", topdown=False):
+    for name in files:
+        targets.append( File(os.path.join(root, name)) )
+
+for root, dirs, files in os.walk("./include", topdown=False):
+    for name in files:
+        targets.append( File(os.path.join(root, name)) )
+
+Return('targets')
 """
 if (BUILD_FRAMEWORK)
   set_target_properties(glew PROPERTIES

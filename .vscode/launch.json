@@ -5,12 +5,12 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/build/MyLifeApp",
+            "program": "${workspaceRoot}/AppFrameworks/appName",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/build",
+            "cwd": "${workspaceRoot}/AppFrameworks",
             "environment": [
-                {"name":"LD_LIBRARY_PATH","value":"${workspaceRoot}/build"}
+                {"name":"LD_LIBRARY_PATH","value":"${workspaceRoot}/build/lib"}
             ],
             "externalConsole": true,
             "MIMode": "gdb",

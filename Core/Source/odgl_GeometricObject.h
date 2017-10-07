@@ -1,7 +1,7 @@
 #ifndef ODGL_GEOMETRIC_OBJECT_H
 #define ODGL_GEOMETRIC_OBJECT_H
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 
 
 #include <vector>

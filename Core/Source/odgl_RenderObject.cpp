@@ -1,5 +1,5 @@
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 

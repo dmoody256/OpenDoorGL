@@ -1,7 +1,7 @@
 #ifndef ODGL_IMAGE_H
 #define ODGL_IMAGE_H
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 
 namespace OpenDoorGL{
 

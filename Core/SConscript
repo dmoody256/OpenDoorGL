@@ -84,8 +84,7 @@ def CreateNewEnv():
     env = SetupInstalls(env)
     env = ConfigPlatformEnv(env)
     env = ConfigPlatformIDE(env, sourceFiles, headerFiles, resourceFiles, prog)
-    
-    return env
+    return prog
 
 def ConfigPlatformEnv(env):
 
@@ -101,6 +100,7 @@ def ConfigPlatformEnv(env):
         ])
 
         env.Append(CCFLAGS=[
+            "-H",
             debugFlag,
             '-fPIC',
             "-rdynamic",
@@ -409,4 +409,5 @@ def Indent(elem, level = 0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
-CreateNewEnv()
+lib = CreateNewEnv()
+Return('lib')

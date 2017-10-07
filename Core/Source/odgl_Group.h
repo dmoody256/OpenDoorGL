@@ -1,7 +1,7 @@
 #ifndef ODGL_GROUP_H
 #define ODGL_GROUP_H
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 
 
 #include <vector>

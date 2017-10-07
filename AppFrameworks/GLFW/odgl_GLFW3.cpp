@@ -33,6 +33,10 @@ namespace OpenDoorGL{
             return -1;
         }
 
+        GLuint VertexArrayID;
+        glGenVertexArrays(1, &VertexArrayID);
+        glBindVertexArray(VertexArrayID);
+        
         glfwSwapInterval(1);
         // Enable depth test
         glEnable(GL_DEPTH_TEST);
@@ -50,11 +54,13 @@ namespace OpenDoorGL{
             glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
         );
         _currentView->proj = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+        topGroup = new Group();
         return 0;
     }
-
+    void GLFW3Window::InsertObject(RenderObject* object){
+        topGroup->InsertObject(object);
+    }
     void GLFW3Window::RenderFrame(){
-
 
         topGroup->draw(_currentView);
         // Swap buffers

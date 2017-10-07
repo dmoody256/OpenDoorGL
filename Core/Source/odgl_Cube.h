@@ -1,7 +1,7 @@
 #ifndef ODGL_CUBE_H
 #define ODGL_CUBE_H
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 #include <string>
 
 #include "odgl_GeometricObject.h"

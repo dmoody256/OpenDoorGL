@@ -1,7 +1,7 @@
 #ifndef ODGL_SHADER_MANAGER_H
 #define ODGL_SHADER_MANAGER_H
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 
 #include <string>
 

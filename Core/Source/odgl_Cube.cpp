@@ -180,11 +180,11 @@ namespace OpenDoorGL{
             bool activeTexture = false;
             if(_faceTextures[i] != -1){
                 if(!activeTexture){
-                    glActiveTexture(GL_TEXTURE0);
-                    glUniform1i(_uniformTexture, GL_TEXTURE0);
+                    //glActiveTexture(GL_TEXTURE0);
+                    //glUniform1i(_uniformTexture, GL_TEXTURE0);
                     activeTexture = true;
                 }
-                glBindTexture(GL_TEXTURE_2D, _faceTextures[i]);
+                //glBindTexture(GL_TEXTURE_2D, _faceTextures[i]);
                 glDrawArrays(GL_TRIANGLES, i*2*3, 2*3);
             }
         }

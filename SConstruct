@@ -46,14 +46,22 @@ num_cpus = get_cpu_nums()
 print ("Building with %d parallel jobs" % num_cpus)
 mainenv.SetOption( "num_jobs", num_cpus )
 
-SConscript('Dependencies/SConscript',
+dependsInstall = SConscript('Dependencies/SConscript',
            duplicate = 0,
            exports = 'mainenv')
 
-SConscript('Core/SConscript',
+coreLib = SConscript('Core/SConscript',
            duplicate = 0,
            exports = 'mainenv')
 
 SConscript('AppFrameworks/SConscript',
            duplicate = 0,
            exports = 'mainenv')
+
+mainenv.Install("build/lib", coreLib)
+
+for node in dependsInstall:
+    installPath = os.path.dirname(str(node).replace("Dependencies", "build"))
+    mainenv.Install(installPath, node)
+
+ 

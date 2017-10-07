@@ -1,0 +1,2885 @@
+scons: Reading SConscript files ...
+Building with 8 parallel jobs
+include X11
+scons: done reading SConscript files.
+scons: Building targets ...
+Install file: "Dependencies/glew/include/GL/glew.h" as "Dependencies/include/GLEW/glew.h"
+. Core/Source/odgl_View.h
+.. Dependencies/glm/glm/glm.hpp
+... Dependencies/glm/glm/detail/_fixes.hpp
+.... /usr/include/c++/4.8/cmath
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+....... /usr/include/features.h
+........ /usr/include/x86_64-linux-gnu/sys/cdefs.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/gnu/stubs.h
+......... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+..... /usr/include/c++/4.8/bits/cpp_type_traits.h
+..... /usr/include/c++/4.8/ext/type_traits.h
+..... /usr/include/math.h
+...... /usr/include/x86_64-linux-gnu/bits/huge_val.h
+...... /usr/include/x86_64-linux-gnu/bits/huge_valf.h
+...... /usr/include/x86_64-linux-gnu/bits/huge_vall.h
+...... /usr/include/x86_64-linux-gnu/bits/inf.h
+...... /usr/include/x86_64-linux-gnu/bits/nan.h
+...... /usr/include/x86_64-linux-gnu/bits/mathdef.h
+...... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+...... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+...... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+... Dependencies/glm/glm/detail/setup.hpp
+.... /usr/include/c++/4.8/cassert
+..... /usr/include/assert.h
+.... /usr/include/c++/4.8/cstddef
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... Dependencies/glm/glm/detail/../simd/platform.h
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h
+........ /usr/include/stdlib.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/waitflags.h
+......... /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+.......... /usr/include/endian.h
+........... /usr/include/x86_64-linux-gnu/bits/endian.h
+........... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+............ /usr/include/x86_64-linux-gnu/bits/types.h
+............. /usr/include/x86_64-linux-gnu/bits/wordsize.h
+............. /usr/include/x86_64-linux-gnu/bits/typesizes.h
+............ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+............ /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+......... /usr/include/xlocale.h
+......... /usr/include/x86_64-linux-gnu/sys/types.h
+.......... /usr/include/time.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/x86_64-linux-gnu/sys/select.h
+........... /usr/include/x86_64-linux-gnu/bits/select.h
+............ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........... /usr/include/x86_64-linux-gnu/bits/sigset.h
+........... /usr/include/time.h
+........... /usr/include/x86_64-linux-gnu/bits/time.h
+.......... /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+.......... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+........... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... /usr/include/alloca.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+... /usr/include/c++/4.8/cmath
+... /usr/include/c++/4.8/climits
+.... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+....... /usr/include/limits.h
+........ /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+......... /usr/include/x86_64-linux-gnu/bits/local_lim.h
+.......... /usr/include/linux/limits.h
+........ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
+........ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
+......... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+... /usr/include/c++/4.8/cfloat
+.... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/float.h
+... /usr/include/c++/4.8/limits
+... /usr/include/c++/4.8/cassert
+.... /usr/include/assert.h
+... Dependencies/glm/glm/fwd.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/type_int.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... /usr/include/c++/4.8/type_traits
+..... /usr/include/c++/4.8/cstdint
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+....... /usr/include/stdint.h
+........ /usr/include/x86_64-linux-gnu/bits/wchar.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.... Dependencies/glm/glm/detail/type_float.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/type_vec.hpp
+..... Dependencies/glm/glm/detail/qualifier.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/compute_vector_relational.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+...... /usr/include/c++/4.8/cstring
+....... /usr/include/string.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... Dependencies/glm/glm/detail/type_mat.hpp
+... Dependencies/glm/glm/vec2.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/type_vec2.hpp
+..... /usr/include/c++/4.8/cstddef
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/type_vec2.inl
+... Dependencies/glm/glm/vec3.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/type_vec3.hpp
+..... /usr/include/c++/4.8/cstddef
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/type_vec3.inl
+... Dependencies/glm/glm/vec4.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/type_vec4.hpp
+..... /usr/include/c++/4.8/cstddef
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/type_vec4.inl
+...... Dependencies/glm/glm/detail/type_vec4_simd.inl
+... Dependencies/glm/glm/mat2x2.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/type_mat2x2.hpp
+..... /usr/include/c++/4.8/cstddef
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/type_mat2x2.inl
+...... Dependencies/glm/glm/detail/../matrix.hpp
+....... Dependencies/glm/glm/detail/../detail/setup.hpp
+....... Dependencies/glm/glm/detail/../mat2x3.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat2x3.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+....... Dependencies/glm/glm/detail/../mat2x4.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat2x4.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+....... Dependencies/glm/glm/detail/../mat3x2.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat3x2.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+....... Dependencies/glm/glm/detail/../mat3x3.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat3x3.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+....... Dependencies/glm/glm/detail/../mat3x4.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat3x4.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+....... Dependencies/glm/glm/detail/../mat4x2.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat4x2.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+....... Dependencies/glm/glm/detail/../mat4x3.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat4x3.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+....... Dependencies/glm/glm/detail/../mat4x4.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat4x4.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+....... Dependencies/glm/glm/detail/../detail/func_matrix.inl
+........ Dependencies/glm/glm/detail/../detail/../geometric.hpp
+......... Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+.......... Dependencies/glm/glm/detail/../detail/../detail/../exponential.hpp
+........... Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+........... /usr/include/c++/4.8/cmath
+........... Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/../vector_relational.hpp
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/setup.hpp
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/_vectorize.hpp
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+............ /usr/include/c++/4.8/cmath
+............ /usr/include/c++/4.8/cassert
+............. /usr/include/assert.h
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/exponential.h
+.......... Dependencies/glm/glm/detail/../detail/../detail/../common.hpp
+........... Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+........... Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+............ /usr/include/c++/4.8/cmath
+........... Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/common.h
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/immintrin.h
+.......... Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+........... Dependencies/glm/glm/detail/../detail/../detail/../simd/geometric.h
+........ Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+......... Dependencies/glm/glm/detail/../detail/../simd/matrix.h
+gcc -o Dependencies/glew/build/glew.o -c -DGLEW_NO_GLU -g -H -DGLEW_STATIC -IDependencies/glew/include Dependencies/glew/src/glew.c
+......... /usr/include/c++/4.8/cstring
+... Dependencies/glm/glm/trigonometric.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/func_trigonometric.inl
+..... /usr/include/c++/4.8/cmath
+..... Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+... Dependencies/glm/glm/packing.hpp
+.... Dependencies/glm/glm/detail/func_packing.inl
+..... Dependencies/glm/glm/detail/type_half.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+...... Dependencies/glm/glm/detail/type_half.inl
+..... Dependencies/glm/glm/detail/func_packing_simd.inl
+... Dependencies/glm/glm/integer.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/detail/func_integer.inl
+..... Dependencies/glm/glm/detail/../ext/vec1.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+..... Dependencies/glm/glm/detail/func_integer_simd.inl
+...... Dependencies/glm/glm/detail/../simd/integer.h
+.. Dependencies/glm/glm/gtc/matrix_transform.hpp
+... Dependencies/glm/glm/gtc/../gtc/constants.hpp
+.... Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+.... Dependencies/glm/glm/gtc/../gtc/constants.inl
+... Dependencies/glm/glm/gtc/matrix_transform.inl
+. Dependencies/glew/include/GL/glew.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+gcc -o Dependencies/glew/build/glew.os -c -DGLEW_NO_GLU -g -H -fPIC -DGLEW_BUILD -IDependencies/glew/include Dependencies/glew/src/glew.c
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+... /usr/include/stdint.h
+.... /usr/include/features.h
+..... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+.... /usr/include/x86_64-linux-gnu/bits/wchar.h
+.... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+Install file: "Dependencies/glew/include/GL/glxew.h" as "Dependencies/include/GLEW/glxew.h"
+Install file: "Dependencies/glew/include/GL/wglew.h" as "Dependencies/include/GLEW/wglew.h"
+. Dependencies/glew/include/GL/glew.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+... /usr/include/stdint.h
+.... /usr/include/features.h
+..... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+.... /usr/include/x86_64-linux-gnu/bits/wchar.h
+.... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+Install file: "Dependencies/include/GLEW/eglew.h" as "build/include/GLEW/eglew.h"
+Install file: "Dependencies/include/GLFW/glfw3.h" as "build/include/GLFW/glfw3.h"
+. Dependencies/glew/include/GL/glxew.h
+.. /usr/include/X11/Xlib.h
+... /usr/include/x86_64-linux-gnu/sys/types.h
+.... /usr/include/x86_64-linux-gnu/bits/types.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/bits/typesizes.h
+.... /usr/include/time.h
+.... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... /usr/include/endian.h
+..... /usr/include/x86_64-linux-gnu/bits/endian.h
+..... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+.... /usr/include/x86_64-linux-gnu/sys/select.h
+..... /usr/include/x86_64-linux-gnu/bits/select.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/bits/sigset.h
+..... /usr/include/time.h
+..... /usr/include/x86_64-linux-gnu/bits/time.h
+.... /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+.... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+... /usr/include/X11/X.h
+... /usr/include/X11/Xfuncproto.h
+... /usr/include/X11/Xosdefs.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. /usr/include/X11/Xutil.h
+... /usr/include/X11/keysym.h
+.... /usr/include/X11/keysymdef.h
+.. /usr/include/X11/Xmd.h
+. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+g++ -o AppFrameworks/GLFW/odgl_GLFW3.o -c -std=c++11 -g -H -IAppFrameworks -ICore/Source -IDependencies/include -IDependencies/glm AppFrameworks/GLFW/odgl_GLFW3.cpp
+. Dependencies/glew/include/GL/glxew.h
+.. /usr/include/X11/Xlib.h
+... /usr/include/x86_64-linux-gnu/sys/types.h
+.... /usr/include/x86_64-linux-gnu/bits/types.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/bits/typesizes.h
+.... /usr/include/time.h
+.... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... /usr/include/endian.h
+..... /usr/include/x86_64-linux-gnu/bits/endian.h
+..... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+.... /usr/include/x86_64-linux-gnu/sys/select.h
+..... /usr/include/x86_64-linux-gnu/bits/select.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/bits/sigset.h
+..... /usr/include/time.h
+..... /usr/include/x86_64-linux-gnu/bits/time.h
+.... /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+.... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+... /usr/include/X11/X.h
+... /usr/include/X11/Xfuncproto.h
+... /usr/include/X11/Xosdefs.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. /usr/include/X11/Xutil.h
+... /usr/include/X11/keysym.h
+.... /usr/include/X11/keysymdef.h
+.. /usr/include/X11/Xmd.h
+. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+. AppFrameworks/GLFW/odgl_GLFW3.h
+.. Dependencies/include/GLEW/glew.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+.... /usr/include/stdint.h
+..... /usr/include/features.h
+...... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+....... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+..... /usr/include/x86_64-linux-gnu/bits/wchar.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+... /usr/include/GL/glu.h
+.... /usr/include/GL/gl.h
+. Core/Source/odgl_Cube.h
+.. Dependencies/include/GLEW/glew.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+.... /usr/include/stdint.h
+..... /usr/include/features.h
+...... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+....... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+..... /usr/include/x86_64-linux-gnu/bits/wchar.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+... /usr/include/GL/glu.h
+.... /usr/include/GL/gl.h
+. Dependencies/include/GLEW/glew.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+... /usr/include/stdint.h
+.... /usr/include/features.h
+..... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+.... /usr/include/x86_64-linux-gnu/bits/wchar.h
+.... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.. /usr/include/GL/glu.h
+... /usr/include/GL/gl.h
+.. Dependencies/include/GLFW/glfw3.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. AppFrameworks/odgl_WindowInterface.h
+... Core/Source/odgl_Group.h
+.... /usr/include/c++/4.8/vector
+..... /usr/include/c++/4.8/bits/stl_algobase.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+....... /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+....... /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+. Dependencies/glm/glm/gtc/matrix_transform.hpp
+.. Dependencies/glm/glm/gtc/../mat4x4.hpp
+... Dependencies/glm/glm/gtc/../detail/setup.hpp
+.... /usr/include/c++/4.8/cassert
+..... /usr/include/assert.h
+.... /usr/include/c++/4.8/cstddef
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+...... /usr/include/c++/4.8/bits/functexcept.h
+....... /usr/include/c++/4.8/bits/exception_defines.h
+...... /usr/include/c++/4.8/bits/cpp_type_traits.h
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... Dependencies/glm/glm/gtc/../detail/../simd/platform.h
+...... /usr/include/c++/4.8/ext/type_traits.h
+...... /usr/include/c++/4.8/ext/numeric_traits.h
+...... /usr/include/c++/4.8/bits/stl_pair.h
+....... /usr/include/c++/4.8/bits/move.h
+........ /usr/include/c++/4.8/bits/concept_check.h
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h
+.. /usr/include/c++/4.8/type_traits
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h
+........ /usr/include/stdlib.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/waitflags.h
+......... /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+.......... /usr/include/endian.h
+........... /usr/include/x86_64-linux-gnu/bits/endian.h
+........... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+............. /usr/include/c++/4.8/bits/stl_iterator_base_types.h
+..... /usr/include/x86_64-linux-gnu/bits/types.h
+............. /usr/include/x86_64-linux-gnu/bits/wordsize.h
+............ /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h
+....... /usr/include/x86_64-linux-gnu/bits/typesizes.h
+....... /usr/include/c++/4.8/debug/debug.h
+............ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+............ /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+...... /usr/include/c++/4.8/bits/stl_iterator.h
+......... /usr/include/xlocale.h
+......... /usr/include/x86_64-linux-gnu/sys/types.h
+.......... /usr/include/time.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/x86_64-linux-gnu/sys/select.h
+........... /usr/include/x86_64-linux-gnu/bits/select.h
+............ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........... /usr/include/x86_64-linux-gnu/bits/sigset.h
+........... /usr/include/time.h
+........... /usr/include/x86_64-linux-gnu/bits/time.h
+.......... /usr/include/c++/4.8/bits/allocator.h
+..... /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h
+.......... /usr/include/c++/4.8/ext/new_allocator.h
+....... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+................ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+... /usr/include/c++/4.8/new
+......... /usr/include/c++/4.8/exception
+.......... /usr/include/c++/4.8/bits/atomic_lockfree_defines.h
+.......... /usr/include/c++/4.8/bits/exception_ptr.h
+......... /usr/include/alloca.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/c++/4.8/bits/nested_exception.h
+.. /usr/include/c++/4.8/string
+....... /usr/include/c++/4.8/bits/memoryfwd.h
+......... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+.. /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+..... /usr/include/c++/4.8/bits/stl_construct.h
+...... /usr/include/c++/4.8/ext/alloc_traits.h
+........... /usr/include/c++/4.8/bits/alloc_traits.h
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+........ /usr/include/c++/4.8/bits/ptr_traits.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+... /usr/include/c++/4.8/bits/stringfwd.h
+.... /usr/include/c++/4.8/bits/memoryfwd.h
+... /usr/include/c++/4.8/bits/char_traits.h
+.... /usr/include/c++/4.8/bits/stl_algobase.h
+..... /usr/include/c++/4.8/bits/functexcept.h
+...... /usr/include/c++/4.8/bits/exception_defines.h
+.......... /usr/include/c++/4.8/bits/stl_uninitialized.h
+ /usr/include/c++/4.8/bits/cpp_type_traits.h
+..... /usr/include/c++/4.8/ext/type_traits.h
+..... /usr/include/c++/4.8/ext/numeric_traits.h
+..... /usr/include/c++/4.8/bits/stl_pair.h
+...... /usr/include/c++/4.8/bits/move.h
+....... /usr/include/c++/4.8/bits/concept_check.h
+....... /usr/include/c++/4.8/type_traits
+..... /usr/include/c++/4.8/bits/stl_vector.h
+...... /usr/include/c++/4.8/initializer_list
+... Dependencies/glm/glm/gtc/../detail/type_mat4x4.hpp
+.... Dependencies/glm/glm/gtc/../detail/../fwd.hpp
+..... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+..... Dependencies/glm/glm/gtc/../detail/../detail/type_int.hpp
+...... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+...... /usr/include/c++/4.8/type_traits
+..... /usr/include/c++/4.8/bits/stl_bvector.h
+...... /usr/include/c++/4.8/cstdint
+..... Dependencies/glm/glm/gtc/../detail/../detail/type_float.hpp
+...... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+..... /usr/include/c++/4.8/bits/stl_iterator_base_types.h
+...... /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h
+..... /usr/include/c++/4.8/bits/functional_hash.h
+...... Dependencies/glm/glm/gtc/../detail/../detail/type_vec.hpp
+.............. /usr/include/c++/4.8/debug/debug.h
+.... Dependencies/glm/glm/gtc/../detail/../detail/qualifier.hpp
+ /usr/include/c++/4.8/bits/hash_bytes.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+..... /usr/include/c++/4.8/bits/stl_iterator.h
+..... /usr/include/c++/4.8/bits/range_access.h
+...... Dependencies/glm/glm/gtc/../detail/../detail/compute_vector_relational.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+..... /usr/include/c++/4.8/bits/vector.tcc
+....... /usr/include/c++/4.8/cstring
+........ /usr/include/string.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... /usr/include/c++/4.8/string
+..... /usr/include/c++/4.8/bits/stringfwd.h
+..... /usr/include/c++/4.8/bits/char_traits.h
+...... /usr/include/c++/4.8/bits/postypes.h
+....... /usr/include/c++/4.8/cwchar
+....... /usr/include/c++/4.8/limits
+.... /usr/include/c++/4.8/bits/postypes.h
+..... /usr/include/c++/4.8/cwchar
+............ /usr/include/wchar.h
+.. /usr/include/wchar.h
+.............. /usr/include/stdio.h
+.. /usr/include/stdio.h
+. Core/Source/odgl_Image.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. Dependencies/include/GLEW/glew.h
+....... /usr/include/xlocale.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/include/xlocale.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+.... /usr/include/stdint.h
+..... /usr/include/features.h
+...... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+.... /usr/include/c++/4.8/cwchar
+..... /usr/include/wchar.h
+...... /usr/include/c++/4.8/cwchar
+....... /usr/include/wchar.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+....... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+..... /usr/include/x86_64-linux-gnu/bits/wchar.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.... /usr/include/c++/4.8/cstdint
+..... Dependencies/glm/glm/gtc/../detail/../detail/type_mat.hpp
+... /usr/include/c++/4.8/bits/allocator.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h
+........... /usr/include/c++/4.8/ext/new_allocator.h
+ /usr/include/c++/4.8/cstdint
+...... /usr/include/c++/4.8/new
+....... /usr/include/c++/4.8/exception
+........ /usr/include/c++/4.8/bits/atomic_lockfree_defines.h
+........... /usr/include/c++/4.8/bits/localefwd.h
+.. /usr/include/c++/4.8/bits/exception_ptr.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h
+....... /usr/include/c++/4.8/clocale
+........ /usr/include/c++/4.8/bits/nested_exception.h
+........ /usr/include/locale.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/locale.h
+... /usr/include/c++/4.8/bits/localefwd.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h
+..... /usr/include/c++/4.8/clocale
+...... /usr/include/locale.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/include/c++/4.8/iosfwd
+..... Dependencies/glm/glm/gtc/../detail/type_vec4.hpp
+..... /usr/include/c++/4.8/cctype
+............ /usr/include/x86_64-linux-gnu/bits/locale.h
+ /usr/include/c++/4.8/cstddef
+............. /usr/include/ctype.h
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/x86_64-linux-gnu/bits/types.h
+...... /usr/include/GL/glu.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.... /usr/include/c++/4.8/iosfwd
+.... /usr/include/GL/gl.h
+......... /usr/include/x86_64-linux-gnu/bits/typesizes.h
+.... /usr/include/c++/4.8/cctype
+..... /usr/include/ctype.h
+...... /usr/include/x86_64-linux-gnu/bits/types.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/endian.h
+....... /usr/include/x86_64-linux-gnu/bits/typesizes.h
+......... /usr/include/x86_64-linux-gnu/bits/endian.h
+......... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+.......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/endian.h
+.......... /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+....... /usr/include/x86_64-linux-gnu/bits/endian.h
+..... Dependencies/glm/glm/gtc/../detail/type_vec4.inl
+....... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+..... /usr/include/c++/4.8/bits/ostream_insert.h
+...... /usr/include/c++/4.8/bits/cxxabi_forced.h
+... /usr/include/c++/4.8/bits/ostream_insert.h
+.... /usr/include/c++/4.8/bits/cxxabi_forced.h
+..... /usr/include/c++/4.8/bits/stl_function.h
+... /usr/include/c++/4.8/bits/stl_function.h
+.... /usr/include/c++/4.8/backward/binders.h
+... /usr/include/c++/4.8/bits/range_access.h
+...... /usr/include/c++/4.8/backward/binders.h
+... /usr/include/c++/4.8/bits/basic_string.h
+.... /usr/include/c++/4.8/ext/atomicity.h
+..... /usr/include/c++/4.8/bits/basic_string.h
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h
+...... /usr/include/c++/4.8/ext/atomicity.h
+....... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h
+............ /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h
+... /usr/include/pthread.h
+......... /usr/include/sched.h
+........ /usr/include/pthread.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/sched.h
+............ Dependencies/glm/glm/gtc/../detail/type_vec4_simd.inl
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/time.h
+......... /usr/include/x86_64-linux-gnu/bits/sched.h
+........... /usr/include/time.h
+.... /usr/include/c++/4.8/cstddef
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/time.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... /usr/include/x86_64-linux-gnu/bits/sched.h
+......... /usr/include/x86_64-linux-gnu/bits/time.h
+.... Dependencies/glm/glm/gtc/../detail/type_mat4x4.inl
+..... Dependencies/glm/glm/gtc/../detail/../matrix.hpp
+........................ /usr/include/x86_64-linux-gnu/bits/timex.h
+.. Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+ /usr/include/time.h
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... /usr/include/x86_64-linux-gnu/bits/time.h
+......... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+.................... /usr/include/x86_64-linux-gnu/bits/timex.h
+.... Dependencies/glm/glm/gtc/../detail/../vec2.hpp
+.. /usr/include/x86_64-linux-gnu/bits/wordsize.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+........ /usr/include/x86_64-linux-gnu/bits/setjmp.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.......... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+........... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/type_vec2.hpp
+.......... /usr/include/x86_64-linux-gnu/bits/setjmp.h
+........ /usr/include/c++/4.8/cstddef
+.................. /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_vec2.inl
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h
+.... /usr/include/c++/4.8/initializer_list
+....... /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h
+...... Dependencies/glm/glm/gtc/../detail/../vec3.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/type_vec3.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... /usr/include/c++/4.8/ext/string_conversions.h
+..... /usr/include/c++/4.8/cstdlib
+...... /usr/include/stdlib.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/x86_64-linux-gnu/bits/waitflags.h
+......... /usr/include/c++/4.8/ext/string_conversions.h
+..... Dependencies/glm/glm/gtc/../detail/../detail/type_vec3.inl
+............. /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+. /usr/include/c++/4.8/cstdlib
+........ /usr/include/stdlib.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+................ /usr/include/x86_64-linux-gnu/bits/waitflags.h
+ /usr/include/x86_64-linux-gnu/sys/types.h
+......... /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/x86_64-linux-gnu/sys/select.h
+................. /usr/include/x86_64-linux-gnu/sys/types.h
+. /usr/include/x86_64-linux-gnu/bits/select.h
+.......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/sigset.h
+......... /usr/include/x86_64-linux-gnu/bits/time.h
+.......... /usr/include/x86_64-linux-gnu/sys/select.h
+........ /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+........... /usr/include/x86_64-linux-gnu/bits/select.h
+............ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........... /usr/include/x86_64-linux-gnu/bits/sigset.h
+........... /usr/include/x86_64-linux-gnu/bits/time.h
+....... /usr/include/alloca.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+......... /usr/include/alloca.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+..... /usr/include/c++/4.8/cwchar
+...... /usr/include/wchar.h
+...... Dependencies/glm/glm/gtc/../detail/../vec4.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+......... /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+....... /usr/include/c++/4.8/cwchar
+.......... /usr/include/wchar.h
+... /usr/include/c++/4.8/cstdio
+...... /usr/include/stdio.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... Dependencies/glm/glm/gtc/../detail/../mat2x2.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+....... /usr/include/libio.h
+........ /usr/include/_G_config.h
+............... /usr/include/c++/4.8/cstdio
+. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/stdio.h
+.......... Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x2.hpp
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/wchar.h
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/libio.h
+.......... /usr/include/_G_config.h
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+........... /usr/include/wchar.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x2.inl
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+....... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+...... Dependencies/glm/glm/gtc/../detail/../mat2x3.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+......... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+....... /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x3.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... /usr/include/c++/4.8/cerrno
+......... /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+...... /usr/include/errno.h
+....... /usr/include/x86_64-linux-gnu/bits/errno.h
+.............. /usr/include/linux/errno.h
+. /usr/include/c++/4.8/cerrno
+......... /usr/include/x86_64-linux-gnu/asm/errno.h
+........ /usr/include/errno.h
+.................. Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x3.inl
+...... /usr/include/asm-generic/errno.h
+... /usr/include/x86_64-linux-gnu/bits/errno.h
+........... /usr/include/asm-generic/errno-base.h
+.......... /usr/include/linux/errno.h
+........... /usr/include/x86_64-linux-gnu/asm/errno.h
+............ /usr/include/asm-generic/errno.h
+............. /usr/include/asm-generic/errno-base.h
+...... Dependencies/glm/glm/gtc/../detail/../mat2x4.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+.... /usr/include/c++/4.8/bits/functional_hash.h
+..... /usr/include/c++/4.8/bits/hash_bytes.h
+.... /usr/include/c++/4.8/bits/basic_string.tcc
+...... Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x4.hpp
+.......... /usr/include/c++/4.8/bits/basic_string.tcc
+... /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x4.inl
+.. Core/Source/odgl_GeometricObject.h
+... /usr/include/c++/4.8/vector
+.... /usr/include/c++/4.8/bits/stl_construct.h
+..... /usr/include/c++/4.8/ext/alloc_traits.h
+...... Dependencies/glm/glm/gtc/../detail/../mat3x2.hpp
+...... /usr/include/c++/4.8/bits/alloc_traits.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+....... /usr/include/c++/4.8/bits/ptr_traits.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x2.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... /usr/include/c++/4.8/bits/stl_uninitialized.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x2.inl
+.... /usr/include/c++/4.8/bits/stl_vector.h
+...... Dependencies/glm/glm/gtc/../detail/../mat3x3.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+.... Core/Source/odgl_RenderObject.h
+..... Dependencies/glm/glm/glm.hpp
+...... Dependencies/glm/glm/detail/_fixes.hpp
+....... /usr/include/c++/4.8/cmath
+........ /usr/include/math.h
+.......... Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x3.hpp
+...... /usr/include/x86_64-linux-gnu/bits/huge_val.h
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/huge_valf.h
+.... /usr/include/c++/4.8/bits/stl_bvector.h
+......... /usr/include/x86_64-linux-gnu/bits/huge_vall.h
+......... /usr/include/x86_64-linux-gnu/bits/inf.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x3.inl
+......... /usr/include/x86_64-linux-gnu/bits/nan.h
+.... /usr/include/c++/4.8/bits/vector.tcc
+......... /usr/include/x86_64-linux-gnu/bits/mathdef.h
+......... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+...... Dependencies/glm/glm/gtc/../detail/../mat3x4.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x4.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x4.inl
+... Core/Source/odgl_RenderObject.h
+......... Dependencies/glm/glm/glm.hpp
+.... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+..... Dependencies/glm/glm/detail/_fixes.hpp
+...... Dependencies/glm/glm/gtc/../detail/../mat4x2.hpp
+........... /usr/include/c++/4.8/cmath
+.. Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+....... /usr/include/math.h
+........ /usr/include/x86_64-linux-gnu/bits/huge_val.h
+........ /usr/include/x86_64-linux-gnu/bits/huge_valf.h
+........ /usr/include/x86_64-linux-gnu/bits/huge_vall.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/type_mat4x2.hpp
+........ /usr/include/x86_64-linux-gnu/bits/inf.h
+........ /usr/include/c++/4.8/cstddef
+................. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+ /usr/include/x86_64-linux-gnu/bits/nan.h
+........ /usr/include/x86_64-linux-gnu/bits/mathdef.h
+........ /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_mat4x2.inl
+...... Dependencies/glm/glm/gtc/../detail/../mat4x3.hpp
+....... Dependencies/glm/glm/gtc/../detail/../detail/setup.hpp
+......... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/type_mat4x3.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ Dependencies/glm/glm/gtc/../detail/../detail/type_mat4x3.inl
+........ /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+...... Dependencies/glm/glm/gtc/../detail/../detail/func_matrix.inl
+....... Dependencies/glm/glm/gtc/../detail/../detail/../geometric.hpp
+........ Dependencies/glm/glm/gtc/../detail/../detail/../detail/func_geometric.inl
+......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../exponential.hpp
+.......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/type_vec1.hpp
+.......... /usr/include/c++/4.8/cmath
+........... /usr/include/c++/4.8/bits/cpp_type_traits.h
+........... /usr/include/c++/4.8/ext/type_traits.h
+........... /usr/include/math.h
+............ /usr/include/x86_64-linux-gnu/bits/huge_val.h
+...... Dependencies/glm/glm/detail/setup.hpp
+........... /usr/include/c++/4.8/cassert
+....... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+......... /usr/include/x86_64-linux-gnu/bits/huge_valf.h
+........ /usr/include/assert.h
+............ /usr/include/x86_64-linux-gnu/bits/huge_vall.h
+....... /usr/include/c++/4.8/cstddef
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+............ /usr/include/x86_64-linux-gnu/bits/inf.h
+............ /usr/include/x86_64-linux-gnu/bits/nan.h
+....... Dependencies/glm/glm/detail/../simd/platform.h
+............ /usr/include/x86_64-linux-gnu/bits/mathdef.h
+............ /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+............ /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+. Dependencies/include/GLEW/glew.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+... /usr/include/stdint.h
+.... /usr/include/features.h
+..... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+..... Dependencies/glm/glm/detail/setup.hpp
+...... /usr/include/c++/4.8/cassert
+....... /usr/include/assert.h
+................. /usr/include/c++/4.8/cstddef
+. /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/../simd/platform.h
+. /usr/include/c++/4.8/string
+.. /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+... /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+.......... /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+.. /usr/include/c++/4.8/bits/stringfwd.h
+.... /usr/include/x86_64-linux-gnu/bits/wchar.h
+... /usr/include/c++/4.8/bits/memoryfwd.h
+.... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.. /usr/include/c++/4.8/bits/char_traits.h
+... /usr/include/c++/4.8/bits/stl_algobase.h
+.... /usr/include/c++/4.8/bits/functexcept.h
+..... /usr/include/c++/4.8/bits/exception_defines.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h
+.... /usr/include/c++/4.8/bits/cpp_type_traits.h
+.... /usr/include/c++/4.8/ext/type_traits.h
+.... /usr/include/c++/4.8/ext/numeric_traits.h
+.... /usr/include/c++/4.8/bits/stl_pair.h
+..... /usr/include/c++/4.8/bits/move.h
+...... /usr/include/c++/4.8/bits/concept_check.h
+...... /usr/include/c++/4.8/type_traits
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+...... /usr/include/c++/4.8/cmath
+.... /usr/include/c++/4.8/bits/stl_iterator_base_types.h
+.......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_exponential.inl
+......... /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h
+...... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../vector_relational.hpp
+..... /usr/include/c++/4.8/debug/debug.h
+............ Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../detail/setup.hpp
+.... /usr/include/c++/4.8/bits/stl_iterator.h
+...... /usr/include/c++/4.8/climits
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+.......... /usr/include/limits.h
+............ Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+........... /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+............. Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+........... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/_vectorize.hpp
+............ Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/type_vec1.hpp
+..... /usr/include/c++/4.8/cmath
+.. /usr/include/GL/glu.h
+........... /usr/include/c++/4.8/cmath
+... /usr/include/GL/gl.h
+... /usr/include/c++/4.8/bits/postypes.h
+.... /usr/include/c++/4.8/cwchar
+..... /usr/include/c++/4.8/climits
+........ /usr/include/wchar.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+............ /usr/include/stdio.h
+..... /usr/include/c++/4.8/cassert
+................... /usr/include/assert.h
+.. /usr/include/limits.h
+.......... /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+........... /usr/include/x86_64-linux-gnu/bits/local_lim.h
+................... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+............... /usr/include/linux/limits.h
+ Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_exponential_simd.inl
+............ /usr/include/x86_64-linux-gnu/bits/local_lim.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../simd/exponential.h
+.............. /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
+............. /usr/include/linux/limits.h
+..... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../common.hpp
+.......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/setup.hpp
+.......... /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
+................ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
+...... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+...... /usr/include/xlocale.h
+........... /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
+................. /usr/include/c++/4.8/cfloat
+ /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/float.h
+...... /usr/include/c++/4.8/cfloat
+.......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/_fixes.hpp
+.................... /usr/include/c++/4.8/limits
+... /usr/include/c++/4.8/cmath
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/float.h
+...... /usr/include/c++/4.8/limits
+... /usr/include/c++/4.8/cwchar
+.... /usr/include/wchar.h
+.......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_common.inl
+... /usr/include/c++/4.8/cstdint
+.. /usr/include/c++/4.8/bits/allocator.h
+... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h
+.... /usr/include/c++/4.8/ext/new_allocator.h
+..... /usr/include/c++/4.8/new
+...... /usr/include/c++/4.8/exception
+....... /usr/include/c++/4.8/bits/atomic_lockfree_defines.h
+....... /usr/include/c++/4.8/bits/exception_ptr.h
+....... /usr/include/c++/4.8/bits/nested_exception.h
+.. /usr/include/c++/4.8/bits/localefwd.h
+... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h
+.... /usr/include/c++/4.8/clocale
+..... /usr/include/locale.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... /usr/include/c++/4.8/cassert
+....... /usr/include/x86_64-linux-gnu/bits/locale.h
+..... /usr/include/assert.h
+..... Dependencies/glm/glm/fwd.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+........... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_common_simd.inl
+... /usr/include/c++/4.8/iosfwd
+............ Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../simd/common.h
+... /usr/include/c++/4.8/cctype
+.... /usr/include/ctype.h
+..... /usr/include/x86_64-linux-gnu/bits/types.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.......... Dependencies/glm/glm/detail/type_int.hpp
+.. /usr/include/x86_64-linux-gnu/bits/typesizes.h
+.............. Dependencies/glm/glm/detail/setup.hpp
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/immintrin.h
+..... /usr/include/endian.h
+...... /usr/include/x86_64-linux-gnu/bits/endian.h
+...... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+....... /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+...... Dependencies/glm/glm/detail/type_float.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/func_geometric_simd.inl
+.......... Dependencies/glm/glm/gtc/../detail/../detail/../detail/../simd/geometric.h
+...... Dependencies/glm/glm/detail/type_vec.hpp
+....... Dependencies/glm/glm/detail/qualifier.hpp
+........ Dependencies/glm/glm/detail/setup.hpp
+.. /usr/include/c++/4.8/bits/ostream_insert.h
+... /usr/include/c++/4.8/bits/cxxabi_forced.h
+.. /usr/include/c++/4.8/bits/stl_function.h
+....... Dependencies/glm/glm/detail/compute_vector_relational.hpp
+........ Dependencies/glm/glm/detail/setup.hpp
+........ /usr/include/c++/4.8/cstring
+...... /usr/include/c++/4.8/cassert
+.......... /usr/include/c++/4.8/backward/binders.h
+.... /usr/include/assert.h
+..... /usr/include/string.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... /usr/include/c++/4.8/bits/range_access.h
+.... Dependencies/glm/glm/gtc/../detail/../detail/func_matrix_simd.inl
+...... Dependencies/glm/glm/fwd.hpp
+........... Dependencies/glm/glm/detail/setup.hpp
+.... Dependencies/glm/glm/gtc/../detail/../detail/../simd/matrix.h
+.. /usr/include/c++/4.8/bits/basic_string.h
+... /usr/include/c++/4.8/ext/atomicity.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h
+...... /usr/include/pthread.h
+....... /usr/include/sched.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/detail/type_int.hpp
+........ Dependencies/glm/glm/detail/setup.hpp
+........ /usr/include/time.h
+........ /usr/include/x86_64-linux-gnu/bits/sched.h
+....... Dependencies/glm/glm/detail/type_float.hpp
+............. Dependencies/glm/glm/detail/type_mat.hpp
+. Dependencies/glm/glm/detail/setup.hpp
+....... /usr/include/time.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/x86_64-linux-gnu/bits/time.h
+.............. Dependencies/glm/glm/detail/type_vec.hpp
+.. /usr/include/x86_64-linux-gnu/bits/timex.h
+........ Dependencies/glm/glm/detail/qualifier.hpp
+......... Dependencies/glm/glm/detail/setup.hpp
+....... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ Dependencies/glm/glm/detail/compute_vector_relational.hpp
+......... Dependencies/glm/glm/detail/setup.hpp
+....... /usr/include/x86_64-linux-gnu/bits/setjmp.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... /usr/include/c++/4.8/cstring
+...... Dependencies/glm/glm/vec2.hpp
+............ /usr/include/string.h
+... Dependencies/glm/glm/detail/setup.hpp
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec2.hpp
+....... /usr/include/c++/4.8/cstddef
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/c++/4.8/cstring
+....... Dependencies/glm/glm/detail/type_vec2.inl
+....... Dependencies/glm/glm/detail/type_mat.hpp
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h
+... /usr/include/c++/4.8/initializer_list
+..... Dependencies/glm/glm/gtc/../detail/type_mat4x4_simd.inl
+.. Dependencies/glm/glm/gtc/../gtc/constants.hpp
+... Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+..... Dependencies/glm/glm/vec3.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+...... Dependencies/glm/glm/detail/type_vec3.hpp
+........ Dependencies/glm/glm/vec2.hpp
+..... /usr/include/c++/4.8/cstddef
+....... Dependencies/glm/glm/detail/setup.hpp
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... Dependencies/glm/glm/gtc/../gtc/constants.inl
+....... Dependencies/glm/glm/detail/type_vec2.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... /usr/include/c++/4.8/ext/string_conversions.h
+.... /usr/include/c++/4.8/cstdlib
+....... Dependencies/glm/glm/detail/type_vec3.inl
+..... /usr/include/stdlib.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. Dependencies/glm/glm/gtc/matrix_transform.inl
+... Dependencies/glm/glm/gtc/../trigonometric.hpp
+.... Dependencies/glm/glm/gtc/../detail/setup.hpp
+...... /usr/include/x86_64-linux-gnu/bits/waitflags.h
+...... /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+.... Dependencies/glm/glm/gtc/../detail/func_trigonometric.inl
+..... /usr/include/c++/4.8/cmath
+..... Dependencies/glm/glm/vec4.hpp
+........ /usr/include/x86_64-linux-gnu/sys/types.h
+.... Dependencies/glm/glm/detail/setup.hpp
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec4.hpp
+......... /usr/include/x86_64-linux-gnu/sys/select.h
+..... /usr/include/c++/4.8/cstddef
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/x86_64-linux-gnu/bits/select.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/sigset.h
+........ /usr/include/x86_64-linux-gnu/bits/time.h
+..... Dependencies/glm/glm/gtc/../detail/func_trigonometric_simd.inl
+....... /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+...... /usr/include/alloca.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/detail/type_vec4.inl
+... /usr/include/c++/4.8/sstream
+.... /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+.. /usr/include/c++/4.8/istream
+... /usr/include/c++/4.8/ios
+.... /usr/include/c++/4.8/iosfwd
+..... /usr/include/c++/4.8/bits/stringfwd.h
+.... /usr/include/c++/4.8/cwchar
+...... /usr/include/c++/4.8/bits/memoryfwd.h
+..... /usr/include/c++/4.8/bits/postypes.h
+...... /usr/include/c++/4.8/cwchar
+..... /usr/include/wchar.h
+....... /usr/include/wchar.h
+........ /usr/include/stdio.h
+........ Dependencies/glm/glm/detail/type_vec4_simd.inl
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+.... /usr/include/c++/4.8/cstdio
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... /usr/include/stdio.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/mat2x2.hpp
+.......... Dependencies/glm/glm/detail/setup.hpp
+.. /usr/include/libio.h
+....... /usr/include/_G_config.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/wchar.h
+...... Dependencies/glm/glm/detail/type_mat2x2.hpp
+....... /usr/include/c++/4.8/cstddef
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+.... /usr/include/c++/4.8/exception
+..... /usr/include/c++/4.8/bits/atomic_lockfree_defines.h
+..... /usr/include/c++/4.8/bits/exception_ptr.h
+...... /usr/include/c++/4.8/bits/exception_defines.h
+....... Dependencies/glm/glm/detail/type_mat2x2.inl
+........ Dependencies/glm/glm/detail/../matrix.hpp
+.......... /usr/include/c++/4.8/bits/nested_exception.h
+....... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+... Dependencies/glm/glm/detail/../detail/setup.hpp
+.... /usr/include/c++/4.8/bits/char_traits.h
+..... /usr/include/c++/4.8/bits/stl_algobase.h
+...... /usr/include/c++/4.8/bits/functexcept.h
+...... /usr/include/c++/4.8/ext/numeric_traits.h
+...... /usr/include/c++/4.8/bits/stl_pair.h
+......... /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+.... /usr/include/c++/4.8/bits/move.h
+........ /usr/include/c++/4.8/bits/concept_check.h
+......... Dependencies/glm/glm/detail/../mat2x3.hpp
+.... /usr/include/c++/4.8/cerrno
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+..... /usr/include/errno.h
+...... /usr/include/x86_64-linux-gnu/bits/errno.h
+....... /usr/include/linux/errno.h
+...... /usr/include/c++/4.8/bits/stl_iterator_base_types.h
+........ /usr/include/x86_64-linux-gnu/asm/errno.h
+......... /usr/include/asm-generic/errno.h
+............. /usr/include/asm-generic/errno-base.h
+...... /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h
+............ Dependencies/glm/glm/detail/../detail/type_mat2x3.hpp
+.. /usr/include/c++/4.8/debug/debug.h
+........... /usr/include/c++/4.8/cstddef
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... /usr/include/c++/4.8/bits/functional_hash.h
+.... /usr/include/c++/4.8/bits/hash_bytes.h
+...... /usr/include/c++/4.8/bits/stl_iterator.h
+...... /usr/include/c++/4.8/bits/basic_string.tcc
+....... Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+......... Dependencies/glm/glm/detail/../mat2x4.hpp
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+..... /usr/include/c++/4.8/cwchar
+.......... Dependencies/glm/glm/detail/../detail/type_mat2x4.hpp
+...... /usr/include/wchar.h
+........... /usr/include/c++/4.8/cstddef
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ Dependencies/glm/glm/detail/type_vec2.inl
+........... Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+.... /usr/include/c++/4.8/bits/localefwd.h
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h
+...... /usr/include/c++/4.8/clocale
+....... /usr/include/locale.h
+.......... Dependencies/glm/glm/detail/../mat3x2.hpp
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+........ /usr/include/x86_64-linux-gnu/bits/locale.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x2.hpp
+........... /usr/include/c++/4.8/cstddef
+........ /usr/include/c++/4.8/cctype
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/include/ctype.h
+........... Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+.... /usr/include/c++/4.8/bits/ios_base.h
+..... /usr/include/c++/4.8/ext/atomicity.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h
+....... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h
+........ /usr/include/pthread.h
+......... /usr/include/sched.h
+.............. Dependencies/glm/glm/detail/../mat3x3.hpp
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+.......... /usr/include/time.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x3.hpp
+........... /usr/include/c++/4.8/cstddef
+.................... /usr/include/x86_64-linux-gnu/bits/sched.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/time.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+.......... /usr/include/x86_64-linux-gnu/bits/time.h
+........... /usr/include/x86_64-linux-gnu/bits/timex.h
+......... /usr/include/x86_64-linux-gnu/bits/setjmp.h
+.......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... Dependencies/glm/glm/detail/../mat3x4.hpp
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x4.hpp
+........... /usr/include/c++/4.8/cstddef
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h
+..... /usr/include/c++/4.8/bits/locale_classes.h
+...... /usr/include/c++/4.8/string
+....... /usr/include/c++/4.8/bits/allocator.h
+........ /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h
+......... /usr/include/c++/4.8/ext/new_allocator.h
+.......... /usr/include/c++/4.8/new
+....... /usr/include/c++/4.8/bits/ostream_insert.h
+........ /usr/include/c++/4.8/bits/cxxabi_forced.h
+....... /usr/include/c++/4.8/bits/stl_function.h
+......... Dependencies/glm/glm/detail/../mat4x2.hpp
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+........ /usr/include/c++/4.8/backward/binders.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x2.hpp
+........... /usr/include/c++/4.8/cstddef
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+......... Dependencies/glm/glm/detail/../mat4x3.hpp
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+....... /usr/include/c++/4.8/bits/range_access.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x3.hpp
+............... /usr/include/c++/4.8/bits/basic_string.h
+... /usr/include/c++/4.8/cstddef
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+......... Dependencies/glm/glm/detail/../mat4x4.hpp
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x4.hpp
+........... /usr/include/c++/4.8/cstddef
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/vec3.hpp
+....... /usr/include/c++/4.8/initializer_list
+....... Dependencies/glm/glm/detail/setup.hpp
+........... Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+....... Dependencies/glm/glm/detail/type_vec3.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ Dependencies/glm/glm/detail/type_vec3.inl
+............ Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+........ /usr/include/c++/4.8/ext/string_conversions.h
+......... /usr/include/c++/4.8/cstdlib
+......... Dependencies/glm/glm/detail/../detail/func_matrix.inl
+.......... Dependencies/glm/glm/detail/../detail/../geometric.hpp
+........... Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+..................... /usr/include/c++/4.8/cwchar
+ Dependencies/glm/glm/detail/../detail/../detail/../exponential.hpp
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+........ /usr/include/wchar.h
+............. /usr/include/c++/4.8/cmath
+...... Dependencies/glm/glm/vec4.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../vector_relational.hpp
+............... /usr/include/c++/4.8/cstdio
+......... Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/setup.hpp
+.......... /usr/include/stdio.h
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/detail/type_vec4.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... /usr/include/libio.h
+........................ /usr/include/_G_config.h
+... Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+................... Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+............ /usr/include/wchar.h
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/_vectorize.hpp
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+.............. /usr/include/c++/4.8/cmath
+......... Dependencies/glm/glm/detail/type_vec4.inl
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+.............. /usr/include/c++/4.8/cassert
+............... /usr/include/assert.h
+........... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/exponential.h
+............ Dependencies/glm/glm/detail/../detail/../detail/../common.hpp
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/type_vec4_simd.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+.............. /usr/include/c++/4.8/cmath
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/common.h
+...... Dependencies/glm/glm/mat2x2.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+............... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/immintrin.h
+....... Dependencies/glm/glm/detail/type_mat2x2.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+............ Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../simd/geometric.h
+........ Dependencies/glm/glm/detail/type_mat2x2.inl
+......... Dependencies/glm/glm/detail/../matrix.hpp
+.......... Dependencies/glm/glm/detail/../detail/setup.hpp
+........... /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+................... Dependencies/glm/glm/detail/../mat2x3.hpp
+............ /usr/include/c++/4.8/cerrno
+. Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+........... Dependencies/glm/glm/detail/../detail/../simd/matrix.h
+.......... /usr/include/errno.h
+........... /usr/include/x86_64-linux-gnu/bits/errno.h
+............ /usr/include/linux/errno.h
+........... Dependencies/glm/glm/detail/../detail/type_mat2x3.hpp
+............. /usr/include/x86_64-linux-gnu/asm/errno.h
+.......................... /usr/include/asm-generic/errno.h
+ /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+............... /usr/include/asm-generic/errno-base.h
+............ Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+........ /usr/include/c++/4.8/bits/functional_hash.h
+......... /usr/include/c++/4.8/bits/hash_bytes.h
+....... /usr/include/c++/4.8/bits/basic_string.tcc
+...... /usr/include/c++/4.8/bits/locale_classes.tcc
+.... /usr/include/c++/4.8/streambuf
+..... /usr/include/c++/4.8/bits/streambuf.tcc
+.... /usr/include/c++/4.8/bits/basic_ios.h
+..... /usr/include/c++/4.8/bits/locale_facets.h
+...... /usr/include/c++/4.8/cwctype
+....... /usr/include/wctype.h
+........ /usr/include/wchar.h
+........... /usr/include/c++/4.8/cstring
+...... /usr/include/c++/4.8/cctype
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h
+...... /usr/include/c++/4.8/bits/streambuf_iterator.h
+..... Dependencies/glm/glm/trigonometric.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+...... Dependencies/glm/glm/detail/func_trigonometric.inl
+....... /usr/include/c++/4.8/cmath
+.......... Dependencies/glm/glm/detail/../mat2x4.hpp
+........... Dependencies/glm/glm/detail/../detail/setup.hpp
+........... Dependencies/glm/glm/detail/../detail/type_mat2x4.hpp
+............ /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+..... Dependencies/glm/glm/packing.hpp
+............ Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+.......... Dependencies/glm/glm/detail/../mat3x2.hpp
+........... Dependencies/glm/glm/detail/../detail/setup.hpp
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h
+........... Dependencies/glm/glm/detail/../detail/type_mat3x2.hpp
+............ /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/func_packing.inl
+...... /usr/include/c++/4.8/bits/locale_facets.tcc
+........... Dependencies/glm/glm/detail/type_half.hpp
+........ Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+........ Dependencies/glm/glm/detail/setup.hpp
+........ Dependencies/glm/glm/detail/type_half.inl
+.......... Dependencies/glm/glm/detail/../mat3x3.hpp
+........... Dependencies/glm/glm/detail/../detail/setup.hpp
+....... Dependencies/glm/glm/detail/func_packing_simd.inl
+..... Dependencies/glm/glm/integer.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+........... Dependencies/glm/glm/detail/../detail/type_mat3x3.hpp
+........... /usr/include/c++/4.8/bits/basic_ios.tcc
+...... /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... /usr/include/c++/4.8/ostream
+...... Dependencies/glm/glm/detail/func_integer.inl
+....... Dependencies/glm/glm/detail/../ext/vec1.hpp
+........ /usr/include/c++/4.8/cstddef
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... /usr/include/c++/4.8/bits/ostream.tcc
+..... Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+........ Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+... /usr/include/c++/4.8/bits/istream.tcc
+.......... Dependencies/glm/glm/detail/../mat3x4.hpp
+........... Dependencies/glm/glm/detail/../detail/setup.hpp
+........... Dependencies/glm/glm/detail/../detail/type_mat3x4.hpp
+............ /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. /usr/include/c++/4.8/bits/sstream.tcc
+. /usr/include/c++/4.8/vector
+.. /usr/include/c++/4.8/bits/stl_algobase.h
+....... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+... Dependencies/glm/glm/detail/func_integer_simd.inl
+........ Dependencies/glm/glm/detail/../simd/integer.h
+. /usr/include/c++/4.8/vector
+.. /usr/include/c++/4.8/bits/stl_construct.h
+... /usr/include/c++/4.8/ext/alloc_traits.h
+......... Core/Source/odgl_View.h
+.. /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+. /usr/include/c++/4.8/bits/alloc_traits.h
+...... Dependencies/glm/glm/gtc/matrix_transform.hpp
+........ /usr/include/c++/4.8/bits/ptr_traits.h
+ /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+...... Dependencies/glm/glm/gtc/../gtc/constants.hpp
+....... Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+... /usr/include/c++/4.8/bits/functexcept.h
+.... /usr/include/c++/4.8/bits/exception_defines.h
+....... Dependencies/glm/glm/gtc/../gtc/constants.inl
+... /usr/include/c++/4.8/bits/cpp_type_traits.h
+... /usr/include/c++/4.8/ext/type_traits.h
+... /usr/include/c++/4.8/ext/numeric_traits.h
+... /usr/include/c++/4.8/bits/stl_pair.h
+.... /usr/include/c++/4.8/bits/move.h
+..... /usr/include/c++/4.8/bits/concept_check.h
+..... /usr/include/c++/4.8/type_traits
+...... Dependencies/glm/glm/gtc/matrix_transform.inl
+... /usr/include/c++/4.8/bits/stl_iterator_base_types.h
+. Core/Source/odgl_Image.h
+... /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h
+.... /usr/include/c++/4.8/debug/debug.h
+... /usr/include/c++/4.8/bits/stl_iterator.h
+............ Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+.. /usr/include/c++/4.8/bits/stl_uninitialized.h
+.. /usr/include/c++/4.8/bits/allocator.h
+... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h
+.... /usr/include/c++/4.8/ext/new_allocator.h
+..... /usr/include/c++/4.8/new
+...... /usr/include/c++/4.8/exception
+....... /usr/include/c++/4.8/bits/atomic_lockfree_defines.h
+....... /usr/include/c++/4.8/bits/exception_ptr.h
+....... /usr/include/c++/4.8/bits/nested_exception.h
+.. /usr/include/c++/4.8/bits/stl_vector.h
+... /usr/include/c++/4.8/bits/memoryfwd.h
+.. /usr/include/c++/4.8/bits/stl_construct.h
+... /usr/include/c++/4.8/ext/alloc_traits.h
+.... /usr/include/c++/4.8/bits/alloc_traits.h
+..... /usr/include/c++/4.8/bits/ptr_traits.h
+.. /usr/include/c++/4.8/bits/stl_bvector.h
+.. /usr/include/c++/4.8/bits/stl_uninitialized.h
+.. /usr/include/c++/4.8/bits/stl_vector.h
+... /usr/include/c++/4.8/initializer_list
+.. /usr/include/c++/4.8/bits/vector.tcc
+.......... Dependencies/glm/glm/detail/../mat4x2.hpp
+........... Dependencies/glm/glm/detail/../detail/setup.hpp
+.. /usr/include/c++/4.8/bits/stl_bvector.h
+........... Dependencies/glm/glm/detail/../detail/type_mat4x2.hpp
+............ /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+... /usr/include/c++/4.8/bits/functional_hash.h
+.... /usr/include/c++/4.8/bits/hash_bytes.h
+.. /usr/include/c++/4.8/bits/range_access.h
+.. /usr/include/c++/4.8/bits/vector.tcc
+............ Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+. /usr/include/c++/4.8/string
+.. /usr/include/c++/4.8/bits/stringfwd.h
+.. /usr/include/c++/4.8/bits/char_traits.h
+... /usr/include/c++/4.8/bits/postypes.h
+........... /usr/include/c++/4.8/cwchar
+... Dependencies/glm/glm/detail/../mat4x3.hpp
+........... Dependencies/glm/glm/detail/../detail/setup.hpp
+..... /usr/include/wchar.h
+...... /usr/include/stdio.h
+........... Dependencies/glm/glm/detail/../detail/type_mat4x3.hpp
+............ /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/include/xlocale.h
+............ Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+... /usr/include/c++/4.8/cwchar
+.... /usr/include/wchar.h
+. Core/Source/odgl_RenderObject.h
+.. Dependencies/glm/glm/glm.hpp
+... Dependencies/glm/glm/detail/_fixes.hpp
+.... /usr/include/c++/4.8/cmath
+... /usr/include/c++/4.8/cstdint
+.. /usr/include/c++/4.8/bits/localefwd.h
+... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h
+.... /usr/include/c++/4.8/clocale
+..... /usr/include/locale.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/include/x86_64-linux-gnu/bits/locale.h
+... Dependencies/glm/glm/detail/setup.hpp
+... /usr/include/c++/4.8/iosfwd
+... /usr/include/c++/4.8/cctype
+.... /usr/include/ctype.h
+...... /usr/include/c++/4.8/cmath
+.. /usr/include/x86_64-linux-gnu/bits/types.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/bits/typesizes.h
+..... /usr/include/endian.h
+...... /usr/include/x86_64-linux-gnu/bits/endian.h
+...... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+... /usr/include/c++/4.8/climits
+....... /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+.... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+....... /usr/include/limits.h
+........ /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+......... /usr/include/x86_64-linux-gnu/bits/local_lim.h
+.. /usr/include/c++/4.8/bits/ostream_insert.h
+........... /usr/include/c++/4.8/bits/cxxabi_forced.h
+.. /usr/include/linux/limits.h
+........ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
+.. /usr/include/c++/4.8/bits/stl_function.h
+........ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
+.......... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+.. /usr/include/c++/4.8/backward/binders.h
+.. /usr/include/c++/4.8/bits/basic_string.h
+...... /usr/include/c++/4.8/cfloat
+ /usr/include/c++/4.8/ext/atomicity.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h
+.... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/float.h
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h
+...... /usr/include/pthread.h
+... /usr/include/c++/4.8/cassert
+....... /usr/include/sched.h
+.... /usr/include/assert.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/time.h
+... Dependencies/glm/glm/packing.hpp
+........... /usr/include/x86_64-linux-gnu/bits/sched.h
+. Dependencies/glm/glm/detail/func_packing.inl
+..... Dependencies/glm/glm/detail/type_half.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+....... /usr/include/time.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/time.h
+..... Dependencies/glm/glm/detail/type_half.inl
+......... /usr/include/x86_64-linux-gnu/bits/timex.h
+..... Dependencies/glm/glm/detail/func_packing_simd.inl
+....... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+... Dependencies/glm/glm/integer.hpp
+.... Dependencies/glm/glm/detail/setup.hpp
+....... /usr/include/x86_64-linux-gnu/bits/setjmp.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.......... Dependencies/glm/glm/detail/../mat4x4.hpp
+........... Dependencies/glm/glm/detail/../detail/setup.hpp
+.... Dependencies/glm/glm/detail/func_integer.inl
+..... Dependencies/glm/glm/detail/../ext/vec1.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... Dependencies/glm/glm/detail/../detail/type_mat4x4.hpp
+............ /usr/include/c++/4.8/cstddef
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+............ Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+..... Dependencies/glm/glm/detail/func_integer_simd.inl
+...... Dependencies/glm/glm/detail/../simd/integer.h
+............. Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+.......... Dependencies/glm/glm/detail/../detail/func_matrix.inl
+.. Core/Source/odgl_View.h
+........... Dependencies/glm/glm/detail/../detail/../geometric.hpp
+............ Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../exponential.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+.............. /usr/include/c++/4.8/cmath
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/../vector_relational.hpp
+................ Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/setup.hpp
+................ Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+................. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/_vectorize.hpp
+................ Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+............... /usr/include/c++/4.8/cmath
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h
+... /usr/include/c++/4.8/ext/string_conversions.h
+.... /usr/include/c++/4.8/cstdlib
+..... /usr/include/stdlib.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/include/x86_64-linux-gnu/bits/waitflags.h
+...... /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+...... /usr/include/x86_64-linux-gnu/sys/types.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/x86_64-linux-gnu/sys/select.h
+........ /usr/include/x86_64-linux-gnu/bits/select.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/sigset.h
+........ /usr/include/x86_64-linux-gnu/bits/time.h
+....... /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+...... /usr/include/alloca.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+............... /usr/include/c++/4.8/cassert
+................ /usr/include/assert.h
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+................ Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/exponential.h
+............. Dependencies/glm/glm/detail/../detail/../detail/../common.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+............... /usr/include/c++/4.8/cmath
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+................ Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/common.h
+................ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/immintrin.h
+............. Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../simd/geometric.h
+........... Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+............ Dependencies/glm/glm/detail/../detail/../simd/matrix.h
+...... /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+.... /usr/include/c++/4.8/cwchar
+..... /usr/include/wchar.h
+.... /usr/include/c++/4.8/cstdio
+..... /usr/include/stdio.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... /usr/include/libio.h
+....... /usr/include/_G_config.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/wchar.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+...... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+...... /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+.... /usr/include/c++/4.8/cerrno
+..... /usr/include/errno.h
+...... /usr/include/x86_64-linux-gnu/bits/errno.h
+....... /usr/include/linux/errno.h
+........ /usr/include/x86_64-linux-gnu/asm/errno.h
+......... /usr/include/asm-generic/errno.h
+.......... /usr/include/asm-generic/errno-base.h
+.. /usr/include/c++/4.8/bits/basic_string.tcc
+. Core/Source/odgl_Group.h
+.. Core/Source/odgl_RenderObject.h
+... Dependencies/glm/glm/glm.hpp
+.... Dependencies/glm/glm/detail/_fixes.hpp
+..... /usr/include/c++/4.8/cmath
+...... /usr/include/math.h
+....... /usr/include/x86_64-linux-gnu/bits/huge_val.h
+....... /usr/include/x86_64-linux-gnu/bits/huge_valf.h
+....... /usr/include/x86_64-linux-gnu/bits/huge_vall.h
+....... /usr/include/x86_64-linux-gnu/bits/inf.h
+....... /usr/include/x86_64-linux-gnu/bits/nan.h
+....... /usr/include/x86_64-linux-gnu/bits/mathdef.h
+....... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+............ /usr/include/c++/4.8/cstring
+...... Dependencies/glm/glm/trigonometric.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+....... Dependencies/glm/glm/detail/func_trigonometric.inl
+........ /usr/include/c++/4.8/cmath
+........ Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+...... Dependencies/glm/glm/packing.hpp
+....... Dependencies/glm/glm/detail/func_packing.inl
+........ Dependencies/glm/glm/detail/type_half.hpp
+......... Dependencies/glm/glm/detail/setup.hpp
+......... Dependencies/glm/glm/detail/type_half.inl
+........ Dependencies/glm/glm/detail/func_packing_simd.inl
+...... Dependencies/glm/glm/integer.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+....... Dependencies/glm/glm/detail/func_integer.inl
+........ Dependencies/glm/glm/detail/../ext/vec1.hpp
+......... /usr/include/c++/4.8/cstddef
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+....... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+........ Dependencies/glm/glm/detail/func_integer_simd.inl
+......... Dependencies/glm/glm/detail/../simd/integer.h
+..... Core/Source/odgl_View.h
+...... Dependencies/glm/glm/gtc/matrix_transform.hpp
+....... Dependencies/glm/glm/gtc/../gtc/constants.hpp
+........ Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+........ Dependencies/glm/glm/gtc/../gtc/constants.inl
+....... Dependencies/glm/glm/gtc/matrix_transform.inl
+... Core/Source/odgl_View.h
+.. Core/Source/odgl_Cube.h
+... Core/Source/odgl_GeometricObject.h
+....... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+.... Dependencies/glm/glm/detail/setup.hpp
+..... /usr/include/c++/4.8/cassert
+...... /usr/include/assert.h
+..... /usr/include/c++/4.8/cstddef
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/../simd/platform.h
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cfloat
+/usr/include/c++/4.8/climits
+/usr/include/limits.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/huge_val.h
+/usr/include/x86_64-linux-gnu/bits/huge_valf.h
+/usr/include/x86_64-linux-gnu/bits/huge_vall.h
+/usr/include/x86_64-linux-gnu/bits/inf.h
+/usr/include/x86_64-linux-gnu/bits/local_lim.h
+/usr/include/x86_64-linux-gnu/bits/mathdef.h
+/usr/include/x86_64-linux-gnu/bits/nan.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/time.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+Dependencies/glm/glm/detail/../detail/func_matrix.inl
+Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+Dependencies/glm/glm/detail/func_integer.inl
+Dependencies/glm/glm/detail/func_integer_simd.inl
+Dependencies/glm/glm/detail/func_packing.inl
+Dependencies/glm/glm/detail/func_packing_simd.inl
+Dependencies/glm/glm/detail/func_trigonometric.inl
+Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+Dependencies/glm/glm/detail/type_half.inl
+Dependencies/glm/glm/detail/type_mat2x2.inl
+Dependencies/glm/glm/detail/type_vec2.inl
+Dependencies/glm/glm/detail/type_vec3.inl
+Dependencies/glm/glm/detail/type_vec4.inl
+Dependencies/glm/glm/detail/type_vec4_simd.inl
+Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+Dependencies/glm/glm/gtc/../gtc/constants.inl
+Dependencies/glm/glm/gtc/matrix_transform.inl
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+.... /usr/include/c++/4.8/cmath
+.... /usr/include/c++/4.8/climits
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+........ /usr/include/limits.h
+......... /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+.......... /usr/include/x86_64-linux-gnu/bits/local_lim.h
+........... /usr/include/linux/limits.h
+......... /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
+......... /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
+.......... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+.... /usr/include/c++/4.8/cfloat
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/float.h
+.... /usr/include/c++/4.8/limits
+.... /usr/include/c++/4.8/cassert
+..... /usr/include/assert.h
+.... Dependencies/glm/glm/fwd.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_int.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_float.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec.hpp
+...... Dependencies/glm/glm/detail/qualifier.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+...... Dependencies/glm/glm/detail/compute_vector_relational.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+....... /usr/include/c++/4.8/cstring
+........ /usr/include/string.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/type_mat.hpp
+.... Dependencies/glm/glm/vec2.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec2.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec2.inl
+.... Dependencies/glm/glm/vec3.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec3.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec3.inl
+.... Dependencies/glm/glm/vec4.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec4.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec4.inl
+....... Dependencies/glm/glm/detail/type_vec4_simd.inl
+.... Dependencies/glm/glm/mat2x2.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_mat2x2.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_mat2x2.inl
+....... Dependencies/glm/glm/detail/../matrix.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../mat2x3.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat2x3.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+........ Dependencies/glm/glm/detail/../mat2x4.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat2x4.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+........ Dependencies/glm/glm/detail/../mat3x2.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat3x2.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+........ Dependencies/glm/glm/detail/../mat3x3.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat3x3.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+........ Dependencies/glm/glm/detail/../mat3x4.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat3x4.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+........ Dependencies/glm/glm/detail/../mat4x2.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat4x2.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+........ Dependencies/glm/glm/detail/../mat4x3.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat4x3.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+........ Dependencies/glm/glm/detail/../mat4x4.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat4x4.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+........... Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+........ Dependencies/glm/glm/detail/../detail/func_matrix.inl
+......... Dependencies/glm/glm/detail/../detail/../geometric.hpp
+.......... Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+........... Dependencies/glm/glm/detail/../detail/../detail/../exponential.hpp
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+............ /usr/include/c++/4.8/cmath
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../vector_relational.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/setup.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/_vectorize.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+............. /usr/include/c++/4.8/cmath
+............. /usr/include/c++/4.8/cassert
+.............. /usr/include/assert.h
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/exponential.h
+........... Dependencies/glm/glm/detail/../detail/../detail/../common.hpp
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+............. /usr/include/c++/4.8/cmath
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/common.h
+.............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/immintrin.h
+. Dependencies/include/GLEW/glew.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+... /usr/include/stdint.h
+.... /usr/include/features.h
+........... Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+............ Dependencies/glm/glm/detail/../detail/../detail/../simd/geometric.h
+......... Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+.......... Dependencies/glm/glm/detail/../detail/../simd/matrix.h
+..... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+...... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+.... /usr/include/x86_64-linux-gnu/bits/wchar.h
+.... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.. /usr/include/GL/glu.h
+... /usr/include/GL/gl.h
+.......... /usr/include/c++/4.8/cstring
+.... Dependencies/glm/glm/trigonometric.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/func_trigonometric.inl
+...... /usr/include/c++/4.8/cmath
+...... Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+.... Dependencies/glm/glm/packing.hpp
+..... Dependencies/glm/glm/detail/func_packing.inl
+...... Dependencies/glm/glm/detail/type_half.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+....... Dependencies/glm/glm/detail/type_half.inl
+...... Dependencies/glm/glm/detail/func_packing_simd.inl
+.... Dependencies/glm/glm/integer.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/func_integer.inl
+...... Dependencies/glm/glm/detail/../ext/vec1.hpp
+....... /usr/include/c++/4.8/cstddef
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+...... Dependencies/glm/glm/detail/func_integer_simd.inl
+....... Dependencies/glm/glm/detail/../simd/integer.h
+... Core/Source/odgl_View.h
+.... Dependencies/glm/glm/gtc/matrix_transform.hpp
+..... Dependencies/glm/glm/gtc/../gtc/constants.hpp
+...... Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+...... Dependencies/glm/glm/gtc/../gtc/constants.inl
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cctype
+/usr/include/c++/4.8/cerrno
+/usr/include/c++/4.8/clocale
+/usr/include/c++/4.8/cstdio
+/usr/include/c++/4.8/cstdlib
+/usr/include/errno.h
+/usr/include/linux/errno.h
+/usr/include/x86_64-linux-gnu/asm/errno.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/errno.h
+/usr/include/x86_64-linux-gnu/bits/locale.h
+/usr/include/x86_64-linux-gnu/bits/sched.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+..... Dependencies/glm/glm/gtc/matrix_transform.inl
+. /usr/include/c++/4.8/sstream
+.. /usr/include/c++/4.8/istream
+... /usr/include/c++/4.8/ios
+.... /usr/include/c++/4.8/iosfwd
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+..... /usr/include/c++/4.8/bits/stringfwd.h
+...... /usr/include/c++/4.8/bits/memoryfwd.h
+..... /usr/include/c++/4.8/bits/postypes.h
+...... /usr/include/c++/4.8/cwchar
+....... /usr/include/wchar.h
+........ /usr/include/stdio.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/xlocale.h
+.... /usr/include/c++/4.8/exception
+..... /usr/include/c++/4.8/bits/atomic_lockfree_defines.h
+..... /usr/include/c++/4.8/bits/exception_ptr.h
+...... /usr/include/c++/4.8/bits/exception_defines.h
+..... /usr/include/c++/4.8/bits/nested_exception.h
+.... /usr/include/c++/4.8/bits/char_traits.h
+..... /usr/include/c++/4.8/bits/stl_algobase.h
+...... /usr/include/c++/4.8/bits/functexcept.h
+...... /usr/include/c++/4.8/bits/cpp_type_traits.h
+...... /usr/include/c++/4.8/ext/type_traits.h
+...... /usr/include/c++/4.8/ext/numeric_traits.h
+...... /usr/include/c++/4.8/bits/stl_pair.h
+....... /usr/include/c++/4.8/bits/move.h
+........ /usr/include/c++/4.8/bits/concept_check.h
+........ /usr/include/c++/4.8/type_traits
+...... /usr/include/c++/4.8/bits/stl_iterator_base_types.h
+...... /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h
+....... /usr/include/c++/4.8/debug/debug.h
+...... /usr/include/c++/4.8/bits/stl_iterator.h
+..... /usr/include/c++/4.8/cwchar
+...... /usr/include/wchar.h
+..... /usr/include/c++/4.8/cstdint
+.... /usr/include/c++/4.8/bits/localefwd.h
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h
+...... /usr/include/c++/4.8/clocale
+....... /usr/include/locale.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/x86_64-linux-gnu/bits/locale.h
+..... /usr/include/c++/4.8/cctype
+...... /usr/include/ctype.h
+....... /usr/include/x86_64-linux-gnu/bits/types.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/typesizes.h
+....... /usr/include/endian.h
+........ /usr/include/x86_64-linux-gnu/bits/endian.h
+........ /usr/include/x86_64-linux-gnu/bits/byteswap.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+.... /usr/include/c++/4.8/bits/ios_base.h
+..... /usr/include/c++/4.8/ext/atomicity.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h
+....... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h
+........ /usr/include/pthread.h
+......... /usr/include/sched.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/time.h
+.......... /usr/include/x86_64-linux-gnu/bits/sched.h
+......... /usr/include/time.h
+.......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... /usr/include/x86_64-linux-gnu/bits/time.h
+........... /usr/include/x86_64-linux-gnu/bits/timex.h
+......... /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+.......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... /usr/include/x86_64-linux-gnu/bits/setjmp.h
+.......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h
+..... /usr/include/c++/4.8/bits/locale_classes.h
+...... /usr/include/c++/4.8/string
+....... /usr/include/c++/4.8/bits/allocator.h
+........ /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h
+......... /usr/include/c++/4.8/ext/new_allocator.h
+.......... /usr/include/c++/4.8/new
+....... /usr/include/c++/4.8/bits/ostream_insert.h
+........ /usr/include/c++/4.8/bits/cxxabi_forced.h
+....... /usr/include/c++/4.8/bits/stl_function.h
+........ /usr/include/c++/4.8/backward/binders.h
+....... /usr/include/c++/4.8/bits/range_access.h
+....... /usr/include/c++/4.8/bits/basic_string.h
+........ /usr/include/c++/4.8/initializer_list
+........ /usr/include/c++/4.8/ext/string_conversions.h
+......... /usr/include/c++/4.8/cstdlib
+.......... /usr/include/stdlib.h
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... /usr/include/x86_64-linux-gnu/bits/waitflags.h
+........... /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+........... /usr/include/x86_64-linux-gnu/sys/types.h
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+............ /usr/include/x86_64-linux-gnu/sys/select.h
+............. /usr/include/x86_64-linux-gnu/bits/select.h
+.............. /usr/include/x86_64-linux-gnu/bits/wordsize.h
+............. /usr/include/x86_64-linux-gnu/bits/sigset.h
+............. /usr/include/x86_64-linux-gnu/bits/time.h
+............ /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+........... /usr/include/alloca.h
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+......... /usr/include/c++/4.8/cwchar
+.......... /usr/include/wchar.h
+......... /usr/include/c++/4.8/cstdio
+.......... /usr/include/stdio.h
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........... /usr/include/libio.h
+............ /usr/include/_G_config.h
+............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+............. /usr/include/wchar.h
+............ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+........... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+........... /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+......... /usr/include/c++/4.8/cerrno
+.......... /usr/include/errno.h
+........... /usr/include/x86_64-linux-gnu/bits/errno.h
+............ /usr/include/linux/errno.h
+............. /usr/include/x86_64-linux-gnu/asm/errno.h
+.............. /usr/include/asm-generic/errno.h
+............... /usr/include/asm-generic/errno-base.h
+........ /usr/include/c++/4.8/bits/functional_hash.h
+......... /usr/include/c++/4.8/bits/hash_bytes.h
+....... /usr/include/c++/4.8/bits/basic_string.tcc
+...... /usr/include/c++/4.8/bits/locale_classes.tcc
+.... /usr/include/c++/4.8/streambuf
+..... /usr/include/c++/4.8/bits/streambuf.tcc
+.... /usr/include/c++/4.8/bits/basic_ios.h
+..... /usr/include/c++/4.8/bits/locale_facets.h
+...... /usr/include/c++/4.8/cwctype
+....... /usr/include/wctype.h
+........ /usr/include/wchar.h
+...... /usr/include/c++/4.8/cctype
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h
+...... /usr/include/c++/4.8/bits/streambuf_iterator.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h
+...... /usr/include/c++/4.8/bits/locale_facets.tcc
+..... /usr/include/c++/4.8/bits/basic_ios.tcc
+... /usr/include/c++/4.8/ostream
+.... /usr/include/c++/4.8/bits/ostream.tcc
+... /usr/include/c++/4.8/bits/istream.tcc
+.. /usr/include/c++/4.8/bits/sstream.tcc
+. /usr/include/c++/4.8/vector
+.. /usr/include/c++/4.8/bits/stl_construct.h
+... /usr/include/c++/4.8/ext/alloc_traits.h
+.... /usr/include/c++/4.8/bits/alloc_traits.h
+..... /usr/include/c++/4.8/bits/ptr_traits.h
+.. /usr/include/c++/4.8/bits/stl_uninitialized.h
+.. /usr/include/c++/4.8/bits/stl_vector.h
+.. /usr/include/c++/4.8/bits/stl_bvector.h
+.. /usr/include/c++/4.8/bits/vector.tcc
+. Core/Source/odgl_GeometricObject.h
+.. Core/Source/odgl_RenderObject.h
+... Dependencies/glm/glm/glm.hpp
+.... Dependencies/glm/glm/detail/_fixes.hpp
+..... /usr/include/c++/4.8/cmath
+...... /usr/include/math.h
+....... /usr/include/x86_64-linux-gnu/bits/huge_val.h
+....... /usr/include/x86_64-linux-gnu/bits/huge_valf.h
+....... /usr/include/x86_64-linux-gnu/bits/huge_vall.h
+....... /usr/include/x86_64-linux-gnu/bits/inf.h
+....... /usr/include/x86_64-linux-gnu/bits/nan.h
+....... /usr/include/x86_64-linux-gnu/bits/mathdef.h
+....... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+....... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+....... /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+. Core/Source/odgl_ShaderManager.h
+.... Dependencies/glm/glm/detail/setup.hpp
+..... /usr/include/c++/4.8/cassert
+...... /usr/include/assert.h
+..... /usr/include/c++/4.8/cstddef
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/../simd/platform.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/xmmintrin.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mmintrin.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/mm_malloc.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/emmintrin.h
+.. Dependencies/include/GLEW/glew.h
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.... /usr/include/c++/4.8/cmath
+... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdint.h
+.... /usr/include/stdint.h
+.... /usr/include/c++/4.8/climits
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+...... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/limits.h
+........ /usr/include/limits.h
+......... /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+.......... /usr/include/x86_64-linux-gnu/bits/local_lim.h
+........... /usr/include/linux/limits.h
+......... /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
+......... /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
+.......... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+.... /usr/include/c++/4.8/cfloat
+..... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/float.h
+.... /usr/include/c++/4.8/limits
+..... /usr/include/features.h
+...... /usr/include/x86_64-linux-gnu/sys/cdefs.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+...... /usr/include/x86_64-linux-gnu/gnu/stubs.h
+....... /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+..... /usr/include/x86_64-linux-gnu/bits/wchar.h
+..... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+.... /usr/include/c++/4.8/cassert
+..... /usr/include/assert.h
+.... Dependencies/glm/glm/fwd.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_int.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_float.hpp
+...... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec.hpp
+...... Dependencies/glm/glm/detail/qualifier.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+...... Dependencies/glm/glm/detail/compute_vector_relational.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+....... /usr/include/c++/4.8/cstring
+........ /usr/include/string.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+..... Dependencies/glm/glm/detail/type_mat.hpp
+... /usr/include/GL/glu.h
+.... /usr/include/GL/gl.h
+.... Dependencies/glm/glm/vec2.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec2.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec2.inl
+.... Dependencies/glm/glm/vec3.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec3.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec3.inl
+.... Dependencies/glm/glm/vec4.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_vec4.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_vec4.inl
+....... Dependencies/glm/glm/detail/type_vec4_simd.inl
+.... Dependencies/glm/glm/mat2x2.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/type_mat2x2.hpp
+...... /usr/include/c++/4.8/cstddef
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+...... Dependencies/glm/glm/detail/type_mat2x2.inl
+....... Dependencies/glm/glm/detail/../matrix.hpp
+........ Dependencies/glm/glm/detail/../detail/setup.hpp
+........ Dependencies/glm/glm/detail/../mat2x3.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat2x3.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+........ Dependencies/glm/glm/detail/../mat2x4.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat2x4.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+........ Dependencies/glm/glm/detail/../mat3x2.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat3x2.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+........ Dependencies/glm/glm/detail/../mat3x3.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat3x3.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+........ Dependencies/glm/glm/detail/../mat3x4.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat3x4.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+........ Dependencies/glm/glm/detail/../mat4x2.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat4x2.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+........ Dependencies/glm/glm/detail/../mat4x3.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat4x3.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+........ Dependencies/glm/glm/detail/../mat4x4.hpp
+......... Dependencies/glm/glm/detail/../detail/setup.hpp
+......... Dependencies/glm/glm/detail/../detail/type_mat4x4.hpp
+.......... /usr/include/c++/4.8/cstddef
+........... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+.......... Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+........... Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+........ Dependencies/glm/glm/detail/../detail/func_matrix.inl
+......... Dependencies/glm/glm/detail/../detail/../geometric.hpp
+.......... Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+........... Dependencies/glm/glm/detail/../detail/../detail/../exponential.hpp
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+............ /usr/include/c++/4.8/cmath
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../vector_relational.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/setup.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+............... Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/_vectorize.hpp
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+............. /usr/include/c++/4.8/cmath
+............. /usr/include/c++/4.8/cassert
+.............. /usr/include/assert.h
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/exponential.h
+........... Dependencies/glm/glm/detail/../detail/../detail/../common.hpp
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+............. /usr/include/c++/4.8/cmath
+............ Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+............. Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+.............. Dependencies/glm/glm/detail/../detail/../detail/../detail/../simd/common.h
+.............. /usr/lib/gcc/x86_64-linux-gnu/4.8/include/immintrin.h
+........... Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+............ Dependencies/glm/glm/detail/../detail/../detail/../simd/geometric.h
+......... Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+.......... Dependencies/glm/glm/detail/../detail/../simd/matrix.h
+.......... /usr/include/c++/4.8/cstring
+.... Dependencies/glm/glm/trigonometric.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/func_trigonometric.inl
+...... /usr/include/c++/4.8/cmath
+...... Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+.... Dependencies/glm/glm/packing.hpp
+..... Dependencies/glm/glm/detail/func_packing.inl
+...... Dependencies/glm/glm/detail/type_half.hpp
+....... Dependencies/glm/glm/detail/setup.hpp
+....... Dependencies/glm/glm/detail/type_half.inl
+...... Dependencies/glm/glm/detail/func_packing_simd.inl
+.... Dependencies/glm/glm/integer.hpp
+..... Dependencies/glm/glm/detail/setup.hpp
+..... Dependencies/glm/glm/detail/func_integer.inl
+...... Dependencies/glm/glm/detail/../ext/vec1.hpp
+....... /usr/include/c++/4.8/cstddef
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+...... Dependencies/glm/glm/detail/func_integer_simd.inl
+....... Dependencies/glm/glm/detail/../simd/integer.h
+... Core/Source/odgl_View.h
+.... Dependencies/glm/glm/gtc/matrix_transform.hpp
+..... Dependencies/glm/glm/gtc/../gtc/constants.hpp
+...... Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+...... Dependencies/glm/glm/gtc/../gtc/constants.inl
+..... Dependencies/glm/glm/gtc/matrix_transform.inl
+. Core/Source/odgl_ShaderManager.h
+.. /usr/include/c++/4.8/string
+... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/cpu_defines.h
+... /usr/include/c++/4.8/bits/stringfwd.h
+.... /usr/include/c++/4.8/bits/memoryfwd.h
+... /usr/include/c++/4.8/bits/char_traits.h
+.... /usr/include/c++/4.8/bits/stl_algobase.h
+..... /usr/include/c++/4.8/bits/functexcept.h
+...... /usr/include/c++/4.8/bits/exception_defines.h
+..... /usr/include/c++/4.8/bits/cpp_type_traits.h
+..... /usr/include/c++/4.8/ext/type_traits.h
+..... /usr/include/c++/4.8/ext/numeric_traits.h
+..... /usr/include/c++/4.8/bits/stl_pair.h
+...... /usr/include/c++/4.8/bits/move.h
+....... /usr/include/c++/4.8/bits/concept_check.h
+....... /usr/include/c++/4.8/type_traits
+..... /usr/include/c++/4.8/bits/stl_iterator_base_types.h
+..... /usr/include/c++/4.8/bits/stl_iterator_base_funcs.h
+...... /usr/include/c++/4.8/debug/debug.h
+..... /usr/include/c++/4.8/bits/stl_iterator.h
+.... /usr/include/c++/4.8/bits/postypes.h
+..... /usr/include/c++/4.8/cwchar
+...... /usr/include/wchar.h
+....... /usr/include/stdio.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/xlocale.h
+.... /usr/include/c++/4.8/cwchar
+..... /usr/include/wchar.h
+.... /usr/include/c++/4.8/cstdint
+... /usr/include/c++/4.8/bits/allocator.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++allocator.h
+..... /usr/include/c++/4.8/ext/new_allocator.h
+...... /usr/include/c++/4.8/new
+....... /usr/include/c++/4.8/exception
+........ /usr/include/c++/4.8/bits/atomic_lockfree_defines.h
+........ /usr/include/c++/4.8/bits/exception_ptr.h
+........ /usr/include/c++/4.8/bits/nested_exception.h
+... /usr/include/c++/4.8/bits/localefwd.h
+.... /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++locale.h
+..... /usr/include/c++/4.8/clocale
+...... /usr/include/locale.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/x86_64-linux-gnu/bits/locale.h
+.... /usr/include/c++/4.8/iosfwd
+.... /usr/include/c++/4.8/cctype
+..... /usr/include/ctype.h
+...... /usr/include/x86_64-linux-gnu/bits/types.h
+....... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+....... /usr/include/x86_64-linux-gnu/bits/typesizes.h
+...... /usr/include/endian.h
+....... /usr/include/x86_64-linux-gnu/bits/endian.h
+....... /usr/include/x86_64-linux-gnu/bits/byteswap.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+... /usr/include/c++/4.8/bits/ostream_insert.h
+.... /usr/include/c++/4.8/bits/cxxabi_forced.h
+... /usr/include/c++/4.8/bits/stl_function.h
+.... /usr/include/c++/4.8/backward/binders.h
+... /usr/include/c++/4.8/bits/range_access.h
+... /usr/include/c++/4.8/bits/basic_string.h
+.... /usr/include/c++/4.8/ext/atomicity.h
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/gthr-default.h
+....... /usr/include/pthread.h
+........ /usr/include/sched.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/time.h
+......... /usr/include/x86_64-linux-gnu/bits/sched.h
+........ /usr/include/time.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/x86_64-linux-gnu/bits/time.h
+.......... /usr/include/x86_64-linux-gnu/bits/timex.h
+........ /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/setjmp.h
+......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+........ /usr/include/x86_64-linux-gnu/bits/wordsize.h
+..... /usr/include/x86_64-linux-gnu/c++/4.8/bits/atomic_word.h
+.... /usr/include/c++/4.8/initializer_list
+.... /usr/include/c++/4.8/ext/string_conversions.h
+..... /usr/include/c++/4.8/cstdlib
+...... /usr/include/stdlib.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/x86_64-linux-gnu/bits/waitflags.h
+....... /usr/include/x86_64-linux-gnu/bits/waitstatus.h
+....... /usr/include/x86_64-linux-gnu/sys/types.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+........ /usr/include/x86_64-linux-gnu/sys/select.h
+......... /usr/include/x86_64-linux-gnu/bits/select.h
+.......... /usr/include/x86_64-linux-gnu/bits/wordsize.h
+......... /usr/include/x86_64-linux-gnu/bits/sigset.h
+......... /usr/include/x86_64-linux-gnu/bits/time.h
+........ /usr/include/x86_64-linux-gnu/sys/sysmacros.h
+....... /usr/include/alloca.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+..... /usr/include/c++/4.8/cwchar
+...... /usr/include/wchar.h
+..... /usr/include/c++/4.8/cstdio
+...... /usr/include/stdio.h
+....... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+....... /usr/include/libio.h
+........ /usr/include/_G_config.h
+......... /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h
+......... /usr/include/wchar.h
+........ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+....... /usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+....... /usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+..... /usr/include/c++/4.8/cerrno
+...... /usr/include/errno.h
+....... /usr/include/x86_64-linux-gnu/bits/errno.h
+........ /usr/include/linux/errno.h
+......... /usr/include/x86_64-linux-gnu/asm/errno.h
+.......... /usr/include/asm-generic/errno.h
+........... /usr/include/asm-generic/errno-base.h
+.... /usr/include/c++/4.8/bits/functional_hash.h
+..... /usr/include/c++/4.8/bits/hash_bytes.h
+... /usr/include/c++/4.8/bits/basic_string.tcc
+. /usr/include/c++/4.8/sstream
+.. /usr/include/c++/4.8/istream
+... /usr/include/c++/4.8/ios
+.... /usr/include/c++/4.8/bits/ios_base.h
+..... /usr/include/c++/4.8/bits/locale_classes.h
+...... /usr/include/c++/4.8/bits/locale_classes.tcc
+.... /usr/include/c++/4.8/streambuf
+..... /usr/include/c++/4.8/bits/streambuf.tcc
+.... /usr/include/c++/4.8/bits/basic_ios.h
+..... /usr/include/c++/4.8/bits/locale_facets.h
+...... /usr/include/c++/4.8/cwctype
+....... /usr/include/wctype.h
+........ /usr/include/wchar.h
+...... /usr/include/c++/4.8/cctype
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h
+...... /usr/include/c++/4.8/bits/streambuf_iterator.h
+...... /usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h
+...... /usr/include/c++/4.8/bits/locale_facets.tcc
+..... /usr/include/c++/4.8/bits/basic_ios.tcc
+... /usr/include/c++/4.8/ostream
+.... /usr/include/c++/4.8/bits/ostream.tcc
+... /usr/include/c++/4.8/bits/istream.tcc
+.. /usr/include/c++/4.8/bits/sstream.tcc
+. /usr/include/c++/4.8/vector
+.. /usr/include/c++/4.8/bits/stl_construct.h
+... /usr/include/c++/4.8/ext/alloc_traits.h
+.... /usr/include/c++/4.8/bits/alloc_traits.h
+..... /usr/include/c++/4.8/bits/ptr_traits.h
+.. /usr/include/c++/4.8/bits/stl_uninitialized.h
+.. /usr/include/c++/4.8/bits/stl_vector.h
+.. /usr/include/c++/4.8/bits/stl_bvector.h
+.. /usr/include/c++/4.8/bits/vector.tcc
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cerrno
+/usr/include/c++/4.8/cfloat
+/usr/include/c++/4.8/climits
+/usr/include/c++/4.8/clocale
+/usr/include/c++/4.8/cstdio
+/usr/include/c++/4.8/cstdlib
+/usr/include/c++/4.8/cwctype
+/usr/include/errno.h
+/usr/include/limits.h
+/usr/include/linux/errno.h
+/usr/include/x86_64-linux-gnu/asm/errno.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/errno.h
+/usr/include/x86_64-linux-gnu/bits/huge_val.h
+/usr/include/x86_64-linux-gnu/bits/huge_valf.h
+/usr/include/x86_64-linux-gnu/bits/huge_vall.h
+/usr/include/x86_64-linux-gnu/bits/inf.h
+/usr/include/x86_64-linux-gnu/bits/local_lim.h
+/usr/include/x86_64-linux-gnu/bits/locale.h
+/usr/include/x86_64-linux-gnu/bits/mathdef.h
+/usr/include/x86_64-linux-gnu/bits/nan.h
+/usr/include/x86_64-linux-gnu/bits/sched.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+Dependencies/glm/glm/detail/_fixes.hpp
+Dependencies/glm/glm/detail/func_integer.inl
+Dependencies/glm/glm/detail/func_integer_simd.inl
+Dependencies/glm/glm/detail/func_packing.inl
+Dependencies/glm/glm/detail/func_packing_simd.inl
+Dependencies/glm/glm/detail/setup.hpp
+Dependencies/glm/glm/detail/type_half.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_common.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_common_simd.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_exponential.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/func_exponential_simd.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/func_geometric.inl
+Dependencies/glm/glm/gtc/../detail/../detail/../detail/func_geometric_simd.inl
+Dependencies/glm/glm/gtc/../detail/../detail/func_matrix.inl
+Dependencies/glm/glm/gtc/../detail/../detail/func_matrix_simd.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x2.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x3.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat2x4.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x2.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x3.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat3x4.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat4x2.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_mat4x3.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_vec2.inl
+Dependencies/glm/glm/gtc/../detail/../detail/type_vec3.inl
+Dependencies/glm/glm/gtc/../detail/func_trigonometric.inl
+Dependencies/glm/glm/gtc/../detail/func_trigonometric_simd.inl
+Dependencies/glm/glm/gtc/../detail/type_mat4x4.inl
+Dependencies/glm/glm/gtc/../detail/type_mat4x4_simd.inl
+Dependencies/glm/glm/gtc/../detail/type_vec4.inl
+Dependencies/glm/glm/gtc/../detail/type_vec4_simd.inl
+Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+Dependencies/glm/glm/gtc/../gtc/constants.inl
+Dependencies/glm/glm/gtc/matrix_transform.inl
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cctype
+/usr/include/c++/4.8/cerrno
+/usr/include/c++/4.8/cfloat
+/usr/include/c++/4.8/climits
+/usr/include/c++/4.8/clocale
+/usr/include/c++/4.8/cstdio
+/usr/include/c++/4.8/cstdlib
+/usr/include/errno.h
+/usr/include/limits.h
+/usr/include/linux/errno.h
+/usr/include/x86_64-linux-gnu/asm/errno.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/errno.h
+/usr/include/x86_64-linux-gnu/bits/huge_val.h
+/usr/include/x86_64-linux-gnu/bits/huge_valf.h
+/usr/include/x86_64-linux-gnu/bits/huge_vall.h
+/usr/include/x86_64-linux-gnu/bits/inf.h
+/usr/include/x86_64-linux-gnu/bits/local_lim.h
+/usr/include/x86_64-linux-gnu/bits/locale.h
+/usr/include/x86_64-linux-gnu/bits/mathdef.h
+/usr/include/x86_64-linux-gnu/bits/nan.h
+/usr/include/x86_64-linux-gnu/bits/sched.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+Dependencies/glm/glm/detail/../detail/func_matrix.inl
+Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+Dependencies/glm/glm/detail/func_integer.inl
+Dependencies/glm/glm/detail/func_integer_simd.inl
+Dependencies/glm/glm/detail/func_packing.inl
+Dependencies/glm/glm/detail/func_packing_simd.inl
+Dependencies/glm/glm/detail/func_trigonometric.inl
+Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+Dependencies/glm/glm/detail/type_half.inl
+Dependencies/glm/glm/detail/type_mat2x2.inl
+Dependencies/glm/glm/detail/type_vec2.inl
+Dependencies/glm/glm/detail/type_vec3.inl
+Dependencies/glm/glm/detail/type_vec4.inl
+Dependencies/glm/glm/detail/type_vec4_simd.inl
+Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+Dependencies/glm/glm/gtc/../gtc/constants.inl
+Dependencies/glm/glm/gtc/matrix_transform.inl
+Install file: "Dependencies/include/GLFW/glfw3native.h" as "build/include/GLFW/glfw3native.h"
+Install file: "Dependencies/lib/cmake/glfw3/glfw3Config.cmake" as "build/lib/cmake/glfw3/glfw3Config.cmake"
+Install file: "Dependencies/lib/cmake/glfw3/glfw3ConfigVersion.cmake" as "build/lib/cmake/glfw3/glfw3ConfigVersion.cmake"
+Install file: "Dependencies/lib/cmake/glfw3/glfw3Targets-noconfig.cmake" as "build/lib/cmake/glfw3/glfw3Targets-noconfig.cmake"
+Install file: "Dependencies/lib/cmake/glfw3/glfw3Targets.cmake" as "build/lib/cmake/glfw3/glfw3Targets.cmake"
+Install file: "Dependencies/lib/libglfw.so" as "build/lib/libglfw.so"
+Install file: "Dependencies/lib/libglfw.so.3" as "build/lib/libglfw.so.3"
+Install file: "Dependencies/lib/libglfw.so.3.3" as "build/lib/libglfw.so.3.3"
+Install file: "Dependencies/lib/libglfw3.a" as "build/lib/libglfw3.a"
+Install file: "Dependencies/lib/pkgconfig/glfw3.pc" as "build/lib/pkgconfig/glfw3.pc"
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cctype
+/usr/include/c++/4.8/cerrno
+/usr/include/c++/4.8/cfloat
+/usr/include/c++/4.8/climits
+/usr/include/c++/4.8/clocale
+/usr/include/c++/4.8/cstdio
+/usr/include/c++/4.8/cstdlib
+/usr/include/errno.h
+/usr/include/limits.h
+/usr/include/linux/errno.h
+/usr/include/x86_64-linux-gnu/asm/errno.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/errno.h
+/usr/include/x86_64-linux-gnu/bits/huge_val.h
+/usr/include/x86_64-linux-gnu/bits/huge_valf.h
+/usr/include/x86_64-linux-gnu/bits/huge_vall.h
+/usr/include/x86_64-linux-gnu/bits/inf.h
+/usr/include/x86_64-linux-gnu/bits/local_lim.h
+/usr/include/x86_64-linux-gnu/bits/locale.h
+/usr/include/x86_64-linux-gnu/bits/mathdef.h
+/usr/include/x86_64-linux-gnu/bits/nan.h
+/usr/include/x86_64-linux-gnu/bits/sched.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+Dependencies/glm/glm/detail/../detail/func_matrix.inl
+Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+Dependencies/glm/glm/detail/func_integer.inl
+Dependencies/glm/glm/detail/func_integer_simd.inl
+Dependencies/glm/glm/detail/func_packing.inl
+Dependencies/glm/glm/detail/func_packing_simd.inl
+Dependencies/glm/glm/detail/func_trigonometric.inl
+Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+Dependencies/glm/glm/detail/type_half.inl
+Dependencies/glm/glm/detail/type_mat2x2.inl
+Dependencies/glm/glm/detail/type_vec2.inl
+Dependencies/glm/glm/detail/type_vec3.inl
+Dependencies/glm/glm/detail/type_vec4.inl
+Dependencies/glm/glm/detail/type_vec4_simd.inl
+Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+Dependencies/glm/glm/gtc/../gtc/constants.inl
+Dependencies/glm/glm/gtc/matrix_transform.inl
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cctype
+/usr/include/c++/4.8/cerrno
+/usr/include/c++/4.8/cfloat
+/usr/include/c++/4.8/climits
+/usr/include/c++/4.8/clocale
+/usr/include/c++/4.8/cstdio
+/usr/include/c++/4.8/cstdlib
+/usr/include/errno.h
+/usr/include/limits.h
+/usr/include/linux/errno.h
+/usr/include/x86_64-linux-gnu/asm/errno.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/errno.h
+/usr/include/x86_64-linux-gnu/bits/huge_val.h
+/usr/include/x86_64-linux-gnu/bits/huge_valf.h
+/usr/include/x86_64-linux-gnu/bits/huge_vall.h
+/usr/include/x86_64-linux-gnu/bits/inf.h
+/usr/include/x86_64-linux-gnu/bits/local_lim.h
+/usr/include/x86_64-linux-gnu/bits/locale.h
+/usr/include/x86_64-linux-gnu/bits/mathdef.h
+/usr/include/x86_64-linux-gnu/bits/nan.h
+/usr/include/x86_64-linux-gnu/bits/sched.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+Dependencies/glm/glm/detail/../detail/func_matrix.inl
+Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+Dependencies/glm/glm/detail/func_integer.inl
+Dependencies/glm/glm/detail/func_integer_simd.inl
+Dependencies/glm/glm/detail/func_packing.inl
+Dependencies/glm/glm/detail/func_packing_simd.inl
+Dependencies/glm/glm/detail/func_trigonometric.inl
+Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+Dependencies/glm/glm/detail/type_half.inl
+Dependencies/glm/glm/detail/type_mat2x2.inl
+Dependencies/glm/glm/detail/type_vec2.inl
+Dependencies/glm/glm/detail/type_vec3.inl
+Dependencies/glm/glm/detail/type_vec4.inl
+Dependencies/glm/glm/detail/type_vec4_simd.inl
+Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+Dependencies/glm/glm/gtc/../gtc/constants.inl
+Dependencies/glm/glm/gtc/matrix_transform.inl
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cerrno
+/usr/include/c++/4.8/clocale
+/usr/include/c++/4.8/cstdio
+/usr/include/c++/4.8/cstdlib
+/usr/include/c++/4.8/cwctype
+/usr/include/errno.h
+/usr/include/linux/errno.h
+/usr/include/x86_64-linux-gnu/asm/errno.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/errno.h
+/usr/include/x86_64-linux-gnu/bits/locale.h
+/usr/include/x86_64-linux-gnu/bits/sched.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+Multiple include guards may be useful for:
+/usr/include/X11/keysym.h
+/usr/include/X11/keysymdef.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/time.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+Multiple include guards may be useful for:
+/usr/include/c++/4.8/cerrno
+/usr/include/c++/4.8/cfloat
+/usr/include/c++/4.8/climits
+/usr/include/c++/4.8/clocale
+/usr/include/c++/4.8/cstdio
+/usr/include/c++/4.8/cstdlib
+/usr/include/c++/4.8/cwctype
+/usr/include/errno.h
+/usr/include/limits.h
+/usr/include/linux/errno.h
+/usr/include/x86_64-linux-gnu/asm/errno.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/errno.h
+/usr/include/x86_64-linux-gnu/bits/huge_val.h
+/usr/include/x86_64-linux-gnu/bits/huge_valf.h
+/usr/include/x86_64-linux-gnu/bits/huge_vall.h
+/usr/include/x86_64-linux-gnu/bits/inf.h
+/usr/include/x86_64-linux-gnu/bits/local_lim.h
+/usr/include/x86_64-linux-gnu/bits/locale.h
+/usr/include/x86_64-linux-gnu/bits/mathdef.h
+/usr/include/x86_64-linux-gnu/bits/nan.h
+/usr/include/x86_64-linux-gnu/bits/sched.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/bits/waitflags.h
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_base.h
+/usr/include/x86_64-linux-gnu/c++/4.8/bits/ctype_inline.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed/syslimits.h
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/../detail/func_vector_relational_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/_fixes.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_common_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/func_exponential_simd.inl
+Dependencies/glm/glm/detail/../detail/../detail/../detail/setup.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/../detail/type_vec1.hpp
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric.inl
+Dependencies/glm/glm/detail/../detail/../detail/func_geometric_simd.inl
+Dependencies/glm/glm/detail/../detail/func_matrix.inl
+Dependencies/glm/glm/detail/../detail/func_matrix_simd.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat2x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat3x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x2.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x3.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4.inl
+Dependencies/glm/glm/detail/../detail/type_mat4x4_simd.inl
+Dependencies/glm/glm/detail/../ext/../detail/type_vec1.inl
+Dependencies/glm/glm/detail/func_integer.inl
+Dependencies/glm/glm/detail/func_integer_simd.inl
+Dependencies/glm/glm/detail/func_packing.inl
+Dependencies/glm/glm/detail/func_packing_simd.inl
+Dependencies/glm/glm/detail/func_trigonometric.inl
+Dependencies/glm/glm/detail/func_trigonometric_simd.inl
+Dependencies/glm/glm/detail/type_half.inl
+Dependencies/glm/glm/detail/type_mat2x2.inl
+Dependencies/glm/glm/detail/type_vec2.inl
+Dependencies/glm/glm/detail/type_vec3.inl
+Dependencies/glm/glm/detail/type_vec4.inl
+Dependencies/glm/glm/detail/type_vec4_simd.inl
+Dependencies/glm/glm/gtc/../gtc/../detail/setup.hpp
+Dependencies/glm/glm/gtc/../gtc/constants.inl
+Dependencies/glm/glm/gtc/matrix_transform.inl
+Install file: "Core/build/libOpenDoorGL.so" as "build/lib/libOpenDoorGL.so"
+Multiple include guards may be useful for:
+/usr/include/X11/keysym.h
+/usr/include/X11/keysymdef.h
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h
+/usr/include/x86_64-linux-gnu/bits/byteswap.h
+/usr/include/x86_64-linux-gnu/bits/endian.h
+/usr/include/x86_64-linux-gnu/bits/select.h
+/usr/include/x86_64-linux-gnu/bits/sigset.h
+/usr/include/x86_64-linux-gnu/bits/time.h
+/usr/include/x86_64-linux-gnu/bits/typesizes.h
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h
+/usr/include/x86_64-linux-gnu/gnu/stubs.h
+ar rc Dependencies/glew/build/libGLEW.a Dependencies/glew/build/glew.o
+ranlib Dependencies/glew/build/libGLEW.a
+Install file: "Dependencies/glew/build/libGLEW.a" as "Dependencies/lib/libGLEW.a"
+gcc -o Dependencies/glew/build/libGLEW.so -shared Dependencies/glew/build/glew.os
+Install file: "Dependencies/glew/build/libGLEW.so" as "Dependencies/lib/libGLEW.so"
+g++ -o AppFrameworks/appName AppFrameworks/GLFW/odgl_GLFW3.o -L/usr/lib/gnome-settings-daemon-3.0 -LCore/build -LCore/Source -LDependencies/lib -lOpenDoorGL -lGLEW -lglfw3 -lGL -lX11 -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -lpthread -ldl
+scons: done building targets.
+[92mBuild succeeded.[0m

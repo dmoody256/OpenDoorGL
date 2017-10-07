@@ -1,5 +1,5 @@
 
-#include <GL/glew.h>
+#include <GLEW/glew.h>
 
 
 #include <vector>
@@ -23,7 +23,7 @@ namespace OpenDoorGL{
         }
     }
     void Group::InsertObject(RenderObject* object){
-
+        objects.push_back(object);
     }
 
 }
