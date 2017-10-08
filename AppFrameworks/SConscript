@@ -28,7 +28,7 @@ env = Environment()
 env.Append(CPPPATH=[
     mainenv.baseProjectDir + "/AppFrameworks",
     mainenv.baseProjectDir + "/Core/Source",
-    mainenv.baseProjectDir + "/Dependencies/include",
+    mainenv.baseProjectDir + "/build/include",
     mainenv.baseProjectDir + "/Dependencies/glm",
 ])
 

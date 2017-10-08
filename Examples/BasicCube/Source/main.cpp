@@ -1,4 +1,5 @@
 #include "odgl_GLFW3.h"
+#include "odgl_Cube.h"
 
 
 int main( void )

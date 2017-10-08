@@ -46,31 +46,29 @@ num_cpus = get_cpu_nums()
 print ("Building with %d parallel jobs" % num_cpus)
 mainenv.SetOption( "num_jobs", num_cpus )
 
-dependsInstall = SConscript('Dependencies/SConscript',
-           duplicate = 0,
-           exports = 'mainenv')
+###
+# build subProjects
+dependLibs= SConscript('Dependencies/SConscript',  duplicate = 0, exports = 'mainenv')
+coreLib =   SConscript('Core/SConscript',          duplicate = 0, exports = 'mainenv')
+framework = SConscript('AppFrameworks/SConscript', duplicate = 0, exports = 'mainenv')
 
-for header in dependsInstall['headers']['GLEW']:
+
+
+# setup installs
+for header in dependLibs['headers']['GLEW']:
     mainenv.Install("build/include/GLEW", header)
-for header in dependsInstall['headers']['GLFW']:
+for header in dependLibs['headers']['GLFW']:
     mainenv.Install("build/include/GLFW", header)
 
-for lib    in dependsInstall['libs']:
+for lib in dependLibs['libs']:
+    mainenv.Depends(coreLib, lib )
     mainenv.Install("build/lib", lib)
-
-coreLib = SConscript('Core/SConscript',
-           duplicate = 0,
-           exports = 'mainenv')
 
 for buildFile in coreLib:
     if(str(buildFile).endswith(".h")):
         mainenv.Install("build/include", buildFile)
     else:
         mainenv.Install("build/lib", buildFile)
-
-framework = SConscript('AppFrameworks/SConscript',
-           duplicate = 0,
-           exports = 'mainenv')
 
 mainenv.Depends(framework,coreLib )
 

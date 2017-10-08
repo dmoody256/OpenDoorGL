@@ -103,7 +103,7 @@ def ConfigPlatformEnv(env):
             debugFlag = "-g"
 
         env.Append(CPPPATH=[
-            mainenv.baseProjectDir + "/Dependencies/include",
+            mainenv.baseProjectDir + "/build/include",
             mainenv.baseProjectDir + "/Dependencies/glm",
         ])
 
