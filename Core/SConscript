@@ -46,6 +46,9 @@ def CreateNewEnv():
         "Source/odgl_RenderObject.h",
         "Source/odgl_View.h",
         "Source/odgl_ShaderManager.h",
+        "Source/odgl_Image.h",
+        "Source/odgl_GeometricObject.h",
+        "Source/odgl_Group.h",
     ]
 
     libType = "ReleaseBuild"
@@ -84,7 +87,12 @@ def CreateNewEnv():
     env = SetupInstalls(env)
     env = ConfigPlatformEnv(env)
     env = ConfigPlatformIDE(env, sourceFiles, headerFiles, resourceFiles, prog)
-    return prog
+    targets = [prog]
+    for file in headerFiles:
+        targets.append(File(file))
+
+    
+    return targets
 
 def ConfigPlatformEnv(env):
 
@@ -100,7 +108,6 @@ def ConfigPlatformEnv(env):
         ])
 
         env.Append(CCFLAGS=[
-            "-H",
             debugFlag,
             '-fPIC',
             "-rdynamic",
@@ -409,5 +416,5 @@ def Indent(elem, level = 0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
-lib = CreateNewEnv()
-Return('lib')
+build = CreateNewEnv()
+Return('build')

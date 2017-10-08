@@ -1,0 +1,23 @@
+
+env = Environment()
+
+devPath = "../../build"
+
+env.Append(CPPPATH=[
+     devPath + "/include",
+])
+env.Append(CPPDEFINES=[
+    "GLM_FORCE_RADIANS",
+])
+env.Append(LIBPATH=[
+    devPath + "/lib",
+])
+env.Append(LIBS=[
+    "OpenDoorGL",
+    "OpenDoorGL-GLFW3",
+])
+
+env.Program("build/BasicCube", "Source/main.cpp")
+
+env.Install( "build", devPath + "/lib/libOpenDoorGL.so")
+env.Install( "build", devPath + "/lib/libOpenDoorGL-GLFW3.so")

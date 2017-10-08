@@ -34,7 +34,6 @@ env.Append(CPPPATH=[
 
 env.Append(CCFLAGS=[
     debugFlag,
-    "-H",
 ])
 
 env.Append(CXXFLAGS= [
@@ -76,4 +75,12 @@ if(GetOption('glfw3') == True):
     ])
 sourceFiles =  [ "GLFW/odgl_GLFW3.cpp" ]
 
-prog = env.Program("appName", sourceFiles)
+prog = env.SharedLibrary("OpenDoorGL-GLFW3", sourceFiles)
+
+targets = [
+    prog,
+    mainenv.baseProjectDir + "/AppFrameworks/odgl_WindowInterface.h",
+    mainenv.baseProjectDir + "/AppFrameworks/GLFW/odgl_GLFW3.h",
+]
+
+Return('targets')

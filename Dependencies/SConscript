@@ -123,7 +123,6 @@ else:
 env.Append(CCFLAGS = [
     '-DGLEW_NO_GLU',
     debugFlag,
-    "-H",
 ])
 
 
@@ -206,19 +205,24 @@ envStatic.Append(CPPDEFINES = [
 ])
 staticLib = envStatic.StaticLibrary("glew/build/" + env['GLEW_LIB_NAME'], sourceFiles)
 
+targets = dict()
 
-env.Install("lib", staticLib)
-env.Install("lib", sharedLib)
-env.Install("include/GLEW", publicHeaders)
-targets = []
+targets['headers'] = dict()
+targets['headers']['GLFW'] = []
+targets['headers']['GLEW'] = []
 
-for root, dirs, files in os.walk("./lib", topdown=False):
-    for name in files:
-        targets.append( File(os.path.join(root, name)) )
+for header in publicHeaders:
+    targets['headers']['GLEW'].append(File(header))
 
-for root, dirs, files in os.walk("./include", topdown=False):
-    for name in files:
-        targets.append( File(os.path.join(root, name)) )
+GLFWheaders = glob.glob("include/GLFW/*")
+for file in GLFWheaders:
+    targets['headers']['GLFW'].append(File(file))
+
+targets['libs'] = [sharedLib]
+GLFWlibs = glob.glob("lib/libglfw*")
+
+for file in GLFWlibs:
+    targets['libs'].append(File(file))
 
 Return('targets')
 """

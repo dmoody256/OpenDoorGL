@@ -50,18 +50,37 @@ dependsInstall = SConscript('Dependencies/SConscript',
            duplicate = 0,
            exports = 'mainenv')
 
+for header in dependsInstall['headers']['GLEW']:
+    mainenv.Install("build/include/GLEW", header)
+for header in dependsInstall['headers']['GLFW']:
+    mainenv.Install("build/include/GLFW", header)
+
+for lib    in dependsInstall['libs']:
+    mainenv.Install("build/lib", lib)
+
 coreLib = SConscript('Core/SConscript',
            duplicate = 0,
            exports = 'mainenv')
 
-SConscript('AppFrameworks/SConscript',
+for buildFile in coreLib:
+    if(str(buildFile).endswith(".h")):
+        mainenv.Install("build/include", buildFile)
+    else:
+        mainenv.Install("build/lib", buildFile)
+
+framework = SConscript('AppFrameworks/SConscript',
            duplicate = 0,
            exports = 'mainenv')
 
-mainenv.Install("build/lib", coreLib)
+mainenv.Depends(framework,coreLib )
 
-for node in dependsInstall:
-    installPath = os.path.dirname(str(node).replace("Dependencies", "build"))
-    mainenv.Install(installPath, node)
+for buildFile in framework:
+    if(str(buildFile).endswith(".h")):
+        mainenv.Install("build/include", buildFile)
+    else:
+        mainenv.Install("build/lib", buildFile)
+
+
+
 
  
