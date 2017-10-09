@@ -12,11 +12,12 @@ int main( void )
     cube.setColor(1.0f, 0.0f, 0.0f);
     
     mainWindow->InsertObject(&cube);
-    while(mainWindow->AppRunning()){
+    while( mainWindow->AppRunning() ){
         mainWindow->RenderFrame();
     }
 
     delete mainWindow;
+    
     return 0;
     
 }

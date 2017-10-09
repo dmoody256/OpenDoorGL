@@ -14,7 +14,7 @@ namespace OpenDoorGL {
     
     class GLFW3Window : public WindowInterface {
     public:
-
+        ~GLFW3Window();
         int InitWindow(const char* window_name);
         void RenderFrame();
         bool AppRunning();

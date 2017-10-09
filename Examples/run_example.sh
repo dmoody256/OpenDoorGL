@@ -6,5 +6,7 @@ if [ -z "$1" ]
   then
     echo "No Args"
   else
-    ./${1}
+    ./${1} & 
 fi
+
+exit

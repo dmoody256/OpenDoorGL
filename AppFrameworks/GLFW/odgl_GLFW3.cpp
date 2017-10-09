@@ -57,6 +57,15 @@ namespace OpenDoorGL{
         topGroup = new Group();
         return 0;
     }
+    GLFW3Window::~GLFW3Window(){
+       
+        delete topGroup;
+        delete _currentView;
+        // Close OpenGL window and terminate GLFW
+        glfwTerminate();    
+    }
+
+
     void GLFW3Window::InsertObject(RenderObject* object){
         topGroup->InsertObject(object);
     }
@@ -69,6 +78,9 @@ namespace OpenDoorGL{
     }
 
     bool GLFW3Window::AppRunning(){
+        if(glfwGetKey(window, GLFW_KEY_ESCAPE ) == GLFW_PRESS || glfwWindowShouldClose(window)){
+            _appRunning = false;
+        }
         return _appRunning;
     }
 

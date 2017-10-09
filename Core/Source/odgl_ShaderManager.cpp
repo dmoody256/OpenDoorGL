@@ -73,7 +73,7 @@ namespace OpenDoorGL{
         GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
         // Compile Vertex Shader
-        printf("Compiling shader : %s\n", vertShader);
+        //printf("Compiling shader : %s\n", vertShader);
         glShaderSource(VertexShaderID, 1, &vertShader , NULL);
         glCompileShader(VertexShaderID);
 
@@ -89,7 +89,7 @@ namespace OpenDoorGL{
 
 
         // Compile Fragment Shader
-        printf("Compiling shader : %s\n", fragShader);
+        //printf("Compiling shader : %s\n", fragShader);
         glShaderSource(FragmentShaderID, 1, &fragShader , NULL);
         glCompileShader(FragmentShaderID);
 
@@ -105,7 +105,7 @@ namespace OpenDoorGL{
 
 
         // Link the program
-        printf("Linking program\n");
+        //printf("Linking program\n");
         GLuint ProgramID = glCreateProgram();
         glAttachShader(ProgramID, VertexShaderID);
         glAttachShader(ProgramID, FragmentShaderID);
