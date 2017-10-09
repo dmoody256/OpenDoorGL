@@ -1,0 +1,23 @@
+
+Import('mainenv')
+env = Environment()
+
+env.Append(CCFLAGS=[
+    "-std=c++11",
+])
+env.Append(CPPPATH=[
+     mainenv.baseProjectDir + "/build/include",
+])
+env.Append(CPPDEFINES=[
+    "GLM_FORCE_RADIANS",
+])
+env.Append(LIBPATH=[
+    mainenv.baseProjectDir + "/build/lib",
+])
+env.Append(LIBS=[
+    "OpenDoorGL",
+    "OpenDoorGL-GLFW3",
+])
+
+executable = env.Program("build/RedCubeTest", "main.cpp")
+Return('executable')

@@ -18,6 +18,7 @@ namespace OpenDoorGL {
         int InitWindow(const char* window_name);
         void RenderFrame();
         bool AppRunning();
+        void SetView(View* view);
         void InsertObject(RenderObject* object);
     protected:
         GLFWwindow* window;

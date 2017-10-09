@@ -4,8 +4,6 @@
 #include <sstream>
 #include <vector>
 
-
-
 namespace OpenDoorGL{
 
     std::string ShaderManager::colorVertShader;

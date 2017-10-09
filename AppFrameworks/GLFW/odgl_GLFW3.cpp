@@ -65,7 +65,9 @@ namespace OpenDoorGL{
         glfwTerminate();    
     }
 
-
+    void GLFW3Window::SetView(View* view){
+        _currentView = view;
+    }
     void GLFW3Window::InsertObject(RenderObject* object){
         topGroup->InsertObject(object);
     }

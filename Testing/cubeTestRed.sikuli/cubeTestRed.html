@@ -67,21 +67,26 @@
    </head>
 <body>
 <div class="info">
-<h2>cubeTest.sikuli</h2> <a href="cubeTest.zip">(Download this script)</a>
+<h2>cubeTestRed.sikuli</h2> <a href="cubeTestRed.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
 <span class="kw">import</span> subprocess
 <span class="kw">import</span> os
 
 os.chdir(<span class="str">"/Data/ODGL/build/bin"</span>)
-output = subprocess.check_output([<span class="str">"./run_example.sh"</span>, <span class="str">"BasicCube"</span>])
+output = subprocess.check_output([<span class="str">"./run_test.sh"</span>, <span class="str">"RedCubeTest"</span>])
 res = exists(<img src="1507505686231.png" />)
 <span class="skw">type</span>(Key.ESC)
-<span class="kw">print</span> res.getScore()
-<span class="kw">if</span>(res.getScore() &lt; <span class="dig">.99</span>):
+<span class="kw">if</span>(res == None):
     <span class="kw">print</span>(<span class="str">"Failure"</span>)
+    exit(<span class="dig">1</span>)
+<span class="kw">print</span> res.getScore()
+<span class="kw">if</span>(res.getScore() &lt; <span class="dig">.999</span>):
+    <span class="kw">print</span>(<span class="str">"Failure"</span>)
+    exit(<span class="dig">2</span>)
 <span class="kw">else</span>:
     <span class="kw">print</span>(<span class="str">"Success"</span>)
+    exit(<span class="dig">0</span>)
 </pre>
 </body>
 </html>
