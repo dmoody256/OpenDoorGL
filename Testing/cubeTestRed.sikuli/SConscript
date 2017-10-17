@@ -17,6 +17,8 @@ env.Append(LIBPATH=[
 env.Append(LIBS=[
     "OpenDoorGL",
     "OpenDoorGL-GLFW3",
+    "glfw",
+    "GLEW",
 ])
 
 executable = env.Program("build/RedCubeTest", "main.cpp")

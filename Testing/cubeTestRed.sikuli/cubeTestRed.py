@@ -1,10 +1,13 @@
 import subprocess
 import os
 
-os.chdir("/Data/ODGL/build/bin")
-output = subprocess.check_output(["./run_test.sh", "RedCubeTest"])
-res = exists("1507505686231.png")
+type ("T", KeyModifier.SHIFT + KeyModifier.KEY_CTRL )
+type("cd /tank2/OpenDoorGL/build/bin\n")
+type("vglrun ./run_test.sh RedCubeTest\n")
+res = exists("1507766021321.png")
 type(Key.ESC)
+click("1507766167995.png")
+type ("W", KeyModifier.SHIFT + KeyModifier.KEY_CTRL )
 if(res == None):
     print("Failure") 
     exit(1)
