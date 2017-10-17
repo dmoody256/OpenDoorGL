@@ -53,7 +53,7 @@ env.Append(LIBPATH=[
 env.Append(LIBS=[
     "OpenDoorGL",
     "GLEW",
-    "glfw3",
+    "glfw",
     "GL",
     "X11",
     "Xi",
