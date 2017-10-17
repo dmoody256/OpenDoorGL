@@ -1,0 +1,4 @@
+visual_test:
+    script:
+    - scons
+    - /tank2/SikuliX/runsikulix -r Testing/cubeTestRed.sikuli/
