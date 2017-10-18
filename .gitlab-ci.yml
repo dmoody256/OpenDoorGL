@@ -2,4 +2,5 @@ visual_test:
     script:
     - export DISPLAY=:1
     - scons
-    - /tank2/SikuliX/runsikulix -r Testing/cubeTestRed.sikuli/
+    - cd Testing
+    - python run_tests.py
