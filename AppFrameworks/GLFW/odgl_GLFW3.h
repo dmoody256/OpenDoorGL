@@ -19,8 +19,10 @@ namespace OpenDoorGL {
         void RenderFrame();
         bool AppRunning();
         void SetView(View* view);
+        View* GetView();
         void InsertObject(RenderObject* object);
     protected:
+        void ComputeMatricesFromInputs();
         GLFWwindow* window;
     };
     

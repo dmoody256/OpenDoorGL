@@ -70,14 +70,8 @@
 <h2>cubeTestRed.sikuli</h2> <a href="cubeTestRed.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
-<span class="kw">import</span> subprocess
-<span class="kw">import</span> os
-
-os.chdir(<span class="str">"/tank2/OpenDoorGL/build/bin"</span>)
-output = subprocess.check_output([<span class="str">"vglrun"</span>, <span class="str">"./run_test.sh"</span>, <span class="str">"RedCubeTest"</span>])
-res = <span class="skw">find</span>(Pattern(<img src="1507613563494.png" />).similar(<span class="dig">0.92</span>))
-
-
+res = exists(<img src="1508297323827.png" />)
+<span class="skw">click</span>(<img src="1508297323827.png" />)
 <span class="skw">type</span>(Key.ESC)
 <span class="kw">if</span>(res == None):
     <span class="kw">print</span>(<span class="str">"Failure"</span>)

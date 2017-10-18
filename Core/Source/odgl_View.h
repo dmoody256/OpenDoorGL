@@ -13,7 +13,17 @@ namespace OpenDoorGL{
 
         glm::mat4 proj;
         glm::mat4 view;
-        
+        // Initial position : on +Z
+        glm::vec3 position; 
+        // Initial horizontal angle : toward -Z
+        float horizontalAngle; 
+        // Initial vertical angle : none
+        float verticalAngle; 
+        // Initial Field of View
+        float initialFoV;
+
+        float speed;
+        float mouseSpeed;
     };
 
 
