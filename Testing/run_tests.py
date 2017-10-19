@@ -2,16 +2,10 @@ import os
 import subprocess
 import platform
 
+SikuliPath = os.environ["SIKULI_DIR"]
 
-redCubeCommand = []
-if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
-    redCubeCommand.append("vglrun")
-redCubeCommand.extend(["./run_test.sh", "RedCubeTest"])
+output = subprocess.check_output([SikuliPath + "/runsikulix", "-r", "cubeTestRed.sikuli"])
+print("test result: " + str(output))
 
-if platform.system() == 'Linux':
-    proc = subprocess.Popen(redCubeCommand, cwd="../build/bin", stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-else:
-    proc = subprocess.Popen(redCubeCommand, cwd="../build/bin", stderr=subprocess.STDOUT, stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
-    
-output = subprocess.check_output(["/tank2/SikuliX/runsikulix", "-r", "cubeTestRed.sikuli"])
+output = subprocess.check_output([SikuliPath + "/runsikulix", "-r", "StackedCubeTest.sikuli"])
 print("test result: " + str(output))

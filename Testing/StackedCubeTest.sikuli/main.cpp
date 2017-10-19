@@ -6,7 +6,7 @@ int main( void )
 {
     
     OpenDoorGL::WindowInterface* mainWindow = new OpenDoorGL::GLFW3Window();
-    mainWindow->InitWindow("Test");
+    mainWindow->InitWindow("Stacked Cube Test");
 
     OpenDoorGL::View testView;
     testView.view = glm::lookAt(
@@ -16,16 +16,25 @@ int main( void )
     );
     testView.proj = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
     testView.position = glm::vec3(4,3,3);
-    
     testView.verticalAngle = -0.6f;
     testView.horizontalAngle = 4.0f;
 
-    OpenDoorGL::Cube cube;
-    cube.setColor(1.0f, 0.0f, 0.0f);
-    cube.setSize(1.0);
-    
+    OpenDoorGL::Cube cube1;
+    cube1.setColor(1.0f, 0.0f, 0.0f);
+    cube1.setSize(1.0);
+    OpenDoorGL::Cube cube2;
+    cube2.setColor(0.0f, 1.0f, 0.0f);
+    cube2.setSize(1.0);
+    cube2.Translate(0.0f, 1.0f, 0.0f);
+    OpenDoorGL::Cube cube3;
+    cube3.setColor(0.0f, 0.0f, 1.0f);
+    cube3.setSize(2.0);
+    cube3.Translate(1.5f, 0.5f, -0.5f);
+
     mainWindow->SetView(&testView);
-    mainWindow->InsertObject(&cube);
+    mainWindow->InsertObject(&cube1);
+    mainWindow->InsertObject(&cube2);
+    mainWindow->InsertObject(&cube3);
 
     while( mainWindow->AppRunning() ){
         mainWindow->RenderFrame();

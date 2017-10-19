@@ -1,6 +1,7 @@
 visual_test:
     script:
     - export DISPLAY=:1
+    - export SIKULI_DIR=/tank2/SikuliX
     - scons
     - cd Testing
     - python run_tests.py
