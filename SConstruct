@@ -52,8 +52,11 @@ dependLibs= SConscript('Dependencies/SConscript',  duplicate = 0, exports = 'mai
 coreLib =   SConscript('Core/SConscript',          duplicate = 0, exports = 'mainenv')
 framework = SConscript('AppFrameworks/SConscript', duplicate = 0, exports = 'mainenv')
 
-redCubeTest = SConscript('Testing/cubeTestRed.sikuli/SConscript', duplicate = 0, exports = 'mainenv')
-stackedCubeTest = SConscript('Testing/stackedCubeTest.sikuli/SConscript', duplicate = 0, exports = 'mainenv')
+tests = []
+for root, dirs, files in os.walk("Testing"):
+    for file in files:
+        if file.endswith("SConscript"):
+             tests.append(SConscript(os.path.join(root, file), duplicate = 0, exports = 'mainenv'))
 
 # setup installs
 for header in dependLibs['headers']['GLEW']:
@@ -81,10 +84,10 @@ for buildFile in framework:
 
 mainenv.Install("build/bin", File("Testing/run_test.sh"))
 
-mainenv.Depends(redCubeTest, framework)
-mainenv.Depends(stackedCubeTest, framework)
-mainenv.Install("build/bin", redCubeTest)
-mainenv.Install("build/bin", stackedCubeTest)
+for test in tests:
+    mainenv.Depends(test, framework)
+    mainenv.Install("build/bin", test)
+
 
 
 
