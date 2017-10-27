@@ -14,7 +14,7 @@ redCubeCommand.extend(["./run_test.sh", "RedCubeTest"])
 
 subprocess.Popen(redCubeCommand, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
 
-res = exists("1508297323827.png")
+res = exists("1508297323827.png", 5)
 
 type(Key.ESC)
 waitVanish("1508297323827.png")

@@ -13,7 +13,7 @@ if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
 redCubeCommand.extend(["./run_test.sh", "LoadObjTest"])
 print "running command " +str(redCubeCommand)
 subprocess.Popen(redCubeCommand, cwd=dname, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
-res = exists("1509078145523.png", 2 )
+res = exists("1509078145523.png", 5 )
 type(Key.ESC)
 waitVanish("1509078145523.png")
         
