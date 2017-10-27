@@ -26,11 +26,11 @@ env.Append(LIBS=[
     "GLEW",
 ])
 
-executable = env.Program("build/RedCubeTest", "main.cpp")
+executable = env.Program("build/LoadObjTest", "main.cpp")
 
 targets = dict()
 
 targets['executable'] = executable
-targets['resources'] = []
+targets['resources'] = [env.File('LoadObjTest.obj'), env.File('LoadObjTest.dds') ]
 
 Return('targets')

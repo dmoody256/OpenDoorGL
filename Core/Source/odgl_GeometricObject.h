@@ -18,7 +18,7 @@ namespace OpenDoorGL{
         ~GeometricObject();
 
         void draw(View view);
-        void setShadersFromFile(const char* vert_shader_file, const char* frag_shader_file);
+        
         void setShadersFromString(const char* vert_shader, const char* frag_shader);
         
     protected:
@@ -26,10 +26,12 @@ namespace OpenDoorGL{
         GLuint _vertexBuffer;
         GLuint _colorBuffer;
         GLuint _textureBuffer;
-        
+        GLuint _normalBuffer;
+
         std::vector<GLfloat> _vertices;
         std::vector<GLfloat> _vertColors;
         std::vector<GLfloat> _textureCoords;
+        std::vector<GLfloat> _normals;
 
         GLuint _programID;
         GLuint _uniformMVP;

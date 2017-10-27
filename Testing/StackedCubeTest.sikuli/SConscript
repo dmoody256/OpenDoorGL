@@ -1,9 +1,14 @@
 
 Import('mainenv')
-env = Environment()
+env = Environment(DEBUG_BUILD = mainenv['DEBUG_BUILD'])
+
+debugFlag = ""
+if(env['DEBUG_BUILD']):
+    debugFlag = "-g"
 
 env.Append(CCFLAGS=[
     "-std=c++11",
+    debugFlag,
 ])
 env.Append(CPPPATH=[
      mainenv.baseProjectDir + "/build/include",
@@ -22,4 +27,10 @@ env.Append(LIBS=[
 ])
 
 executable = env.Program("build/StackedCubeTest", "main.cpp")
-Return('executable')
+
+targets = dict()
+
+targets['executable'] = executable
+targets['resources'] = []
+
+Return('targets')

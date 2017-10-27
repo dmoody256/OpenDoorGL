@@ -8,11 +8,20 @@ namespace OpenDoorGL{
     class Image{
     public:
         Image();
+        Image(const char* filepath);
         ~Image();
 
-        static GLuint LoadImageFromFile(const char* filePath);
+        GLuint LoadImageFromFile(const char* filePath);
+        GLuint LoadBMPFromFile(const char* filePath);
+        GLuint LoadDDSFromFile(const char* filepath);
 
-        static GLuint LoadBMPFromFile(const char* filePath);
+        GLuint GetTextureGPUHandle();
+    private:
+
+        GLuint _textureID;
+
+        int _height;
+        int _width;
 
     };
 

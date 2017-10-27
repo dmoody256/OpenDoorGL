@@ -5,6 +5,7 @@
 #include <string>
 
 #include "odgl_GeometricObject.h"
+#include "odgl_Image.h"
 
 namespace OpenDoorGL{
 
@@ -26,7 +27,7 @@ namespace OpenDoorGL{
 
     protected:
         float _size;
-        GLuint _faceTextures[6];
+        Image* _faceTextures[6];
         GLuint _uniformTexture;
     };
 }

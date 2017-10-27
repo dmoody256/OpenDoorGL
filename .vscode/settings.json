@@ -53,7 +53,8 @@
         "utility": "cpp",
         "valarray": "cpp",
         "random": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "string": "cpp"
     },
     "clang.cxxflags": [
         "-std=c++11"

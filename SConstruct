@@ -83,10 +83,13 @@ for buildFile in framework:
         mainenv.Install("build/lib", buildFile)
 
 mainenv.Install("build/bin", File("Testing/run_test.sh"))
+mainenv.Install("build/bin", File("Testing/debug_test.sh"))
 
 for test in tests:
-    mainenv.Depends(test, framework)
-    mainenv.Install("build/bin", test)
+    mainenv.Depends(test['executable'], framework)
+    mainenv.Install("build/bin", test['executable'])
+    for resource in test['resources']:
+        mainenv.Install("build/bin/resources", resource)
 
 
 

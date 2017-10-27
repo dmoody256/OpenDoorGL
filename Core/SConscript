@@ -40,6 +40,9 @@ def CreateNewEnv():
         "build/odgl_Image.cpp",
         "build/odgl_GeometricObject.cpp",
         "build/odgl_Group.cpp",
+        "build/odgl_Model.cpp",
+        "build/odgl_ModelLoader.cpp",
+        "build/odgl_Include.cpp",
     ]
     headerFiles = [
         "Source/odgl_Cube.h",
@@ -49,14 +52,21 @@ def CreateNewEnv():
         "Source/odgl_Image.h",
         "Source/odgl_GeometricObject.h",
         "Source/odgl_Group.h",
+        "Source/odgl_Model.h",
+        "Source/odgl_ModelLoader.h",
+        "Source/odgl_Include.h",
     ]
 
     libType = "ReleaseBuild"
     if(env['DEBUG_BUILD']):
         libType = 'DebugBuild'
+        env.Append(CPPDEFINES=[
+            "ODGL_DEBUG",
+        ])
 
     env.Append(CPPDEFINES=[
         "GLM_FORCE_RADIANS",
+        "ODGL_DEBUG",
     ])
 
     env.Append(CPPPATH=[

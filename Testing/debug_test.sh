@@ -6,7 +6,7 @@ if [ -z "$1" ]
   then
     echo "No Args"
   else
-    $VGLRUN ./${1}
+    $VGLRUN gdb -ex run ./${1} 
 fi
 
 exit
