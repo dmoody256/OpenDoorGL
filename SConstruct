@@ -51,12 +51,7 @@ mainenv.SetOption( "num_jobs", num_cpus )
 dependLibs= SConscript('Dependencies/SConscript',  duplicate = 0, exports = 'mainenv')
 coreLib =   SConscript('Core/SConscript',          duplicate = 0, exports = 'mainenv')
 framework = SConscript('AppFrameworks/SConscript', duplicate = 0, exports = 'mainenv')
-
-tests = []
-for root, dirs, files in os.walk("Testing"):
-    for file in files:
-        if file.endswith("SConscript"):
-             tests.append(SConscript(os.path.join(root, file), duplicate = 0, exports = 'mainenv'))
+tests =     SConscript('Testing/SConscript', duplicate = 0, exports = 'mainenv')
 
 # setup installs
 for header in dependLibs['headers']['GLEW']:

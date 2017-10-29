@@ -65,7 +65,11 @@ namespace OpenDoorGL{
         _currentView->proj = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
         _currentView->position = glm::vec3(4,3,3);
         topGroup = new Group();
-        _time = glfwGetTime();
+        _inputTime = glfwGetTime();
+        _renderTime = _inputTime;
+        _framePrintTime = _renderTime;
+        _numFrames = 0;
+
         return 0;
     }
     GLFW3Window::~GLFW3Window(){
@@ -90,7 +94,7 @@ namespace OpenDoorGL{
 
         // Compute time difference between current and last frame
         double currentTime = glfwGetTime();
-        float deltaTime = float(currentTime - _time);
+        float deltaTime = float(currentTime - _inputTime);
     
         // Get mouse position
         double xpos, ypos;
@@ -149,16 +153,39 @@ namespace OpenDoorGL{
                                );
     
         // For the next frame, the "last time" will be "now"
-        _time = currentTime;
+        _inputTime = currentTime;
     }
-    void GLFW3Window::RenderFrame(){
 
+    void GLFW3Window::SetEnableFramerate(bool value){
+        _frameRateEnabled = value;
+    }
+    bool GLFW3Window::GetEnableFramerate(){
+        return _frameRateEnabled;
+    }
+    double GLFW3Window::RenderFrame(){
+        
         ComputeMatricesFromInputs();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         topGroup->draw(_currentView);
         // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+        double currentTime = glfwGetTime();
+        double deltaTime = glfwGetTime() - _renderTime;
+        _renderTime = currentTime;
+
+        if(_frameRateEnabled){
+            _numFrames++;
+            if ( currentTime - _framePrintTime >= 1.0 ){ // If last prinf() was more than 1 sec ago
+                // printf and reset timer
+                printf("%f ms/frame\n", 1000.0/double(_numFrames));
+                _numFrames = 0;
+                _framePrintTime += 1.0;
+            }
+        }
+
+        return deltaTime;
     }
 
     bool GLFW3Window::AppRunning(){

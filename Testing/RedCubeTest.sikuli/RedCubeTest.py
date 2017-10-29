@@ -8,11 +8,11 @@ sys.path.append(os.path.abspath(getBundlePath() + "/.." ))
 import OdglTestFramework
 
 dname = os.path.abspath(getBundlePath() + "/../../build/bin/")
-p = OdglTestFramework.StartTest("StackedCubeTest", dname)
+p = OdglTestFramework.StartTest("RedCubeTest", dname)
 
-res = exists("1508387700265.png", 5)
+res = exists("1508297323827.png", 5)
 type(Key.ESC)
-waitVanish("1508387700265.png")
+waitVanish("1508297323827.png")
 
 if(res == None):
     print("FAIL: No match found") 

@@ -4,26 +4,22 @@ import subprocess
 import platform
 import threading
 
+sys.path.append(os.path.abspath(getBundlePath() + "/.." ))
+import OdglTestFramework
+
 dname = os.path.abspath(getBundlePath() + "/../../build/bin/")
-os.chdir(dname)
-print dname
-redCubeCommand = []
-if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
-    redCubeCommand.append("vglrun")
-redCubeCommand.extend(["./run_test.sh", "LoadObjTest"])
-print "running command " +str(redCubeCommand)
-subprocess.Popen(redCubeCommand, cwd=dname, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+p = OdglTestFramework.StartTest("LoadObjTest", dname)
+
 res = exists("1509078145523.png", 5 )
 type(Key.ESC)
 waitVanish("1509078145523.png")
-        
+
 if(res == None):
-    print("Failure") 
+    print("FAIL: No match found") 
     exit(1)
-print res.getScore()
+
 if(res.getScore() < .999):
-    print("Failure")
+    print("FAIL: Match score " + str(res.getScore()) + " too low")
     exit(2)
-else:
-    print("Success")
-    exit(0)
+
+OdglTestFramework.EndTest(p)

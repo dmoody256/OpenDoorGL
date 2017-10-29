@@ -54,7 +54,10 @@
         "valarray": "cpp",
         "random": "cpp",
         "vector": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "*.ipp": "cpp",
+        "algorithm": "cpp",
+        "cstddef": "cpp"
     },
     "clang.cxxflags": [
         "-std=c++11"

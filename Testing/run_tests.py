@@ -7,7 +7,7 @@ SikuliPath = os.environ["SIKULI_DIR"]
 sikuli_command = [SikuliPath + "/runsikulix", "-r"]
 
 tests = [
-    "cubeTestRed.sikuli",
+    "RedCubeTest.sikuli",
     "StackedCubeTest.sikuli",
     "LoadObjTest.sikuli",
 ]

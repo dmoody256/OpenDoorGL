@@ -1,0 +1,40 @@
+import os
+
+Import('mainenv')
+testenv = Environment(DEBUG_BUILD = mainenv['DEBUG_BUILD'])
+
+debugFlag = ""
+if(testenv['DEBUG_BUILD']):
+    debugFlag = "-g"
+
+testenv.Append(CCFLAGS=[
+    "-std=c++11",
+    debugFlag,
+])
+testenv.Append(CPPPATH=[
+     mainenv.baseProjectDir + "/build/include",
+     mainenv.baseProjectDir + "/Testing",
+])
+testenv.Append(CPPDEFINES=[
+    "GLM_FORCE_RADIANS",
+])
+testenv.Append(LIBPATH=[
+    mainenv.baseProjectDir + "/build/lib",
+    
+])
+testenv.Append(LIBS=[
+    "OpenDoorGL",
+    "GLEW",
+])
+
+Export('testenv')
+
+tests = []
+for root, dirs, files in os.walk("./"):
+    for file in files:
+        if file.endswith("SConscript"):
+            if(root == "./"):
+                continue
+            tests.append(SConscript(os.path.join(root, file), duplicate = 0, exports = 'mainenv'))
+
+Return('tests')

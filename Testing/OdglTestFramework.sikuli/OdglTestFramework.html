@@ -67,34 +67,36 @@
    </head>
 <body>
 <div class="info">
-<h2>StackedCubeTest.sikuli</h2> <a href="StackedCubeTest.zip">(Download this script)</a>
+<h2>OdglTestFramework.sikuli</h2> <a href="OdglTestFramework.zip">(Download this script)</a>
 </div>
 <pre class="sikuli-code">
+<span class="kw">from</span> sikuli <span class="kw">import</span> *
+
 <span class="kw">import</span> os
 <span class="kw">import</span> signal
 <span class="kw">import</span> subprocess
 <span class="kw">import</span> platform
 <span class="kw">import</span> threading
 
-sys.path.append(os.path.abspath(getBundlePath() + <span class="str">"/.."</span> ))
-<span class="kw">import</span> OdglTestFramework
+<span class="kw">def</span> StartTest(test, working_dir):
+    dname = os.path.abspath(getBundlePath() + <span class="str">"/../../build/bin/"</span>)
 
-dname = os.path.abspath(getBundlePath() + <span class="str">"/../../build/bin/"</span>)
-p = OdglTestFramework.StartTest(<span class="str">"StackedCubeTest"</span>, dname)
+    command = []
+    <span class="kw">if</span>(os.path.isfile(<span class="str">"/opt/VirtualGL/bin/vglrun"</span>)):
+        command.append(<span class="str">"vglrun"</span>)
+    command.extend([<span class="str">"./run_test.sh"</span>, test])
 
-res = exists(<img src="1508387700265.png" />, <span class="dig">5</span>)
-<span class="skw">type</span>(Key.ESC)
-waitVanish(<img src="1508387700265.png" />)
+    os.chdir(working_dir)
+    <span class="kw">return</span> subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
 
-<span class="kw">if</span>(res == None):
-    <span class="kw">print</span>(<span class="str">"Failure"</span>)
-    exit(<span class="dig">1</span>)
-<span class="kw">print</span> res.getScore()
-<span class="kw">if</span>(res.getScore() &lt; <span class="dig">.999</span>):
-    <span class="kw">print</span>(<span class="str">"Failure"</span>)
-    exit(<span class="dig">2</span>)
-
-OdglTestFramework.StartTest(p)
+<span class="kw">def</span> EndTest(process):
+    out, err = process.communicate()
+    <span class="kw">if</span>(float(out) &lt; <span class="dig">0.016</span>):
+        <span class="kw">print</span>(<span class="str">"Failure"</span>)
+        exit(<span class="dig">3</span>)
+    <span class="kw">else</span>:
+        <span class="kw">print</span>(<span class="str">"Success"</span>)
+        exit(<span class="dig">0</span>)
 </pre>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 Import('testenv')
 env = testenv.Clone()
 
@@ -23,7 +22,7 @@ env.Append(LIBS=[
     "glfw",
 ])
 
-executable = env.Program("build/StackedCubeTest", "StackedCubeTest.cpp")
+executable = env.Program("build/RedCubeTest", "RedCubeTest.cpp")
 
 targets = dict()
 

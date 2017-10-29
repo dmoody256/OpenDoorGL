@@ -16,14 +16,22 @@ namespace OpenDoorGL {
     public:
         ~GLFW3Window();
         int InitWindow(const char* window_name);
-        void RenderFrame();
+        double RenderFrame();
         bool AppRunning();
         void SetView(View* view);
         View* GetView();
         void InsertObject(RenderObject* object);
+
+        void SetEnableFramerate(bool value);
+        bool GetEnableFramerate();
     protected:
         void ComputeMatricesFromInputs();
         GLFWwindow* window;
+        double _inputTime;
+        double _renderTime;
+        double _framePrintTime;
+        int _numFrames;
+        bool _frameRateEnabled;
     };
     
 }
