@@ -27,6 +27,6 @@ executable = env.Program("build/LoadObjTest", "LoadObjTest.cpp")
 targets = dict()
 
 targets['executable'] = executable
-targets['resources'] = []
+targets['resources'] = [env.File(LoadObjTest.obj), env.File(LoadObjTest.dds), ]
 
 Return('targets')
