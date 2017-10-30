@@ -3,5 +3,6 @@ visual_test:
     - export DISPLAY=:0
     - export SIKULI_DIR=/Data/SikuliX
     - scons
+    - chmod -R +x *
     - cd Testing
     - python run_tests.py
