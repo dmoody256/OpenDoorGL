@@ -10,7 +10,7 @@ import OdglTestFramework
 dname = os.path.abspath(getBundlePath() + "/../../build/bin/")
 p = OdglTestFramework.StartTest("LoadObjTest", dname)
 
-res = exists("1509078145523.png", 5 )
+res = exists("1509078145523.png", 30 )
 type(Key.ESC)
 waitVanish("1509078145523.png")
 
