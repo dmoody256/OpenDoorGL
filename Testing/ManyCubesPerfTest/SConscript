@@ -1,0 +1,33 @@
+
+Import('testenv')
+env = testenv.Clone()
+
+debugFlag = ""
+if(env['DEBUG_BUILD']):
+    debugFlag = "-g"
+
+env.Append(CCFLAGS=[
+    
+])
+env.Append(CPPPATH=[
+    
+])
+env.Append(CPPDEFINES=[
+   
+])
+env.Append(LIBPATH=[
+    
+])
+env.Append(LIBS=[
+    "OpenDoorGL-GLFW3",
+    "glfw",
+])
+
+executable = env.Program("build/ManyCubesPerfTest", "ManyCubesPerfTest.cpp")
+
+targets = dict()
+
+targets['executable'] = executable
+targets['resources'] = []
+
+Return('targets')

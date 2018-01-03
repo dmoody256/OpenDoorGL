@@ -16,9 +16,9 @@ namespace OpenDoorGL{
     public:
         Group();
         ~Group();
-        void draw(View* view);
-        void InsertObject(RenderObject* object);
-
+        virtual void draw(View* view);
+        virtual void InsertObject(RenderObject* object);
+        virtual void Update(double time_passed);
     protected:
 
         std::vector<RenderObject*> objects;

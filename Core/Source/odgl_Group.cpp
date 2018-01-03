@@ -22,8 +22,15 @@ namespace OpenDoorGL{
             objects.at(i)->draw(view);
         }
     }
+    
     void Group::InsertObject(RenderObject* object){
         objects.push_back(object);
+    }
+
+    void Group::Update(double time_passed){
+        for(int i = 0; i < objects.size(); i++){
+            objects.at(i)->Update(time_passed);
+        }
     }
 
 }
