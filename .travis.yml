@@ -3,6 +3,7 @@ distro: trusty
 language: cpp
 install:
   - sudo apt-get install sikuli-ide
+  - sudo apt-get install xorg-dev libglu1-mesa-dev
   
 before_script:
   - "export DISPLAY=:99.0"
