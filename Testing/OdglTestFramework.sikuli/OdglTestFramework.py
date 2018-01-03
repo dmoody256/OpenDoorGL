@@ -20,7 +20,7 @@ def StartTest(test, working_dir):
 
     os.chdir(working_dir)
     print("Running: " + str(command))
-    return subprocess.Popen(test, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
+    return subprocess.Popen('./' + test, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
 
 def EndTest(process, framerate = 0.016):
     out, err = process.communicate()
