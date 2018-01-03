@@ -2,7 +2,7 @@
 
 namespace OpenDoorGL{
 
-    int GLFW3Window::InitWindow(const char* window_name){
+    int GLFW3Window::InitWindow(const char* window_name, bool _vsyncEnabled){
 
         // Initialise GLFW
         if( !glfwInit() )
@@ -36,8 +36,9 @@ namespace OpenDoorGL{
         GLuint VertexArrayID;
         glGenVertexArrays(1, &VertexArrayID);
         glBindVertexArray(VertexArrayID);
-        
-        glfwSwapInterval(1);
+        if(_vsyncEnabled){
+            glfwSwapInterval(1);
+        }
         // Enable depth test
         glEnable(GL_DEPTH_TEST);
         // Accept fragment if it closer to the camera than the former one
@@ -68,6 +69,7 @@ namespace OpenDoorGL{
         _inputTime = glfwGetTime();
         _renderTime = _inputTime;
         _framePrintTime = _renderTime;
+        _startTime = glfwGetTime();
         _numFrames = 0;
 
         return 0;
@@ -88,6 +90,10 @@ namespace OpenDoorGL{
     }
     void GLFW3Window::InsertObject(RenderObject* object){
         topGroup->InsertObject(object);
+    }
+
+    double GLFW3Window::UpdateFrame(){
+        topGroup->Update(glfwGetTime() - _startTime);
     }
 
     void GLFW3Window::ComputeMatricesFromInputs(){
@@ -144,7 +150,7 @@ namespace OpenDoorGL{
         float FoV = _currentView->initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
        
         // Projection matrix : 45� Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-        _currentView->proj = glm::perspective(glm::radians(FoV), 4.0f / 3.0f, 0.1f, 100.0f);
+        _currentView->proj = glm::perspective(glm::radians(FoV), 4.0f / 3.0f, 0.1f, 10000.0f);
         // Camera matrix
         _currentView->view      = glm::lookAt(
                                     _currentView->position,           // Camera is here
@@ -162,6 +168,7 @@ namespace OpenDoorGL{
     bool GLFW3Window::GetEnableFramerate(){
         return _frameRateEnabled;
     }
+   
     double GLFW3Window::RenderFrame(){
         
         ComputeMatricesFromInputs();

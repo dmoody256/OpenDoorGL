@@ -12,6 +12,13 @@ namespace OpenDoorGL{
 
     public:
         static OpenDoorGL::WindowInterface* SetupTest();
+
+    };
+
+    class TestGroup : public Group{
+
+    public:
+        void Update(double time_passed);
     };
 }
 
@@ -25,6 +32,7 @@ int main( void )
 
     while( mainWindow->AppRunning() ){
         numFrames++;
+        mainWindow->UpdateFrame();
         mainWindow->RenderFrame();
     }
 

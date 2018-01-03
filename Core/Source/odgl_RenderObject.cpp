@@ -19,6 +19,11 @@ namespace OpenDoorGL{
     RenderObject::~RenderObject(){
        
     }
+
+    void RenderObject::Update(double time_passed){
+        
+
+    }
     
     void RenderObject::Translate(float x, float y, float z){
         glm::vec3 trans(x,y,z);
