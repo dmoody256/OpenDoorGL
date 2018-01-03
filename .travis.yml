@@ -1,0 +1,20 @@
+
+distro: trusty
+language: cpp
+install:
+  - sudo apt-get install sikuli-ide
+  
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+  - export SIKULI_DIR=$PWD/SikuliX
+  - mkdir SikuliX && cd SikuliX
+  - wget https://launchpad.net/sikuli/sikulix/1.1.1/+download/sikulixsetup-1.1.1.jar
+  - java -jar sikulixsetup-1.1.1.jar options 1.1
+  
+script:
+  - scons
+  - chmod -R +x *
+  - cd Testing
+  - python run_tests.py
