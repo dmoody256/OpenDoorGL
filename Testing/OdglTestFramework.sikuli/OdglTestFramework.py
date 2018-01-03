@@ -16,7 +16,7 @@ def StartTest(test, working_dir):
     command.extend(["./run_test.sh", test])
 
     os.chdir(working_dir)
-    return subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+    return subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell=True)
 
 def EndTest(process, framerate = 0.016):
     out, err = process.communicate()
