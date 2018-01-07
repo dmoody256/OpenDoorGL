@@ -28,7 +28,7 @@ namespace OpenDoorGL{
         
         mainWindow->SetView(testView);
         mainWindow->InsertObject(cube);
-        
+        printf("RedCubeTest starting to render\n");
         return mainWindow;
     }
     

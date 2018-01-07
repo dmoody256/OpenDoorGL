@@ -1,0 +1,8 @@
+
+distro: trusty
+language: cpp
+install:
+  - sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev
+  
+script:
+  - scons

@@ -15,8 +15,12 @@ def StartTest(test, working_dir):
         command.append("vglrun")
     command.extend(["./run_test.sh", test])
 
+    my_env = os.environ.copy()
+    my_env["LD_LIBRARY_PATH"] = '../lib'
+
     os.chdir(working_dir)
-    return subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+    print("Running: " + str(command))
+    return subprocess.Popen('./' + test, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
 
 def EndTest(process, framerate = 0.016):
     out, err = process.communicate()

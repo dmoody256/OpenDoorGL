@@ -2,6 +2,10 @@ import os
 import subprocess
 import platform
 
+failed_tests = []
+passed_tests = []
+
+# Visual Tests
 SikuliPath = os.environ["SIKULI_DIR"]
 
 sikuli_command = [SikuliPath + "/runsikulix", "-r"]
@@ -12,8 +16,6 @@ tests = [
     "LoadObjTest.sikuli",
 ]
 
-failed_tests = []
-passed_tests = []
 for test in tests:
     test_command = []
     test_command.extend(sikuli_command)
@@ -26,6 +28,8 @@ for test in tests:
         print("failed test " + test + "with exit code: " + str(grepexc.returncode) + "output:\n\n" + grepexc.output)
         failed_tests.append(test)
         pass
+
+
 
 print( "passed " + str(len(passed_tests)) + " tests:")
 

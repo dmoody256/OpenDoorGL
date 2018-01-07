@@ -59,6 +59,8 @@ for header in dependLibs['headers']['GLEW']:
 for header in dependLibs['headers']['GLFW']:
     mainenv.Install("build/include/GLFW", header)
 
+mainenv.Install("build/include", 'Dependencies/glm/glm')
+
 for lib in dependLibs['libs']:
     mainenv.Depends(coreLib, lib )
     mainenv.Install("build/lib", lib)

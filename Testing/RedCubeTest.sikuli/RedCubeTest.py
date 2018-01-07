@@ -16,6 +16,8 @@ waitVanish("1508297323827.png")
 
 if(res == None):
     print("FAIL: No match found") 
+    out, err = p.communicate()
+    print(out)
     exit(1)
 
 if(res.getScore() < .999):
