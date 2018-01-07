@@ -1,4 +1,5 @@
 # OpenDoorGL
+[![Build Status](https://travis-ci.org/dmoody256/OpenDoorGL.svg?branch=master)](https://travis-ci.org/dmoody256/OpenDoorGL)
 
 This is a simple OpenGL Rendering library I created for fun.
 
@@ -6,7 +7,7 @@ This is a simple OpenGL Rendering library I created for fun.
 
 To build first install the dependencies:
 
-```sudo apt-get install git cmake python-pip xorg-dev```
+```sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev```
 
 Then isntall SCons:
 
