@@ -84,13 +84,18 @@ for buildFile in framework:
 test_script = mainenv.Install("build/bin", File("Testing/run_test.sh"))
 mainenv.Install("build/bin", File("Testing/debug_test.sh"))
 
+
 def ChmodBuildDir():
+
+    def make_executable(path):
+        mode = os.stat(path).st_mode
+        mode |= (mode & 0o444) >> 2    # copy R bits to X
+        os.chmod(path, mode)
+        
     for dir in ['build']:
         for root, dirs, files in os.walk(dir):
-            for d in dirs:
-                os.chmod(os.path.join(root, d), stat.S_IXUSR)
             for f in files:
-                os.chmod(os.path.join(root, f), stat.S_IXUSR)
+                make_executable(os.path.join(root, f))
 
 chmod_callback = SCons.Action.ActionFactory( ChmodBuildDir,
             lambda: 'Setting build to exec permissions')
