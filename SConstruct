@@ -10,6 +10,8 @@
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
 import os
+import stat
+import SCons.Action
 
 def get_cpu_nums():
     # Linux, Unix and MacOS:
@@ -79,15 +81,29 @@ for buildFile in framework:
     else:
         mainenv.Install("build/lib", buildFile)
 
-mainenv.Install("build/bin", File("Testing/run_test.sh"))
+test_script = mainenv.Install("build/bin", File("Testing/run_test.sh"))
 mainenv.Install("build/bin", File("Testing/debug_test.sh"))
+
+def ChmodBuildDir():
+    for dir in ['build']:
+        for root, dirs, files in os.walk(dir):
+            for d in dirs:
+                os.chmod(os.path.join(root, d), stat.S_IXUSR)
+            for f in files:
+                os.chmod(os.path.join(root, f), stat.S_IXUSR)
+
+chmod_callback = SCons.Action.ActionFactory( ChmodBuildDir,
+            lambda: 'Setting build to exec permissions')
+
+chmod_command = mainenv.Command(None, test_script, chmod_callback())
+
 
 for test in tests:
     mainenv.Depends(test['executable'], framework)
     mainenv.Install("build/bin", test['executable'])
     for resource in test['resources']:
         mainenv.Install("build/bin/resources", resource)
-
+    mainenv.Depends(chmod_command, test['executable'] ) 
 
 
 
