@@ -2,6 +2,7 @@ build/
 Dependencies/include
 Dependencies/lib
 .sconsign.dblite
+*.html
 
 # Compiled source #
 ###################
