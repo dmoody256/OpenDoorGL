@@ -110,6 +110,4 @@ for test in tests:
         mainenv.Install("build/bin/resources", resource)
     mainenv.Depends(chmod_command, test['executable'] ) 
 
-
-
  
