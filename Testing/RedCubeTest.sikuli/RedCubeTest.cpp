@@ -8,7 +8,7 @@ namespace OpenDoorGL{
 
     WindowInterface* TestWindow::SetupTest(){
         WindowInterface* mainWindow = new GLFW3Window();
-        mainWindow->InitWindow("Test");
+        mainWindow->InitWindow("Test", false);
 
         View* testView = new View();
         testView->view = glm::lookAt(
@@ -28,7 +28,6 @@ namespace OpenDoorGL{
         
         mainWindow->SetView(testView);
         mainWindow->InsertObject(cube);
-        printf("RedCubeTest starting to render\n");
         return mainWindow;
     }
     
