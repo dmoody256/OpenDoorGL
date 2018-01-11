@@ -68,7 +68,7 @@ for lib in dependLibs['libs']:
     mainenv.Install("build/lib", lib)
 
 for buildFile in coreLib:
-    if(str(buildFile).endswith(".h")):
+    if(str(buildFile).endswith(".hpp")):
         mainenv.Install("build/include", buildFile)
     else:
         mainenv.Install("build/lib", buildFile)
@@ -76,7 +76,7 @@ for buildFile in coreLib:
 mainenv.Depends(framework,coreLib )
 
 for buildFile in framework:
-    if(str(buildFile).endswith(".h")):
+    if(str(buildFile).endswith(".hpp")):
         mainenv.Install("build/include", buildFile)
     else:
         mainenv.Install("build/lib", buildFile)
