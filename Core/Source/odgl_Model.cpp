@@ -1,6 +1,6 @@
-#include "odgl_Model.h"
-#include "odgl_Include.h"
-#include "odgl_ShaderManager.h"
+#include "odgl_Model.hpp"
+#include "odgl_Include.hpp"
+#include "odgl_ShaderManager.hpp"
 
 namespace OpenDoorGL{
 

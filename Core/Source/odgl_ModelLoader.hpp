@@ -2,7 +2,7 @@
 #define ODGL_MODEL_LOADER
 
 
-#include "odgl_Model.h"
+#include "odgl_Model.hpp"
 
 namespace OpenDoorGL{
 

@@ -5,9 +5,9 @@
 #include <vector>
 #include <string>
 
-#include "odgl_Include.h"
-#include "odgl_GeometricObject.h"
-#include "odgl_ShaderManager.h"
+#include "odgl_Include.hpp"
+#include "odgl_GeometricObject.hpp"
+#include "odgl_ShaderManager.hpp"
 
 namespace OpenDoorGL{
     GeometricObject::GeometricObject() : RenderObject(){

@@ -1,4 +1,4 @@
-#include "odgl_View.h"
+#include "odgl_View.hpp"
 
 
 namespace OpenDoorGL{

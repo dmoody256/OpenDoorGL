@@ -4,8 +4,8 @@
 #include <GLEW/glew.h>
 #include <string>
 
-#include "odgl_GeometricObject.h"
-#include "odgl_Image.h"
+#include "odgl_GeometricObject.hpp"
+#include "odgl_Image.hpp"
 
 namespace OpenDoorGL{
 

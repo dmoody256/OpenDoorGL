@@ -7,7 +7,7 @@
 // Include GLFW
 #include <GLFW/glfw3.h>
 
-#include "odgl_WindowInterface.h"
+#include "odgl_WindowInterface.hpp"
 
 
 namespace OpenDoorGL {

@@ -1,5 +1,5 @@
-#include "odgl_ModelLoader.h"
-#include "odgl_Include.h"
+#include "odgl_ModelLoader.hpp"
+#include "odgl_Include.hpp"
 
 #include <vector>
 #include <iostream>

@@ -1,8 +1,8 @@
-#include "odgl_GLFW3.h"
-#include "odgl_Cube.h"
-#include "odgl_View.h"
+#include "odgl_GLFW3.hpp"
+#include "odgl_Cube.hpp"
+#include "odgl_View.hpp"
 
-#include "main.h"
+#include "main.hpp"
 
 namespace OpenDoorGL{
 
