@@ -13,16 +13,18 @@ def StartTest(test, working_dir):
     command = []
     if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
         command.append("vglrun")
-    command.extend(["./run_test.sh", test])
+    command.append("./" + test)
 
     my_env = os.environ.copy()
     my_env["LD_LIBRARY_PATH"] = '../lib'
 
     os.chdir(working_dir)
-    return subprocess.Popen('./' + test, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
+    return subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
 
 def EndTest(process, framerate = 0.016):
     out, err = process.communicate()
+    print("Test output: " + str(out))
+    print("Test exitcode: " + str(err))
     framerateResults = re.findall('([\d.]+$)', out)
     
     print("Test Passed: Framerate = " + str(float(framerateResults[0])))
