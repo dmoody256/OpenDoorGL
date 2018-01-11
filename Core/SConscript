@@ -45,16 +45,16 @@ def CreateNewEnv():
         "build/odgl_Include.cpp",
     ]
     headerFiles = [
-        "Source/odgl_Cube.h",
-        "Source/odgl_RenderObject.h",
-        "Source/odgl_View.h",
-        "Source/odgl_ShaderManager.h",
-        "Source/odgl_Image.h",
-        "Source/odgl_GeometricObject.h",
-        "Source/odgl_Group.h",
-        "Source/odgl_Model.h",
-        "Source/odgl_ModelLoader.h",
-        "Source/odgl_Include.h",
+        "Source/odgl_Cube.hpp",
+        "Source/odgl_RenderObject.hpp",
+        "Source/odgl_View.hpp",
+        "Source/odgl_ShaderManager.hpp",
+        "Source/odgl_Image.hpp",
+        "Source/odgl_GeometricObject.hpp",
+        "Source/odgl_Group.hpp",
+        "Source/odgl_Model.hpp",
+        "Source/odgl_ModelLoader.hpp",
+        "Source/odgl_Include.hpp",
     ]
 
     libType = "ReleaseBuild"
