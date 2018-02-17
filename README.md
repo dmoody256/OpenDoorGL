@@ -29,15 +29,11 @@ export LD_LIBRARY_PATH=../lib
 
 To run the graphics tests install SikuliX:
 
-```
-sudo apt-get install -y sikuli-ide
-cd Testing
-source ./install_sikiliX.sh
-```
+```sudo apt-get install -y sikuli-ide```
 
-Now the latest sikuli version is installed in SIKULIX_DIR variable set from the script. You can then run the test suite:
+You can then run the test suite:
 
-```python run_tests.py```
+```scons --test```
 
 
 
