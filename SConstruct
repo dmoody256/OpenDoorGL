@@ -116,7 +116,8 @@ def RunTests():
 
     if(not os.path.isdir(mainenv.baseProjectDir+'/Testing/SikuliX')):
         proc = subprocess.Popen(args=['./install_sikuliX.sh'], cwd=mainenv.baseProjectDir+'/Testing', stdout=subprocess.PIPE)
-        #print(output.stdout.read())
+        output = proc.communicate()[0]
+        print(output)
 
     test_env = os.environ
     test_env['SIKULI_DIR'] = mainenv.baseProjectDir+'/Testing/SikuliX'
