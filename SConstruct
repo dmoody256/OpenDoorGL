@@ -11,6 +11,7 @@
 # all copies or substantial portions of the Software.
 import os
 import stat
+import subprocess
 import SCons.Action
 
 def get_cpu_nums():
@@ -34,9 +35,18 @@ AddOption(
         '--debug_build',
         dest='debug_build',
         action='store_true',
-        metavar='DIR',
+        metavar='BOOL',
         default=False,
         help='Build in debug mode'
+    )
+
+AddOption(
+        '--test',
+        dest='run_test',
+        action='store_true',
+        metavar='BOOL',
+        default=False,
+        help='run tests after build'
     )
 
 mainenv = Environment(DEBUG_BUILD = GetOption('debug_build'),TARGET_ARCH='x86_64')
@@ -102,6 +112,22 @@ chmod_callback = SCons.Action.ActionFactory( ChmodBuildDir,
 
 chmod_command = mainenv.Command(None, test_script, chmod_callback())
 
+def RunTests():
+
+    if(not os.path.isdir(mainenv.baseProjectDir+'/Testing/SikuliX')):
+        proc = subprocess.Popen(args=['./install_sikuliX.sh'], cwd=mainenv.baseProjectDir+'/Testing', stdout=subprocess.PIPE)
+        #print(output.stdout.read())
+
+    test_env = os.environ
+    test_env['SIKULI_DIR'] = mainenv.baseProjectDir+'/Testing/SikuliX'
+    proc = subprocess.Popen(args=['python', 'run_tests.py'], cwd=mainenv.baseProjectDir+'/Testing', env=test_env)
+    output = proc.communicate()[0]
+    print(output)
+
+test_callback = SCons.Action.ActionFactory( RunTests,
+            lambda: 'Running Tests... Please be Patient')
+
+test_command = mainenv.Command(None, test_script, test_callback())
 
 for test in tests:
     mainenv.Depends(test['executable'], framework)

@@ -10,14 +10,16 @@ import re
 def StartTest(test, working_dir):
     dname = os.path.abspath(getBundlePath() + "/../../build/bin/")
 
+    my_env = os.environ.copy()
     command = []
     if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
         command.append("vglrun")
+    else:
+        my_env["DISPLAY"] = ':0'
     command.append("./" + test)
 
-    my_env = os.environ.copy()
     my_env["LD_LIBRARY_PATH"] = '../lib'
-
+    
     os.chdir(working_dir)
     return subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
 

@@ -22,10 +22,10 @@ for test in tests:
     test_command.append(test)
     try:
         output = subprocess.check_output(test_command)
-        print("test result: " + str(output))
+        print("Passed Test " + test + ": " + os.linesep + str(output))
         passed_tests.append(test)
     except subprocess.CalledProcessError as grepexc:                                                                                                   
-        print("failed test " + test + "with exit code: " + str(grepexc.returncode) + "output:\n\n" + grepexc.output)
+        print("Failed Test " + test + " with exit code: " + str(grepexc.returncode) + "output:\n\n" + grepexc.output)
         failed_tests.append(test)
         pass
 
