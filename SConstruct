@@ -126,8 +126,9 @@ def RunTests():
 
 test_callback = SCons.Action.ActionFactory( RunTests,
             lambda: 'Running Tests... Please be Patient')
-
-test_command = mainenv.Command(None, test_script, test_callback())
+            
+if(GetOption('run_test')):
+    test_command = mainenv.Command(None, test_script, test_callback())
 
 for test in tests:
     mainenv.Depends(test['executable'], framework)
