@@ -1,7 +1,7 @@
 #ifndef ODGL_TESTFRAMEWORK
 #define ODGL_TESTFRAMEWORK
 
-#include "odgl_WindowInterface.h"
+#include "odgl_WindowInterface.hpp"
 
 #include <chrono>
 #include <iostream>

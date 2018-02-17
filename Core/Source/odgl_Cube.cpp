@@ -1,7 +1,7 @@
-#include "odgl_Include.h"
-#include "odgl_Cube.h"
-#include "odgl_Image.h"
-#include "odgl_ShaderManager.h"
+#include "odgl_Include.hpp"
+#include "odgl_Cube.hpp"
+#include "odgl_Image.hpp"
+#include "odgl_ShaderManager.hpp"
 
 namespace OpenDoorGL{
 

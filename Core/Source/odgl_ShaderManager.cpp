@@ -1,6 +1,6 @@
 
-#include "odgl_Include.h"
-#include "odgl_ShaderManager.h"
+#include "odgl_Include.hpp"
+#include "odgl_ShaderManager.hpp"
 
 #include <sstream>
 #include <vector>

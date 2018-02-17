@@ -1,8 +1,8 @@
 #ifndef ODGL_WINDOW_INTERFACE
 #define ODGL_WINDOW_INTERFACE
 
-#include "odgl_Group.h"
-#include "odgl_View.h"
+#include "odgl_Group.hpp"
+#include "odgl_View.hpp"
 
 namespace OpenDoorGL{
 

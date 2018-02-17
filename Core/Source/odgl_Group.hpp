@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-#include "odgl_RenderObject.h"
+#include "odgl_RenderObject.hpp"
 
 namespace OpenDoorGL{
 

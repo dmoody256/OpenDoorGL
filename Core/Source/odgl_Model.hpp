@@ -1,9 +1,9 @@
 #ifndef ODGL_MODEL
 #define ODGL_MODEL
 
-#include "odgl_GeometricObject.h"
-#include "odgl_View.h"
-#include "odgl_Image.h"
+#include "odgl_GeometricObject.hpp"
+#include "odgl_View.hpp"
+#include "odgl_Image.hpp"
 
 namespace OpenDoorGL{
 

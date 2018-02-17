@@ -1,5 +1,5 @@
-#include "odgl_Include.h"
-#include "odgl_Image.h"
+#include "odgl_Include.hpp"
+#include "odgl_Image.hpp"
 
 #include <string>
 #include <algorithm>

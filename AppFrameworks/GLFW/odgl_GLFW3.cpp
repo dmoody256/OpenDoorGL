@@ -1,4 +1,4 @@
-#include "odgl_GLFW3.h"
+#include "odgl_GLFW3.hpp"
 
 namespace OpenDoorGL{
 

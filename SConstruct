@@ -26,7 +26,7 @@ def get_cpu_nums():
             return int( os.popen2( "sysctl -n hw.ncpu")[1].read() )
     # Windows:
     if os.environ.has_key( "NUMBER_OF_PROCESSORS" ):
-        ncpus = int( os.environ[ "NUMBER_OF_PROCESSORS" ] );
+        ncpus = int( os.environ[ "NUMBER_OF_PROCESSORS" ] )
     if ncpus > 0:
         return ncpus
     return 1 # Default
@@ -78,7 +78,7 @@ for lib in dependLibs['libs']:
     mainenv.Install("build/lib", lib)
 
 for buildFile in coreLib:
-    if(str(buildFile).endswith(".h")):
+    if(str(buildFile).endswith(".hpp")):
         mainenv.Install("build/include", buildFile)
     else:
         mainenv.Install("build/lib", buildFile)
@@ -86,7 +86,7 @@ for buildFile in coreLib:
 mainenv.Depends(framework,coreLib )
 
 for buildFile in framework:
-    if(str(buildFile).endswith(".h")):
+    if(str(buildFile).endswith(".hpp")):
         mainenv.Install("build/include", buildFile)
     else:
         mainenv.Install("build/lib", buildFile)

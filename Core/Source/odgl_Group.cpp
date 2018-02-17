@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "odgl_Group.h"
+#include "odgl_Group.hpp"
 
 namespace OpenDoorGL{
 

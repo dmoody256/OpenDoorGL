@@ -79,8 +79,8 @@ prog = env.SharedLibrary("OpenDoorGL-GLFW3", sourceFiles)
 
 targets = [
     prog,
-    mainenv.baseProjectDir + "/AppFrameworks/odgl_WindowInterface.h",
-    mainenv.baseProjectDir + "/AppFrameworks/GLFW/odgl_GLFW3.h",
+    mainenv.baseProjectDir + "/AppFrameworks/odgl_WindowInterface.hpp",
+    mainenv.baseProjectDir + "/AppFrameworks/GLFW/odgl_GLFW3.hpp",
 ]
 
 Return('targets')
