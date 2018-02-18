@@ -20,16 +20,15 @@ for test in tests:
     test_command = []
     test_command.extend(sikuli_command)
     test_command.append(test)
-    try:
-        output = subprocess.check_output(test_command)
+    proc = subprocess.Popen(test_command, cwd=os.path.abspath("VisualTests"),stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
+    output = proc.communicate()[0]
+
+    if(proc.returncode == 0):
         print("Passed Test " + test + ": " + os.linesep + str(output))
         passed_tests.append(test)
-    except subprocess.CalledProcessError as grepexc:                                                                                                   
-        print("Failed Test " + test + " with exit code: " + str(grepexc.returncode) + "output:\n\n" + grepexc.output)
+    else:                                                                                                  
+        print("Failed Test " + test + " with exit code: " + str(proc.returncode) + "output:\n\n" + output)
         failed_tests.append(test)
-        pass
-
-
 
 print( "passed " + str(len(passed_tests)) + " tests:")
 

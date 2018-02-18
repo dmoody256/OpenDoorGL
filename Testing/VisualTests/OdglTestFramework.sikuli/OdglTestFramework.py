@@ -8,14 +8,12 @@ import threading
 import re
 
 def StartTest(test, working_dir):
-    dname = os.path.abspath(getBundlePath() + "/../../build/bin/")
 
     my_env = os.environ.copy()
     command = []
     if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
         command.append("vglrun")
-    else:
-        my_env["DISPLAY"] = ':0'
+
     command.append("./" + test)
 
     my_env["LD_LIBRARY_PATH"] = '../lib'

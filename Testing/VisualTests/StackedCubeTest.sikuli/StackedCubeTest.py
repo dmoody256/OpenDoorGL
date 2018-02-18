@@ -7,12 +7,12 @@ import threading
 sys.path.append(os.path.abspath(getBundlePath() + "/.." ))
 import OdglTestFramework
 
-dname = os.path.abspath(getBundlePath() + "/../../build/bin/")
-p = OdglTestFramework.StartTest("LoadObjTest", dname)
+dname = os.environ['TEST_BIN_DIR']
+p = OdglTestFramework.StartTest("StackedCubeTest", dname)
 
-res = exists("1509078145523.png", 30 )
+res = exists("1508387700265.png", 30)
 type(Key.ESC)
-waitVanish("1509078145523.png")
+waitVanish("1508387700265.png")
 
 if(res == None):
     print("FAIL: No match found") 

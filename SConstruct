@@ -112,13 +112,18 @@ mainenv.AlwaysBuild(chmod_command )
 
 def RunTests():
     
-    if(not os.path.isdir(mainenv.baseProjectDir+'/Testing/SikuliX')):
-        proc = subprocess.Popen(args=['./install_sikuliX.sh'], cwd=mainenv.baseProjectDir+'/Testing', stdout=subprocess.PIPE, shell=True)
+    if('SIKULI_DIR' not in os.environ and not os.path.isdir(mainenv.baseProjectDir+'/Testing/VisualTests/SikuliX')):
+        proc = subprocess.Popen(args=['./install_sikuliX.sh'], cwd=mainenv.baseProjectDir+'/Testing/VisualTests', stdout=subprocess.PIPE, shell=True)
         output = proc.communicate()[0]
         print(output)
 
     test_env = os.environ
-    test_env['SIKULI_DIR'] = mainenv.baseProjectDir+'/Testing/SikuliX'
+    if('SIKULI_DIR' not in os.environ):
+        test_env['SIKULI_DIR'] = mainenv.baseProjectDir+'/Testing/VisualTests/SikuliX'
+
+    test_env['TEST_BIN_DIR'] = mainenv.baseProjectDir+'/build/bin'
+    test_env['DISPLAY'] = ':0'
+    
     proc = subprocess.Popen(args=['python', 'run_tests.py'], cwd=mainenv.baseProjectDir+'/Testing', env=test_env)
     output = proc.communicate()[0]
     print(output)
@@ -135,6 +140,6 @@ for test in tests:
     mainenv.Depends(chmod_command, test['executable'] ) 
 
 if(GetOption('run_test')):
-    test_command = mainenv.Command(Dir('Testing/SikuliX'), tests_bins, test_callback())
+    test_command = mainenv.Command(Dir('Testing/VisualTests/SikuliX'), tests_bins, test_callback())
     mainenv.Depends(test_command,chmod_command )
     mainenv.AlwaysBuild(test_command)
