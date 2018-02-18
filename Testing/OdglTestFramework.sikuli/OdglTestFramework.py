@@ -20,8 +20,7 @@ def StartTest(test, working_dir):
 
     my_env["LD_LIBRARY_PATH"] = '../lib'
     
-    os.chdir(working_dir)
-    return subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
+    return subprocess.Popen(command, cwd=working_dir, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=my_env)
 
 def EndTest(process, framerate = 0.016):
     out, err = process.communicate()

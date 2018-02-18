@@ -9,7 +9,7 @@ To build first install the dependencies:
 
 ```sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev```
 
-Then isntall SCons:
+Then install SCons:
 
 ```sudo pip install --egg SCons```
 
