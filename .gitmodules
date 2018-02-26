@@ -6,3 +6,6 @@
 	path = Dependencies/glfw
 	url = https://github.com/glfw/glfw.git
 	ignore = dirty
+[submodule "Dependencies/cxxtest"]
+	path = Dependencies/cxxtest
+	url = https://github.com/CxxTest/cxxtest.git
