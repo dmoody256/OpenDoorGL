@@ -17,6 +17,7 @@ testenv.Append(CCFLAGS=[
 testenv.Append(CPPPATH=[
     mainenv.baseProjectDir + "/build/include",
     mainenv.baseProjectDir + "/Testing",
+    mainenv.baseProjectDir + "/Dependencies/glm",
     mainenv.baseProjectDir + "/Dependencies/cxxtest/cxxtest",
 ])
 testenv.Append(CPPDEFINES=[
