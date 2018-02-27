@@ -5,6 +5,21 @@ import platform
 failed_tests = []
 passed_tests = []
 
+unittests = [
+    'test_translate'
+]
+
+for test in unittests:
+    testenv = os.environ
+    testenv['LD_LIBRARY_PATH'] = '../lib'
+    proc = subprocess.Popen("./" + test, cwd=os.path.abspath("../build/bin"),stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=testenv)
+    output = proc.communicate()[0]
+    print(str(output))
+    if(proc.returncode == 0):
+        passed_tests.append(test)
+    else:    
+        failed_tests.append(test)
+
 # Visual Tests
 SikuliPath = os.environ["SIKULI_DIR"]
 

@@ -1,7 +1,10 @@
 import os
 
 Import('mainenv')
-testenv = Environment(DEBUG_BUILD = mainenv['DEBUG_BUILD'])
+testenv = Environment(DEBUG_BUILD = mainenv['DEBUG_BUILD'], 
+CXXTEST=mainenv.baseProjectDir + '/Dependencies/cxxtest/bin/cxxtestgen', 
+toolpath=[mainenv.baseProjectDir + '/Dependencies/cxxtest/build_tools/SCons'], 
+tools = ['default','cxxtest'])
 
 debugFlag = ""
 if(testenv['DEBUG_BUILD']):
@@ -12,8 +15,9 @@ testenv.Append(CCFLAGS=[
     debugFlag,
 ])
 testenv.Append(CPPPATH=[
-     mainenv.baseProjectDir + "/build/include",
-     mainenv.baseProjectDir + "/Testing",
+    mainenv.baseProjectDir + "/build/include",
+    mainenv.baseProjectDir + "/Testing",
+    mainenv.baseProjectDir + "/Dependencies/cxxtest/cxxtest",
 ])
 testenv.Append(CPPDEFINES=[
     "GLM_FORCE_RADIANS",
