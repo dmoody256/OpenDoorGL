@@ -9,3 +9,4 @@
 [submodule "Dependencies/cxxtest"]
 	path = Dependencies/cxxtest
 	url = https://github.com/CxxTest/cxxtest.git
+	ignore = dirty

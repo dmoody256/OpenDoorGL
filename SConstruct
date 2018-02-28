@@ -122,7 +122,9 @@ def RunTests():
         test_env['SIKULI_DIR'] = mainenv.baseProjectDir+'/Testing/VisualTests/SikuliX'
 
     test_env['TEST_BIN_DIR'] = mainenv.baseProjectDir+'/build/bin'
-    test_env['DISPLAY'] = ':0'
+    
+    if('DISPLAY' not in test_env):
+        test_env['DISPLAY'] = ':0'
     
     proc = subprocess.Popen(args=['python', 'run_tests.py'], cwd=mainenv.baseProjectDir+'/Testing', env=test_env)
     output = proc.communicate()[0]
