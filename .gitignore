@@ -1,7 +1,7 @@
 build/
 Dependencies/include
 Dependencies/lib
-Testing/SikuliX/*
+Testing/VisualTests/SikuliX/*
 .sconsign.dblite
 *.html
 *.pyc
