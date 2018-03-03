@@ -9,139 +9,166 @@
 #
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
+
+"""
+Main SConstruct file for building the OpenDoorGL library along with tests.
+"""
+
+# python
 import os
-import stat
 import subprocess
+
+# scons
 import SCons.Action
+from SCons.Environment import Environment
+from SCons.Script import SConscript
+from SCons.Script.Main import AddOption
+from SCons.Script.Main import GetOption
 
-def get_cpu_nums():
-    # Linux, Unix and MacOS:
-    if hasattr( os, "sysconf" ):
-        if os.sysconf_names.has_key( "SC_NPROCESSORS_ONLN" ):
-            # Linux & Unix:
-            ncpus = os.sysconf( "SC_NPROCESSORS_ONLN" )
-        if isinstance(ncpus, int) and ncpus > 0:
-            return ncpus
-        else: # OSX:
-            return int( os.popen2( "sysctl -n hw.ncpu")[1].read() )
-    # Windows:
-    if os.environ.has_key( "NUMBER_OF_PROCESSORS" ):
-        ncpus = int( os.environ[ "NUMBER_OF_PROCESSORS" ] )
-    if ncpus > 0:
-        return ncpus
-    return 1 # Default
+# project
+import build_utils
 
 AddOption(
-        '--debug_build',
-        dest='debug_build',
-        action='store_true',
-        metavar='BOOL',
-        default=False,
-        help='Build in debug mode'
-    )
+    '--debug_build',
+    dest='debug_build',
+    action='store_true',
+    metavar='BOOL',
+    default=False,
+    help='Build in debug mode'
+)
 
 AddOption(
-        '--test',
-        dest='run_test',
-        action='store_true',
-        metavar='BOOL',
-        default=False,
-        help='run tests after build'
-    )
+    '--test',
+    dest='run_test',
+    action='store_true',
+    metavar='BOOL',
+    default=False,
+    help='run tests after build'
+)
 
-mainenv = Environment(DEBUG_BUILD = GetOption('debug_build'),TARGET_ARCH='x86_64')
-mainenv.baseProjectDir = os.path.abspath(Dir('.').abspath).replace('\\', '/')
+MAIN_ENV = Environment(
+    DEBUG_BUILD=GetOption('debug_build'),
+    TARGET_ARCH='x86_64',
+    RUN_TEST=GetOption('run_test')
+)
+
+MAIN_ENV.baseProjectDir = os.path.abspath(MAIN_ENV.Dir('.').abspath).replace('\\', '/')
 
 ###################################################
 # Determine number of CPUs
-num_cpus = get_cpu_nums()
-print ("Building with %d parallel jobs" % num_cpus)
-mainenv.SetOption( "num_jobs", num_cpus )
+NUM_CPUS = build_utils.get_num_cpus()
+print("Building with " + str(NUM_CPUS) + " parallel jobs")
+MAIN_ENV.SetOption("num_jobs", NUM_CPUS)
 
 ###
 # build subProjects
-dependLibs= SConscript('Dependencies/SConscript',  duplicate = 0, exports = 'mainenv')
-coreLib =   SConscript('Core/SConscript',          duplicate = 0, exports = 'mainenv')
-framework = SConscript('AppFrameworks/SConscript', duplicate = 0, exports = 'mainenv')
-tests =     SConscript('Testing/SConscript', duplicate = 0, exports = 'mainenv')
+DEPEND_LIBS = SConscript('Dependencies/SConscript', duplicate=0, exports='MAIN_ENV')
+CORE_LIBS = SConscript('Core/SConscript', duplicate=0, exports='MAIN_ENV')
+FRAMEWORK_LIBS = SConscript('AppFrameworks/SConscript', duplicate=0, exports='MAIN_ENV')
+TESTS = SConscript('Testing/SConscript', duplicate=0, exports='MAIN_ENV')
+
 
 # setup installs
-for header in dependLibs['headers']['GLEW']:
-    mainenv.Install("build/include/GLEW", header)
-for header in dependLibs['headers']['GLFW']:
-    mainenv.Install("build/include/GLFW", header)
+for header in DEPEND_LIBS['headers']['GLEW']:
+    MAIN_ENV.Install("build/include/GLEW", header)
+for header in DEPEND_LIBS['headers']['GLFW']:
+    MAIN_ENV.Install("build/include/GLFW", header)
 
-testnode = mainenv.Install("build/include", 'Dependencies/glm/glm')
+TEST_NODE = MAIN_ENV.Install("build/include", 'Dependencies/glm/glm')
 
-for lib in dependLibs['libs']:
-    mainenv.Depends(coreLib, lib )
-    mainenv.Install("build/lib", lib)
+for lib in DEPEND_LIBS['libs']:
+    MAIN_ENV.Depends(CORE_LIBS, lib)
+    MAIN_ENV.Install("build/lib", lib)
 
-for buildFile in coreLib:
-    if(str(buildFile).endswith(".hpp")):
-        mainenv.Install("build/include", buildFile)
+for buildFile in CORE_LIBS:
+    if str(buildFile).endswith(".hpp"):
+        MAIN_ENV.Install("build/include", buildFile)
     else:
-        mainenv.Install("build/lib", buildFile)
+        MAIN_ENV.Install("build/lib", buildFile)
 
-mainenv.Depends(framework,coreLib )
+MAIN_ENV.Depends(FRAMEWORK_LIBS, CORE_LIBS)
 
-for buildFile in framework:
-    if(str(buildFile).endswith(".hpp")):
-        mainenv.Install("build/include", buildFile)
+for buildFile in FRAMEWORK_LIBS:
+    if str(buildFile).endswith(".hpp"):
+        MAIN_ENV.Install("build/include", buildFile)
     else:
-        mainenv.Install("build/lib", buildFile)
+        MAIN_ENV.Install("build/lib", buildFile)
 
-def ChmodBuildDir():
-
+def chmod_build_dir():
+    """
+    Callback function used to change the permission of the build files
+    so they can be executed.
+    """
     def make_executable(path):
+        """
+        Utility function to perform the chmod command.
+        """
         mode = os.stat(path).st_mode
         mode |= (mode & 0o444) >> 2    # copy R bits to X
         os.chmod(path, mode)
-        
-    for dir in ['build']:
-        for root, dirs, files in os.walk(dir):
-            for f in files:
-                make_executable(os.path.join(root, f))
 
-chmod_callback = SCons.Action.ActionFactory( ChmodBuildDir,
-            lambda: 'Setting build to exec permissions')
+    for dir_name in ['build']:
+        for root, _unused_dirs, files in os.walk(dir_name):
+            for file_to_chmod in files:
+                make_executable(os.path.join(root, file_to_chmod))
 
-chmod_command = mainenv.Command('never_exists', 'build', chmod_callback())
-mainenv.Depends(chmod_command,framework )
-mainenv.AlwaysBuild(chmod_command )
+CHMOD_CALLBACK = SCons.Action.ActionFactory(
+    chmod_build_dir,
+    lambda: 'Setting build to exec permissions'
+)
 
-def RunTests():
-    
-    if('SIKULI_DIR' not in os.environ and not os.path.isdir(mainenv.baseProjectDir+'/Testing/VisualTests/SikuliX')):
-        proc = subprocess.Popen(args=['./install_sikuliX.sh'], cwd=mainenv.baseProjectDir+'/Testing/VisualTests', stdout=subprocess.PIPE, shell=True)
+CHMOD_COMMAND = MAIN_ENV.Command('never_exists', 'build', CHMOD_CALLBACK())
+MAIN_ENV.Depends(CHMOD_COMMAND, FRAMEWORK_LIBS)
+MAIN_ENV.AlwaysBuild(CHMOD_COMMAND)
+
+def run_tests():
+    """
+    Callback function to run the test script.
+    """
+    if('SIKULI_DIR' not in os.environ
+       and not os.path.isdir(MAIN_ENV.baseProjectDir+'/Testing/VisualTests/SikuliX')):
+        proc = subprocess.Popen(
+            args=['./install_sikuliX.sh'],
+            cwd=MAIN_ENV.baseProjectDir+'/Testing/VisualTests',
+            stdout=subprocess.PIPE,
+            shell=True)
         output = proc.communicate()[0]
         print(output)
 
     test_env = os.environ
-    if('SIKULI_DIR' not in os.environ):
-        test_env['SIKULI_DIR'] = mainenv.baseProjectDir+'/Testing/VisualTests/SikuliX'
+    if 'SIKULI_DIR' not in os.environ:
+        test_env['SIKULI_DIR'] = MAIN_ENV.baseProjectDir+'/Testing/VisualTests/SikuliX'
 
-    test_env['TEST_BIN_DIR'] = mainenv.baseProjectDir+'/build/bin'
-    
-    if('DISPLAY' not in test_env):
+    test_env['TEST_BIN_DIR'] = MAIN_ENV.baseProjectDir+'/build/bin'
+
+    if 'DISPLAY' not in test_env:
         test_env['DISPLAY'] = ':0'
-    
-    proc = subprocess.Popen(args=['python', 'run_tests.py'], cwd=mainenv.baseProjectDir+'/Testing', env=test_env)
+
+    proc = subprocess.Popen(
+        args=['python', 'run_tests.py'],
+        cwd=MAIN_ENV.baseProjectDir+'/Testing',
+        env=test_env
+    )
     output = proc.communicate()[0]
     print(output)
 
-test_callback = SCons.Action.ActionFactory( RunTests,
-            lambda: 'Running Tests... Please be Patient')
-            
-tests_bins = []
-for test in tests:
-    mainenv.Depends(test['executable'], framework)
-    tests_bins.append(mainenv.Install("build/bin", test['executable']))
-    for resource in test['resources']:
-        mainenv.Install("build/bin/resources", resource)
-    mainenv.Depends(chmod_command, test['executable'] ) 
+TEST_CALLBACK = SCons.Action.ActionFactory(
+    run_tests,
+    lambda: 'Running Tests... Please be Patient'
+)
 
-if(GetOption('run_test')):
-    test_command = mainenv.Command(Dir('Testing/VisualTests/SikuliX'), tests_bins, test_callback())
-    mainenv.Depends(test_command,chmod_command )
-    mainenv.AlwaysBuild(test_command)
+TEST_BINS = []
+for test in TESTS:
+    MAIN_ENV.Depends(test['executable'], FRAMEWORK_LIBS)
+    TEST_BINS.append(MAIN_ENV.Install("build/bin", test['executable']))
+    for resource in test['resources']:
+        MAIN_ENV.Install("build/bin/resources", resource)
+    MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
+
+if GetOption('run_test'):
+    TEST_COMMAND = MAIN_ENV.Command(
+        MAIN_ENV.Dir('Testing/VisualTests/SikuliX'),
+        TEST_BINS,
+        TEST_CALLBACK())
+    MAIN_ENV.Depends(TEST_COMMAND, CHMOD_COMMAND)
+    MAIN_ENV.AlwaysBuild(TEST_COMMAND)

@@ -1,0 +1,8 @@
+[MASTER]
+init-hook='import sys; sys.path.append("/usr/local/lib/scons-3.0.0")'
+
+[TYPECHECK]
+generated-members=Install,SharedLibrary
+
+[MESSAGES CONTROL]
+disable=C0103

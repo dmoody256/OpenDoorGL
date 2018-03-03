@@ -1,9 +1,12 @@
 import os
 
-Import('mainenv')
-testenv = Environment(DEBUG_BUILD = mainenv['DEBUG_BUILD'], 
-CXXTEST=mainenv.baseProjectDir + '/Dependencies/cxxtest/bin/cxxtestgen', 
-toolpath=[mainenv.baseProjectDir + '/Dependencies/cxxtest/build_tools/SCons'], 
+# project
+import build_utils
+MAIN_ENV = build_utils.ImportVar('MAIN_ENV')
+
+testenv = Environment(DEBUG_BUILD = MAIN_ENV['DEBUG_BUILD'], 
+CXXTEST=MAIN_ENV.baseProjectDir + '/Dependencies/cxxtest/bin/cxxtestgen', 
+toolpath=[MAIN_ENV.baseProjectDir + '/Dependencies/cxxtest/build_tools/SCons'], 
 tools = ['default','cxxtest'])
 
 debugFlag = ""
@@ -15,16 +18,16 @@ testenv.Append(CCFLAGS=[
     debugFlag,
 ])
 testenv.Append(CPPPATH=[
-    mainenv.baseProjectDir + "/build/include",
-    mainenv.baseProjectDir + "/Testing",
-    mainenv.baseProjectDir + "/Dependencies/glm",
-    mainenv.baseProjectDir + "/Dependencies/cxxtest/cxxtest",
+    MAIN_ENV.baseProjectDir + "/build/include",
+    MAIN_ENV.baseProjectDir + "/Testing",
+    MAIN_ENV.baseProjectDir + "/Dependencies/glm",
+    MAIN_ENV.baseProjectDir + "/Dependencies/cxxtest/cxxtest",
 ])
 testenv.Append(CPPDEFINES=[
     "GLM_FORCE_RADIANS",
 ])
 testenv.Append(LIBPATH=[
-    mainenv.baseProjectDir + "/build/lib",
+    MAIN_ENV.baseProjectDir + "/build/lib",
     
 ])
 testenv.Append(LIBS=[
@@ -40,6 +43,6 @@ for root, dirs, files in os.walk("./"):
         if file.endswith("SConscript"):
             if(root == "./"):
                 continue
-            tests.append(SConscript(os.path.join(root, file), duplicate = 0, exports = 'mainenv'))
+            tests.append(SConscript(os.path.join(root, file), duplicate = 0, exports = 'MAIN_ENV'))
 
 Return('tests')

@@ -1,15 +1,39 @@
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 
+"""
+SConscript for building windowing frameworks.
+"""
 
+# python
 import subprocess
 import platform
 import os
 import re
 
-Import('mainenv')
+# scons
+import SCons.Action
+from SCons.Environment import Environment
+from SCons.Script import SConscript
+from SCons.Script.Main import AddOption
+from SCons.Script.Main import GetOption
+from SCons.Script.SConscript import Return
+
+# project
+import build_utils
+MAIN_ENV = build_utils.ImportVar('MAIN_ENV')
 
 libType = "ReleaseBuild"
 debugFlag = ""
-if(mainenv['DEBUG_BUILD']):
+if(MAIN_ENV['DEBUG_BUILD']):
     libType = 'DebugBuild'
     debugFlag = "-g"
     
@@ -26,10 +50,10 @@ AddOption(
 env = Environment() 
 
 env.Append(CPPPATH=[
-    mainenv.baseProjectDir + "/AppFrameworks",
-    mainenv.baseProjectDir + "/Core/Source",
-    mainenv.baseProjectDir + "/build/include",
-    mainenv.baseProjectDir + "/Dependencies/glm",
+    MAIN_ENV.baseProjectDir + "/AppFrameworks",
+    MAIN_ENV.baseProjectDir + "/Core/Source",
+    MAIN_ENV.baseProjectDir + "/build/include",
+    MAIN_ENV.baseProjectDir + "/Dependencies/glm",
 ])
 
 env.Append(CCFLAGS=[
@@ -46,8 +70,8 @@ env.Append(LINKFLAGS= [
 
 env.Append(LIBPATH=[
     "/usr/lib/gnome-settings-daemon-3.0/",
-    mainenv.baseProjectDir + "/Core/build",
-    mainenv.baseProjectDir + "/build/lib/",
+    MAIN_ENV.baseProjectDir + "/Core/build",
+    MAIN_ENV.baseProjectDir + "/build/lib/",
 ])
 
 env.Append(LIBS=[
@@ -79,8 +103,8 @@ prog = env.SharedLibrary("OpenDoorGL-GLFW3", sourceFiles)
 
 targets = [
     prog,
-    mainenv.baseProjectDir + "/AppFrameworks/odgl_WindowInterface.hpp",
-    mainenv.baseProjectDir + "/AppFrameworks/GLFW/odgl_GLFW3.hpp",
+    MAIN_ENV.baseProjectDir + "/AppFrameworks/odgl_WindowInterface.hpp",
+    MAIN_ENV.baseProjectDir + "/AppFrameworks/GLFW/odgl_GLFW3.hpp",
 ]
 
 Return('targets')

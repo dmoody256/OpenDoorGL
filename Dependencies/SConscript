@@ -1,21 +1,47 @@
+# This file is licensed under the MIT License.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 
+"""
+SConscript for building the dependincies and selecting files to be installed.
+"""
 
+# python
 import subprocess
 import platform
 import os
 import re
 import glob
 
+# scons
+import SCons.Action
+from SCons.Environment import Environment
+from SCons.Script import SConscript
+from SCons.Script.Main import AddOption
+from SCons.Script.Main import GetOption
+from SCons.Script.SConscript import Return
+
+# project
+import build_utils
+MAIN_ENV = build_utils.ImportVar('MAIN_ENV')
+
+# TODO: make this python and not command line
 output = subprocess.check_output(["git", "submodule", "init"])
 output = subprocess.check_output(["git", "submodule", "update"])
 output = subprocess.check_output(["./runCmake.sh"])
 
-Import('mainenv')
-
 libType = "ReleaseBuild"
 libPostfix = ""
 debugFlag = ""
-if(mainenv['DEBUG_BUILD']):
+if(MAIN_ENV['DEBUG_BUILD']):
     debugFlag = "-g"
     libType = 'DebugBuild'
     libPostfix = ""
@@ -84,20 +110,20 @@ if( "windows" in platform.system().lower() ):
     )
     env.Append(MSVC = not GetOption('msvc') )
 
-env.Append(GLEW_DIR = os.path.abspath(Dir('glew').abspath).replace('\\', '/') )
+env.Append(GLEW_DIR = os.path.abspath(env.Dir('glew').abspath).replace('\\', '/') )
 
 versionfile = open(env['GLEW_DIR'] + "/config/version")
 lines = versionfile.readlines()
 lines = [x.strip() for x in lines] 
 for line in lines:
     if(line.startswith('GLEW_MAJOR')):
-        m = re.search('GLEW_MAJOR\s*=\s*([0-9]+)', line)
+        m = re.search(r'GLEW_MAJOR\s*=\s*([0-9]+)', line)
         env.Append(GLEW_MAJOR = m.group(0) )
     if(line.startswith('GLEW_MINOR')):
-        m = re.search('GLEW_MINOR\s*=\s*([0-9]+)', line)
+        m = re.search(r'GLEW_MINOR\s*=\s*([0-9]+)', line)
         env.Append(GLEW_MINOR = m.group(0) )
     if(line.startswith('GLEW_MICRO')):
-        m = re.search('GLEW_MICRO\s*=\s*([0-9]+)', line)
+        m = re.search(r'GLEW_MICRO\s*=\s*([0-9]+)', line)
         env.Append(GLEW_MICRO = m.group(0) )
 env.Append(GLEW_VERSION = env['GLEW_MAJOR'] + '.' + env['GLEW_MINOR'] + '.' + env['GLEW_MICRO'] )
 
@@ -212,17 +238,17 @@ targets['headers']['GLFW'] = []
 targets['headers']['GLEW'] = []
 
 for header in publicHeaders:
-    targets['headers']['GLEW'].append(File(header))
+    targets['headers']['GLEW'].append(env.File(header))
 
 GLFWheaders = glob.glob("include/GLFW/*")
 for file in GLFWheaders:
-    targets['headers']['GLFW'].append(File(file))
+    targets['headers']['GLFW'].append(env.File(file))
 
 targets['libs'] = [sharedLib]
 GLFWlibs = glob.glob("lib/libglfw*")
 
 for file in GLFWlibs:
-    targets['libs'].append(File(file))
+    targets['libs'].append(env.File(file))
 
 Return('targets')
 """

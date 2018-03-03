@@ -1,4 +1,3 @@
-# This file is licensed under the MIT License.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -10,6 +9,11 @@
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
 
+"""
+SConscript for building the core OpenDoorGL library.
+"""
+
+# python
 import os
 import json
 import sys
@@ -21,15 +25,25 @@ import datetime
 import atexit
 import platform
 import xml.etree.cElementTree as ET
-from cStringIO import StringIO
-import SCons.Action
 
+# scons
+import SCons.Action
+import SCons.Script.SConscript
+from SCons.Environment import Environment
+from SCons.Script import SConscript
+from SCons.Script.Main import AddOption
+from SCons.Script.Main import GetOption
+from SCons.Script.Main import Progress
+from SCons.Script.SConscript import Return
+
+# project
+import build_utils
+MAIN_ENV = build_utils.ImportVar('MAIN_ENV')
 
 def CreateNewEnv():
-	
-    Import('mainenv')
-    env = Environment(DEBUG_BUILD = mainenv['DEBUG_BUILD'])
-    env.baseProjectDir = os.path.abspath(Dir('.').abspath).replace('\\', '/')
+
+    env = Environment(DEBUG_BUILD = MAIN_ENV['DEBUG_BUILD'])
+    env.baseProjectDir = os.path.abspath(env.Dir('.').abspath).replace('\\', '/')
     env.VariantDir('build', 'Source', duplicate=0)
 
     sourceFiles = [
@@ -57,9 +71,7 @@ def CreateNewEnv():
         "Source/odgl_Include.hpp",
     ]
 
-    libType = "ReleaseBuild"
     if(env['DEBUG_BUILD']):
-        libType = 'DebugBuild'
         env.Append(CPPDEFINES=[
             "ODGL_DEBUG",
         ])
@@ -69,37 +81,13 @@ def CreateNewEnv():
         "ODGL_DEBUG",
     ])
 
-    env.Append(CPPPATH=[
-
-    ])    
-        
-    env.Append(LIBPATH=[
-
-    ])
-
-    libs = [
-        
-    ]
-    if(env['DEBUG_BUILD']):
-        libs = [ 
-        ]
-    
-    env.Append(LIBS=libs)
-    env.Append(LIBS=[
-
-    ])
-    
-    resourceFiles = [
-        
-    ]
-
     env, prog = SetupBuildOutput(env, sourceFiles)
     env = SetupInstalls(env)
     env = ConfigPlatformEnv(env)
-    env = ConfigPlatformIDE(env, sourceFiles, headerFiles, resourceFiles, prog)
+    env = ConfigPlatformIDE(env, sourceFiles, headerFiles, [], prog)
     targets = [prog]
     for file in headerFiles:
-        targets.append(File(file))
+        targets.append(env.File(file))
 
     
     return targets
@@ -113,8 +101,8 @@ def ConfigPlatformEnv(env):
             debugFlag = "-g"
 
         env.Append(CPPPATH=[
-            mainenv.baseProjectDir + "/build/include",
-            mainenv.baseProjectDir + "/Dependencies/glm",
+            MAIN_ENV.baseProjectDir + "/build/include",
+            MAIN_ENV.baseProjectDir + "/Dependencies/glm",
         ])
 
         env.Append(CCFLAGS=[
@@ -148,13 +136,12 @@ def ConfigPlatformEnv(env):
         debugFlag = "/O2"
         degug = '/DEBUG:NONE'
         debugRuntime = "/MD"
-        libType = "Release"
+        
         if(env['DEBUG_BUILD']):
             degugDefine = 'DEBUG'
             debugFlag = "/Od"
             degug = '/DEBUG:FULL'
             debugRuntime = "/MDd"
-            libType = 'Debug'
 
         env.Append(CPPDEFINES=[
             'NOMINMAX',
@@ -253,8 +240,8 @@ def SetupBuildOutput(env, sourceFiles):
     if not os.path.exists(env.baseProjectDir + "/build/build_logs"):
         os.makedirs(env.baseProjectDir + "/build/build_logs")
 
-    if ARGUMENTS.get('fail', 0):
-        Command('target', 'source', ['/bin/false'])
+    #if ARGUMENTS.get('fail', 0):
+    #    env.Command('target', 'source', ['/bin/false'])
 
     atexit.register(display_build_status)
 
@@ -263,14 +250,14 @@ def SetupBuildOutput(env, sourceFiles):
             f.write(s + "\n")
 
     env['BUILD_LOG_TIME'] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d__%H_%M_%S')
-    if("VERBOSE" not in ARGUMENTS):
+    if("VERBOSE" not in env):
         env['PRINT_CMD_LINE_FUNC'] = print_cmd_line
     
     builtBins = []
     if("Windows" in platform.system()):
         builtBins.append("build/MyLifeApp.exe")
     else:
-        builtBins.append("build/MyLifeApp")
+        builtBins.append("build/libOpenDoorGL.so")
         
     Progress(ProgressCounter(sourceFiles, builtBins), interval=1)
 
@@ -304,31 +291,45 @@ class ProgressCounter(object):
         self.ENDC = ''
 
     def __call__(self, node, *args, **kw):
-        #print(str(node))
+       
         slashedNode = str(node).replace("\\", "/")
-        if(slashedNode in self.targetBinaries):
-            filename = os.path.basename(str(node))
-            if(node.get_state() == 2):
-                print(self.OKGREEN + "[   LINK] " + self.ENDC + "Linking " +  filename )
-            else:
-                print(self.OKGREEN + "[   LINK] " + self.ENDC + "Skipping, already built " +  filename )
-        
-        if(str(node).endswith(".obj") or str(node).endswith(".o")):
-            slashedNodeObj = os.path.splitext(slashedNode)[0] + ".cpp"
-            if(slashedNodeObj in self.progressSources ):
-                self.count += 1
-                percent = self.count / self.maxCount * 100.00
+        for binFileNode in self.targetBinaries:
+            #print(slashedNode)
+
+            if(slashedNode.endswith(binFileNode)):
                 filename = os.path.basename(str(node))
-                percentString = "{0:.2f}".format(percent)
-                if(percent < 100):
-                    percentString = " " + percentString
-                if(percent < 10):
-                    percentString = " " + percentString
-                    
                 if(node.get_state() == 2):
-                    print(self.OKGREEN + "[" + percentString + "%] " + self.ENDC + "Compiling " + filename )
+                    print(self.OKGREEN + "[   LINK] " + self.ENDC + "Linking " +  filename )
                 else:
-                    print(self.OKGREEN + "[" + percentString + "%] " + self.ENDC + "Skipping, already built " + filename )
+                    print(self.OKGREEN + "[   LINK] " + self.ENDC + "Skipping, already built " +  filename )
+        
+        if(str(node).endswith(".obj") or str(node).endswith(".os") or str(node).endswith(".o")):
+
+            slashedNodeObj = os.path.splitext(slashedNode)[0] + ".cpp"
+            for sourceFileNode in self.progressSources:
+                if(slashedNodeObj.endswith( sourceFileNode)):
+
+                    if(self.count == 0):
+                        start_build_string = "Building "
+                        for bin in self.targetBinaries:
+                            start_build_string += os.path.basename(bin) + ", "
+                        start_build_string = start_build_string[:-2]
+                        ColorPrinter().InfoPrint(start_build_string)
+
+                    self.count += 1
+                    percent = self.count / self.maxCount * 100.00
+                    filename = os.path.basename(str(node))
+                    percentString = "{0:.2f}".format(percent)
+                    if(percent < 100):
+                        percentString = " " + percentString
+                    if(percent < 10):
+                        percentString = " " + percentString
+                        
+                    if(node.get_state() == 2):
+                        print(self.OKGREEN + "[" + percentString + "%] " + self.ENDC + "Compiling " + filename )
+                    else:
+                        print(self.OKGREEN + "[" + percentString + "%] " + self.ENDC + "Skipping, already built " + filename )
+                    break
 
 
 
@@ -372,9 +373,9 @@ def highlight_word(line, word, color):
 def display_build_status():
     """Display the build status.  Called by atexit.
     Here you could do all kinds of complicated things."""
-    status, failures_message = build_status()
+    status, _unused_failures_message = build_status()
     
-    HEADER = '\033[95m'
+    #HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
     WARNING = '\033[93m'
@@ -425,6 +426,43 @@ def Indent(elem, level = 0):
     else:
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
+
+class ColorPrinter():
+
+    def __init__(self):
+    
+        if("Windows" in platform.system()):
+            self.HEADER = ''
+            self.OKBLUE = ''
+            self.OKGREEN = ''
+            self.WARNING = ''
+            self.FAIL = ''
+            self.ENDC = ''
+        else:
+            self.HEADER = '\033[95m'
+            self.OKBLUE = '\033[94m'
+            self.OKGREEN = '\033[92m'
+            self.WARNING = '\033[93m'
+            self.FAIL = '\033[91m'
+            self.ENDC = '\033[0m'
+
+    def InfoPrint(self, message):
+        print(self.HEADER + "[   INFO] " + self.ENDC + message)
+
+    def ErrorPrint(self, message):
+        print(self.FAIL + "[  ERROR] " + self.ENDC + message)
+
+    def CompilePrint(self, percent, message):
+        percent_string = "{0:.2f}".format(percent)
+        if(percent < 100): percent_string = " " + percent_string
+        if(percent < 10):  percent_string = " " + percent_string
+        print(self.OKGREEN + "[" + percent_string + "%] " + self.ENDC + message )
+
+    def LinkPrint(self, message):
+        print(self.OKGREEN + "[   LINK] " + self.ENDC + message)
+
+    def ConfigString(self, message):
+        return self.OKBLUE + "[ CONFIG] " + self.ENDC + message
 
 build = CreateNewEnv()
 Return('build')
