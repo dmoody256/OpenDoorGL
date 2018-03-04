@@ -13,16 +13,9 @@
 SConscript for building windowing frameworks.
 """
 
-# python
-import subprocess
-import platform
-import os
-import re
 
 # scons
-import SCons.Action
 from SCons.Environment import Environment
-from SCons.Script import SConscript
 from SCons.Script.Main import AddOption
 from SCons.Script.Main import GetOption
 from SCons.Script.SConscript import Return
@@ -60,11 +53,11 @@ env.Append(CCFLAGS=[
     debugFlag,
 ])
 
-env.Append(CXXFLAGS= [
+env.Append(CXXFLAGS=[
     "-std=c++11",
 ])
 
-env.Append(LINKFLAGS= [
+env.Append(LINKFLAGS=[
     debugFlag,
 ])
 
@@ -92,12 +85,12 @@ env.Append(LIBS=[
 ])
 
 
-if(GetOption('glfw3') == True):
-    env.Append(GLFW3 = True)
-    env.Append(CPPPATH = [
+if(GetOption('glfw3')):
+    env.Append(GLFW3=True)
+    env.Append(CPPPATH=[
         "GLFW",
     ])
-sourceFiles =  [ "GLFW/odgl_GLFW3.cpp" ]
+sourceFiles = ["GLFW/odgl_GLFW3.cpp"]
 
 prog = env.SharedLibrary("OpenDoorGL-GLFW3", sourceFiles)
 
