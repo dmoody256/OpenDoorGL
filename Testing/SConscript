@@ -1,48 +1,78 @@
+# This file is licensed under the MIT License.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+"""
+SConcript for building different text modules.
+"""
+
+# python
 import os
+
+# scons
+from SCons.Environment import Environment
+from SCons.Script import SConscript
+from SCons.Script.SConscript import Return
 
 # project
 from BuildUtils import ImportVar
+
 MAIN_ENV = ImportVar('MAIN_ENV')
 
-testenv = Environment(DEBUG_BUILD = MAIN_ENV['DEBUG_BUILD'], 
-CXXTEST=MAIN_ENV.baseProjectDir + '/Dependencies/cxxtest/bin/cxxtestgen', 
-toolpath=[MAIN_ENV.baseProjectDir + '/Dependencies/cxxtest/build_tools/SCons'], 
-tools = ['default','cxxtest'])
+CXXTEST_DIR = MAIN_ENV.baseProjectDir + '/Dependencies/cxxtest'
+
+TEST_ENV = Environment(
+    DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'],
+    CXXTEST=CXXTEST_DIR + '/bin/cxxtestgen',
+    toolpath=[CXXTEST_DIR + '/build_tools/SCons'],
+    tools=['default', 'cxxtest']
+)
 
 debugFlag = ""
-if(testenv['DEBUG_BUILD']):
+if TEST_ENV['DEBUG_BUILD']:
     debugFlag = "-g"
 
-testenv.Append(CCFLAGS=[
+TEST_ENV.Append(CCFLAGS=[
     "-std=c++11",
     debugFlag,
 ])
-testenv.Append(CPPPATH=[
+TEST_ENV.Append(CPPPATH=[
     MAIN_ENV.baseProjectDir + "/build/include",
     MAIN_ENV.baseProjectDir + "/Testing",
     MAIN_ENV.baseProjectDir + "/Dependencies/glm",
     MAIN_ENV.baseProjectDir + "/Dependencies/cxxtest/cxxtest",
 ])
-testenv.Append(CPPDEFINES=[
+TEST_ENV.Append(CPPDEFINES=[
     "GLM_FORCE_RADIANS",
 ])
-testenv.Append(LIBPATH=[
+TEST_ENV.Append(LIBPATH=[
     MAIN_ENV.baseProjectDir + "/build/lib",
-    
 ])
-testenv.Append(LIBS=[
+TEST_ENV.Append(LIBS=[
     "OpenDoorGL",
     "GLEW",
 ])
-
-Export('testenv')
 
 tests = []
 for root, dirs, files in os.walk("./"):
     for file in files:
         if file.endswith("SConscript"):
-            if(root == "./"):
+            if root == "./":
                 continue
-            tests.append(SConscript(os.path.join(root, file), duplicate = 0, exports = 'MAIN_ENV'))
+            tests.append(
+                SConscript(
+                    os.path.join(root, file),
+                    duplicate=0,
+                    exports='TEST_ENV'
+                )
+            )
 
 Return('tests')

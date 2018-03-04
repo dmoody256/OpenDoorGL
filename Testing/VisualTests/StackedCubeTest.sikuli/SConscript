@@ -1,6 +1,6 @@
 
-Import('testenv')
-env = testenv.Clone()
+Import('TEST_ENV')
+env = TEST_ENV.Clone()
 
 debugFlag = ""
 if(env['DEBUG_BUILD']):

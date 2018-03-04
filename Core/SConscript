@@ -1,3 +1,4 @@
+# This file is licensed under the MIT License.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +72,7 @@ if "linux" in platform.system().lower():
         debugFlag = "-g"
 
     env.Append(
-        CPPPATH=[ 
+        CPPPATH=[
             MAIN_ENV.baseProjectDir + "/build/include",
             MAIN_ENV.baseProjectDir + "/Dependencies/glm",
         ],
@@ -111,7 +112,7 @@ elif "win" in platform.system().lower():
             "/Zc:forScope",  # Force Conformance in for Loop Scope
             "/GR",           # Enable Run-Time Type Information
             "/Oy-",          # Disable Frame-Pointer Omission
-            debugRuntime,    
+            debugRuntime,
             "/EHsc",
             "/nologo",
         ],
@@ -139,8 +140,10 @@ for file in headerFiles:
 #                variantSourceFiles.append(re.sub("^build", "../Source", file))
 #            variantHeaderFiles = []
 #            for file in headerFiles:
-#                variantHeaderFiles.append(re.sub("^Source", "../Source", file))
-#            BUILD_PREFIX = os.path.abspath(env.baseProjectDir).replace('\\', '/')
+#                variantHeaderFiles.append(
+#                   re.sub("^Source", "../Source", file))
+#            BUILD_PREFIX =
+#               os.path.abspath(env.baseProjectDir).replace('\\', '/')
 #            buildSettings = {
 #                'LocalDebuggerCommand':BUILD_PREFIX + "/build/MyLifeApp.exe",
 #                'LocalDebuggerWorkingDirectory':BUILD_PREFIX + "/build/",
@@ -150,8 +153,9 @@ for file in headerFiles:
 #            if env['DEBUG_BUILD']:
 #                buildVariant = 'Debug|x64'
 #                cmdargs = '--debug_build'
-#            env.MSVSProject(target='VisualStudio/MyLifeApp' + env['MSVSPROJECTSUFFIX'],
-#                            srcs=variantSourceFiles,
+#            env.MSVSProject(
+#               target='VisualStudio/MyLifeApp' + env['MSVSPROJECTSUFFIX'],
+#                        srcs=variantSourceFiles,
 #                            localincs=variantHeaderFiles,
 #                            resources=resources,
 #                            buildtarget=program,
@@ -159,12 +163,5 @@ for file in headerFiles:
 #                            variantbuildVariant,
 #                            cmdargs=cmdargs)
 #        return env
-
-
-
-
-
-
-   
 
 Return('targets')
