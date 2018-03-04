@@ -1,8 +1,8 @@
 import os
 
 # project
-import build_utils
-MAIN_ENV = build_utils.ImportVar('MAIN_ENV')
+from BuildUtils import ImportVar
+MAIN_ENV = ImportVar('MAIN_ENV')
 
 testenv = Environment(DEBUG_BUILD = MAIN_ENV['DEBUG_BUILD'], 
 CXXTEST=MAIN_ENV.baseProjectDir + '/Dependencies/cxxtest/bin/cxxtestgen', 

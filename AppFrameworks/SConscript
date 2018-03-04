@@ -28,8 +28,8 @@ from SCons.Script.Main import GetOption
 from SCons.Script.SConscript import Return
 
 # project
-import build_utils
-MAIN_ENV = build_utils.ImportVar('MAIN_ENV')
+from BuildUtils import ImportVar
+MAIN_ENV = ImportVar('MAIN_ENV')
 
 libType = "ReleaseBuild"
 debugFlag = ""

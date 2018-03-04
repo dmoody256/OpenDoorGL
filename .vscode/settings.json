@@ -67,10 +67,17 @@
         "/usr/local/lib/scons-3.0.0"
     ],
     "python.globalModuleInstallation": true,
-    "python.linting.mypyArgs": [
-        "--ignore-missing-imports",
-        "--follow-imports=silent",
-        "--rcfile=${workspaceFolder}/.pylintrc"
-    ],
-    "python.pythonPath": "/usr/bin/python3.5",
+    "python.pythonPath": "/usr/bin/python3",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Path": "/usr/bin/flake8",
+    "python.linting.pylintPath": "/usr/local/bin/pylint",
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.pylintArgs": [
+        "--rcfile",
+        "${workspaceFolder}/.pylintrc",
+        "--init-hook",
+        "import sys; sys.path.extend(['${workspaceFolder}', '/usr/local/lib/scons-3.0.0'])"
+    ]
 }
