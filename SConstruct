@@ -122,7 +122,7 @@ MAIN_ENV.AlwaysBuild(CHMOD_COMMAND)
 
 TEST_CALLBACK = SCons.Action.ActionFactory(
     run_tests,
-    lambda: 'Running Tests... Please be Patient'
+    lambda base_dir: 'Running Tests... Please be Patient'
 )
 
 TEST_BINS = []
