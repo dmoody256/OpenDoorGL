@@ -94,6 +94,9 @@ def build_status():
 
 
 def highlight_word(line, word, color):
+    """
+    Highlights the word in the passed line if its present.
+    """
     ENDC = '\033[0m'
     return line.replace(word, color + word + ENDC)
 
@@ -150,7 +153,9 @@ def display_build_status():
 
 
 class ColorPrinter():
-
+    """
+    Utility class used for printing colored messages.
+    """
     def __init__(self):
 
         if "Windows" in platform.system():
@@ -169,79 +174,128 @@ class ColorPrinter():
             self.ENDC = '\033[0m'
 
     def InfoPrint(self, message):
+        """
+        Prints a purple info message.
+        """
         print(self.HEADER + "[   INFO] " + self.ENDC + message)
 
     def ErrorPrint(self, message):
+        """
+        Prints a red error message.
+        """
         print(self.FAIL + "[  ERROR] " + self.ENDC + message)
 
     def CompilePrint(self, percent, message):
+        """
+        Prints a compiled message, including a green percent prefix.
+        """
         percent_string = "{0:.2f}".format(percent)
-        if(percent < 100):
+        if percent < 100:
             percent_string = " " + percent_string
-        if(percent < 10):
+        if percent < 10:
             percent_string = " " + percent_string
-        print(self.OKGREEN 
-              + "[" + percent_string + "%] " 
+        print(self.OKGREEN
+              + "[" + percent_string + "%] "
               + self.ENDC + message)
 
     def LinkPrint(self, message):
+        """
+        Prints a linked message, including a green link prefix.
+        """
         print(self.OKGREEN + "[   LINK] " + self.ENDC + message)
 
     def ConfigString(self, message):
+        """
+        Prints a blue configure message.
+        """
         return self.OKBLUE + "[ CONFIG] " + self.ENDC + message
+
+
+def print_purple():
+    """  Returns string for purple console code."""
+    if platform == 'win32':
+        return ''
+    return '\033[95m'
+
+
+def print_blue():
+    """  Returns string for blue console code."""
+    if platform == 'win32':
+        return ''
+    return '\033[94m'
+
+
+def print_green():
+    """  Returns string for green console code."""
+    if platform == 'win32':
+        return ''
+    return '\033[92m'
+
+
+def print_yellow():
+    """  Returns string for yellow console code."""
+    if platform == 'win32':
+        return ''
+    return '\033[93m'
+
+
+def print_red():
+    """  Returns string for red console code."""
+    if platform == 'win32':
+        return ''
+    return '\033[91m'
+
+
+def color_stop():
+    """  stops the color console code."""
+    if platform == 'win32':
+        return ''
+    return '\033[0m'
 
 
 class ProgressCounter(object):
 
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
+    """
+    Utility class used for printing progress during the build.
+    """
 
-    def __init__(self, sourceFiles, targetBinaries):
-        self.count = 0.0
-        self.maxCount = float(len(sourceFiles))
-        self.progressSources = sourceFiles
-        self.targetBinaries = targetBinaries
-
-    def disable(self):
-        self.HEADER = ''
-        self.OKBLUE = ''
-        self.OKGREEN = ''
-        self.WARNING = ''
-        self.FAIL = ''
-        self.ENDC = ''
-
-    def __call__(self, node, *_unused_args, **_unused_kw):
-        
-        slashedNode = str(node).replace("\\", "/")
-        for binFileNode in self.targetBinaries:
+    def process_bins(self, node):
+        """
+        Check to see if node is in the list of bins and
+        print a status message.
+        """
+        node_string = str(node).replace("\\", "/")
+        for bin_node in self.targetBinaries:
             #print(slashedNode)
 
-            if(slashedNode.endswith(binFileNode)):
-                filename = os.path.basename(str(node))
-                if(node.get_state() == 2):
-                    print(self.OKGREEN 
-                          + "[   LINK] " 
-                          + self.ENDC + "Linking " 
+            if node_string.endswith(bin_node):
+                filename = os.path.basename(node_string)
+                if node.get_state() == 2:
+                    print(print_green()
+                          + "[   LINK] "
+                          + color_stop() + "Linking "
                           + filename)
                 else:
-                    print(self.OKGREEN 
-                          + "[   LINK] " 
-                          + self.ENDC + "Skipping, already built "
+                    print(print_green()
+                          + "[   LINK] "
+                          + color_stop() + "Skipping, already built "
                           + filename)
-        
-        if(str(node).endswith(".obj")
-                or str(node).endswith(".os")
-                or str(node).endswith(".o")):
 
-            slashedNodeObj = os.path.splitext(slashedNode)[0] + ".cpp"
+    def process_sources(self, node):
+        """
+        Check to see if the source has been compilied
+        and report the status.
+        """
+        node_string = str(node).replace("\\", "/")
+        if(str(node_string).endswith(".obj")
+           or str(node_string).endswith(".os")
+           or str(node_string).endswith(".o")):
+
+            slashedNodeObj = os.path.splitext(node_string)[0] + ".cpp"
             for sourceFileNode in self.progressSources:
-                if(slashedNodeObj.endswith(sourceFileNode)):
+                if slashedNodeObj.endswith(sourceFileNode):
 
-                    if(self.count == 0):
+                    if self.count == 0:
                         start_build_string = "Building "
                         for binFile in self.targetBinaries:
                             start_build_string += (os.path.basename(binFile)
@@ -253,29 +307,43 @@ class ProgressCounter(object):
                     percent = self.count / self.maxCount * 100.00
                     filename = os.path.basename(str(node))
                     percentString = "{0:.2f}".format(percent)
-                    if(percent < 100):
+                    if percent < 100:
                         percentString = " " + percentString
-                    if(percent < 10):
+                    if percent < 10:
                         percentString = " " + percentString
-                        
-                    if(node.get_state() == 2):
-                        print(self.OKGREEN 
-                              + "[" + percentString + "%] " 
-                              + self.ENDC + "Compiling " 
+
+                    if node.get_state() == 2:
+                        print(print_green()
+                              + "[" + percentString + "%] "
+                              + color_stop() + "Compiling "
                               + filename)
                     else:
-                        print(self.OKGREEN 
-                              + "[" + percentString + "%] " 
-                              + self.ENDC + "Skipping, already built " 
+                        print(print_green()
+                              + "[" + percentString + "%] "
+                              + color_stop() + "Skipping, already built "
                               + filename)
                     break
+
+    def __init__(self, sourceFiles, targetBinaries):
+        self.count = 0.0
+        self.maxCount = float(len(sourceFiles))
+        self.progressSources = sourceFiles
+        self.targetBinaries = targetBinaries
+
+    def __call__(self, node, *_unused_args, **_unused_kw):
+
+        self.process_bins(node)
+        self.process_sources(node)
 
 
 def SetupBuildOutput(env, sourceFiles):
 
+    """
+    Sets up the build output by condiguring the passed environment.
+    """
     windowsRedirect = ""
     linuxRedirect = "2>&1"
-    if("Windows" in platform.system()):
+    if "Windows" in platform.system():
         windowsRedirect = "2>&1"
         linuxRedirect = ""
 
@@ -294,18 +362,18 @@ def SetupBuildOutput(env, sourceFiles):
         )
         soureFileObjs.append(buildObj)
 
-    if("Windows" in platform.system()):
+    if "Windows" in platform.system():
 
         new_command = env['LINKCOM'].list[0].cmd_list.replace(
             '",',
-            " 2>&1 > \\\"" + env.baseProjectDir 
+            " 2>&1 > \\\"" + env.baseProjectDir
             + "/build/build_logs/MyLifeApp_link.txt")
         env['LINKCOM'].list[0].cmd_list = new_command
     else:
         new_command = env['LINKCOM'].replace(
             '",',
-            " > \\\"" + env.baseProjectDir 
-            + "/build/build_logs/MyLifeApp_link.txt\\\"\" 2>&1 ,") 
+            " > \\\"" + env.baseProjectDir
+            + "/build/build_logs/MyLifeApp_link.txt\\\"\" 2>&1 ,")
         env['LINKCOM'] = new_command
 
     prog = env.SharedLibrary("build/libOpenDoorGL", soureFileObjs)
@@ -321,8 +389,11 @@ def SetupBuildOutput(env, sourceFiles):
     atexit.register(display_build_status)
 
     def print_cmd_line(s, _unused_targets, _unused_sources, env):
-        log_file = (env.baseProjectDir 
-                    + "/build/build_logs/build_" 
+        """
+        Switches out the default scons printing.
+        """
+        log_file = (env.baseProjectDir
+                    + "/build/build_logs/build_"
                     + env['BUILD_LOG_TIME'] + ".log")
         with open(log_file, "a") as f:
             f.write(s + "\n")
@@ -330,15 +401,15 @@ def SetupBuildOutput(env, sourceFiles):
     current_date = datetime.datetime.fromtimestamp(time.time())
     env['BUILD_LOG_TIME'] = current_date.strftime('%Y_%m_%d__%H_%M_%S')
 
-    if("VERBOSE" not in env):
+    if "VERBOSE" not in env:
         env['PRINT_CMD_LINE_FUNC'] = print_cmd_line
 
     builtBins = []
-    if("Windows" in platform.system()):
+    if "Windows" in platform.system():
         builtBins.append("build/MyLifeApp.exe")
     else:
         builtBins.append("build/libOpenDoorGL.so")
-        
+
     Progress(ProgressCounter(sourceFiles, builtBins), interval=1)
 
     return [env, prog]
