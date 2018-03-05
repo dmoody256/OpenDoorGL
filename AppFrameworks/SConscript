@@ -26,10 +26,10 @@ MAIN_ENV = ImportVar('MAIN_ENV')
 
 libType = "ReleaseBuild"
 debugFlag = ""
-if(MAIN_ENV['DEBUG_BUILD']):
+if MAIN_ENV['DEBUG_BUILD']:
     libType = 'DebugBuild'
     debugFlag = "-g"
-    
+
 
 AddOption(
     '--glfw3',
@@ -40,7 +40,7 @@ AddOption(
     help='Build App using GLFW3'
 )
 
-env = Environment() 
+env = Environment()
 
 env.Append(CPPPATH=[
     MAIN_ENV.baseProjectDir + "/AppFrameworks",
@@ -77,7 +77,7 @@ env.Append(LIBS=[
     "Xrandr",
     "Xxf86vm",
     "Xinerama",
-    "Xcursor", 
+    "Xcursor",
     "rt",
     "m",
     "pthread",
@@ -85,7 +85,7 @@ env.Append(LIBS=[
 ])
 
 
-if(GetOption('glfw3')):
+if GetOption('glfw3'):
     env.Append(GLFW3=True)
     env.Append(CPPPATH=[
         "GLFW",
