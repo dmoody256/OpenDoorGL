@@ -79,5 +79,6 @@
         "${workspaceFolder}/.pylintrc",
         "--init-hook",
         "import sys; sys.path.extend(['${workspaceFolder}', '/usr/local/lib/scons-3.0.0'])"
-    ]
+    ],
+    "editor.formatOnSave": true
 }

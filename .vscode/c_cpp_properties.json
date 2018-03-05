@@ -28,7 +28,8 @@
             "includePath": [
                 "/usr/include",
                 "/usr/local/include",
-                "${workspaceRoot}/Source",
+                "${workspaceRoot}/Core/Source",
+                "${workspaceRoot}/build/include",
                 "/usr/include/x86_64-linux-gnu/",
                 "/usr/include/x86_64-linux-gnu/bits",
                 "/usr/include/x86_64-linux-gnu/c++/4.8",
@@ -43,7 +44,8 @@
                 "path": [
                     "/usr/include",
                     "/usr/local/include",
-                    "${workspaceRoot}/Source",
+                    "${workspaceRoot}/Core/Source",
+                    "${workspaceRoot}/build/include",
                     "/usr/include/x86_64-linux-gnu/",
                     "/usr/include/x86_64-linux-gnu/bits",
                     "/usr/include/x86_64-linux-gnu/c++/4.8",
