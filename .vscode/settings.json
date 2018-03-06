@@ -62,7 +62,6 @@
     "clang.cxxflags": [
         "-std=c++11"
     ],
-    "C_Cpp.intelliSenseEngine": "Tag Parser",
     "python.autoComplete.extraPaths": [
         "/usr/local/lib/scons-3.0.0"
     ],

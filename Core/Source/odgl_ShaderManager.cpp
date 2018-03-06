@@ -9,7 +9,8 @@ namespace OpenDoorGL{
 
     std::string ShaderManager::colorVertShader;
     std::string ShaderManager::colorFragShader;
-
+    std::string ShaderManager::textureVertShader;
+    std::string ShaderManager::textureFragShader;
     std::string ShaderManager::textureModelVertShader;
     std::string ShaderManager::textureModelFragShader;
 
@@ -190,6 +191,55 @@ namespace OpenDoorGL{
             colorVertShader = vertShader.str();
         }
         return colorVertShader.c_str();
+    }
+
+    const char* ShaderManager::getTextureFragShader(){
+        if(textureFragShader.size() == 0){
+            std::stringstream fragShader;
+            fragShader <<
+            "#version 330 core\n"<< 
+            "\n"<<
+            "uniform sampler2D myTextureSampler;\n"<< 
+            "\n"<<
+            "in vec2 UV;\n"<<
+            "// Ouput data\n"<< 
+            "out vec3 color;\n"<< 
+            "\n"<<
+            "void main(){\n"<< 
+            "\n"<<
+            "    // Output color = color specified in the vertex shader,\n"<< 
+            "    // interpolated between all 3 surrounding vertices\n"<< 
+            "    color = texture( myTextureSampler, UV ).rgb;\n"<< 
+            "\n"<<
+            "}\n";
+            textureFragShader = fragShader.str();
+        }
+        return textureFragShader.c_str();
+    }
+
+    const char* ShaderManager::getTextureVertShader(){
+        if(textureVertShader.size() == 0){
+            std::stringstream vertShader;
+            vertShader <<
+            "#version 330 core\n"<< 
+            "\n"<<
+            "// Input vertex data, different for all executions of this shader.\n"<<
+            "layout(location = 0) in vec3 vertexPosition_modelspace;\n"<< 
+            "layout(location = 1) in vec2 vertexUV;\n"<<
+            "\n"<<
+            "out vec2 UV;\n"<<
+            "// Values that stay constant for the whole mesh.\n"<< 
+            "uniform mat4 MVP;\n"<< 
+            "\n"<< 
+            "void main(){\n"<< 
+            "    // Output position of the vertex, in clip space : MVP * position\n"<< 
+            "    gl_Position =  MVP * vec4(vertexPosition_modelspace,1);\n"<< 
+            "    UV = vertexUV;\n"<<
+            "}\n";
+            
+            textureVertShader = vertShader.str();
+        }
+        return textureVertShader.c_str();
     }
 
     GLuint ShaderManager::LoadShadersFromString(const char * vertShader,const char * fragShader){

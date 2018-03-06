@@ -33,6 +33,7 @@ env.baseProjectDir = os.path.abspath(env.Dir('.').abspath).replace('\\', '/')
 env.VariantDir('build', 'Source', duplicate=0)
 
 sourceFiles = [
+    "build/odgl_Button.cpp",
     "build/odgl_Cube.cpp",
     "build/odgl_RenderObject.cpp",
     "build/odgl_View.cpp",
@@ -46,6 +47,7 @@ sourceFiles = [
 ]
 
 headerFiles = [
+    "Source/odgl_Button.hpp",
     "Source/odgl_Cube.hpp",
     "Source/odgl_RenderObject.hpp",
     "Source/odgl_View.hpp",

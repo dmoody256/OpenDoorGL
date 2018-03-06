@@ -5,12 +5,15 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/AppFrameworks/appName",
+            "program": "${workspaceRoot}/build/bin/ButtonTest",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/AppFrameworks",
             "environment": [
-                {"name":"LD_LIBRARY_PATH","value":"${workspaceRoot}/build/lib"}
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceRoot}/build/lib"
+                }
             ],
             "externalConsole": true,
             "MIMode": "gdb",
