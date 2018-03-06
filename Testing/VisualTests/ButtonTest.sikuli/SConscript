@@ -39,6 +39,7 @@ targets = dict()
 
 targets['executable'] = executable
 targets['resources'] = [
-    env.File('ButtonTexture.bmp'), env.File('ButtonTexture.dds')]
+    env.File('ButtonTexture.bmp')
+]
 
 Return('targets')
