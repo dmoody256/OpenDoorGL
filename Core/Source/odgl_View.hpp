@@ -22,6 +22,7 @@ namespace OpenDoorGL{
         // Initial Field of View
         float initialFoV;
 
+        bool _orthographic;
         float speed;
         float mouseSpeed;
     };

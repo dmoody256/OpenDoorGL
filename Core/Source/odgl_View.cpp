@@ -15,7 +15,7 @@ namespace OpenDoorGL{
 
         speed = 3.0f; // 3 units / second
         mouseSpeed = 0.005f;
-        
+        _orthographic = false;
     }
 
     View::~View(){
