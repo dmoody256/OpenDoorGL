@@ -11,17 +11,17 @@ Button::Button()
     // Create and compile our GLSL program from the shaders
     _programID = ShaderManager::LoadShadersFromString(ShaderManager::getTextureVertShader(), ShaderManager::getTextureFragShader());
     GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
-    GL_CHECK ( _uniformTexture  = glGetUniformLocation(_programID, "myTextureSampler") );
+    GL_CHECK(_uniformTexture = glGetUniformLocation(_programID, "myTextureSampler"));
     _vertices.resize(2 * 3 * 3, 0);
     _textureCoords.resize(2 * 3 * 2, 0);
     _width = 0.0f;
     _height = 0.0f;
     _buttonTexture = NULL;
-
 }
 Button::~Button()
 {
-    if(_buttonTexture){
+    if (_buttonTexture)
+    {
         GLuint texture = _buttonTexture->GetTextureGPUHandle();
         GL_CHECK(glDeleteTextures(1, &texture));
         delete _buttonTexture;
@@ -83,7 +83,8 @@ float Button::getWidth()
     return _width;
 }
 
-float Button::getHeight(){
+float Button::getHeight()
+{
     return _height;
 }
 
@@ -122,16 +123,14 @@ void Button::draw(View *view)
         ));
 
     // Bind our texture in Texture Unit 0
-    GL_CHECK ( glActiveTexture(GL_TEXTURE0) );
-    GL_CHECK ( glBindTexture(GL_TEXTURE_2D, _buttonTexture->GetTextureGPUHandle()) );
+    GL_CHECK(glActiveTexture(GL_TEXTURE0));
+    GL_CHECK(glBindTexture(GL_TEXTURE_2D, _buttonTexture->GetTextureGPUHandle()));
     // Set our "myTextureSampler" sampler to use Texture Unit 0
-    GL_CHECK ( glUniform1i(_uniformTexture, 0) );
+    GL_CHECK(glUniform1i(_uniformTexture, 0));
 
     GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, 2 * 3));
-    
 
     GL_CHECK(glDisableVertexAttribArray(0));
     GL_CHECK(glDisableVertexAttribArray(1));
 }
-
 }
