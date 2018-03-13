@@ -8,7 +8,7 @@
             "program": "${workspaceRoot}/build/bin/ButtonTest",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/AppFrameworks",
+            "cwd": "${workspaceRoot}/build/bin",
             "environment": [
                 {
                     "name": "LD_LIBRARY_PATH",
@@ -16,6 +16,7 @@
                 }
             ],
             "externalConsole": true,
+            "miDebuggerPath": "${workspaceRoot}/.vscode/vglrun_debug.sh",
             "MIMode": "gdb",
             "setupCommands": [
                 {
