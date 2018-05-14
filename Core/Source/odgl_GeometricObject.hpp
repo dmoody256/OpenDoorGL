@@ -3,42 +3,43 @@
 
 #include <GLEW/glew.h>
 
-
 #include <vector>
 #include <string>
 
+#include "odgl_Include.hpp"
 #include "odgl_RenderObject.hpp"
 
-namespace OpenDoorGL{
+namespace OpenDoorGL
+{
 
-    class GeometricObject : public RenderObject{
-        
-    public:
-        GeometricObject();
-        ~GeometricObject();
+class ODGL_DLLEXPORT GeometricObject : public RenderObject
+{
 
-        void draw(View view);
-        
-        void setShadersFromString(const char* vert_shader, const char* frag_shader);
-        
-    protected:
+  public:
+    GeometricObject();
+    ~GeometricObject();
 
-        GLuint _vertexBuffer;
-        GLuint _colorBuffer;
-        GLuint _textureBuffer;
-        GLuint _normalBuffer;
+    void draw(View view);
 
-        std::vector<GLfloat> _vertices;
-        std::vector<GLfloat> _vertColors;
-        std::vector<GLfloat> _textureCoords;
-        std::vector<GLfloat> _normals;
+    void setShadersFromString(const char *vert_shader, const char *frag_shader);
 
-        GLuint _programID;
-        GLuint _uniformMVP;
-        
-        std::string _vertShader;
-        std::string _fragShader;
-    };
-}
+  protected:
+    GLuint _vertexBuffer;
+    GLuint _colorBuffer;
+    GLuint _textureBuffer;
+    GLuint _normalBuffer;
+
+    std::vector<GLfloat> _vertices;
+    std::vector<GLfloat> _vertColors;
+    std::vector<GLfloat> _textureCoords;
+    std::vector<GLfloat> _normals;
+
+    GLuint _programID;
+    GLuint _uniformMVP;
+
+    std::string _vertShader;
+    std::string _fragShader;
+};
+} // namespace OpenDoorGL
 
 #endif

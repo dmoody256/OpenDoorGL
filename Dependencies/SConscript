@@ -34,23 +34,25 @@ MAIN_ENV = ImportVar('MAIN_ENV')
 # TODO: make this python and not command line
 output = subprocess.check_output(["git", "submodule", "init"])
 output = subprocess.check_output(["git", "submodule", "update"])
-output = subprocess.check_output(["./runCmake.sh"])
+# output = subprocess.check_output(["./runCmake.sh"])
 
 libType = "ReleaseBuild"
 libPostfix = ""
 debugFlag = ""
 if MAIN_ENV['DEBUG_BUILD']:
     debugFlag = "-g"
+    if "windows" in platform.system().lower():
+        debugFlag = "/Z7"
     libType = 'DebugBuild'
     libPostfix = ""
 
-#include(GNUInstallDirs)
+# include(GNUInstallDirs)
 
 AddOption(
     '--no-glew-util',
     dest='utilities',
     action='store_true',
-    metavar='DIR',
+    metavar='BOOL',
     default=False,
     help='Build utilities'
 )
@@ -59,34 +61,88 @@ AddOption(
     '--regal',
     dest='regal',
     action='store_true',
-    metavar='DIR',
+    metavar='BOOL',
     default=False,
     help='Build Regal mode'
 )
 
 AddOption(
-    '--osmesa',
-    dest='osmesa',
+    '--glfw-examples',
+    dest='glfw_examples',
     action='store_true',
-    metavar='DIR',
+    metavar='BOOL',
     default=False,
-    help='Build osmesa mode'
+    help='Build the GLFW example programs'
 )
 
 AddOption(
-    '--no-msvc',
-    dest='msvc',
+    '--glfw-tests',
+    dest='glfw_tests',
     action='store_true',
-    metavar='DIR',
+    metavar='BOOL',
     default=False,
-    help='Build osmesa mode'
+    help='Build the GLFW test programs'
 )
 
-env = Environment(
+AddOption(
+    '--glfw-docs',
+    dest='glfw_docs',
+    action='store_true',
+    metavar='BOOL',
+    default=False,
+    help='Build the GLFW documentation'
+)
+
+GLEW_ENV = Environment(
     UTILITIES=not GetOption('utilities'),
     REGAL=GetOption('regal'),
-    OSMESA=GetOption('osmesa')
 )
+
+GLFW_ENV = Environment(
+    BUILD_EXAMPLES=not GetOption('glfw_examples'),
+    BUILD_TESTS=GetOption('glfw_tests'),
+    BUILD_DOCS=GetOption('glfw_docs')
+)
+
+if ("linux" in platform.system().lower() or
+        "darwin" in platform.system().lower()):
+    AddOption(
+        '--osmesa',
+        dest='osmesa',
+        action='store_true',
+        metavar='BOOL',
+        default=False,
+        help='Build osmesa mode'
+    )
+    GLEW_ENV.Append(OSMESA=GetOption('osmesa'))
+    GLFW_ENV.Append(OSMESA=GetOption('osmesa'))
+else:
+    GLEW_ENV.Append(OSMESA=False)
+    GLFW_ENV.Append(OSMESA=False)
+
+if "linux" in platform.system().lower():
+    AddOption(
+        '--wayland',
+        dest='wayland',
+        action='store_true',
+        metavar='BOOL',
+        default=False,
+        help='Use Wayland for window creation'
+    )
+    GLFW_ENV.Append(WAYLAND=GetOption('wayland'))
+
+    AddOption(
+        '--mir',
+        dest='mir',
+        action='store_true',
+        metavar='BOOL',
+        default=False,
+        help='Use Mir for window creation'
+    )
+    GLFW_ENV.Append(MIR=GetOption('mir'))
+else:
+    GLFW_ENV.Append(WAYLAND=False)
+    GLFW_ENV.Append(MIR=False)
 
 if "darwin" in platform.system().lower():
     AddOption(
@@ -97,7 +153,9 @@ if "darwin" in platform.system().lower():
         default=False,
         help='Build Framework bundle for OSX'
     )
-    env.Append(BUNDLE=GetOption('bundle'))
+    GLEW_ENV.Append(BUNDLE=GetOption('bundle'))
+else:
+    GLEW_ENV.Append(BUNDLE=False)
 
 if "windows" in platform.system().lower():
     AddOption(
@@ -106,141 +164,720 @@ if "windows" in platform.system().lower():
         action='store_true',
         metavar='DIR',
         default=False,
-        help='Build osmesa mode'
+        help='Use OSMesa for offscreen context creation'
     )
-    env.Append(MSVC=not GetOption('msvc'))
+    GLEW_ENV.Append(MSVC=not GetOption('msvc'))
+    AddOption(
+        '--hybrid-hpg',
+        dest='hybrid-hpg',
+        action='store_true',
+        metavar='DIR',
+        default=False,
+        help='Force use of high-performance GPU on hybrid systems'
+    )
+    AddOption(
+        '--msvc-dll',
+        dest='msvc-dll',
+        action='store_true',
+        metavar='DIR',
+        default=True,
+        help='Force use of high-performance GPU on hybrid systems'
+    )
+    GLFW_ENV.Append(HYBRID_HPG=GetOption('hybrid-hpg'))
+    GLFW_ENV.Append(MSVC_DLL=GetOption('msvc-dll'))
+else:
+    GLEW_ENV.Append(MSVC=False)
+    GLFW_ENV.Append(HYBRID_HPG=False)
+    GLFW_ENV.Append(MSVC_DLL=False)
 
-env.Append(
-    GLEW_DIR=os.path.abspath(env.Dir('glew').abspath).replace('\\', '/')
+#### GLEW ####
+################################################################################
+GLEW_ENV.Append(
+    GLEW_DIR=os.path.abspath(GLEW_ENV.Dir('glew').abspath).replace('\\', '/')
 )
 
-versionfile = open(env['GLEW_DIR'] + "/config/version")
+versionfile = open(GLEW_ENV['GLEW_DIR'] + "/config/version")
 lines = versionfile.readlines()
 lines = [x.strip() for x in lines]
 for line in lines:
     if line.startswith('GLEW_MAJOR'):
         m = re.search(r'GLEW_MAJOR\s*=\s*([0-9]+)', line)
-        env.Append(GLEW_MAJOR=m.group(0))
+        GLEW_ENV.Append(GLEW_MAJOR=m.group(0))
     if line.startswith('GLEW_MINOR'):
         m = re.search(r'GLEW_MINOR\s*=\s*([0-9]+)', line)
-        env.Append(GLEW_MINOR=m.group(0))
+        GLEW_ENV.Append(GLEW_MINOR=m.group(0))
     if line.startswith('GLEW_MICRO'):
         m = re.search(r'GLEW_MICRO\s*=\s*([0-9]+)', line)
-        env.Append(GLEW_MICRO=m.group(0))
-env.Append(GLEW_VERSION=env['GLEW_MAJOR'] + '.'
-           + env['GLEW_MINOR'] + '.' + env['GLEW_MICRO'])
+        GLEW_ENV.Append(GLEW_MICRO=m.group(0))
+GLEW_ENV.Append(GLEW_VERSION=GLEW_ENV['GLEW_MAJOR'] + '.'
+                + GLEW_ENV['GLEW_MINOR'] + '.' + GLEW_ENV['GLEW_MICRO'])
 
-#set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-#set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-#set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-#find_package (OpenGL REQUIRED)
+# TODO: convert to soncs SConf
+# find_package (OpenGL REQUIRED)
 
 # X11 required when builing visualinfo and glewinfo,
 # but not for Windows or Apple OSX platforms
-if (env['UTILITIES']
+if (GLEW_ENV['UTILITIES']
         and "window" not in platform.system().lower()
         and "darwin" not in platform.system().lower()):
-    #find_package (X11)
+    # TODO: convert to soncs SConf
+    # find_package (X11)+
     print("include X11")
 
 if "window" in platform.system().lower():
-    env.Append(GLEW_LIB_NAME='glew32')
+    GLEW_ENV.Append(GLEW_LIB_NAME='glew32')
 else:
-    env.Append(GLEW_LIB_NAME='GLEW')
-    #set (DLL_PREFIX lib)
+    GLEW_ENV.Append(GLEW_LIB_NAME='GLEW')
+    # set (DLL_PREFIX lib)
 
-#set (GLEW_LIBRARIES ${OPENGL_LIBRARIES})
-env.Append(CCFLAGS=[
-    '-DGLEW_NO_GLU',
+# set (GLEW_LIBRARIES ${OPENGL_LIBRARIES})
+GLEW_ENV.Append(CCFLAGS=[
     debugFlag,
 ])
-
+GLEW_ENV.Append(CPPDEFINES=[
+    'GLEW_NO_GLU',
+])
 
 #### Regal mode ####
-if env['REGAL']:
+if GLEW_ENV['REGAL']:
     if "window" in platform.system().lower():
-        #set (REGAL_LIB_NAME regal32)
+        # set (REGAL_LIB_NAME regal32)
         print("set windows libname")
     else:
-        #set (REGAL_LIB_NAME Regal)
+        # set (REGAL_LIB_NAME Regal)
         print("set linux libname")
-    env.Append(CCFLAGS=[
-        '-DGLEW_REGAL',
+    GLEW_ENV.Append(CPPDEFINES=[
+        'GLEW_REGAL',
     ])
-    #set (GLEW_LIBRARIES ${REGAL_LIB_NAME})
+    # set (GLEW_LIBRARIES ${REGAL_LIB_NAME})
 
 
 #### OSMesa mode ####
-if env['OSMESA']:
+if GLEW_ENV['OSMESA']:
     if "window" in platform.system().lower():
-        #set (OSMESA_LIB_NAME osmesa)
+        # set (OSMESA_LIB_NAME osmesa)
         print("set windows libname")
     else:
-        #set (OSMESA_LIB_NAME OSMesa)
+        # set (OSMESA_LIB_NAME OSMesa)
         print("set linux libname")
-    env.Append(CCFLAGS=[
-        '-DGLEW_OSMESA',
+    GLEW_ENV.Append(CPPDEFINES=[
+        'GLEW_OSMESA',
     ])
 
-    #set (GLEW_LIBRARIES ${OSMESA_LIB_NAME} ${OPENGL_LIBRARIES})
-    #set (X11_LIBRARIES)
+    # set (GLEW_LIBRARIES ${OSMESA_LIB_NAME} ${OPENGL_LIBRARIES})
+    # set (X11_LIBRARIES)
 
-#### GLEW ####
-env.Append(CPPPATH=[env['GLEW_DIR'] + "/include"])
+GLEW_ENV.Append(CPPPATH=[GLEW_ENV['GLEW_DIR'] + "/include"])
 
-env.VariantDir('glew/build', 'glew/src', duplicate=0)
+if "window" in platform.system().lower():
+    GLEW_ENV.Append(LIBS=[
+        'OpenGL32',
+        'user32'
+    ])
+
 publicHeaders = [
     "glew/include/GL/wglew.h",
     "glew/include/GL/glew.h",
     "glew/include/GL/glxew.h",
 ]
-sourceFiles = ["glew/build/glew.c"]
+
+GLEW_ENV.Append(CPPDEFINES=[
+    "GLEW_BUILD",
+])
 
 if "window" in platform.system().lower():
-    sourceFiles += ["glew/build/glew.rc"]
-
-    if ('MSVC' in env and env['MSVC']):
-        env.Append(CPPDEFINES=["VC_EXTRALEAN"])
-        env.Append(CCFLAGS=["/GS-"])
+    if ('MSVC' in GLEW_ENV and GLEW_ENV['MSVC']):
+        GLEW_ENV.Append(CPPDEFINES=["VC_EXTRALEAN"])
+        GLEW_ENV.Append(CCFLAGS=["/GS-"])
     else:
-        env.Append(CCFLAGS=[
+        GLEW_ENV.Append(CCFLAGS=[
             "-fno-builtin",
             "-fno-stack-protector",
         ])
 
-envStatic = env.Clone()
+
+GLEW_STATIC_ENV = GLEW_ENV.Clone()
+GLEW_SHARED_ENV = GLEW_ENV.Clone()
+
+GLEW_STATIC_ENV.VariantDir('glew/static_build', 'glew/src', duplicate=0)
+GLEW_SHARED_ENV.VariantDir('glew/shared_build', 'glew/src', duplicate=0)
+
+staticSourceFiles = ["glew/static_build/glew.c"]
+sharedSourceFiles = ["glew/shared_build/glew.c"]
 
 if "window" in platform.system().lower():
-    sourceFiles += [env['GLEW_DIR'] + "/build/glew.rc"]
+    # staticSourceFiles += ["glew/static_build/glew.rc"]
+    # sharedSourceFiles += ["glew/shared_build/glew.rc"]
 
-    if ('MSVC' in env and env['MSVC']):
-        env.Append(LDFLAGS=[
+    if ('MSVC' in GLEW_ENV and GLEW_ENV['MSVC']):
+        GLEW_SHARED_ENV.Append(LDFLAGS=[
             "/BASE:0x62AA0000",
             "/nodefaultlib",
             "/noentry",
         ])
     else:
-        env.Append(LDFLAGS=[
+        GLEW_SHARED_ENV.Append(LDFLAGS=[
             "-nostdlib",
         ])
 
-
-env.Append(CPPDEFINES=[
-    "GLEW_BUILD",
-])
-sharedLib = env.SharedLibrary(
-    "glew/build/" + env['GLEW_LIB_NAME'],
-    sourceFiles
+sharedLib = GLEW_SHARED_ENV.SharedLibrary(
+    "glew/shared_build/" + GLEW_ENV['GLEW_LIB_NAME'],
+    sharedSourceFiles
 )
 
-envStatic.Append(CPPDEFINES=[
+GLEW_STATIC_ENV.Append(CPPDEFINES=[
     "GLEW_STATIC",
 ])
-staticLib = envStatic.StaticLibrary(
-    "glew/build/" + env['GLEW_LIB_NAME'],
-    sourceFiles
+staticLib = GLEW_STATIC_ENV.StaticLibrary(
+    "glew/static_build/" + GLEW_ENV['GLEW_LIB_NAME'],
+    staticSourceFiles
 )
+
+#### GLFW ####
+################################################################################
+
+GLFW_ENV.Append(GLFW_VERSION_MAJOR=3)
+GLFW_ENV.Append(GLFW_VERSION_MINOR=3)
+GLFW_ENV.Append(GLFW_VERSION_PATCH=3)
+GLFW_ENV.Append(GLFW_VERSION_EXTRA="")
+GLFW_ENV.Append(GLFW_VERSION=str(GLFW_ENV['GLFW_VERSION_MAJOR']) + "." +
+                str(GLFW_ENV['GLFW_VERSION_MINOR']))
+GLFW_ENV.Append(GLFW_VERSION_FULL=str(GLFW_ENV['GLFW_VERSION_MAJOR']) + "." +
+                str(GLFW_ENV['GLFW_VERSION_MINOR']) + "." +
+                str(GLFW_ENV['GLFW_VERSION_PATCH']) + str(GLFW_ENV['GLFW_VERSION_EXTRA']))
+
+# if (BUILD_SHARED_LIBS)
+#    set(_GLFW_BUILD_DLL 1)
+# endif()
+#
+# if (BUILD_SHARED_LIBS AND UNIX)
+#    # On Unix-like systems, shared libraries can use the soname system.
+#    set(GLFW_LIB_NAME glfw)
+# else()
+#    set(GLFW_LIB_NAME glfw3)
+# endif()
+#
+# if (GLFW_VULKAN_STATIC)
+#    set(_GLFW_VULKAN_STATIC 1)
+# endif()
+
+# find_package(Threads REQUIRED)
+# find_package(Vulkan)
+#
+# if (GLFW_BUILD_DOCS)
+#    set(DOXYGEN_SKIP_DOT TRUE)
+#    find_package(Doxygen)
+# endif()
+
+# #--------------------------------------------------------------------
+# # Set compiler specific flags
+# #--------------------------------------------------------------------
+# if (MSVC)
+#     if (MSVC90)
+#         # Workaround for VS 2008 not shipping with the DirectX 9 SDK
+#         include(CheckIncludeFile)
+#         check_include_file(dinput.h DINPUT_H_FOUND)
+#         if (NOT DINPUT_H_FOUND)
+#             message(FATAL_ERROR "DirectX 9 SDK not found")
+#         endif()
+#         # Workaround for VS 2008 not shipping with stdint.h
+#         list(APPEND glfw_INCLUDE_DIRS "${GLFW_SOURCE_DIR}/deps/vs2008")
+#     endif()
+#
+#     if (NOT USE_MSVC_RUNTIME_LIBRARY_DLL)
+#         foreach (flag CMAKE_C_FLAGS
+#                       CMAKE_C_FLAGS_DEBUG
+#                       CMAKE_C_FLAGS_RELEASE
+#                       CMAKE_C_FLAGS_MINSIZEREL
+#                       CMAKE_C_FLAGS_RELWITHDEBINFO)
+#
+#             if (${flag} MATCHES "/MD")
+#                 string(REGEX REPLACE "/MD" "/MT" ${flag} "${${flag}}")
+#             endif()
+#             if (${flag} MATCHES "/MDd")
+#                 string(REGEX REPLACE "/MDd" "/MTd" ${flag} "${${flag}}")
+#             endif()
+#
+#         endforeach()
+#     endif()
+# endif()
+#
+# if (MINGW)
+#     # Workaround for legacy MinGW not providing XInput and DirectInput
+#     include(CheckIncludeFile)
+#
+#     check_include_file(dinput.h DINPUT_H_FOUND)
+#     check_include_file(xinput.h XINPUT_H_FOUND)
+#     if (NOT DINPUT_H_FOUND OR NOT XINPUT_H_FOUND)
+#         list(APPEND glfw_INCLUDE_DIRS "${GLFW_SOURCE_DIR}/deps/mingw")
+#     endif()
+#
+#     # Enable link-time exploit mitigation features enabled by default on MSVC
+#     include(CheckCCompilerFlag)
+#
+#     # Compatibility with data execution prevention (DEP)
+#     set(CMAKE_REQUIRED_FLAGS "-Wl,--nxcompat")
+#     check_c_compiler_flag("" _GLFW_HAS_DEP)
+#     if (_GLFW_HAS_DEP)
+#         set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--nxcompat ${CMAKE_SHARED_LINKER_FLAGS}")
+#     endif()
+#
+#     # Compatibility with address space layout randomization (ASLR)
+#     set(CMAKE_REQUIRED_FLAGS "-Wl,--dynamicbase")
+#     check_c_compiler_flag("" _GLFW_HAS_ASLR)
+#     if (_GLFW_HAS_ASLR)
+#         set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--dynamicbase ${CMAKE_SHARED_LINKER_FLAGS}")
+#     endif()
+#
+#     # Compatibility with 64-bit address space layout randomization (ASLR)
+#     set(CMAKE_REQUIRED_FLAGS "-Wl,--high-entropy-va")
+#     check_c_compiler_flag("" _GLFW_HAS_64ASLR)
+#     if (_GLFW_HAS_64ASLR)
+#         set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--high-entropy-va ${CMAKE_SHARED_LINKER_FLAGS}")
+#     endif()
+# endif()
+#
+# if (APPLE)
+#     # Dependencies required by the MoltenVK static library
+#     set(GLFW_VULKAN_DEPS
+#         "-lc++"
+#         "-framework Cocoa"
+#         "-framework Metal"
+#         "-framework QuartzCore")
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Detect and select backend APIs
+# #--------------------------------------------------------------------
+# if (GLFW_USE_WAYLAND)
+#     set(_GLFW_WAYLAND 1)
+#     message(STATUS "Using Wayland for window creation")
+# elseif (GLFW_USE_MIR)
+#     set(_GLFW_MIR 1)
+#     message(STATUS "Using Mir for window creation")
+# elseif (GLFW_USE_OSMESA)
+#     set(_GLFW_OSMESA 1)
+#     message(STATUS "Using OSMesa for headless context creation")
+if "window" in platform.system().lower():
+    GLFW_ENV.Append(CPPDEFINES=["_GLFW_WIN32", "_GLFW_BUILD_DLL"])
+    print("Using Win32 for window creation")
+# elseif (APPLE)
+#     set(_GLFW_COCOA 1)
+#     message(STATUS "Using Cocoa for window creation")
+# elseif (UNIX)
+#     set(_GLFW_X11 1)
+#     message(STATUS "Using X11 for window creation")
+# else()
+#     message(FATAL_ERROR "No supported platform was detected")
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Add Vulkan static library if requested
+# #--------------------------------------------------------------------
+# if (GLFW_VULKAN_STATIC)
+#     if (VULKAN_FOUND AND VULKAN_STATIC_LIBRARY)
+#         list(APPEND glfw_LIBRARIES "${VULKAN_STATIC_LIBRARY}" ${GLFW_VULKAN_DEPS})
+#         if (BUILD_SHARED_LIBS)
+#             message(WARNING "Linking Vulkan loader static library into GLFW")
+#         endif()
+#     else()
+#         if (BUILD_SHARED_LIBS OR GLFW_BUILD_EXAMPLES OR GLFW_BUILD_TESTS)
+#             message(FATAL_ERROR "Vulkan loader static library not found")
+#         else()
+#             message(WARNING "Vulkan loader static library not found")
+#         endif()
+#     endif()
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Find and add Unix math and time libraries
+# #--------------------------------------------------------------------
+# if (UNIX AND NOT APPLE)
+#     find_library(RT_LIBRARY rt)
+#     mark_as_advanced(RT_LIBRARY)
+#     if (RT_LIBRARY)
+#         list(APPEND glfw_LIBRARIES "${RT_LIBRARY}")
+#         list(APPEND glfw_PKG_LIBS "-lrt")
+#     endif()
+#
+#     find_library(MATH_LIBRARY m)
+#     mark_as_advanced(MATH_LIBRARY)
+#     if (MATH_LIBRARY)
+#         list(APPEND glfw_LIBRARIES "${MATH_LIBRARY}")
+#         list(APPEND glfw_PKG_LIBS "-lm")
+#     endif()
+#
+#     if (CMAKE_DL_LIBS)
+#         list(APPEND glfw_LIBRARIES "${CMAKE_DL_LIBS}")
+#         list(APPEND glfw_PKG_LIBS "-l${CMAKE_DL_LIBS}")
+#     endif()
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Use Win32 for window creation
+# #--------------------------------------------------------------------
+# if (_GLFW_WIN32)
+#
+#     list(APPEND glfw_PKG_LIBS "-lgdi32")
+#
+#     if (GLFW_USE_HYBRID_HPG)
+#         set(_GLFW_USE_HYBRID_HPG 1)
+#     endif()
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Use X11 for window creation
+# #--------------------------------------------------------------------
+# if (_GLFW_X11)
+#
+#     find_package(X11 REQUIRED)
+#
+#     list(APPEND glfw_PKG_DEPS "x11")
+#
+#     # Set up library and include paths
+#     list(APPEND glfw_INCLUDE_DIRS "${X11_X11_INCLUDE_PATH}")
+#     list(APPEND glfw_LIBRARIES "${X11_X11_LIB}" "${CMAKE_THREAD_LIBS_INIT}")
+#
+#     # Check for XRandR (modern resolution switching and gamma control)
+#     if (NOT X11_Xrandr_FOUND)
+#         message(FATAL_ERROR "The RandR headers were not found")
+#     endif()
+#
+#     # Check for Xinerama (legacy multi-monitor support)
+#     if (NOT X11_Xinerama_FOUND)
+#         message(FATAL_ERROR "The Xinerama headers were not found")
+#     endif()
+#
+#     # Check for Xkb (X keyboard extension)
+#     if (NOT X11_Xkb_FOUND)
+#         message(FATAL_ERROR "The X keyboard extension headers were not found")
+#     endif()
+#
+#     # Check for Xcursor (cursor creation from RGBA images)
+#     if (NOT X11_Xcursor_FOUND)
+#         message(FATAL_ERROR "The Xcursor headers were not found")
+#     endif()
+#
+#     list(APPEND glfw_INCLUDE_DIRS "${X11_Xrandr_INCLUDE_PATH}"
+#                                   "${X11_Xinerama_INCLUDE_PATH}"
+#                                   "${X11_Xkb_INCLUDE_PATH}"
+#                                   "${X11_Xcursor_INCLUDE_PATH}")
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Use Wayland for window creation
+# #--------------------------------------------------------------------
+# if (_GLFW_WAYLAND)
+#     find_package(ECM REQUIRED NO_MODULE)
+#     list(APPEND CMAKE_MODULE_PATH "${ECM_MODULE_PATH}")
+#
+#     find_package(Wayland REQUIRED)
+#     find_package(WaylandScanner REQUIRED)
+#     find_package(WaylandProtocols 1.1 REQUIRED)
+#
+#     list(APPEND glfw_PKG_DEPS "wayland-egl")
+#
+#     list(APPEND glfw_INCLUDE_DIRS "${Wayland_INCLUDE_DIR}")
+#     list(APPEND glfw_LIBRARIES "${Wayland_LIBRARIES}" "${CMAKE_THREAD_LIBS_INIT}")
+#
+#     find_package(XKBCommon REQUIRED)
+#     list(APPEND glfw_PKG_DEPS "xkbcommon")
+#     list(APPEND glfw_INCLUDE_DIRS "${XKBCOMMON_INCLUDE_DIRS}")
+#     list(APPEND glfw_LIBRARIES "${XKBCOMMON_LIBRARY}")
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Use Mir for window creation
+# #--------------------------------------------------------------------
+# if (_GLFW_MIR)
+#     find_package(Mir REQUIRED)
+#     list(APPEND glfw_PKG_DEPS "mirclient")
+#
+#     list(APPEND glfw_INCLUDE_DIRS "${MIR_INCLUDE_DIRS}")
+#     list(APPEND glfw_LIBRARIES "${MIR_LIBRARIES}" "${CMAKE_THREAD_LIBS_INIT}")
+#
+#     find_package(XKBCommon REQUIRED)
+#     list(APPEND glfw_PKG_DEPS "xkbcommon")
+#     list(APPEND glfw_INCLUDE_DIRS "${XKBCOMMON_INCLUDE_DIRS}")
+#     list(APPEND glfw_LIBRARIES "${XKBCOMMON_LIBRARY}")
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Use OSMesa for offscreen context creation
+# #--------------------------------------------------------------------
+# if (_GLFW_OSMESA)
+#     find_package(OSMesa REQUIRED)
+#     list(APPEND glfw_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")
+# endif()
+#
+# #--------------------------------------------------------------------
+# # Use Cocoa for window creation and NSOpenGL for context creation
+# #--------------------------------------------------------------------
+# if (_GLFW_COCOA)
+#
+#     list(APPEND glfw_LIBRARIES
+#         "-framework Cocoa"
+#         "-framework IOKit"
+#         "-framework CoreFoundation"
+#         "-framework CoreVideo")
+#
+#     set(glfw_PKG_DEPS "")
+#     set(glfw_PKG_LIBS "-framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo")
+# endif()
+
+# --------------------------------------------------------------------
+# Export GLFW library dependencies
+# --------------------------------------------------------------------
+# foreach(arg ${glfw_PKG_DEPS})
+#    set(GLFW_PKG_DEPS "${GLFW_PKG_DEPS} ${arg}")
+# endforeach()
+# foreach(arg ${glfw_PKG_LIBS})
+#    set(GLFW_PKG_LIBS "${GLFW_PKG_LIBS} ${arg}")
+# endforeach()
+#
+# --------------------------------------------------------------------
+# Create generated files
+# --------------------------------------------------------------------
+# include(CMakePackageConfigHelpers)
+#
+# set(GLFW_CONFIG_PATH "lib${LIB_SUFFIX}/cmake/glfw3")
+#
+# configure_package_config_file(src/glfw3Config.cmake.in
+#                              src/glfw3Config.cmake
+#                              INSTALL_DESTINATION "${GLFW_CONFIG_PATH}"
+#                              NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+#
+# write_basic_package_version_file(src/glfw3ConfigVersion.cmake
+#                                 VERSION ${GLFW_VERSION_FULL}
+#                                 COMPATIBILITY SameMajorVersion)
+#
+# configure_file(src/glfw_config.h.in src/glfw_config.h @ONLY)
+#
+# configure_file(src/glfw3.pc.in src/glfw3.pc @ONLY)
+#
+# --------------------------------------------------------------------
+# Add subdirectories
+# --------------------------------------------------------------------
+# add_subdirectory(src)
+#
+# if (GLFW_BUILD_EXAMPLES)
+#    add_subdirectory(examples)
+# endif()
+#
+# if (GLFW_BUILD_TESTS)
+#    add_subdirectory(tests)
+# endif()
+#
+# if (DOXYGEN_FOUND AND GLFW_BUILD_DOCS)
+#    add_subdirectory(docs)
+# endif()
+#
+# --------------------------------------------------------------------
+# Install files other than the library
+# The library is installed by src/CMakeLists.txt
+# --------------------------------------------------------------------
+# if (GLFW_INSTALL)
+#    install(DIRECTORY include/GLFW DESTINATION include
+#            FILES_MATCHING PATTERN glfw3.h PATTERN glfw3native.h)
+#
+#    install(FILES "${GLFW_BINARY_DIR}/src/glfw3Config.cmake"
+#                  "${GLFW_BINARY_DIR}/src/glfw3ConfigVersion.cmake"
+#            DESTINATION "${GLFW_CONFIG_PATH}")
+#
+#    install(EXPORT glfwTargets FILE glfw3Targets.cmake
+#            EXPORT_LINK_INTERFACE_LIBRARIES
+#            DESTINATION "${GLFW_CONFIG_PATH}")
+#    install(FILES "${GLFW_BINARY_DIR}/src/glfw3.pc"
+#            DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
+#
+#    # Only generate this target if no higher-level project already has
+#    if (NOT TARGET uninstall)
+#        configure_file(cmake_uninstall.cmake.in
+#                       cmake_uninstall.cmake IMMEDIATE @ONLY)
+#
+#        add_custom_target(uninstall
+#                          "${CMAKE_COMMAND}" -P
+#                          "${GLFW_BINARY_DIR}/cmake_uninstall.cmake")
+#    endif()
+# endif()
+
+headers = [
+    "internal.h",
+    "mappings.h",
+    "glfw_config.h",
+    "/include/GLFW/glfw3.h",
+    "/include/GLFW/glfw3native.h",
+]
+
+sources = [
+    "glfw/src/context.c",
+    "glfw/src/init.c",
+    "glfw/src/input.c",
+    "glfw/src/monitor.c",
+    "glfw/src/vulkan.c",
+    "glfw/src/window.c"
+]
+
+# if (_GLFW_COCOA)
+#    set(glfw_HEADERS ${common_HEADERS} cocoa_platform.h cocoa_joystick.h
+#                     posix_thread.h nsgl_context.h egl_context.h osmesa_context.h)
+#    set(glfw_SOURCES ${common_SOURCES} cocoa_init.m cocoa_joystick.m
+#                     cocoa_monitor.m cocoa_window.m cocoa_time.c posix_thread.c
+#                     nsgl_context.m egl_context.c osmesa_context.c)
+
+if "window" in platform.system().lower():
+    headers.extend([
+        "win32_platform.h",
+        "win32_joystick.h",
+        "wgl_context.h",
+        "egl_context.h",
+        "osmesa_context.h"
+    ])
+    sources.extend([
+        "glfw/src/win32_init.c",
+        "glfw/src/win32_joystick.c",
+        "glfw/src/win32_monitor.c",
+        "glfw/src/win32_time.c",
+        "glfw/src/win32_thread.c",
+        "glfw/src/win32_window.c",
+        "glfw/src/wgl_context.c",
+        "glfw/src/egl_context.c",
+        "glfw/src/osmesa_context.c"
+    ])
+
+# elseif(_GLFW_X11)
+#    set(glfw_HEADERS ${common_HEADERS} x11_platform.h xkb_unicode.h posix_time.h
+#                     posix_thread.h glx_context.h egl_context.h osmesa_context.h)
+#    set(glfw_SOURCES ${common_SOURCES} x11_init.c x11_monitor.c x11_window.c
+#                     xkb_unicode.c posix_time.c posix_thread.c glx_context.c
+#                     egl_context.c osmesa_context.c)
+#
+#    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+#        set(glfw_HEADERS ${glfw_HEADERS} linux_joystick.h)
+#        set(glfw_SOURCES ${glfw_SOURCES} linux_joystick.c)
+#    else()
+#        set(glfw_HEADERS ${glfw_HEADERS} null_joystick.h)
+#        set(glfw_SOURCES ${glfw_SOURCES} null_joystick.c)
+#    endif()
+# elseif(_GLFW_WAYLAND)
+#    set(glfw_HEADERS ${common_HEADERS} wl_platform.h linux_joystick.h
+#                     posix_time.h posix_thread.h xkb_unicode.h egl_context.h
+#                     osmesa_context.h)
+#    set(glfw_SOURCES ${common_SOURCES} wl_init.c wl_monitor.c wl_window.c
+#                     linux_joystick.c posix_time.c posix_thread.c xkb_unicode.c
+#                     egl_context.c osmesa_context.c)
+#
+#    ecm_add_wayland_client_protocol(glfw_SOURCES
+#        PROTOCOL
+#        "${WAYLAND_PROTOCOLS_PKGDATADIR}/unstable/relative-pointer/relative-pointer-unstable-v1.xml"
+#        BASENAME relative-pointer-unstable-v1)
+#    ecm_add_wayland_client_protocol(glfw_SOURCES
+#        PROTOCOL
+#        "${WAYLAND_PROTOCOLS_PKGDATADIR}/unstable/pointer-constraints/pointer-constraints-unstable-v1.xml"
+#        BASENAME pointer-constraints-unstable-v1)
+# elseif(_GLFW_MIR)
+#    set(glfw_HEADERS ${common_HEADERS} mir_platform.h linux_joystick.h
+#                     posix_time.h posix_thread.h xkb_unicode.h egl_context.h
+#                     osmesa_context.h)
+#    set(glfw_SOURCES ${common_SOURCES} mir_init.c mir_monitor.c mir_window.c
+#                     linux_joystick.c posix_time.c posix_thread.c xkb_unicode.c
+#                     egl_context.c osmesa_context.c)
+# elseif(_GLFW_OSMESA)
+#    set(glfw_HEADERS ${common_HEADERS} null_platform.h null_joystick.h
+#                     posix_time.h posix_thread.h osmesa_context.h)
+#    set(glfw_SOURCES ${common_SOURCES} null_init.c null_monitor.c null_window.c
+#                     null_joystick.c posix_time.c posix_thread.c osmesa_context.c)
+# endif()
+#
+# if (APPLE)
+#    # For some reason, CMake doesn't know about .m
+#    set_source_files_properties(${glfw_SOURCES} PROPERTIES LANGUAGE C)
+# endif()
+
+# Make GCC and Clang warn about declarations that VS 2010 and 2012 won't accept
+# for all source files that VS will build
+# if (${CMAKE_C_COMPILER_ID} STREQUAL GNU OR ${CMAKE_C_COMPILER_ID} STREQUAL Clang)
+#    if (WIN32)
+#        set(windows_SOURCES ${glfw_SOURCES})
+#    else()
+#        set(windows_SOURCES ${common_SOURCES})
+#    endif()
+#    set_source_files_properties(${windows_SOURCES} PROPERTIES
+#        COMPILE_FLAGS - Wdeclaration-after-statement)
+# endif()
+if "window" in platform.system().lower():
+    GLFW_ENV.Append(
+        LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
+        LIBS=['OpenGL32', 'user32', 'glew32', 'winmm', 'Gdi32', 'Shell32']
+    )
+libs = GLFW_ENV.SharedLibrary("glfw3", sources)
+
+
+# target_compile_definitions(glfw PRIVATE
+#                           _GLFW_USE_CONFIG_H
+#                           $<$<BOOL: ${UNIX} > : _XOPEN_SOURCE=600 > )
+# target_include_directories(glfw PUBLIC
+#                           "$<BUILD_INTERFACE:${GLFW_SOURCE_DIR}/include>"
+#                           "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>")
+# target_include_directories(glfw PRIVATE
+#                           "${GLFW_SOURCE_DIR}/src"
+#                           "${GLFW_BINARY_DIR}/src"
+#                           ${glfw_INCLUDE_DIRS})
+
+# HACK: When building on MinGW, WINVER and UNICODE need to be defined before
+# the inclusion of stddef.h (by glfw3.h), which is itself included before
+# win32_platform.h.  We define them here until a saner solution can be found
+# NOTE: MinGW-w64 and Visual C++ do /not/ need this hack.
+# target_compile_definitions(glfw PRIVATE
+#                            "$<$<BOOL:${MINGW}>:UNICODE;WINVER=0x0501>")
+#
+# # Enable a reasonable set of warnings (no, -Wextra is not reasonable)
+# target_compile_options(glfw PRIVATE
+#                        "$<$<C_COMPILER_ID:Clang>:-Wall>"
+#                        "$<$<C_COMPILER_ID:GNU>:-Wall>")
+
+# if (BUILD_SHARED_LIBS)
+#     if (WIN32)
+#         if (MINGW)
+#             # Remove the lib prefix on the DLL (but not the import library
+#             set_target_properties(glfw PROPERTIES PREFIX "")
+#
+#             # Add a suffix to the import library to avoid naming conflicts
+#             set_target_properties(glfw PROPERTIES IMPORT_SUFFIX "dll.a")
+#         else()
+#             # Add a suffix to the import library to avoid naming conflicts
+#             set_target_properties(glfw PROPERTIES IMPORT_SUFFIX "dll.lib")
+#         endif()
+#     elseif(APPLE)
+#         # Add -fno-common to work around a bug in Apple's GCC
+#         target_compile_options(glfw PRIVATE "-fno-common")
+#
+#         set_target_properties(glfw PROPERTIES
+#                               INSTALL_NAME_DIR "lib${LIB_SUFFIX}")
+#     elseif(UNIX)
+#         # Hide symbols not explicitly tagged for export from the shared library
+#         target_compile_options(glfw PRIVATE "-fvisibility=hidden")
+#     endif()
+#
+#     target_compile_definitions(glfw INTERFACE GLFW_DLL)
+#     target_link_libraries(glfw PRIVATE ${glfw_LIBRARIES})
+# else()
+#     target_link_libraries(glfw INTERFACE ${glfw_LIBRARIES})
+# endif()
+#
+# if (MSVC)
+#     target_compile_definitions(glfw PRIVATE _CRT_SECURE_NO_WARNINGS)
+# endif()
+#
+# if (GLFW_INSTALL)
+#     install(TARGETS glfw
+#             EXPORT glfwTargets
+#             RUNTIME DESTINATION "bin"
+#             ARCHIVE DESTINATION "lib${LIB_SUFFIX}"
+#             LIBRARY DESTINATION "lib${LIB_SUFFIX}")
+# endif()
+#
+
 
 targets = dict()
 
@@ -249,17 +886,16 @@ targets['headers']['GLFW'] = []
 targets['headers']['GLEW'] = []
 
 for header in publicHeaders:
-    targets['headers']['GLEW'].append(env.File(header))
+    targets['headers']['GLEW'].append(GLEW_ENV.File(header))
 
-GLFWheaders = glob.glob("include/GLFW/*")
-for file in GLFWheaders:
-    targets['headers']['GLFW'].append(env.File(file))
+targets['headers']['GLFW'].append(GLEW_ENV.File("glfw/include/GLFW/glfw3.h"))
+targets['headers']['GLFW'].append(
+    GLEW_ENV.File("glfw/include/GLFW/glfw3native.h"))
 
 targets['libs'] = [sharedLib]
-GLFWlibs = glob.glob("lib/libglfw*")
 
-for file in GLFWlibs:
-    targets['libs'].append(env.File(file))
+for file in libs:
+    targets['libs'].append(GLEW_ENV.File(file))
 
 Return('targets')
 """

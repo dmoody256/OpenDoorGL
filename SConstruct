@@ -47,16 +47,16 @@ AddOption(
 MAIN_ENV = Environment(
     DEBUG_BUILD=GetOption('debug_build'),
     TARGET_ARCH='x86_64',
-    RUN_TEST=GetOption('run_test')
+    RUN_TEST=GetOption('run_test'),
+    PROJECT_DIR=""
 )
-
-MAIN_ENV.baseProjectDir = MAIN_ENV.Dir('.').abspath.replace('\\', '/')
+MAIN_ENV['PROJECT_DIR'] = MAIN_ENV.Dir('.').abspath.replace('\\', '/')
 
 ###################################################
 # Determine number of CPUs
 NUM_CPUS = get_num_cpus()
 print("Building with " + str(NUM_CPUS) + " parallel jobs")
-MAIN_ENV.SetOption("num_jobs", NUM_CPUS)
+MAIN_ENV.SetOption("num_jobs", 1)
 
 ###
 # build subProjects
@@ -98,6 +98,7 @@ for lib in DEPEND_LIBS['libs']:
     MAIN_ENV.Install("build/lib", lib)
 
 for buildFile in CORE_LIBS:
+    print(buildFile)
     if str(buildFile).endswith(".hpp"):
         MAIN_ENV.Install("build/include", buildFile)
     else:

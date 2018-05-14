@@ -13,6 +13,7 @@
 SConscript for building windowing frameworks.
 """
 
+import platform
 
 # scons
 from SCons.Environment import Environment
@@ -43,10 +44,14 @@ AddOption(
 env = Environment()
 
 env.Append(CPPPATH=[
-    MAIN_ENV.baseProjectDir + "/AppFrameworks",
-    MAIN_ENV.baseProjectDir + "/Core/Source",
-    MAIN_ENV.baseProjectDir + "/build/include",
-    MAIN_ENV.baseProjectDir + "/Dependencies/glm",
+    MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks",
+    MAIN_ENV['PROJECT_DIR'] + "/Core/Source",
+    MAIN_ENV['PROJECT_DIR'] + "/build/include",
+    MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
+])
+
+env.Append(CPPDEFINES=[
+    "ODGL_LIBRARAY_BUILD"
 ])
 
 env.Append(CCFLAGS=[
@@ -63,26 +68,34 @@ env.Append(LINKFLAGS=[
 
 env.Append(LIBPATH=[
     "/usr/lib/gnome-settings-daemon-3.0/",
-    MAIN_ENV.baseProjectDir + "/Core/build",
-    MAIN_ENV.baseProjectDir + "/build/lib/",
+    MAIN_ENV['PROJECT_DIR'] + "/Core/build",
+    MAIN_ENV['PROJECT_DIR'] + "/build/lib/",
 ])
 
-env.Append(LIBS=[
-    "OpenDoorGL",
-    "GLEW",
-    "glfw",
-    "GL",
-    "X11",
-    "Xi",
-    "Xrandr",
-    "Xxf86vm",
-    "Xinerama",
-    "Xcursor",
-    "rt",
-    "m",
-    "pthread",
-    "dl",
-])
+if "window" in platform.system().lower():
+    env.Append(LIBS=[
+        "OpenDoorGL",
+        "glew32",
+        "glfw3",
+        "OpenGL32",
+    ])
+else:
+    env.Append(LIBS=[
+        "OpenDoorGL",
+        "GLEW",
+        "glfw",
+        "GL",
+        "X11",
+        "Xi",
+        "Xrandr",
+        "Xxf86vm",
+        "Xinerama",
+        "Xcursor",
+        "rt",
+        "m",
+        "pthread",
+        "dl",
+    ])
 
 
 if GetOption('glfw3'):
@@ -96,8 +109,8 @@ prog = env.SharedLibrary("OpenDoorGL-GLFW3", sourceFiles)
 
 targets = [
     prog,
-    MAIN_ENV.baseProjectDir + "/AppFrameworks/odgl_WindowInterface.hpp",
-    MAIN_ENV.baseProjectDir + "/AppFrameworks/GLFW/odgl_GLFW3.hpp",
+    MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks/odgl_WindowInterface.hpp",
+    MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks/GLFW/odgl_GLFW3.hpp",
 ]
 
 Return('targets')

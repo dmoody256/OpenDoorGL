@@ -31,7 +31,7 @@ if env['DEBUG_BUILD']:
 
 env.Append(LIBS=[
     "OpenDoorGL-GLFW3",
-    "glfw",
+    "glfw3",
 ])
 
 test = env.CxxTest('build/test_translate', source='build/TranslateTest.hpp')

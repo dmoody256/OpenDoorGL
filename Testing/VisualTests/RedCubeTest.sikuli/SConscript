@@ -30,7 +30,7 @@ if env['DEBUG_BUILD']:
 
 env.Append(LIBS=[
     "OpenDoorGL-GLFW3",
-    "glfw",
+    "glfw3",
 ])
 
 executable = env.Program("build/RedCubeTest", "RedCubeTest.cpp")

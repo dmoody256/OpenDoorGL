@@ -66,6 +66,7 @@ if env['DEBUG_BUILD']:
 env.Append(CPPDEFINES=[
     "GLM_FORCE_RADIANS",
     "ODGL_DEBUG",
+    "ODGL_LIBRARAY_BUILD",
 ])
 
 if "linux" in platform.system().lower():
@@ -100,6 +101,10 @@ elif "win" in platform.system().lower():
         debugRuntime = "/MDd"
 
     env.Append(
+        CPPPATH=[
+            MAIN_ENV['PROJECT_DIR'] + "/build/include",
+            MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
+        ],
         CPPDEFINES=['NOMINMAX', "WIN32", degugDefine],
         CCFLAGS=[
             "/analyze-",
@@ -118,14 +123,19 @@ elif "win" in platform.system().lower():
             "/EHsc",
             "/nologo",
         ],
-        LINKFLAGS=[degug, "/SUBSYSTEM:CONSOLE", "/ENTRY:mainCRTStartup"],
-        LIBS=['OpenGL32', 'user32']
+        LINKFLAGS=[degug],
+        LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
+        LIBS=['OpenGL32', 'user32', 'glew32']
     )
 
 env, prog = SetupBuildOutput(env, sourceFiles)
+targets = []
 
-
-targets = [prog]
+if "win" in platform.system().lower():
+    targets.extend(prog)
+    print(str(targets))
+else:
+    targets.append(prog)
 
 for file in headerFiles:
     targets.append(env.File(file))

@@ -4,32 +4,33 @@
 #include <GLEW/glew.h>
 #include <string>
 
+#include "odgl_Include.hpp"
 #include "odgl_GeometricObject.hpp"
 #include "odgl_Image.hpp"
 
 namespace OpenDoorGL
 {
 
-class Button : public GeometricObject
+class ODGL_DLLEXPORT Button : public GeometricObject
 {
-  public:
-    Button();
-    ~Button();
+public:
+  Button();
+  ~Button();
 
-    void setTexture(const char *filepath);
-    void setSize(float width, float height);
-    
-    float getWidth();
-    float getHeight();
+  void setTexture(const char *filepath);
+  void setSize(float width, float height);
 
-    void draw(View *view);
+  float getWidth();
+  float getHeight();
 
-  protected:
-    float _width;
-    float _height;
-    Image *_buttonTexture;
-    GLuint _uniformTexture;
+  void draw(View *view);
+
+protected:
+  float _width;
+  float _height;
+  Image *_buttonTexture;
+  GLuint _uniformTexture;
 };
-}
+} // namespace OpenDoorGL
 
 #endif

@@ -1,5 +1,2 @@
 [TYPECHECK]
 generated-members=Install,SharedLibrary
-
-[MESSAGE CONTROL]
-disable=C0103

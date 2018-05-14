@@ -59,25 +59,14 @@
         "algorithm": "cpp",
         "cstddef": "cpp"
     },
-    "clang.cxxflags": [
-        "-std=c++11"
-    ],
-    "python.autoComplete.extraPaths": [
-        "/usr/local/lib/scons-3.0.0"
-    ],
     "python.globalModuleInstallation": true,
-    "python.pythonPath": "/usr/bin/python3",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Path": "/usr/bin/flake8",
-    "python.linting.pylintPath": "/usr/local/bin/pylint",
+    "python.linting.flake8Enabled": false,
     "python.linting.pylintUseMinimalCheckers": false,
     "python.linting.pylintArgs": [
         "--rcfile",
-        "${workspaceFolder}/.pylintrc",
-        "--init-hook",
-        "import sys; sys.path.extend(['${workspaceFolder}', '/usr/local/lib/scons-3.0.0'])"
+        "${workspaceFolder}/.pylintrc"
     ],
     "editor.formatOnSave": true
 }

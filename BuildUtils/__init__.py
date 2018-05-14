@@ -113,6 +113,8 @@ def display_build_status():
     FAIL = '\033[91m'
     ENDC = '\033[0m'
 
+    printer = ColorPrinter
+
     compileOutput = []
     for filename in glob.glob('build/build_logs/*_compile.txt'):
         f = open(filename, "r")
@@ -156,9 +158,10 @@ class ColorPrinter():
     """
     Utility class used for printing colored messages.
     """
+
     def __init__(self):
 
-        if "Windows" in platform.system():
+        if "windows" in platform.system().lower():
             self.HEADER = ''
             self.OKBLUE = ''
             self.OKGREEN = ''
@@ -213,42 +216,42 @@ class ColorPrinter():
 
 def print_purple():
     """  Returns string for purple console code."""
-    if platform == 'win32':
+    if "windows" in platform.system().lower():
         return ''
     return '\033[95m'
 
 
 def print_blue():
     """  Returns string for blue console code."""
-    if platform == 'win32':
+    if "windows" in platform.system().lower():
         return ''
     return '\033[94m'
 
 
 def print_green():
     """  Returns string for green console code."""
-    if platform == 'win32':
+    if "windows" in platform.system().lower():
         return ''
     return '\033[92m'
 
 
 def print_yellow():
     """  Returns string for yellow console code."""
-    if platform == 'win32':
+    if "windows" in platform.system().lower():
         return ''
     return '\033[93m'
 
 
 def print_red():
     """  Returns string for red console code."""
-    if platform == 'win32':
+    if "windows" in platform.system().lower():
         return ''
     return '\033[91m'
 
 
 def color_stop():
     """  stops the color console code."""
-    if platform == 'win32':
+    if "windows" in platform.system().lower():
         return ''
     return '\033[0m'
 
@@ -266,7 +269,7 @@ class ProgressCounter(object):
         """
         node_string = str(node).replace("\\", "/")
         for bin_node in self.targetBinaries:
-            #print(slashedNode)
+            # print(slashedNode)
 
             if node_string.endswith(bin_node):
                 filename = os.path.basename(node_string)
@@ -337,7 +340,6 @@ class ProgressCounter(object):
 
 
 def SetupBuildOutput(env, sourceFiles):
-
     """
     Sets up the build output by condiguring the passed environment.
     """
@@ -367,23 +369,23 @@ def SetupBuildOutput(env, sourceFiles):
         new_command = env['LINKCOM'].list[0].cmd_list.replace(
             '",',
             " 2>&1 > \\\"" + env.baseProjectDir
-            + "/build/build_logs/MyLifeApp_link.txt")
-        env['LINKCOM'].list[0].cmd_list = new_command
+            + "/build/build_logs/MyLifeApp_link.txt\"")
+        #env['LINKCOM'].list[0].cmd_list = new_command
+        prog = env.SharedLibrary("build/OpenDoorGL", soureFileObjs)
     else:
         new_command = env['LINKCOM'].replace(
             '",',
             " > \\\"" + env.baseProjectDir
             + "/build/build_logs/MyLifeApp_link.txt\\\"\" 2>&1 ,")
-        env['LINKCOM'] = new_command
-
-    prog = env.SharedLibrary("build/libOpenDoorGL", soureFileObjs)
+        #env['LINKCOM'] = new_command
+        prog = env.SharedLibrary("build/libOpenDoorGL", soureFileObjs)
 
     ###################################################
     # setup build output
     if not os.path.exists(env.baseProjectDir + "/build/build_logs"):
         os.makedirs(env.baseProjectDir + "/build/build_logs")
 
-    #if ARGUMENTS.get('fail', 0):
+    # if ARGUMENTS.get('fail', 0):
     #    env.Command('target', 'source', ['/bin/false'])
 
     atexit.register(display_build_status)
@@ -406,7 +408,7 @@ def SetupBuildOutput(env, sourceFiles):
 
     builtBins = []
     if "Windows" in platform.system():
-        builtBins.append("build/MyLifeApp.exe")
+        builtBins.append("build/OpenDoorGL.dll")
     else:
         builtBins.append("build/libOpenDoorGL.so")
 

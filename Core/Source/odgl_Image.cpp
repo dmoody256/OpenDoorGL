@@ -38,12 +38,13 @@ GLuint Image::LoadImageFromFile(const char *filepath)
     std::transform(filepathString.begin(), filepathString.end(), filepathString.begin(), ::tolower);
     if (filepathString.substr(filepathString.find_last_of(".") + 1) == "bmp")
     {
-        LoadBMPFromFile(filepath);
+        return LoadBMPFromFile(filepath);
     }
     if (filepathString.substr(filepathString.find_last_of(".") + 1) == "dds")
     {
-        LoadDDSFromFile(filepath);
+        return LoadDDSFromFile(filepath);
     }
+    return 0;
 }
 
 #define FOURCC_DXT1 0x31545844 // Equivalent to "DXT1" in ASCII
@@ -199,7 +200,7 @@ GLuint Image::LoadBMPFromFile(const char *filepath)
     _width = *(int *)&(header[0x12]);
     _height = *(int *)&(header[0x16]);
 
-    unsigned char otherData[dataPos - 54];
+    unsigned char *otherData = new unsigned char[dataPos - 54];
 
     // Some BMP files are misformatted, guess missing information
     if (imageSize == 0)
@@ -229,6 +230,7 @@ GLuint Image::LoadBMPFromFile(const char *filepath)
 
     // OpenGL has now copied the data. Free our own version
     delete[] data;
+    delete[] otherData;
 
     // Poor filtering, or ...
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -245,4 +247,4 @@ GLuint Image::LoadBMPFromFile(const char *filepath)
     // Return the ID of the texture we just created
     return _textureID;
 }
-}
+} // namespace OpenDoorGL

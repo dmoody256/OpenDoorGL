@@ -16,6 +16,7 @@ SConcript for building different text modules.
 
 # python
 import os
+import platform
 
 # scons
 from SCons.Environment import Environment
@@ -26,8 +27,8 @@ from SCons.Script.SConscript import Return
 from BuildUtils import ImportVar
 
 MAIN_ENV = ImportVar('MAIN_ENV')
-
-CXXTEST_DIR = MAIN_ENV.baseProjectDir + '/Dependencies/cxxtest'
+print(MAIN_ENV['PROJECT_DIR'])
+CXXTEST_DIR = MAIN_ENV['PROJECT_DIR'] + '/Dependencies/cxxtest'
 
 TEST_ENV = Environment(
     DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'],
@@ -45,21 +46,30 @@ TEST_ENV.Append(CCFLAGS=[
     debugFlag,
 ])
 TEST_ENV.Append(CPPPATH=[
-    MAIN_ENV.baseProjectDir + "/build/include",
-    MAIN_ENV.baseProjectDir + "/Testing",
-    MAIN_ENV.baseProjectDir + "/Dependencies/glm",
-    MAIN_ENV.baseProjectDir + "/Dependencies/cxxtest/cxxtest",
+    MAIN_ENV['PROJECT_DIR'] + "/build/include",
+    MAIN_ENV['PROJECT_DIR'] + "/Testing",
+    MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
+    MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
 ])
 TEST_ENV.Append(CPPDEFINES=[
     "GLM_FORCE_RADIANS",
 ])
 TEST_ENV.Append(LIBPATH=[
-    MAIN_ENV.baseProjectDir + "/build/lib",
+    MAIN_ENV['PROJECT_DIR'] + "/build/lib",
 ])
-TEST_ENV.Append(LIBS=[
-    "OpenDoorGL",
-    "GLEW",
-])
+
+if "windows" in platform.system().lower():
+    TEST_ENV.Append(LIBS=[
+        "OpenDoorGL",
+        'OpenGL32',
+        'user32',
+        'glew32'
+    ])
+else:
+    TEST_ENV.Append(LIBS=[
+        "OpenDoorGL",
+        "GLEW",
+    ])
 
 tests = []
 for root, dirs, files in os.walk("./"):

@@ -3,7 +3,16 @@
 
 #include <GLEW/glew.h>
 
-namespace OpenDoorGL{
+#ifdef WIN32
+#ifdef ODGL_LIBRARAY_BUILD
+#define ODGL_DLLEXPORT __declspec(dllexport)
+#else
+#define ODGL_DLLEXPORT __declspec(dllimport)
+#endif
+#endif
+
+namespace OpenDoorGL
+{
 
 // Debug print is useful for quickly debugging
 // output for things that may happen over time
@@ -13,17 +22,19 @@ namespace OpenDoorGL{
 #define ODGL_DEBUG_PRINT(x)
 #endif
 
-void CheckOpenGLError(const char* stmt, const char* fname, int line);
+void CheckOpenGLError(const char *stmt, const char *fname, int line);
 
 #ifdef ODGL_DEBUG
-    #define GL_CHECK(stmt) do { \
-            stmt; \
-            CheckOpenGLError(#stmt, __FILE__, __LINE__); \
-        } while (0)
+#define GL_CHECK(stmt)                               \
+    do                                               \
+    {                                                \
+        stmt;                                        \
+        CheckOpenGLError(#stmt, __FILE__, __LINE__); \
+    } while (0)
 #else
-    #define GL_CHECK(stmt) stmt
+#define GL_CHECK(stmt) stmt
 #endif
 
-}
+} // namespace OpenDoorGL
 
 #endif
