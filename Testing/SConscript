@@ -27,7 +27,6 @@ from SCons.Script.SConscript import Return
 from BuildUtils import ImportVar
 
 MAIN_ENV = ImportVar('MAIN_ENV')
-print(MAIN_ENV['PROJECT_DIR'])
 CXXTEST_DIR = MAIN_ENV['PROJECT_DIR'] + '/Dependencies/cxxtest'
 
 TEST_ENV = Environment(

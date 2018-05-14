@@ -54,6 +54,7 @@ env.Append(CPPDEFINES=[
     "ODGL_LIBRARAY_BUILD"
 ])
 
+
 env.Append(CCFLAGS=[
     debugFlag,
 ])
@@ -73,17 +74,20 @@ env.Append(LIBPATH=[
 ])
 
 if "window" in platform.system().lower():
-    env.Append(LIBS=[
-        "OpenDoorGL",
-        "glew32",
-        "glfw3",
-        "OpenGL32",
-    ])
+
+    env.Append(
+        CPPDEFINES=['WIN32'],
+        LIBS=[
+            "OpenDoorGL",
+            "glew32",
+            "glfw3",
+            "OpenGL32",
+        ])
 else:
     env.Append(LIBS=[
         "OpenDoorGL",
         "GLEW",
-        "glfw",
+        "glfw3",
         "GL",
         "X11",
         "Xi",

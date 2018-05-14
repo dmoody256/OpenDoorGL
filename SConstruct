@@ -138,6 +138,6 @@ if GetOption('run_test'):
     TEST_COMMAND = MAIN_ENV.Command(
         MAIN_ENV.Dir('Testing/VisualTests/SikuliX'),
         TEST_BINS,
-        TEST_CALLBACK(MAIN_ENV.baseProjectDir))
+        TEST_CALLBACK(MAIN_ENV['PROJECT_DIR']))
     MAIN_ENV.Depends(TEST_COMMAND, CHMOD_COMMAND)
     MAIN_ENV.AlwaysBuild(TEST_COMMAND)

@@ -9,6 +9,8 @@
 #else
 #define ODGL_DLLEXPORT __declspec(dllimport)
 #endif
+#else
+#define ODGL_DLLEXPORT
 #endif
 
 namespace OpenDoorGL

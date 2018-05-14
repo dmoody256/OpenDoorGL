@@ -354,11 +354,11 @@ def SetupBuildOutput(env, sourceFiles):
         buildObj = env.SharedObject(
             file,
             CCCOM=(env['CCCOM'] + " " + windowsRedirect + " > \""
-                   + env.baseProjectDir + "/build/build_logs/"
+                   + env['PROJECT_DIR'] + "/build/build_logs/"
                    + os.path.splitext(os.path.basename(file))[0]
                    + "_compile.txt\" " + linuxRedirect),
             CXXCOM=(env['CXXCOM'] + " " + windowsRedirect + " > \""
-                    + env.baseProjectDir + "/build/build_logs/"
+                    + env['PROJECT_DIR'] + "/build/build_logs/"
                     + os.path.splitext(os.path.basename(file))[0]
                     + "_compile.txt\" " + linuxRedirect)
         )
@@ -368,22 +368,22 @@ def SetupBuildOutput(env, sourceFiles):
 
         new_command = env['LINKCOM'].list[0].cmd_list.replace(
             '",',
-            " 2>&1 > \\\"" + env.baseProjectDir
+            " 2>&1 > \\\"" + env['PROJECT_DIR']
             + "/build/build_logs/MyLifeApp_link.txt\"")
         #env['LINKCOM'].list[0].cmd_list = new_command
         prog = env.SharedLibrary("build/OpenDoorGL", soureFileObjs)
     else:
         new_command = env['LINKCOM'].replace(
             '",',
-            " > \\\"" + env.baseProjectDir
+            " > \\\"" + env['PROJECT_DIR']
             + "/build/build_logs/MyLifeApp_link.txt\\\"\" 2>&1 ,")
         #env['LINKCOM'] = new_command
         prog = env.SharedLibrary("build/libOpenDoorGL", soureFileObjs)
 
     ###################################################
     # setup build output
-    if not os.path.exists(env.baseProjectDir + "/build/build_logs"):
-        os.makedirs(env.baseProjectDir + "/build/build_logs")
+    if not os.path.exists(env['PROJECT_DIR'] + "/build/build_logs"):
+        os.makedirs(env['PROJECT_DIR'] + "/build/build_logs")
 
     # if ARGUMENTS.get('fail', 0):
     #    env.Command('target', 'source', ['/bin/false'])
@@ -394,7 +394,7 @@ def SetupBuildOutput(env, sourceFiles):
         """
         Switches out the default scons printing.
         """
-        log_file = (env.baseProjectDir
+        log_file = (env['PROJECT_DIR']
                     + "/build/build_logs/build_"
                     + env['BUILD_LOG_TIME'] + ".log")
         with open(log_file, "a") as f:

@@ -29,7 +29,7 @@ MAIN_ENV = ImportVar('MAIN_ENV')
 
 
 env = Environment(DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'])
-env.baseProjectDir = os.path.abspath(env.Dir('.').abspath).replace('\\', '/')
+env['PROJECT_DIR'] = os.path.abspath(env.Dir('.').abspath).replace('\\', '/')
 env.VariantDir('build', 'Source', duplicate=0)
 
 sourceFiles = [
@@ -76,8 +76,8 @@ if "linux" in platform.system().lower():
 
     env.Append(
         CPPPATH=[
-            MAIN_ENV.baseProjectDir + "/build/include",
-            MAIN_ENV.baseProjectDir + "/Dependencies/glm",
+            MAIN_ENV['PROJECT_DIR'] + "/build/include",
+            MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
         ],
         CCFLAGS=[debugFlag, '-fPIC', "-rdynamic"],
         CXXFLAGS=["-std=c++11"],
@@ -155,7 +155,7 @@ for file in headerFiles:
 #                variantHeaderFiles.append(
 #                   re.sub("^Source", "../Source", file))
 #            BUILD_PREFIX =
-#               os.path.abspath(env.baseProjectDir).replace('\\', '/')
+#               os.path.abspath(env['PROJECT_DIR']).replace('\\', '/')
 #            buildSettings = {
 #                'LocalDebuggerCommand':BUILD_PREFIX + "/build/MyLifeApp.exe",
 #                'LocalDebuggerWorkingDirectory':BUILD_PREFIX + "/build/",

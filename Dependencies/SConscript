@@ -464,242 +464,244 @@ if "window" in platform.system().lower():
 # elseif (APPLE)
 #     set(_GLFW_COCOA 1)
 #     message(STATUS "Using Cocoa for window creation")
-# elseif (UNIX)
-#     set(_GLFW_X11 1)
-#     message(STATUS "Using X11 for window creation")
-# else()
-#     message(FATAL_ERROR "No supported platform was detected")
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Add Vulkan static library if requested
-# #--------------------------------------------------------------------
-# if (GLFW_VULKAN_STATIC)
-#     if (VULKAN_FOUND AND VULKAN_STATIC_LIBRARY)
-#         list(APPEND glfw_LIBRARIES "${VULKAN_STATIC_LIBRARY}" ${GLFW_VULKAN_DEPS})
-#         if (BUILD_SHARED_LIBS)
-#             message(WARNING "Linking Vulkan loader static library into GLFW")
-#         endif()
-#     else()
-#         if (BUILD_SHARED_LIBS OR GLFW_BUILD_EXAMPLES OR GLFW_BUILD_TESTS)
-#             message(FATAL_ERROR "Vulkan loader static library not found")
-#         else()
-#             message(WARNING "Vulkan loader static library not found")
-#         endif()
-#     endif()
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Find and add Unix math and time libraries
-# #--------------------------------------------------------------------
-# if (UNIX AND NOT APPLE)
-#     find_library(RT_LIBRARY rt)
-#     mark_as_advanced(RT_LIBRARY)
-#     if (RT_LIBRARY)
-#         list(APPEND glfw_LIBRARIES "${RT_LIBRARY}")
-#         list(APPEND glfw_PKG_LIBS "-lrt")
-#     endif()
-#
-#     find_library(MATH_LIBRARY m)
-#     mark_as_advanced(MATH_LIBRARY)
-#     if (MATH_LIBRARY)
-#         list(APPEND glfw_LIBRARIES "${MATH_LIBRARY}")
-#         list(APPEND glfw_PKG_LIBS "-lm")
-#     endif()
-#
-#     if (CMAKE_DL_LIBS)
-#         list(APPEND glfw_LIBRARIES "${CMAKE_DL_LIBS}")
-#         list(APPEND glfw_PKG_LIBS "-l${CMAKE_DL_LIBS}")
-#     endif()
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Use Win32 for window creation
-# #--------------------------------------------------------------------
-# if (_GLFW_WIN32)
-#
-#     list(APPEND glfw_PKG_LIBS "-lgdi32")
-#
-#     if (GLFW_USE_HYBRID_HPG)
-#         set(_GLFW_USE_HYBRID_HPG 1)
-#     endif()
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Use X11 for window creation
-# #--------------------------------------------------------------------
-# if (_GLFW_X11)
-#
-#     find_package(X11 REQUIRED)
-#
-#     list(APPEND glfw_PKG_DEPS "x11")
-#
-#     # Set up library and include paths
-#     list(APPEND glfw_INCLUDE_DIRS "${X11_X11_INCLUDE_PATH}")
-#     list(APPEND glfw_LIBRARIES "${X11_X11_LIB}" "${CMAKE_THREAD_LIBS_INIT}")
-#
-#     # Check for XRandR (modern resolution switching and gamma control)
-#     if (NOT X11_Xrandr_FOUND)
-#         message(FATAL_ERROR "The RandR headers were not found")
-#     endif()
-#
-#     # Check for Xinerama (legacy multi-monitor support)
-#     if (NOT X11_Xinerama_FOUND)
-#         message(FATAL_ERROR "The Xinerama headers were not found")
-#     endif()
-#
-#     # Check for Xkb (X keyboard extension)
-#     if (NOT X11_Xkb_FOUND)
-#         message(FATAL_ERROR "The X keyboard extension headers were not found")
-#     endif()
-#
-#     # Check for Xcursor (cursor creation from RGBA images)
-#     if (NOT X11_Xcursor_FOUND)
-#         message(FATAL_ERROR "The Xcursor headers were not found")
-#     endif()
-#
-#     list(APPEND glfw_INCLUDE_DIRS "${X11_Xrandr_INCLUDE_PATH}"
-#                                   "${X11_Xinerama_INCLUDE_PATH}"
-#                                   "${X11_Xkb_INCLUDE_PATH}"
-#                                   "${X11_Xcursor_INCLUDE_PATH}")
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Use Wayland for window creation
-# #--------------------------------------------------------------------
-# if (_GLFW_WAYLAND)
-#     find_package(ECM REQUIRED NO_MODULE)
-#     list(APPEND CMAKE_MODULE_PATH "${ECM_MODULE_PATH}")
-#
-#     find_package(Wayland REQUIRED)
-#     find_package(WaylandScanner REQUIRED)
-#     find_package(WaylandProtocols 1.1 REQUIRED)
-#
-#     list(APPEND glfw_PKG_DEPS "wayland-egl")
-#
-#     list(APPEND glfw_INCLUDE_DIRS "${Wayland_INCLUDE_DIR}")
-#     list(APPEND glfw_LIBRARIES "${Wayland_LIBRARIES}" "${CMAKE_THREAD_LIBS_INIT}")
-#
-#     find_package(XKBCommon REQUIRED)
-#     list(APPEND glfw_PKG_DEPS "xkbcommon")
-#     list(APPEND glfw_INCLUDE_DIRS "${XKBCOMMON_INCLUDE_DIRS}")
-#     list(APPEND glfw_LIBRARIES "${XKBCOMMON_LIBRARY}")
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Use Mir for window creation
-# #--------------------------------------------------------------------
-# if (_GLFW_MIR)
-#     find_package(Mir REQUIRED)
-#     list(APPEND glfw_PKG_DEPS "mirclient")
-#
-#     list(APPEND glfw_INCLUDE_DIRS "${MIR_INCLUDE_DIRS}")
-#     list(APPEND glfw_LIBRARIES "${MIR_LIBRARIES}" "${CMAKE_THREAD_LIBS_INIT}")
-#
-#     find_package(XKBCommon REQUIRED)
-#     list(APPEND glfw_PKG_DEPS "xkbcommon")
-#     list(APPEND glfw_INCLUDE_DIRS "${XKBCOMMON_INCLUDE_DIRS}")
-#     list(APPEND glfw_LIBRARIES "${XKBCOMMON_LIBRARY}")
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Use OSMesa for offscreen context creation
-# #--------------------------------------------------------------------
-# if (_GLFW_OSMESA)
-#     find_package(OSMesa REQUIRED)
-#     list(APPEND glfw_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")
-# endif()
-#
-# #--------------------------------------------------------------------
-# # Use Cocoa for window creation and NSOpenGL for context creation
-# #--------------------------------------------------------------------
-# if (_GLFW_COCOA)
-#
-#     list(APPEND glfw_LIBRARIES
-#         "-framework Cocoa"
-#         "-framework IOKit"
-#         "-framework CoreFoundation"
-#         "-framework CoreVideo")
-#
-#     set(glfw_PKG_DEPS "")
-#     set(glfw_PKG_LIBS "-framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo")
-# endif()
+if "linux" in platform.system().lower():
+    GLFW_ENV.Append(CPPDEFINES=["_GLFW_X11"])
+    print("Using X11 for window creation")
+    #     set(_GLFW_X11 1)
+    #     message(STATUS "Using X11 for window creation")
+    # else()
+    #     message(FATAL_ERROR "No supported platform was detected")
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Add Vulkan static library if requested
+    # #--------------------------------------------------------------------
+    # if (GLFW_VULKAN_STATIC)
+    #     if (VULKAN_FOUND AND VULKAN_STATIC_LIBRARY)
+    #         list(APPEND glfw_LIBRARIES "${VULKAN_STATIC_LIBRARY}" ${GLFW_VULKAN_DEPS})
+    #         if (BUILD_SHARED_LIBS)
+    #             message(WARNING "Linking Vulkan loader static library into GLFW")
+    #         endif()
+    #     else()
+    #         if (BUILD_SHARED_LIBS OR GLFW_BUILD_EXAMPLES OR GLFW_BUILD_TESTS)
+    #             message(FATAL_ERROR "Vulkan loader static library not found")
+    #         else()
+    #             message(WARNING "Vulkan loader static library not found")
+    #         endif()
+    #     endif()
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Find and add Unix math and time libraries
+    # #--------------------------------------------------------------------
+    # if (UNIX AND NOT APPLE)
+    #     find_library(RT_LIBRARY rt)
+    #     mark_as_advanced(RT_LIBRARY)
+    #     if (RT_LIBRARY)
+    #         list(APPEND glfw_LIBRARIES "${RT_LIBRARY}")
+    #         list(APPEND glfw_PKG_LIBS "-lrt")
+    #     endif()
+    #
+    #     find_library(MATH_LIBRARY m)
+    #     mark_as_advanced(MATH_LIBRARY)
+    #     if (MATH_LIBRARY)
+    #         list(APPEND glfw_LIBRARIES "${MATH_LIBRARY}")
+    #         list(APPEND glfw_PKG_LIBS "-lm")
+    #     endif()
+    #
+    #     if (CMAKE_DL_LIBS)
+    #         list(APPEND glfw_LIBRARIES "${CMAKE_DL_LIBS}")
+    #         list(APPEND glfw_PKG_LIBS "-l${CMAKE_DL_LIBS}")
+    #     endif()
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Use Win32 for window creation
+    # #--------------------------------------------------------------------
+    # if (_GLFW_WIN32)
+    #
+    #     list(APPEND glfw_PKG_LIBS "-lgdi32")
+    #
+    #     if (GLFW_USE_HYBRID_HPG)
+    #         set(_GLFW_USE_HYBRID_HPG 1)
+    #     endif()
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Use X11 for window creation
+    # #--------------------------------------------------------------------
+    # if (_GLFW_X11)
+    #
+    #     find_package(X11 REQUIRED)
+    #
+    #     list(APPEND glfw_PKG_DEPS "x11")
+    #
+    #     # Set up library and include paths
+    #     list(APPEND glfw_INCLUDE_DIRS "${X11_X11_INCLUDE_PATH}")
+    #     list(APPEND glfw_LIBRARIES "${X11_X11_LIB}" "${CMAKE_THREAD_LIBS_INIT}")
+    #
+    #     # Check for XRandR (modern resolution switching and gamma control)
+    #     if (NOT X11_Xrandr_FOUND)
+    #         message(FATAL_ERROR "The RandR headers were not found")
+    #     endif()
+    #
+    #     # Check for Xinerama (legacy multi-monitor support)
+    #     if (NOT X11_Xinerama_FOUND)
+    #         message(FATAL_ERROR "The Xinerama headers were not found")
+    #     endif()
+    #
+    #     # Check for Xkb (X keyboard extension)
+    #     if (NOT X11_Xkb_FOUND)
+    #         message(FATAL_ERROR "The X keyboard extension headers were not found")
+    #     endif()
+    #
+    #     # Check for Xcursor (cursor creation from RGBA images)
+    #     if (NOT X11_Xcursor_FOUND)
+    #         message(FATAL_ERROR "The Xcursor headers were not found")
+    #     endif()
+    #
+    #     list(APPEND glfw_INCLUDE_DIRS "${X11_Xrandr_INCLUDE_PATH}"
+    #                                   "${X11_Xinerama_INCLUDE_PATH}"
+    #                                   "${X11_Xkb_INCLUDE_PATH}"
+    #                                   "${X11_Xcursor_INCLUDE_PATH}")
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Use Wayland for window creation
+    # #--------------------------------------------------------------------
+    # if (_GLFW_WAYLAND)
+    #     find_package(ECM REQUIRED NO_MODULE)
+    #     list(APPEND CMAKE_MODULE_PATH "${ECM_MODULE_PATH}")
+    #
+    #     find_package(Wayland REQUIRED)
+    #     find_package(WaylandScanner REQUIRED)
+    #     find_package(WaylandProtocols 1.1 REQUIRED)
+    #
+    #     list(APPEND glfw_PKG_DEPS "wayland-egl")
+    #
+    #     list(APPEND glfw_INCLUDE_DIRS "${Wayland_INCLUDE_DIR}")
+    #     list(APPEND glfw_LIBRARIES "${Wayland_LIBRARIES}" "${CMAKE_THREAD_LIBS_INIT}")
+    #
+    #     find_package(XKBCommon REQUIRED)
+    #     list(APPEND glfw_PKG_DEPS "xkbcommon")
+    #     list(APPEND glfw_INCLUDE_DIRS "${XKBCOMMON_INCLUDE_DIRS}")
+    #     list(APPEND glfw_LIBRARIES "${XKBCOMMON_LIBRARY}")
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Use Mir for window creation
+    # #--------------------------------------------------------------------
+    # if (_GLFW_MIR)
+    #     find_package(Mir REQUIRED)
+    #     list(APPEND glfw_PKG_DEPS "mirclient")
+    #
+    #     list(APPEND glfw_INCLUDE_DIRS "${MIR_INCLUDE_DIRS}")
+    #     list(APPEND glfw_LIBRARIES "${MIR_LIBRARIES}" "${CMAKE_THREAD_LIBS_INIT}")
+    #
+    #     find_package(XKBCommon REQUIRED)
+    #     list(APPEND glfw_PKG_DEPS "xkbcommon")
+    #     list(APPEND glfw_INCLUDE_DIRS "${XKBCOMMON_INCLUDE_DIRS}")
+    #     list(APPEND glfw_LIBRARIES "${XKBCOMMON_LIBRARY}")
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Use OSMesa for offscreen context creation
+    # #--------------------------------------------------------------------
+    # if (_GLFW_OSMESA)
+    #     find_package(OSMesa REQUIRED)
+    #     list(APPEND glfw_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")
+    # endif()
+    #
+    # #--------------------------------------------------------------------
+    # # Use Cocoa for window creation and NSOpenGL for context creation
+    # #--------------------------------------------------------------------
+    # if (_GLFW_COCOA)
+    #
+    #     list(APPEND glfw_LIBRARIES
+    #         "-framework Cocoa"
+    #         "-framework IOKit"
+    #         "-framework CoreFoundation"
+    #         "-framework CoreVideo")
+    #
+    #     set(glfw_PKG_DEPS "")
+    #     set(glfw_PKG_LIBS "-framework Cocoa -framework IOKit -framework CoreFoundation -framework CoreVideo")
+    # endif()
 
-# --------------------------------------------------------------------
-# Export GLFW library dependencies
-# --------------------------------------------------------------------
-# foreach(arg ${glfw_PKG_DEPS})
-#    set(GLFW_PKG_DEPS "${GLFW_PKG_DEPS} ${arg}")
-# endforeach()
-# foreach(arg ${glfw_PKG_LIBS})
-#    set(GLFW_PKG_LIBS "${GLFW_PKG_LIBS} ${arg}")
-# endforeach()
-#
-# --------------------------------------------------------------------
-# Create generated files
-# --------------------------------------------------------------------
-# include(CMakePackageConfigHelpers)
-#
-# set(GLFW_CONFIG_PATH "lib${LIB_SUFFIX}/cmake/glfw3")
-#
-# configure_package_config_file(src/glfw3Config.cmake.in
-#                              src/glfw3Config.cmake
-#                              INSTALL_DESTINATION "${GLFW_CONFIG_PATH}"
-#                              NO_CHECK_REQUIRED_COMPONENTS_MACRO)
-#
-# write_basic_package_version_file(src/glfw3ConfigVersion.cmake
-#                                 VERSION ${GLFW_VERSION_FULL}
-#                                 COMPATIBILITY SameMajorVersion)
-#
-# configure_file(src/glfw_config.h.in src/glfw_config.h @ONLY)
-#
-# configure_file(src/glfw3.pc.in src/glfw3.pc @ONLY)
-#
-# --------------------------------------------------------------------
-# Add subdirectories
-# --------------------------------------------------------------------
-# add_subdirectory(src)
-#
-# if (GLFW_BUILD_EXAMPLES)
-#    add_subdirectory(examples)
-# endif()
-#
-# if (GLFW_BUILD_TESTS)
-#    add_subdirectory(tests)
-# endif()
-#
-# if (DOXYGEN_FOUND AND GLFW_BUILD_DOCS)
-#    add_subdirectory(docs)
-# endif()
-#
-# --------------------------------------------------------------------
-# Install files other than the library
-# The library is installed by src/CMakeLists.txt
-# --------------------------------------------------------------------
-# if (GLFW_INSTALL)
-#    install(DIRECTORY include/GLFW DESTINATION include
-#            FILES_MATCHING PATTERN glfw3.h PATTERN glfw3native.h)
-#
-#    install(FILES "${GLFW_BINARY_DIR}/src/glfw3Config.cmake"
-#                  "${GLFW_BINARY_DIR}/src/glfw3ConfigVersion.cmake"
-#            DESTINATION "${GLFW_CONFIG_PATH}")
-#
-#    install(EXPORT glfwTargets FILE glfw3Targets.cmake
-#            EXPORT_LINK_INTERFACE_LIBRARIES
-#            DESTINATION "${GLFW_CONFIG_PATH}")
-#    install(FILES "${GLFW_BINARY_DIR}/src/glfw3.pc"
-#            DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
-#
-#    # Only generate this target if no higher-level project already has
-#    if (NOT TARGET uninstall)
-#        configure_file(cmake_uninstall.cmake.in
-#                       cmake_uninstall.cmake IMMEDIATE @ONLY)
-#
-#        add_custom_target(uninstall
-#                          "${CMAKE_COMMAND}" -P
-#                          "${GLFW_BINARY_DIR}/cmake_uninstall.cmake")
-#    endif()
-# endif()
+    # --------------------------------------------------------------------
+    # Export GLFW library dependencies
+    # --------------------------------------------------------------------
+    # foreach(arg ${glfw_PKG_DEPS})
+    #    set(GLFW_PKG_DEPS "${GLFW_PKG_DEPS} ${arg}")
+    # endforeach()
+    # foreach(arg ${glfw_PKG_LIBS})
+    #    set(GLFW_PKG_LIBS "${GLFW_PKG_LIBS} ${arg}")
+    # endforeach()
+    #
+    # --------------------------------------------------------------------
+    # Create generated files
+    # --------------------------------------------------------------------
+    # include(CMakePackageConfigHelpers)
+    #
+    # set(GLFW_CONFIG_PATH "lib${LIB_SUFFIX}/cmake/glfw3")
+    #
+    # configure_package_config_file(src/glfw3Config.cmake.in
+    #                              src/glfw3Config.cmake
+    #                              INSTALL_DESTINATION "${GLFW_CONFIG_PATH}"
+    #                              NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+    #
+    # write_basic_package_version_file(src/glfw3ConfigVersion.cmake
+    #                                 VERSION ${GLFW_VERSION_FULL}
+    #                                 COMPATIBILITY SameMajorVersion)
+    #
+    # configure_file(src/glfw_config.h.in src/glfw_config.h @ONLY)
+    #
+    # configure_file(src/glfw3.pc.in src/glfw3.pc @ONLY)
+    #
+    # --------------------------------------------------------------------
+    # Add subdirectories
+    # --------------------------------------------------------------------
+    # add_subdirectory(src)
+    #
+    # if (GLFW_BUILD_EXAMPLES)
+    #    add_subdirectory(examples)
+    # endif()
+    #
+    # if (GLFW_BUILD_TESTS)
+    #    add_subdirectory(tests)
+    # endif()
+    #
+    # if (DOXYGEN_FOUND AND GLFW_BUILD_DOCS)
+    #    add_subdirectory(docs)
+    # endif()
+    #
+    # --------------------------------------------------------------------
+    # Install files other than the library
+    # The library is installed by src/CMakeLists.txt
+    # --------------------------------------------------------------------
+    # if (GLFW_INSTALL)
+    #    install(DIRECTORY include/GLFW DESTINATION include
+    #            FILES_MATCHING PATTERN glfw3.h PATTERN glfw3native.h)
+    #
+    #    install(FILES "${GLFW_BINARY_DIR}/src/glfw3Config.cmake"
+    #                  "${GLFW_BINARY_DIR}/src/glfw3ConfigVersion.cmake"
+    #            DESTINATION "${GLFW_CONFIG_PATH}")
+    #
+    #    install(EXPORT glfwTargets FILE glfw3Targets.cmake
+    #            EXPORT_LINK_INTERFACE_LIBRARIES
+    #            DESTINATION "${GLFW_CONFIG_PATH}")
+    #    install(FILES "${GLFW_BINARY_DIR}/src/glfw3.pc"
+    #            DESTINATION "lib${LIB_SUFFIX}/pkgconfig")
+    #
+    #    # Only generate this target if no higher-level project already has
+    #    if (NOT TARGET uninstall)
+    #        configure_file(cmake_uninstall.cmake.in
+    #                       cmake_uninstall.cmake IMMEDIATE @ONLY)
+    #
+    #        add_custom_target(uninstall
+    #                          "${CMAKE_COMMAND}" -P
+    #                          "${GLFW_BINARY_DIR}/cmake_uninstall.cmake")
+    #    endif()
+    # endif()
 
 headers = [
     "internal.h",
@@ -744,71 +746,97 @@ if "window" in platform.system().lower():
         "glfw/src/egl_context.c",
         "glfw/src/osmesa_context.c"
     ])
+if "linux" in platform.system().lower():
+    headers.extend([
+        "x11_platform.h",
+        'xkb_unicode.h',
+        'posix_time.h',
+        'posix_thread.h',
+        'glx_context.h',
+        'egl_context.h',
+        'osmesa_context.h'
+    ])
+    sources.extend([
+        "glfw/src/x11_init.c",
+        "glfw/src/x11_monitor.c",
+        "glfw/src/x11_window.c",
+        "glfw/src/xkb_unicode.c",
+        "glfw/src/posix_time.c",
+        "glfw/src/posix_thread.c",
+        "glfw/src/glx_context.c",
+        "glfw/src/egl_context.c",
+        "glfw/src/osmesa_context.c",
+        "glfw/src/linux_joystick.c"
+    ])
+    # elseif(_GLFW_X11)
+    #    set(glfw_HEADERS ${common_HEADERS} x11_platform.h xkb_unicode.h posix_time.h
+    #                     posix_thread.h glx_context.h egl_context.h osmesa_context.h)
+    #    set(glfw_SOURCES ${common_SOURCES} x11_init.c x11_monitor.c x11_window.c
+    #                     xkb_unicode.c posix_time.c posix_thread.c glx_context.c
+    #                     egl_context.c osmesa_context.c)
+    #
+    #    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    #        set(glfw_HEADERS ${glfw_HEADERS} linux_joystick.h)
+    #        set(glfw_SOURCES ${glfw_SOURCES} linux_joystick.c)
+    #    else()
+    #        set(glfw_HEADERS ${glfw_HEADERS} null_joystick.h)
+    #        set(glfw_SOURCES ${glfw_SOURCES} null_joystick.c)
+    #    endif()
+    # elseif(_GLFW_WAYLAND)
+    #    set(glfw_HEADERS ${common_HEADERS} wl_platform.h linux_joystick.h
+    #                     posix_time.h posix_thread.h xkb_unicode.h egl_context.h
+    #                     osmesa_context.h)
+    #    set(glfw_SOURCES ${common_SOURCES} wl_init.c wl_monitor.c wl_window.c
+    #                     linux_joystick.c posix_time.c posix_thread.c xkb_unicode.c
+    #                     egl_context.c osmesa_context.c)
+    #
+    #    ecm_add_wayland_client_protocol(glfw_SOURCES
+    #        PROTOCOL
+    #        "${WAYLAND_PROTOCOLS_PKGDATADIR}/unstable/relative-pointer/relative-pointer-unstable-v1.xml"
+    #        BASENAME relative-pointer-unstable-v1)
+    #    ecm_add_wayland_client_protocol(glfw_SOURCES
+    #        PROTOCOL
+    #        "${WAYLAND_PROTOCOLS_PKGDATADIR}/unstable/pointer-constraints/pointer-constraints-unstable-v1.xml"
+    #        BASENAME pointer-constraints-unstable-v1)
+    # elseif(_GLFW_MIR)
+    #    set(glfw_HEADERS ${common_HEADERS} mir_platform.h linux_joystick.h
+    #                     posix_time.h posix_thread.h xkb_unicode.h egl_context.h
+    #                     osmesa_context.h)
+    #    set(glfw_SOURCES ${common_SOURCES} mir_init.c mir_monitor.c mir_window.c
+    #                     linux_joystick.c posix_time.c posix_thread.c xkb_unicode.c
+    #                     egl_context.c osmesa_context.c)
+    # elseif(_GLFW_OSMESA)
+    #    set(glfw_HEADERS ${common_HEADERS} null_platform.h null_joystick.h
+    #                     posix_time.h posix_thread.h osmesa_context.h)
+    #    set(glfw_SOURCES ${common_SOURCES} null_init.c null_monitor.c null_window.c
+    #                     null_joystick.c posix_time.c posix_thread.c osmesa_context.c)
+    # endif()
+    #
+    # if (APPLE)
+    #    # For some reason, CMake doesn't know about .m
+    #    set_source_files_properties(${glfw_SOURCES} PROPERTIES LANGUAGE C)
+    # endif()
 
-# elseif(_GLFW_X11)
-#    set(glfw_HEADERS ${common_HEADERS} x11_platform.h xkb_unicode.h posix_time.h
-#                     posix_thread.h glx_context.h egl_context.h osmesa_context.h)
-#    set(glfw_SOURCES ${common_SOURCES} x11_init.c x11_monitor.c x11_window.c
-#                     xkb_unicode.c posix_time.c posix_thread.c glx_context.c
-#                     egl_context.c osmesa_context.c)
-#
-#    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-#        set(glfw_HEADERS ${glfw_HEADERS} linux_joystick.h)
-#        set(glfw_SOURCES ${glfw_SOURCES} linux_joystick.c)
-#    else()
-#        set(glfw_HEADERS ${glfw_HEADERS} null_joystick.h)
-#        set(glfw_SOURCES ${glfw_SOURCES} null_joystick.c)
-#    endif()
-# elseif(_GLFW_WAYLAND)
-#    set(glfw_HEADERS ${common_HEADERS} wl_platform.h linux_joystick.h
-#                     posix_time.h posix_thread.h xkb_unicode.h egl_context.h
-#                     osmesa_context.h)
-#    set(glfw_SOURCES ${common_SOURCES} wl_init.c wl_monitor.c wl_window.c
-#                     linux_joystick.c posix_time.c posix_thread.c xkb_unicode.c
-#                     egl_context.c osmesa_context.c)
-#
-#    ecm_add_wayland_client_protocol(glfw_SOURCES
-#        PROTOCOL
-#        "${WAYLAND_PROTOCOLS_PKGDATADIR}/unstable/relative-pointer/relative-pointer-unstable-v1.xml"
-#        BASENAME relative-pointer-unstable-v1)
-#    ecm_add_wayland_client_protocol(glfw_SOURCES
-#        PROTOCOL
-#        "${WAYLAND_PROTOCOLS_PKGDATADIR}/unstable/pointer-constraints/pointer-constraints-unstable-v1.xml"
-#        BASENAME pointer-constraints-unstable-v1)
-# elseif(_GLFW_MIR)
-#    set(glfw_HEADERS ${common_HEADERS} mir_platform.h linux_joystick.h
-#                     posix_time.h posix_thread.h xkb_unicode.h egl_context.h
-#                     osmesa_context.h)
-#    set(glfw_SOURCES ${common_SOURCES} mir_init.c mir_monitor.c mir_window.c
-#                     linux_joystick.c posix_time.c posix_thread.c xkb_unicode.c
-#                     egl_context.c osmesa_context.c)
-# elseif(_GLFW_OSMESA)
-#    set(glfw_HEADERS ${common_HEADERS} null_platform.h null_joystick.h
-#                     posix_time.h posix_thread.h osmesa_context.h)
-#    set(glfw_SOURCES ${common_SOURCES} null_init.c null_monitor.c null_window.c
-#                     null_joystick.c posix_time.c posix_thread.c osmesa_context.c)
-# endif()
-#
-# if (APPLE)
-#    # For some reason, CMake doesn't know about .m
-#    set_source_files_properties(${glfw_SOURCES} PROPERTIES LANGUAGE C)
-# endif()
-
-# Make GCC and Clang warn about declarations that VS 2010 and 2012 won't accept
-# for all source files that VS will build
-# if (${CMAKE_C_COMPILER_ID} STREQUAL GNU OR ${CMAKE_C_COMPILER_ID} STREQUAL Clang)
-#    if (WIN32)
-#        set(windows_SOURCES ${glfw_SOURCES})
-#    else()
-#        set(windows_SOURCES ${common_SOURCES})
-#    endif()
-#    set_source_files_properties(${windows_SOURCES} PROPERTIES
-#        COMPILE_FLAGS - Wdeclaration-after-statement)
-# endif()
+    # Make GCC and Clang warn about declarations that VS 2010 and 2012 won't accept
+    # for all source files that VS will build
+    # if (${CMAKE_C_COMPILER_ID} STREQUAL GNU OR ${CMAKE_C_COMPILER_ID} STREQUAL Clang)
+    #    if (WIN32)
+    #        set(windows_SOURCES ${glfw_SOURCES})
+    #    else()
+    #        set(windows_SOURCES ${common_SOURCES})
+    #    endif()
+    #    set_source_files_properties(${windows_SOURCES} PROPERTIES
+    #        COMPILE_FLAGS - Wdeclaration-after-statement)
+    # endif()
 if "window" in platform.system().lower():
     GLFW_ENV.Append(
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
         LIBS=['OpenGL32', 'user32', 'glew32', 'winmm', 'Gdi32', 'Shell32']
+    )
+if "linux" in platform.system().lower():
+    GLFW_ENV.Append(
+        LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
+        LIBS=['GL', 'GLEW']
     )
 libs = GLFW_ENV.SharedLibrary("glfw3", sources)
 
