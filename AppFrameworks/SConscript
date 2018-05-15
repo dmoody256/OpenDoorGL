@@ -112,9 +112,13 @@ sourceFiles = ["GLFW/odgl_GLFW3.cpp"]
 prog = env.SharedLibrary("OpenDoorGL-GLFW3", sourceFiles)
 
 targets = [
-    prog,
     MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks/odgl_WindowInterface.hpp",
     MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks/GLFW/odgl_GLFW3.hpp",
 ]
+
+if "windows" in platform.system().lower():
+    targets.extend(prog)
+else:
+    targets.append(prog)
 
 Return('targets')

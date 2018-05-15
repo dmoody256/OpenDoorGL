@@ -95,12 +95,18 @@ TEST_NODE = MAIN_ENV.Install("build/include", 'Dependencies/glm/glm')
 
 for lib in DEPEND_LIBS['libs']:
     MAIN_ENV.Depends(CORE_LIBS, lib)
-    MAIN_ENV.Install("build/lib", lib)
+    if str(lib).endswith(".dll"):
+        print(lib)
+        MAIN_ENV.Install("build/bin", lib)
+    else:
+        MAIN_ENV.Install("build/lib", lib)
 
 for buildFile in CORE_LIBS:
     print(buildFile)
     if str(buildFile).endswith(".hpp"):
         MAIN_ENV.Install("build/include", buildFile)
+    elif str(buildFile).endswith(".dll"):
+        MAIN_ENV.Install("build/bin", buildFile)
     else:
         MAIN_ENV.Install("build/lib", buildFile)
 
@@ -109,6 +115,8 @@ MAIN_ENV.Depends(FRAMEWORK_LIBS, CORE_LIBS)
 for buildFile in FRAMEWORK_LIBS:
     if str(buildFile).endswith(".hpp"):
         MAIN_ENV.Install("build/include", buildFile)
+    elif str(buildFile).endswith(".dll"):
+        MAIN_ENV.Install("build/bin", buildFile)
     else:
         MAIN_ENV.Install("build/lib", buildFile)
 

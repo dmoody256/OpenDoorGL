@@ -320,7 +320,7 @@ if "window" in platform.system().lower():
             "-nostdlib",
         ])
 
-sharedLib = GLEW_SHARED_ENV.SharedLibrary(
+GLEW_SHARED_LIB = GLEW_SHARED_ENV.SharedLibrary(
     "glew/shared_build/" + GLEW_ENV['GLEW_LIB_NAME'],
     sharedSourceFiles
 )
@@ -328,7 +328,7 @@ sharedLib = GLEW_SHARED_ENV.SharedLibrary(
 GLEW_STATIC_ENV.Append(CPPDEFINES=[
     "GLEW_STATIC",
 ])
-staticLib = GLEW_STATIC_ENV.StaticLibrary(
+GLEW_STATIC_LIB = GLEW_STATIC_ENV.StaticLibrary(
     "glew/static_build/" + GLEW_ENV['GLEW_LIB_NAME'],
     staticSourceFiles
 )
@@ -838,7 +838,7 @@ if "linux" in platform.system().lower():
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
         LIBS=['GL', 'GLEW']
     )
-libs = GLFW_ENV.SharedLibrary("glfw3", sources)
+GLFW_LIBS = GLFW_ENV.SharedLibrary("glfw3", sources)
 
 
 # target_compile_definitions(glfw PRIVATE
@@ -920,10 +920,13 @@ targets['headers']['GLFW'].append(GLEW_ENV.File("glfw/include/GLFW/glfw3.h"))
 targets['headers']['GLFW'].append(
     GLEW_ENV.File("glfw/include/GLFW/glfw3native.h"))
 
-targets['libs'] = [sharedLib]
-
-for file in libs:
-    targets['libs'].append(GLEW_ENV.File(file))
+targets['libs'] = []
+if "window" in platform.system().lower():
+    targets['libs'].extend(GLFW_LIBS)
+    targets['libs'].extend(GLEW_SHARED_LIB)
+else:
+    targets['libs'].append(GLFW_LIBS)
+    targets['libs'].append(GLEW_SHARED_LIB)
 
 Return('targets')
 """

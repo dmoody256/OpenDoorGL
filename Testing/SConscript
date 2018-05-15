@@ -36,14 +36,53 @@ TEST_ENV = Environment(
     tools=['default', 'cxxtest']
 )
 
-debugFlag = ""
-if TEST_ENV['DEBUG_BUILD']:
-    debugFlag = "-g"
+if "windows" in platform.system().lower():
+    debugDefine = 'NDEBUG'
+    debugFlag = "/Z7"
+    debugOptimization = "/O2"
+    debug = '/DEBUG:NONE'
+    debugRuntime = "/MD"
 
-TEST_ENV.Append(CCFLAGS=[
-    "-std=c++11",
-    debugFlag,
-])
+    if TEST_ENV['DEBUG_BUILD']:
+        debugDefine = 'DEBUG'
+        debugOptimization = "/Od"
+        debugFlag = "/Z7"
+        debug = '/DEBUG:FULL'
+        debugRuntime = "/MDd"
+
+else:
+    debugDefine = 'NDEBUG'
+    debugFlag = "-g"
+    debugOptimization = "-O2"
+    debug = ''
+    debugRuntime = ""
+
+if "windows" in platform.system().lower():
+    TEST_ENV.Append(
+        CPPDEFINES=['NOMINMAX', "WIN32", debugDefine],
+        CCFLAGS=[
+            "/analyze-",
+            "/GS",
+            "/Zc:wchar_t",
+            "/W1",
+            debugFlag,
+            "/Gm-",
+            debugOptimization,
+            "/WX-",
+            '/FC',
+            "/Zc:forScope",  # Force Conformance in for Loop Scope
+            "/GR",           # Enable Run-Time Type Information
+            "/Oy-",          # Disable Frame-Pointer Omission
+            debugRuntime,
+            "/EHsc",
+            "/nologo",
+        ],
+        LINKFLAGS=[debug])
+else:
+    TEST_ENV.Append(CCFLAGS=[
+        "-std=c++11",
+        debugFlag,
+    ])
 TEST_ENV.Append(CPPPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/build/include",
     MAIN_ENV['PROJECT_DIR'] + "/Testing",
