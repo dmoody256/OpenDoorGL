@@ -2,6 +2,8 @@
     "files.associations": {
         "SConstruct": "python",
         "SConscript": "python",
+        "sconstruct": "python",
+        "sconscript": "python",
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -100,7 +102,8 @@
         "Sikuli",
         "chmod",
         "cpu",
-        "cpus"
+        "cpus",
+        "sconscript"
     ],
     "cSpell.language": "en,en-US"
 }

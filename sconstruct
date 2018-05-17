@@ -90,25 +90,25 @@ else:
 ###
 # build subProjects
 DEPEND_LIBS = SConscript(
-    'Dependencies/SConscript',
+    'Dependencies/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
 
 CORE_LIBS = SConscript(
-    'Core/SConscript',
+    'Core/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
 
 FRAMEWORK_LIBS = SConscript(
-    'AppFrameworks/SConscript',
+    'AppFrameworks/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
 
 TESTS = SConscript(
-    'Testing/SConscript',
+    'Testing/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
