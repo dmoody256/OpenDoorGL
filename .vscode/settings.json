@@ -92,5 +92,15 @@
         "--rcfile",
         "${workspaceFolder}/.pylintrc"
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "python.pythonPath": "/usr/bin/python3.6",
+    "cSpell.words": [
+        "GLEW",
+        "GLFW",
+        "Sikuli",
+        "chmod",
+        "cpu",
+        "cpus"
+    ],
+    "cSpell.language": "en,en-US"
 }
