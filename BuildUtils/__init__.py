@@ -180,7 +180,13 @@ class ColorPrinter():
         """
         Prints a purple info message.
         """
-        print(self.HEADER + "[   INFO] " + self.ENDC + message)
+        print(self.InfoString(message))
+
+    def InfoString(self, message):
+        """
+        Prints a purple info message.
+        """
+        return self.HEADER + "[   INFO] " + self.ENDC + message
 
     def ErrorPrint(self, message):
         """

@@ -133,7 +133,6 @@ targets = []
 
 if "win" in platform.system().lower():
     targets.extend(prog)
-    print(str(targets))
 else:
     targets.append(prog)
 
