@@ -3,7 +3,11 @@ shallow_clone: true
 
 install:
   - python --version
-  - pip install pypiwin32
+  - pip install -U pypiwin32
+  - pip install -U pip
+  - pip install -U setuptools
+  - pip install -U wheel
+  - pip install -U scons
 
 build: off
 build_script:
