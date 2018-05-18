@@ -14,7 +14,10 @@
 Main SConstruct file for building the OpenDoorGL library along with tests.
 """
 
-# scons
+# python
+import sys
+
+# SCons
 import SCons.Action
 from SCons.Environment import Environment
 from SCons.Script import SConscript
@@ -25,6 +28,7 @@ from SCons.Script.Main import GetOption
 from BuildUtils import get_num_cpus
 from BuildUtils import chmod_build_dir
 from BuildUtils import run_tests
+from BuildUtils import ColorPrinter
 
 AddOption(
     '--debug_build',
@@ -53,33 +57,58 @@ MAIN_ENV = Environment(
 MAIN_ENV['PROJECT_DIR'] = MAIN_ENV.Dir('.').abspath.replace('\\', '/')
 
 ###################################################
-# Determine number of CPUs
-NUM_CPUS = get_num_cpus()
-print("Building with " + str(NUM_CPUS) + " parallel jobs")
-MAIN_ENV.SetOption("num_jobs", 1)
+# Determine number of Jobs
+# start by assuming num_jobs was not set
+NUM_JOBS_SET = False
+if GetOption("num_jobs") == 1:
+    # if num_jobs is the default we need to check sys.argv
+    # to see if the user happened to set the default
+    for arg in sys.argv:
+        if arg.startswith("-j") or arg.startswith("--jobs"):
+            if arg == "-j" or arg == "--jobs":
+                if int(sys.argv[sys.argv.index(arg)+1]) == 1:
+                    NUM_JOBS_SET = True
+            else:
+                if arg.startswith("-j"):
+                    if int(arg[2:]) == 1:
+                        NUM_JOBS_SET = True
+else:
+    # user must have set something if it wasn't default
+    NUM_JOBS_SET = True
+
+# num_jobs wasn't specificed so let use the
+# max number since the user doesn't seem to care
+if not NUM_JOBS_SET:
+    NUM_CPUS = get_num_cpus()
+    ColorPrinter().InfoPrint("Building with " + str(NUM_CPUS) + " parallel jobs")
+    MAIN_ENV.SetOption("num_jobs", NUM_CPUS)
+else:
+    # user wants a certain number of jobs so do that
+    ColorPrinter().InfoPrint(
+        "Building with " + str(GetOption('num_jobs')) + " parallel jobs")
 
 ###
 # build subProjects
 DEPEND_LIBS = SConscript(
-    'Dependencies/SConscript',
+    'Dependencies/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
 
 CORE_LIBS = SConscript(
-    'Core/SConscript',
+    'Core/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
 
 FRAMEWORK_LIBS = SConscript(
-    'AppFrameworks/SConscript',
+    'AppFrameworks/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
 
 TESTS = SConscript(
-    'Testing/SConscript',
+    'Testing/sconscript',
     duplicate=0,
     exports='MAIN_ENV'
 )
@@ -96,13 +125,11 @@ TEST_NODE = MAIN_ENV.Install("build/include", 'Dependencies/glm/glm')
 for lib in DEPEND_LIBS['libs']:
     MAIN_ENV.Depends(CORE_LIBS, lib)
     if str(lib).endswith(".dll"):
-        print(lib)
         MAIN_ENV.Install("build/bin", lib)
     else:
         MAIN_ENV.Install("build/lib", lib)
 
 for buildFile in CORE_LIBS:
-    print(buildFile)
     if str(buildFile).endswith(".hpp"):
         MAIN_ENV.Install("build/include", buildFile)
     elif str(buildFile).endswith(".dll"):
@@ -122,7 +149,7 @@ for buildFile in FRAMEWORK_LIBS:
 
 CHMOD_CALLBACK = SCons.Action.ActionFactory(
     chmod_build_dir,
-    lambda: 'Setting build to exec permissions'
+    lambda: ColorPrinter().InfoString('Setting build to exec permissions')
 )
 
 CHMOD_COMMAND = MAIN_ENV.Command('never_exists', 'build', CHMOD_CALLBACK())

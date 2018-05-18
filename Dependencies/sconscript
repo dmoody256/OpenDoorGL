@@ -29,6 +29,8 @@ from SCons.Script.SConscript import Return
 
 # project
 from BuildUtils import ImportVar
+from BuildUtils import ColorPrinter
+
 MAIN_ENV = ImportVar('MAIN_ENV')
 
 # TODO: make this python and not command line
@@ -217,12 +219,11 @@ GLEW_ENV.Append(GLEW_VERSION=GLEW_ENV['GLEW_MAJOR'] + '.'
 
 # X11 required when builing visualinfo and glewinfo,
 # but not for Windows or Apple OSX platforms
-if (GLEW_ENV['UTILITIES']
-        and "window" not in platform.system().lower()
-        and "darwin" not in platform.system().lower()):
-    # TODO: convert to soncs SConf
-    # find_package (X11)+
-    print("include X11")
+# if (GLEW_ENV['UTILITIES']
+#        and "window" not in platform.system().lower()
+#        and "darwin" not in platform.system().lower()):
+#    # TODO: convert to soncs SConf
+#    # find_package (X11)
 
 if "window" in platform.system().lower():
     GLEW_ENV.Append(GLEW_LIB_NAME='glew32')
@@ -240,12 +241,12 @@ GLEW_ENV.Append(CPPDEFINES=[
 
 #### Regal mode ####
 if GLEW_ENV['REGAL']:
-    if "window" in platform.system().lower():
-        # set (REGAL_LIB_NAME regal32)
-        print("set windows libname")
-    else:
-        # set (REGAL_LIB_NAME Regal)
-        print("set linux libname")
+    # if "window" in platform.system().lower():
+    #    # TODO: convert cmake code
+    #    # set (REGAL_LIB_NAME regal32)
+    # else:
+    #    # TODO: convert cmake code
+    #    # set (REGAL_LIB_NAME Regal)
     GLEW_ENV.Append(CPPDEFINES=[
         'GLEW_REGAL',
     ])
@@ -254,12 +255,12 @@ if GLEW_ENV['REGAL']:
 
 #### OSMesa mode ####
 if GLEW_ENV['OSMESA']:
-    if "window" in platform.system().lower():
-        # set (OSMESA_LIB_NAME osmesa)
-        print("set windows libname")
-    else:
-        # set (OSMESA_LIB_NAME OSMesa)
-        print("set linux libname")
+    # if "window" in platform.system().lower():
+    #    # TODO: convert cmake code
+    #    # set (OSMESA_LIB_NAME osmesa)
+    # else:
+    #    # TODO: convert cmake code
+    #    # set (OSMESA_LIB_NAME OSMesa)
     GLEW_ENV.Append(CPPDEFINES=[
         'GLEW_OSMESA',
     ])
@@ -460,13 +461,13 @@ GLFW_ENV.Append(GLFW_VERSION_FULL=str(GLFW_ENV['GLFW_VERSION_MAJOR']) + "." +
 #     message(STATUS "Using OSMesa for headless context creation")
 if "window" in platform.system().lower():
     GLFW_ENV.Append(CPPDEFINES=["_GLFW_WIN32", "_GLFW_BUILD_DLL"])
-    print("Using Win32 for window creation")
+    ColorPrinter().InfoPrint("Using Win32 for window creation")
 # elseif (APPLE)
 #     set(_GLFW_COCOA 1)
 #     message(STATUS "Using Cocoa for window creation")
 if "linux" in platform.system().lower():
     GLFW_ENV.Append(CPPDEFINES=["_GLFW_X11"])
-    print("Using X11 for window creation")
+    ColorPrinter().InfoPrint("Using X11 for window creation")
     #     set(_GLFW_X11 1)
     #     message(STATUS "Using X11 for window creation")
     # else()

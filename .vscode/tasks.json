@@ -9,7 +9,8 @@
             "command": "scons",
             "args": [
                 "--debug_build",
-                "--keep-going"
+                "--keep-going",
+                "-Q"
             ],
             "problemMatcher": [],
             "group": {

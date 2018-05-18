@@ -2,6 +2,8 @@
     "files.associations": {
         "SConstruct": "python",
         "SConscript": "python",
+        "sconstruct": "python",
+        "sconscript": "python",
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -92,5 +94,16 @@
         "--rcfile",
         "${workspaceFolder}/.pylintrc"
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "python.pythonPath": "/usr/bin/python3.6",
+    "cSpell.words": [
+        "GLEW",
+        "GLFW",
+        "Sikuli",
+        "chmod",
+        "cpu",
+        "cpus",
+        "sconscript"
+    ],
+    "cSpell.language": "en,en-US"
 }

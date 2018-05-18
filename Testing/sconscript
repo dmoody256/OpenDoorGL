@@ -112,7 +112,7 @@ else:
 tests = []
 for root, dirs, files in os.walk("./"):
     for file in files:
-        if file.endswith("SConscript"):
+        if file.endswith("sconscript"):
             if root == "./":
                 continue
             tests.append(
