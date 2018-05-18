@@ -370,17 +370,17 @@ class OutputBuilder():
                 raise
         if(prog_type == 'shared'):    
             if("Windows" in platform.system()):
-                linkcom_string_match = re.sub(r"\s2\>\&1.*$", "\",", build_env['SHLINKCOM'].list[0].cmd_list)
+                linkcom_string_match = re.sub(r"\s\d\>\&\d.*", "\",", build_env['SHLINKCOM'].list[0].cmd_list)
                 build_env['SHLINKCOM'].list[0].cmd_list = linkcom_string_match.replace('",'," 2>&1 > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\",") 
             else:
-                linkcom_string_match = re.sub(r"\s\>\".*$", "\",", build_env['SHLINKCOM'])
+                linkcom_string_match = re.sub(r"\s\>\".*", "\",", build_env['SHLINKCOM'])
                 build_env['SHLINKCOM'] = linkcom_string_match + str(" > " + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt 2>&1") 
         elif(   prog_type == 'static' or prog_type == 'exec'):
             if("Windows" in platform.system()):
-                linkcom_string_match = re.sub(r"\s2\>\&1.*$", "\",", build_env['LINKCOM'].list[0].cmd_list)
+                linkcom_string_match = re.sub(r"\s\d\>\&\d.*", "\",", build_env['LINKCOM'].list[0].cmd_list)
                 build_env['LINKCOM'].list[0].cmd_list = linkcom_string_match.replace('",'," 2>&1 > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\",") 
             else:
-                linkcom_string_match = re.sub(r"\s\>\".*$", "\",", build_env['LINKCOM'])
+                linkcom_string_match = re.sub(r"\s\>\".*", "\",", build_env['LINKCOM'])
                 build_env['LINKCOM'] = linkcom_string_match + str(" > " + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt 2>&1") 
         
         if(prog_type == "shared"):
