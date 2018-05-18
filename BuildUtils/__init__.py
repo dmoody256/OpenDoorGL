@@ -22,6 +22,7 @@ import datetime
 import atexit
 import platform
 import subprocess
+import re
 
 # scons
 from SCons.Script.SConscript import call_stack
@@ -329,11 +330,8 @@ class OutputBuilder():
         self.build_num = 0
         self.reset_callback = None
         self.prog_counter = ProgressCounter()
-        reset_string = ''
-        if not GetOption('no_progress'):
-            reset_string = 'Reseting Progress Counter for ' + str(target_bins)
         self.reset_callback = Action.ActionFactory( self.prog_counter.ResetProgress,
-            lambda source_files, target_bins: '') 
+            lambda source_files, target_bins: 'Reseting Progress Counter for ' + str(target_bins) if not GetOption('no_progress') else '') 
 
         Progress(self.prog_counter, interval=1)
 
@@ -357,23 +355,33 @@ class OutputBuilder():
         source_objs = []
         for file in variant_source_files:
 
-            if(prog_type == 'shared'):    build_obj_command = build_env.SharedObject
-            elif(   prog_type == 'static' 
-                 or prog_type == 'exec'): build_obj_command = build_env.Object
+            if(prog_type == 'shared'):    
+                build_obj = build_env.SharedObject(file, 
+                SHCCCOM= build_env['SHCCCOM']  + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect,
+                SHCXXCOM=build_env['SHCXXCOM'] + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect)
+                source_objs.append(build_obj)
+            elif(   prog_type == 'static' or prog_type == 'exec'): 
+                build_obj_command = build_env.Object(file, 
+                CCCOM= build_env['CCCOM']  + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect,
+                CXXCOM=build_env['CXXCOM'] + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect)
+                source_objs.append(build_obj)
             else:
                 ColorPrinter().ErrorPrint("Could not determine build type.")
                 raise
-
-            build_obj = build_obj_command(file, 
-                CCCOM= build_env['CCCOM']  + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect,
-                CXXCOM=build_env['CXXCOM'] + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect)
-            source_objs.append(build_obj)
-           
-        if("Windows" in platform.system()):
-            build_env['LINKCOM'].list[0].cmd_list = build_env['LINKCOM'].list[0].cmd_list.replace('",'," 2>&1 > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\",") 
-        else:
-            build_env['LINKCOM'] = build_env['LINKCOM'].replace('",'," > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\" 2>&1 ,") 
-    
+        if(prog_type == 'shared'):    
+            if("Windows" in platform.system()):
+                linkcom_string_match = re.sub(r"\s2\>\&1.*$", "\",", build_env['SHLINKCOM'].list[0].cmd_list)
+                build_env['SHLINKCOM'].list[0].cmd_list = linkcom_string_match.replace('",'," 2>&1 > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\",") 
+            else:
+                linkcom_string_match = re.sub(r"\s\>\".*$", "\",", build_env['SHLINKCOM'])
+                build_env['SHLINKCOM'] = linkcom_string_match + str(" > " + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt 2>&1") 
+        elif(   prog_type == 'static' or prog_type == 'exec'):
+            if("Windows" in platform.system()):
+                linkcom_string_match = re.sub(r"\s2\>\&1.*$", "\",", build_env['LINKCOM'].list[0].cmd_list)
+                build_env['LINKCOM'].list[0].cmd_list = linkcom_string_match.replace('",'," 2>&1 > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\",") 
+            else:
+                linkcom_string_match = re.sub(r"\s\>\".*$", "\",", build_env['LINKCOM'])
+                build_env['LINKCOM'] = linkcom_string_match + str(" > " + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt 2>&1") 
         
         if(prog_type == "shared"):
             prog = build_env.SharedLibrary(build_env['BUILD_DIR'] + "/" + prog_name, source_objs)
