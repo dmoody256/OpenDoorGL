@@ -26,7 +26,10 @@ import subprocess
 # scons
 from SCons.Script.SConscript import call_stack
 from SCons.Script.Main import Progress
-
+from SCons import Action
+from SCons.Script import Main
+from SCons.Environment import Environment
+from SCons.Script.Main import GetOption
 
 def get_num_cpus():
     """
@@ -150,8 +153,8 @@ def display_build_status():
 
     if status == 'failed':
         print(FAIL + "Build failed." + ENDC)
-    elif status == 'ok':
-        print(OKGREEN + "Build succeeded." + ENDC)
+    #elif status == 'ok':
+    #    print(OKGREEN + "Build succeeded." + ENDC)
 
 
 class ColorPrinter():
@@ -261,167 +264,171 @@ def color_stop():
         return ''
     return '\033[0m'
 
-
 class ProgressCounter(object):
 
     """
     Utility class used for printing progress during the build.
     """
 
-    def process_bins(self, node):
-        """
-        Check to see if node is in the list of bins and
-        print a status message.
-        """
-        node_string = str(node).replace("\\", "/")
-        for bin_node in self.targetBinaries:
-            # print(slashedNode)
+    def __init__(self):
+        self.count = 0.0
+        self.printer = ColorPrinter()
+        self.max_count = 1.0
+        self.progress_sources = []
+        self.target_binaries = []
 
-            if node_string.endswith(bin_node):
-                filename = os.path.basename(node_string)
-                if node.get_state() == 2:
-                    print(print_green()
-                          + "[   LINK] "
-                          + color_stop() + "Linking "
-                          + filename)
-                else:
-                    print(print_green()
-                          + "[   LINK] "
-                          + color_stop() + "Skipping, already built "
-                          + filename)
+    def __call__(self, node, *args, **kw):
+        #print(str(node))
 
-    def process_sources(self, node):
-        """
-        Check to see if the source has been compilied
-        and report the status.
-        """
-        node_string = str(node).replace("\\", "/")
-        if(str(node_string).endswith(".obj")
-           or str(node_string).endswith(".os")
-           or str(node_string).endswith(".o")):
+        slashed_node = str(node).replace("\\", "/")
+        for bin in self.target_binaries:
+            #print (bin + ": "+str(node.get_state())+" - " + slashed_node)
+            if(bin.endswith(slashed_node)):
+                filename = os.path.basename(slashed_node)
+                if(node.get_state() == 2): 
+                    self.printer.LinkPrint("Linking " + filename)
+                else:   
+                    self.printer.LinkPrint("Skipping, already built " + filename)
 
-            slashedNodeObj = os.path.splitext(node_string)[0] + ".cpp"
-            for sourceFileNode in self.progressSources:
-                if slashedNodeObj.endswith(sourceFileNode):
+        # TODO: make hanlding this file extensions better
+        if(   slashed_node.endswith(".obj") 
+           or slashed_node.endswith(".o"  ) 
+           or slashed_node.endswith(".os" ) ):
 
-                    if self.count == 0:
+            slashed_node_file = os.path.basename(os.path.splitext(slashed_node)[0] + ".c")
+            for source in self.progress_sources:
+                if(slashed_node_file in source or slashed_node_file + "pp" in source):
+
+                    if(self.count == 0):
                         start_build_string = "Building "
-                        for binFile in self.targetBinaries:
-                            start_build_string += (os.path.basename(binFile)
-                                                   + ", ")
+                        for bin in self.target_binaries:
+                            start_build_string += bin + ", "
                         start_build_string = start_build_string[:-2]
-                        ColorPrinter().InfoPrint(start_build_string)
+                        self.printer.InfoPrint(start_build_string)
 
                     self.count += 1
-                    percent = self.count / self.maxCount * 100.00
-                    filename = os.path.basename(str(node))
-                    percentString = "{0:.2f}".format(percent)
-                    if percent < 100:
-                        percentString = " " + percentString
-                    if percent < 10:
-                        percentString = " " + percentString
-
-                    if node.get_state() == 2:
-                        print(print_green()
-                              + "[" + percentString + "%] "
-                              + color_stop() + "Compiling "
-                              + filename)
-                    else:
-                        print(print_green()
-                              + "[" + percentString + "%] "
-                              + color_stop() + "Skipping, already built "
-                              + filename)
+                    percent = self.count / self.max_count * 100.00
+                    filename = os.path.basename(slashed_node)
+                    
+                    if(node.get_state() == 2): 
+                        self.printer.CompilePrint( percent, "Compiling " + filename )
+                    else:                      
+                        self.printer.CompilePrint( percent, "Skipping, already built " + filename )
                     break
 
-    def __init__(self, sourceFiles, targetBinaries):
+    def ResetProgress(self, source_files, target_binaries):
         self.count = 0.0
-        self.maxCount = float(len(sourceFiles))
-        self.progressSources = sourceFiles
-        self.targetBinaries = targetBinaries
+        self.max_count = float(len(source_files))
+        #print("reseting sources to " + str(source_files))
+        self.progress_sources = source_files
+        self.target_binaries = target_binaries
 
-    def __call__(self, node, *_unused_args, **_unused_kw):
+class OutputBuilder():
 
-        self.process_bins(node)
-        self.process_sources(node)
+    def __init__(self):
+        self.build_num = 0
+        self.reset_callback = None
+        self.prog_counter = ProgressCounter()
+        reset_string = ''
+        if not GetOption('no_progress'):
+            reset_string = 'Reseting Progress Counter for ' + str(target_bins)
+        self.reset_callback = Action.ActionFactory( self.prog_counter.ResetProgress,
+            lambda source_files, target_bins: '') 
+
+        Progress(self.prog_counter, interval=1)
+
+    def SetupBuildEnv(self, env, prog_type, prog_name, source_files, previous_build = None):
+
+        self.build_num+=1
+        build_env = env.Clone()
+        variant_dir_str = build_env['BUILD_DIR'] + "/" + prog_name + "_objs_" + str(self.build_num)
+        build_env.VariantDir ( variant_dir_str, '.', duplicate=0 )
+        
+        variant_source_files = []
+        for file in source_files:
+            variant_source_files.append(file.replace(build_env['BUILD_DIR'], variant_dir_str))
+        
+        win_redirect = ""
+        linux_redirect = "2>&1"
+        if("Windows" in platform.system()):
+            win_redirect = "2>&1"
+            linux_redirect = ""
+
+        source_objs = []
+        for file in variant_source_files:
+
+            if(prog_type == 'shared'):    build_obj_command = build_env.SharedObject
+            elif(   prog_type == 'static' 
+                 or prog_type == 'exec'): build_obj_command = build_env.Object
+            else:
+                ColorPrinter().ErrorPrint("Could not determine build type.")
+                raise
+
+            build_obj = build_obj_command(file, 
+                CCCOM= build_env['CCCOM']  + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect,
+                CXXCOM=build_env['CXXCOM'] + " " + win_redirect + " > \"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + os.path.splitext(os.path.basename(file))[0] + "_compile.txt\" " + linux_redirect)
+            source_objs.append(build_obj)
+           
+        if("Windows" in platform.system()):
+            build_env['LINKCOM'].list[0].cmd_list = build_env['LINKCOM'].list[0].cmd_list.replace('",'," 2>&1 > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\",") 
+        else:
+            build_env['LINKCOM'] = build_env['LINKCOM'].replace('",'," > \\\"" + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt\\\"\" 2>&1 ,") 
+    
+        
+        if(prog_type == "shared"):
+            prog = build_env.SharedLibrary(build_env['BUILD_DIR'] + "/" + prog_name, source_objs)
 
 
-def SetupBuildOutput(env, sourceFiles):
-    """
-    Sets up the build output by condiguring the passed environment.
-    """
-    windowsRedirect = ""
-    linuxRedirect = "2>&1"
-    if "Windows" in platform.system():
-        windowsRedirect = "2>&1"
-        linuxRedirect = ""
+        elif(prog_type == "static"):
+            prog = build_env.StaticLibrary(build_env['BUILD_DIR'] + "/" + prog_name, source_objs)
 
-    soureFileObjs = []
-    for file in sourceFiles:
-        buildObj = env.SharedObject(
-            file,
-            CCCOM=(env['CCCOM'] + " " + windowsRedirect + " > \""
-                   + env['PROJECT_DIR'] + "/build/build_logs/"
-                   + os.path.splitext(os.path.basename(file))[0]
-                   + "_compile.txt\" " + linuxRedirect),
-            CXXCOM=(env['CXXCOM'] + " " + windowsRedirect + " > \""
-                    + env['PROJECT_DIR'] + "/build/build_logs/"
-                    + os.path.splitext(os.path.basename(file))[0]
-                    + "_compile.txt\" " + linuxRedirect)
-        )
-        soureFileObjs.append(buildObj)
+            
+        elif(prog_type == 'exec'):
+            prog =       build_env.Program(build_env['BUILD_DIR'] + "/" + prog_name, source_objs)
 
-    if "Windows" in platform.system():
+        if not os.path.exists(build_env['PROJECT_DIR'] + "/build/build_logs"):
+            os.makedirs(build_env['PROJECT_DIR'] + "/build/build_logs")
 
-        new_command = env['LINKCOM'].list[0].cmd_list.replace(
-            '",',
-            " 2>&1 > \\\"" + env['PROJECT_DIR']
-            + "/build/build_logs/MyLifeApp_link.txt\"")
-        #env['LINKCOM'].list[0].cmd_list = new_command
-        prog = env.SharedLibrary("build/OpenDoorGL", soureFileObjs)
-    else:
-        new_command = env['LINKCOM'].replace(
-            '",',
-            " > \\\"" + env['PROJECT_DIR']
-            + "/build/build_logs/MyLifeApp_link.txt\\\"\" 2>&1 ,")
-        #env['LINKCOM'] = new_command
-        prog = env.SharedLibrary("build/libOpenDoorGL", soureFileObjs)
+        #if ARGUMENTS.get('fail', 0):
+        #    Command('target', 'source', ['/bin/false'])
 
-    ###################################################
-    # setup build output
-    if not os.path.exists(env['PROJECT_DIR'] + "/build/build_logs"):
-        os.makedirs(env['PROJECT_DIR'] + "/build/build_logs")
+        atexit.register(display_build_status)
 
-    # if ARGUMENTS.get('fail', 0):
-    #    env.Command('target', 'source', ['/bin/false'])
+        def print_cmd_line(s, targets, sources, env):
+            with open(env['PROJECT_DIR'] + "/build/build_logs/build_" + env['BUILD_LOG_TIME'] + ".log", "a") as f:
+                f.write(s + "\n")
 
-    atexit.register(display_build_status)
+        build_env['BUILD_LOG_TIME'] = datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d__%H_%M_%S')
+        if(GetOption('no_progress')):
+            build_env['PRINT_CMD_LINE_FUNC'] = print_cmd_line
+        
+        built_bins = []
+        if("Windows" in platform.system()):
+            if(prog_type == 'shared'):
+                built_bins.append(build_env['BUILD_DIR'] + "/" + build_env.subst('$SHLIBPREFIX') + prog_name + build_env.subst('$SHLIBSUFFIX'))
+            elif(prog_type == 'static'):
+                built_bins.append(build_env['BUILD_DIR'] + "/" + build_env.subst('$LIBPREFIX') + prog_name + build_env.subst('$LIBSUFFIX'))
+            elif(prog_type == 'exec'):
+                built_bins.append(build_env['BUILD_DIR'] + "/" + build_env.subst('$PROGPREFIX') + prog_name + build_env.subst('$PROGSUFFIX') )
+        else:
+            if(prog_type == 'shared'):
+                built_bins.append(build_env['BUILD_DIR'] + "/" + build_env.subst('$SHLIBPREFIX') + prog_name + build_env.subst('$SHLIBSUFFIX'))
+            elif(prog_type == 'static'):
+                built_bins.append(build_env['BUILD_DIR'] + "/" + build_env.subst('$LIBPREFIX') + prog_name + build_env.subst('$LIBSUFFIX'))
+            elif(prog_type == 'exec'):
+                built_bins.append(build_env['BUILD_DIR'] + "/" + build_env.subst('$PROGPREFIX') + prog_name + build_env.subst('$PROGSUFFIX') )
 
-    def print_cmd_line(s, _unused_targets, _unused_sources, env):
-        """
-        Switches out the default scons printing.
-        """
-        log_file = (env['PROJECT_DIR']
-                    + "/build/build_logs/build_"
-                    + env['BUILD_LOG_TIME'] + ".log")
-        with open(log_file, "a") as f:
-            f.write(s + "\n")
+        if(not self.reset_callback == None ):
+            if(previous_build == None):
+                self.prog_counter.ResetProgress(variant_source_files, built_bins)
+            else:
+                reset = build_env.Command( None, variant_source_files, self.reset_callback(variant_source_files, built_bins))
+                build_env.Depends(reset, previous_build)
+                for node in source_objs:
+                    build_env.Depends(node, reset)
 
-    current_date = datetime.datetime.fromtimestamp(time.time())
-    env['BUILD_LOG_TIME'] = current_date.strftime('%Y_%m_%d__%H_%M_%S')
-
-    if "VERBOSE" not in env:
-        env['PRINT_CMD_LINE_FUNC'] = print_cmd_line
-
-    builtBins = []
-    if "Windows" in platform.system():
-        builtBins.append("build/OpenDoorGL.dll")
-    else:
-        builtBins.append("build/libOpenDoorGL.so")
-
-    Progress(ProgressCounter(sourceFiles, builtBins), interval=1)
-
-    return [env, prog]
-
+        return [build_env, prog]  
+         
 
 def chmod_build_dir():
     """

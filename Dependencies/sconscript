@@ -30,6 +30,7 @@ from SCons.Script.SConscript import Return
 # project
 from BuildUtils import ImportVar
 from BuildUtils import ColorPrinter
+from BuildUtils import OutputBuilder
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
@@ -98,12 +99,16 @@ AddOption(
 GLEW_ENV = Environment(
     UTILITIES=not GetOption('utilities'),
     REGAL=GetOption('regal'),
+    PROJECT_DIR=MAIN_ENV['PROJECT_DIR'],
+    BUILD_DIR=MAIN_ENV['BUILD_DIR'],
 )
 
 GLFW_ENV = Environment(
     BUILD_EXAMPLES=not GetOption('glfw_examples'),
     BUILD_TESTS=GetOption('glfw_tests'),
-    BUILD_DOCS=GetOption('glfw_docs')
+    BUILD_DOCS=GetOption('glfw_docs'),
+    PROJECT_DIR=MAIN_ENV['PROJECT_DIR'],
+    BUILD_DIR=MAIN_ENV['BUILD_DIR'],
 )
 
 if ("linux" in platform.system().lower() or
@@ -321,18 +326,15 @@ if "window" in platform.system().lower():
             "-nostdlib",
         ])
 
-GLEW_SHARED_LIB = GLEW_SHARED_ENV.SharedLibrary(
-    "glew/shared_build/" + GLEW_ENV['GLEW_LIB_NAME'],
-    sharedSourceFiles
-)
+GLEW_SHARED_ENV, GLEW_SHARED_LIB = MAIN_ENV['PROGRESS'].SetupBuildEnv(GLEW_SHARED_ENV, "shared", GLEW_ENV['GLEW_LIB_NAME'], sharedSourceFiles)
 
-GLEW_STATIC_ENV.Append(CPPDEFINES=[
-    "GLEW_STATIC",
-])
-GLEW_STATIC_LIB = GLEW_STATIC_ENV.StaticLibrary(
-    "glew/static_build/" + GLEW_ENV['GLEW_LIB_NAME'],
-    staticSourceFiles
-)
+#GLEW_STATIC_ENV.Append(CPPDEFINES=[
+#    "GLEW_STATIC",
+#])
+#GLEW_STATIC_LIB = GLEW_STATIC_ENV.StaticLibrary(
+#    "glew/static_build/" + GLEW_ENV['GLEW_LIB_NAME'],
+#    staticSourceFiles
+#)
 
 #### GLFW ####
 ################################################################################
@@ -839,8 +841,8 @@ if "linux" in platform.system().lower():
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
         LIBS=['GL', 'GLEW']
     )
-GLFW_LIBS = GLFW_ENV.SharedLibrary("glfw3", sources)
 
+GLFW_ENV, GLFW_LIBS = MAIN_ENV['PROGRESS'].SetupBuildEnv(GLFW_ENV, "shared", "glfw3", sources, GLEW_SHARED_LIB)
 
 # target_compile_definitions(glfw PRIVATE
 #                           _GLFW_USE_CONFIG_H

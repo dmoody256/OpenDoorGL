@@ -16,6 +16,8 @@ Main SConstruct file for building the OpenDoorGL library along with tests.
 
 # python
 import sys
+import time
+import datetime
 
 # SCons
 import SCons.Action
@@ -29,6 +31,7 @@ from BuildUtils import get_num_cpus
 from BuildUtils import chmod_build_dir
 from BuildUtils import run_tests
 from BuildUtils import ColorPrinter
+from BuildUtils import OutputBuilder
 
 AddOption(
     '--debug_build',
@@ -52,9 +55,10 @@ MAIN_ENV = Environment(
     DEBUG_BUILD=GetOption('debug_build'),
     TARGET_ARCH='x86_64',
     RUN_TEST=GetOption('run_test'),
-    PROJECT_DIR=""
 )
 MAIN_ENV['PROJECT_DIR'] = MAIN_ENV.Dir('.').abspath.replace('\\', '/')
+MAIN_ENV['BUILD_DIR'] = MAIN_ENV['PROJECT_DIR'] + "/build"
+MAIN_ENV['PROGRESS'] = OutputBuilder()
 
 ###################################################
 # Determine number of Jobs
@@ -94,11 +98,12 @@ DEPEND_LIBS = SConscript(
     duplicate=0,
     exports='MAIN_ENV'
 )
-
+DEPENDS=DEPEND_LIBS['libs']
 CORE_LIBS = SConscript(
     'Core/sconscript',
+    exports=['DEPENDS','MAIN_ENV'],
     duplicate=0,
-    exports='MAIN_ENV'
+    
 )
 
 FRAMEWORK_LIBS = SConscript(
@@ -112,6 +117,13 @@ TESTS = SConscript(
     duplicate=0,
     exports='MAIN_ENV'
 )
+
+def print_cmd_line(s, targets, sources, env):
+    with open(env['PROJECT_DIR'] + "/build/build_logs/build_" + datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d__%H_%M_%S') + ".log", "a") as f:
+        f.write(s + "\n")
+
+if(GetOption('no_progress')):
+    MAIN_ENV['PRINT_CMD_LINE_FUNC'] = print_cmd_line
 
 
 # setup installs

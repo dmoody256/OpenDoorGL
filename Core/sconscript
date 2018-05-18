@@ -24,12 +24,13 @@ from SCons.Script.SConscript import Return
 
 # project
 from BuildUtils import ImportVar
-from BuildUtils import SetupBuildOutput
+from BuildUtils import OutputBuilder
 MAIN_ENV = ImportVar('MAIN_ENV')
-
+DEPENDS = ImportVar('DEPENDS')
 
 env = Environment(DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'])
-env['PROJECT_DIR'] = os.path.abspath(env.Dir('.').abspath).replace('\\', '/')
+env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
+env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 env.VariantDir('build', 'Source', duplicate=0)
 
 sourceFiles = [
@@ -127,8 +128,9 @@ elif "win" in platform.system().lower():
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
         LIBS=['OpenGL32', 'user32', 'glew32']
     )
+    
+env, prog = MAIN_ENV['PROGRESS'].SetupBuildEnv(env, "shared", "OpenDoorGL", sourceFiles, DEPENDS)
 
-env, prog = SetupBuildOutput(env, sourceFiles)
 targets = []
 
 if "win" in platform.system().lower():
