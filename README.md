@@ -1,5 +1,6 @@
 # OpenDoorGL
 [![Build Status](https://travis-ci.org/dmoody256/OpenDoorGL.svg?branch=master)](https://travis-ci.org/dmoody256/OpenDoorGL)
+[![Build status](https://ci.appveyor.com/api/projects/status/iltlwjvcrb86v2e7/branch/master?svg=true)](https://ci.appveyor.com/project/dmoody256/opendoorgl/branch/master)
 
 This is a simple OpenGL Rendering library I created for fun.
 

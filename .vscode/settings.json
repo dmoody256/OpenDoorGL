@@ -95,7 +95,6 @@
         "${workspaceFolder}/.pylintrc"
     ],
     "editor.formatOnSave": true,
-    "python.pythonPath": "/usr/bin/python3.6",
     "cSpell.words": [
         "GLEW",
         "GLFW",
