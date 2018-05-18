@@ -16,6 +16,7 @@ SConcript for building different text modules.
 
 # python
 import os
+import sys
 import platform
 
 # scons
@@ -32,6 +33,7 @@ CXXTEST_DIR = MAIN_ENV['PROJECT_DIR'] + '/Dependencies/cxxtest'
 TEST_ENV = Environment(
     DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'],
     CXXTEST=CXXTEST_DIR + '/bin/cxxtestgen',
+    CXXTEST_PYTHON=sys.executable,
     toolpath=[CXXTEST_DIR + '/build_tools/SCons'],
     tools=['default', 'cxxtest']
 )
