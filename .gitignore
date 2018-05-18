@@ -15,6 +15,7 @@ Testing/VisualTests/SikuliX/*
 *.o
 *.os
 *.so
+*.a
 
 # Packages #
 ############
