@@ -1,6 +1,7 @@
 image: Visual Studio 2017
 
 install:
+  - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - python --version
   - pip install -U pypiwin32
   - pip install -U setuptools
