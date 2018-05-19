@@ -12,5 +12,5 @@ build: off
 build_script:
   - cmd: scons --keep-going --debug_build
   - cmd: scons -c
-  - cmd: scons -Q
+  - cmd: scons --unit -Q
   

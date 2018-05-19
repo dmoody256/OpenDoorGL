@@ -460,7 +460,24 @@ def chmod_build_dir():
                 make_executable(os.path.join(root, file_to_chmod))
 
 
-def run_tests(base_dir):
+def run_unit_tests(base_dir):
+    """
+    Callback function to run the test script.
+    """
+
+    test_env = os.environ
+    test_env['TEST_BIN_DIR'] = base_dir+'/build/bin'
+
+    proc = subprocess.Popen(
+        args=['python', 'run_unit_tests.py'],
+        cwd=base_dir+'/Testing',
+        env=test_env
+    )
+    output = proc.communicate()[0]
+    # print(output)
+
+
+def run_visual_tests(base_dir):
     """
     Callback function to run the test script.
     """
@@ -484,7 +501,7 @@ def run_tests(base_dir):
         test_env['DISPLAY'] = ':0'
 
     proc = subprocess.Popen(
-        args=['python', 'run_tests.py'],
+        args=['python', 'run_visual_tests.py'],
         cwd=base_dir+'/Testing',
         env=test_env
     )

@@ -7,4 +7,4 @@ install:
 script:
   - scons --keep-going --debug_build
   - scons -c
-  - scons -Q
+  - scons --unit -Q

@@ -29,7 +29,8 @@ from SCons.Script.Main import GetOption
 # project
 from BuildUtils import get_num_cpus
 from BuildUtils import chmod_build_dir
-from BuildUtils import run_tests
+from BuildUtils import run_visual_tests
+from BuildUtils import run_unit_tests
 from BuildUtils import display_build_status
 from BuildUtils import ColorPrinter
 from BuildUtils import OutputBuilder
@@ -50,6 +51,15 @@ AddOption(
     metavar='BOOL',
     default=False,
     help='run tests after build'
+)
+
+AddOption(
+    '--unit',
+    dest='run_unit',
+    action='store_true',
+    metavar='BOOL',
+    default=False,
+    help='run unit tests after build'
 )
 
 MAIN_ENV = Environment(
@@ -171,14 +181,20 @@ CHMOD_COMMAND = MAIN_ENV.Command('never_exists', 'build', CHMOD_CALLBACK())
 MAIN_ENV.Depends(CHMOD_COMMAND, FRAMEWORK_LIBS)
 MAIN_ENV.AlwaysBuild(CHMOD_COMMAND)
 
-TEST_CALLBACK = SCons.Action.ActionFactory(
-    run_tests,
-    lambda base_dir: 'Running Tests... Please be Patient'
+VISUAL_TEST_CALLBACK = SCons.Action.ActionFactory(
+    run_visual_tests,
+    lambda base_dir: ColorPrinter().InfoString(
+        'Running Visual Tests... Please be Patient')
+)
+
+UNIT_TEST_CALLBACK = SCons.Action.ActionFactory(
+    run_unit_tests,
+    lambda base_dir: ColorPrinter().InfoString('Running Unit Tests...')
 )
 
 STATUS_CALLBACK = SCons.Action.ActionFactory(
     display_build_status,
-    lambda: 'STATUS'
+    lambda: ''
 )
 
 TEST_BINS = []
@@ -194,13 +210,28 @@ STATUS_COMMAND = MAIN_ENV.Command(
     TEST_BINS,
     STATUS_CALLBACK())
 
+if GetOption('run_unit'):
+    UNIT_TEST_COMMAND = MAIN_ENV.Command(
+        'unit_tests',
+        TEST_BINS,
+        UNIT_TEST_CALLBACK(MAIN_ENV['PROJECT_DIR']))
+
+    MAIN_ENV.Depends(UNIT_TEST_COMMAND, CHMOD_COMMAND)
+    MAIN_ENV.AlwaysBuild(UNIT_TEST_COMMAND)
+    if not GetOption('run_test'):
+        MAIN_ENV.Depends(STATUS_COMMAND, UNIT_TEST_COMMAND)
+
 if GetOption('run_test'):
-    TEST_COMMAND = MAIN_ENV.Command(
+    VISUAL_TEST_COMMAND = MAIN_ENV.Command(
         MAIN_ENV.Dir('Testing/VisualTests/SikuliX'),
         TEST_BINS,
-        TEST_CALLBACK(MAIN_ENV['PROJECT_DIR']))
-    MAIN_ENV.Depends(TEST_COMMAND, CHMOD_COMMAND)
-    MAIN_ENV.AlwaysBuild(TEST_COMMAND)
-    MAIN_ENV.Depends(STATUS_COMMAND, TEST_COMMAND)
-else:
+        VISUAL_TEST_CALLBACK(MAIN_ENV['PROJECT_DIR']))
+    if GetOption('run_unit'):
+        MAIN_ENV.Depends(VISUAL_TEST_COMMAND, UNIT_TEST_COMMAND)
+    else:
+        MAIN_ENV.Depends(VISUAL_TEST_COMMAND, CHMOD_COMMAND)
+    MAIN_ENV.AlwaysBuild(VISUAL_TEST_COMMAND)
+    MAIN_ENV.Depends(STATUS_COMMAND, VISUAL_TEST_COMMAND)
+
+if not GetOption('run_unit') and not GetOption('run_test'):
     MAIN_ENV.Depends(STATUS_COMMAND, CHMOD_COMMAND)

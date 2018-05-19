@@ -15,31 +15,11 @@ Script for running all the tests against the OpenDoorGL library.
 """
 
 import os
+import platform
 import subprocess
 
 failed_tests = []
 passed_tests = []
-
-unittests = [
-    'test_translate'
-]
-
-for test in unittests:
-    testenv = os.environ
-    testenv['LD_LIBRARY_PATH'] = '../lib'
-    proc = subprocess.Popen(
-        "./" + test,
-        cwd=os.path.abspath("../build/bin"),
-        stderr=subprocess.STDOUT,
-        stdout=subprocess.PIPE,
-        env=testenv
-    )
-    output = proc.communicate()[0]
-    print(str(output))
-    if proc.returncode == 0:
-        passed_tests.append(test)
-    else:
-        failed_tests.append(test)
 
 # Visual Tests
 SikuliPath = os.environ["SIKULI_DIR"]
@@ -55,7 +35,11 @@ tests = [
 for test in tests:
     test_command = []
     test_command.extend(sikuli_command)
-    test_command.append(test)
+
+    test_file = "./" + test
+    if "windows" in platform.system().lower():
+        test_file += '.exe'
+    test_command.append(test_file)
     proc = subprocess.Popen(
         test_command,
         cwd=os.path.abspath("VisualTests"),
