@@ -10,6 +10,7 @@ install:
 
 build: off
 build_script:
-  - cmd: scons --keep-going -Q
+  - cmd: scons --keep-going --debug_build
   - cmd: scons -c
-  - cmd: scons --keep-going --debug_build -Q
+  - cmd: scons -Q
+  

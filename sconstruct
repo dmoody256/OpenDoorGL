@@ -30,6 +30,7 @@ from SCons.Script.Main import GetOption
 from BuildUtils import get_num_cpus
 from BuildUtils import chmod_build_dir
 from BuildUtils import run_tests
+from BuildUtils import display_build_status
 from BuildUtils import ColorPrinter
 from BuildUtils import OutputBuilder
 
@@ -98,12 +99,12 @@ DEPEND_LIBS = SConscript(
     duplicate=0,
     exports='MAIN_ENV'
 )
-DEPENDS=DEPEND_LIBS['libs']
+DEPENDS = DEPEND_LIBS['libs']
 CORE_LIBS = SConscript(
     'Core/sconscript',
-    exports=['DEPENDS','MAIN_ENV'],
+    exports=['DEPENDS', 'MAIN_ENV'],
     duplicate=0,
-    
+
 )
 
 FRAMEWORK_LIBS = SConscript(
@@ -118,9 +119,11 @@ TESTS = SConscript(
     exports='MAIN_ENV'
 )
 
+
 def print_cmd_line(s, targets, sources, env):
     with open(env['PROJECT_DIR'] + "/build/build_logs/build_" + datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d__%H_%M_%S') + ".log", "a") as f:
         f.write(s + "\n")
+
 
 if(GetOption('no_progress')):
     MAIN_ENV['PRINT_CMD_LINE_FUNC'] = print_cmd_line
@@ -173,13 +176,23 @@ TEST_CALLBACK = SCons.Action.ActionFactory(
     lambda base_dir: 'Running Tests... Please be Patient'
 )
 
+STATUS_CALLBACK = SCons.Action.ActionFactory(
+    display_build_status,
+    lambda: 'STATUS'
+)
+
 TEST_BINS = []
 for test in TESTS:
     MAIN_ENV.Depends(test['executable'], FRAMEWORK_LIBS)
     TEST_BINS.append(MAIN_ENV.Install("build/bin", test['executable']))
-    for resource in test['resources']:
-        MAIN_ENV.Install("build/bin/resources", resource)
-    MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
+for resource in test['resources']:
+    MAIN_ENV.Install("build/bin/resources", resource)
+MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
+
+STATUS_COMMAND = MAIN_ENV.Command(
+    'build_complete',
+    TEST_BINS,
+    STATUS_CALLBACK())
 
 if GetOption('run_test'):
     TEST_COMMAND = MAIN_ENV.Command(
@@ -188,3 +201,6 @@ if GetOption('run_test'):
         TEST_CALLBACK(MAIN_ENV['PROJECT_DIR']))
     MAIN_ENV.Depends(TEST_COMMAND, CHMOD_COMMAND)
     MAIN_ENV.AlwaysBuild(TEST_COMMAND)
+    MAIN_ENV.Depends(STATUS_COMMAND, TEST_COMMAND)
+else:
+    MAIN_ENV.Depends(STATUS_COMMAND, CHMOD_COMMAND)

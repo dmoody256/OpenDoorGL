@@ -5,6 +5,6 @@ install:
   - sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev
   
 script:
-  - scons --keep-going -Q
+  - scons --keep-going --debug_build
   - scons -c
-  - scons --keep-going --debug_build -Q
+  - scons -Q
