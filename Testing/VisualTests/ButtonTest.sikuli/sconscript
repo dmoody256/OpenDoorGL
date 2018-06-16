@@ -33,11 +33,16 @@ env.Append(LIBS=[
     "glfw3",
 ])
 
-executable = env.Program("build/ButtonTest", "ButtonTest.cpp")
+MAIN_ENV = ImportVar('MAIN_ENV')
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
+                              [env.File('ButtonTest.cpp').abspath], env.subst(
+                                  '$PROGPREFIX') + "ButtonTest" + env.subst('$PROGSUFFIX'))
+prog = env.Program("ButtonTest", [env.File('ButtonTest.cpp').abspath])
+
 
 targets = dict()
 
-targets['executable'] = executable
+targets['executable'] = prog
 targets['resources'] = [
     env.File('ButtonTexture.bmp')
 ]

@@ -29,9 +29,12 @@ env.Append(LIBS=[
     "OpenDoorGL-GLFW3",
     "glfw3",
 ])
+MAIN_ENV = ImportVar('MAIN_ENV')
 
-executable = env.Program("build/ManyCubesPerfTest", "ManyCubesPerfTest.cpp")
-
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
+                              [env.File('ManyCubesPerfTest.cpp').abspath],  env.subst(
+                                  '$PROGPREFIX') + 'ManyCubesPerfTest' + env.subst('$PROGSUFFIX'))
+executable = env.Program('ManyCubesPerfTest', 'ManyCubesPerfTest.cpp')
 targets = dict()
 
 targets['executable'] = executable

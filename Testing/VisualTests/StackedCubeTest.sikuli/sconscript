@@ -21,6 +21,7 @@ from SCons.Script.SConscript import Return
 from BuildUtils import ImportVar
 
 TEST_ENV = ImportVar('TEST_ENV')
+
 env = TEST_ENV.Clone()
 
 debugFlag = ""
@@ -32,11 +33,16 @@ env.Append(LIBS=[
     "glfw3",
 ])
 
-executable = env.Program("build/StackedCubeTest", "StackedCubeTest.cpp")
+MAIN_ENV = ImportVar('MAIN_ENV')
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
+                              [env.File('StackedCubeTest.cpp').abspath], env.subst(
+                                  '$PROGPREFIX') + "StackedCubeTest" + env.subst('$PROGSUFFIX'))
+prog = env.Program("StackedCubeTest", [
+                   env.File('StackedCubeTest.cpp').abspath])
 
 targets = dict()
 
-targets['executable'] = executable
+targets['executable'] = prog
 targets['resources'] = []
 
 Return('targets')

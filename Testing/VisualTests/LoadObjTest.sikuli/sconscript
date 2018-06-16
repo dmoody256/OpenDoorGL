@@ -32,11 +32,15 @@ env.Append(LIBS=[
     "glfw3",
 ])
 
-executable = env.Program("build/LoadObjTest", "LoadObjTest.cpp")
+MAIN_ENV = ImportVar('MAIN_ENV')
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
+                              [env.File('LoadObjTest.cpp').abspath], env.subst(
+                                  '$PROGPREFIX') + "LoadObjTest" + env.subst('$PROGSUFFIX'))
+prog = env.Program("LoadObjTest", [env.File('LoadObjTest.cpp').abspath])
 
 targets = dict()
 
-targets['executable'] = executable
+targets['executable'] = prog
 targets['resources'] = [
     env.File('LoadObjTest.obj'),
     env.File('LoadObjTest.dds')

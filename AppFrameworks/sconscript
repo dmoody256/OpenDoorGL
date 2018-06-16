@@ -23,6 +23,8 @@ from SCons.Script.SConscript import Return
 
 # project
 from BuildUtils import ImportVar
+from BuildUtils import SetupBuildEnv
+
 MAIN_ENV = ImportVar('MAIN_ENV')
 
 libType = "ReleaseBuild"
@@ -42,6 +44,8 @@ AddOption(
 )
 
 env = Environment()
+env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
+env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
 env.Append(CPPPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks",
@@ -109,7 +113,9 @@ if GetOption('glfw3'):
     ])
 sourceFiles = ["GLFW/odgl_GLFW3.cpp"]
 
-prog = env.SharedLibrary("OpenDoorGL-GLFW3", sourceFiles)
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sourceFiles, env.subst(
+    '$SHLIBPREFIX') + "OpenDoorGL-GLFW3" + env.subst('$SHLIBSUFFIX'))
+env, prog = SetupBuildEnv(env, "shared", "OpenDoorGL-GLFW3", sourceFiles)
 
 targets = [
     MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks/odgl_WindowInterface.hpp",

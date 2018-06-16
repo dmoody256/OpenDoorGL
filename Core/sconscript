@@ -24,9 +24,9 @@ from SCons.Script.SConscript import Return
 
 # project
 from BuildUtils import ImportVar
-from BuildUtils import OutputBuilder
+from BuildUtils import SetupBuildEnv
+
 MAIN_ENV = ImportVar('MAIN_ENV')
-DEPENDS = ImportVar('DEPENDS')
 
 env = Environment(DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'])
 env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
@@ -128,8 +128,10 @@ elif "win" in platform.system().lower():
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
         LIBS=['OpenGL32', 'user32', 'glew32']
     )
-    
-env, prog = MAIN_ENV['PROGRESS'].SetupBuildEnv(env, "shared", "OpenDoorGL", sourceFiles, DEPENDS)
+
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sourceFiles, env.subst(
+    '$SHLIBPREFIX') + "OpenDoorGL" + env.subst('$SHLIBSUFFIX'))
+env, prog = SetupBuildEnv(env, "shared", "OpenDoorGL", sourceFiles)
 
 targets = []
 
@@ -141,7 +143,7 @@ else:
 for file in headerFiles:
     targets.append(env.File(file))
 
-#env = ConfigPlatformIDE(env, sourceFiles, headerFiles, [], prog)
+# env = ConfigPlatformIDE(env, sourceFiles, headerFiles, [], prog)
 #    def ConfigPlatformIDE(env, sourceFiles, headerFiles, resources, program):
 #        if platform == "linux" or platform == "linux2":
 #            print("Eclipse C++ project not implemented yet")

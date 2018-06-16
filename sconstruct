@@ -33,7 +33,7 @@ from BuildUtils import run_visual_tests
 from BuildUtils import run_unit_tests
 from BuildUtils import display_build_status
 from BuildUtils import ColorPrinter
-from BuildUtils import OutputBuilder
+from BuildUtils import ProgressCounter
 
 AddOption(
     '--debug_build',
@@ -69,7 +69,7 @@ MAIN_ENV = Environment(
 )
 MAIN_ENV['PROJECT_DIR'] = MAIN_ENV.Dir('.').abspath.replace('\\', '/')
 MAIN_ENV['BUILD_DIR'] = MAIN_ENV['PROJECT_DIR'] + "/build"
-MAIN_ENV['PROGRESS'] = OutputBuilder()
+MAIN_ENV['PROGRESS'] = ProgressCounter()
 
 ###################################################
 # Determine number of Jobs
@@ -112,7 +112,7 @@ DEPEND_LIBS = SConscript(
 DEPENDS = DEPEND_LIBS['libs']
 CORE_LIBS = SConscript(
     'Core/sconscript',
-    exports=['DEPENDS', 'MAIN_ENV'],
+    exports='MAIN_ENV',
     duplicate=0,
 
 )
@@ -138,6 +138,7 @@ def print_cmd_line(s, targets, sources, env):
 if(GetOption('no_progress')):
     MAIN_ENV['PRINT_CMD_LINE_FUNC'] = print_cmd_line
 
+Progress(MAIN_ENV['PROGRESS'], interval=1)
 
 # setup installs
 for header in DEPEND_LIBS['headers']['GLEW']:
@@ -148,7 +149,6 @@ for header in DEPEND_LIBS['headers']['GLFW']:
 TEST_NODE = MAIN_ENV.Install("build/include", 'Dependencies/glm/glm')
 
 for lib in DEPEND_LIBS['libs']:
-    MAIN_ENV.Depends(CORE_LIBS, lib)
     if str(lib).endswith(".dll"):
         MAIN_ENV.Install("build/bin", lib)
     else:
@@ -161,8 +161,6 @@ for buildFile in CORE_LIBS:
         MAIN_ENV.Install("build/bin", buildFile)
     else:
         MAIN_ENV.Install("build/lib", buildFile)
-
-MAIN_ENV.Depends(FRAMEWORK_LIBS, CORE_LIBS)
 
 for buildFile in FRAMEWORK_LIBS:
     if str(buildFile).endswith(".hpp"):
@@ -199,11 +197,12 @@ STATUS_CALLBACK = SCons.Action.ActionFactory(
 
 TEST_BINS = []
 for test in TESTS:
-    MAIN_ENV.Depends(test['executable'], FRAMEWORK_LIBS)
+
     TEST_BINS.append(MAIN_ENV.Install("build/bin", test['executable']))
+    MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
 for resource in test['resources']:
     MAIN_ENV.Install("build/bin/resources", resource)
-MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
+
 
 STATUS_COMMAND = MAIN_ENV.Command(
     'build_complete',

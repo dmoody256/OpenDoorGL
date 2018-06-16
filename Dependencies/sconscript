@@ -30,7 +30,7 @@ from SCons.Script.SConscript import Return
 # project
 from BuildUtils import ImportVar
 from BuildUtils import ColorPrinter
-from BuildUtils import OutputBuilder
+from BuildUtils import SetupBuildEnv
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
@@ -326,15 +326,17 @@ if "window" in platform.system().lower():
             "-nostdlib",
         ])
 
-GLEW_SHARED_ENV, GLEW_SHARED_LIB = MAIN_ENV['PROGRESS'].SetupBuildEnv(GLEW_SHARED_ENV, "shared", GLEW_ENV['GLEW_LIB_NAME'], sharedSourceFiles)
-
-#GLEW_STATIC_ENV.Append(CPPDEFINES=[
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sharedSourceFiles, GLEW_ENV.subst(
+    '$SHLIBPREFIX') + GLEW_ENV['GLEW_LIB_NAME'] + GLEW_ENV.subst('$SHLIBSUFFIX'))
+GLEW_SHARED_ENV, GLEW_SHARED_LIB = SetupBuildEnv(
+    GLEW_SHARED_ENV, "shared", GLEW_ENV['GLEW_LIB_NAME'], sharedSourceFiles)
+# GLEW_STATIC_ENV.Append(CPPDEFINES=[
 #    "GLEW_STATIC",
-#])
-#GLEW_STATIC_LIB = GLEW_STATIC_ENV.StaticLibrary(
+# ])
+# GLEW_STATIC_LIB = GLEW_STATIC_ENV.StaticLibrary(
 #    "glew/static_build/" + GLEW_ENV['GLEW_LIB_NAME'],
 #    staticSourceFiles
-#)
+# )
 
 #### GLFW ####
 ################################################################################
@@ -842,7 +844,9 @@ if "linux" in platform.system().lower():
         LIBS=['GL', 'GLEW']
     )
 
-GLFW_ENV, GLFW_LIBS = MAIN_ENV['PROGRESS'].SetupBuildEnv(GLFW_ENV, "shared", "glfw3", sources, GLEW_SHARED_LIB)
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sources, GLFW_ENV.subst(
+    '$SHLIBPREFIX') + "glfw3" + GLFW_ENV.subst('$SHLIBSUFFIX'))
+GLFW_ENV, GLFW_LIBS = SetupBuildEnv(GLFW_ENV, "shared", "glfw3", sources)
 
 # target_compile_definitions(glfw PRIVATE
 #                           _GLFW_USE_CONFIG_H

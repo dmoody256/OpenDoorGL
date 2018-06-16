@@ -28,6 +28,7 @@ from SCons.Script.SConscript import Return
 from BuildUtils import ImportVar
 
 MAIN_ENV = ImportVar('MAIN_ENV')
+
 CXXTEST_DIR = MAIN_ENV['PROJECT_DIR'] + '/Dependencies/cxxtest'
 
 TEST_ENV = Environment(
@@ -37,6 +38,9 @@ TEST_ENV = Environment(
     toolpath=[CXXTEST_DIR + '/build_tools/SCons'],
     tools=['default', 'cxxtest']
 )
+
+TEST_ENV['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
+TEST_ENV['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
 if "windows" in platform.system().lower():
     debugDefine = 'NDEBUG'
@@ -121,7 +125,7 @@ for root, dirs, files in os.walk("./"):
                 SConscript(
                     os.path.join(root, file),
                     duplicate=0,
-                    exports='TEST_ENV'
+                    exports=['TEST_ENV', 'MAIN_ENV']
                 )
             )
 

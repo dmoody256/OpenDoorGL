@@ -34,11 +34,18 @@ env.Append(LIBS=[
     "glfw3",
 ])
 
-test = env.CxxTest('build/test_translate', source='build/TranslateTest.hpp')
+MAIN_ENV = ImportVar('MAIN_ENV')
+env.Append(CPPPATH=[
+    MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
+])
+
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, ['TranslateTest.hpp'], env.subst(
+    '$PROGPREFIX') + 'test_translate' + env.subst('$PROGSUFFIX'))
+prog = env.CxxTest('build/test_translate', ['build/TranslateTest.hpp'])
 
 targets = dict()
 
-targets['executable'] = [test]
+targets['executable'] = prog
 targets['resources'] = []
 
 Return('targets')
