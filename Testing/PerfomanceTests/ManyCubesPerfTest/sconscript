@@ -17,6 +17,7 @@ from SCons.Script.SConscript import Return
 
 # project
 from BuildUtils import ImportVar
+from BuildUtils import SetupBuildEnv
 
 TEST_ENV = ImportVar('TEST_ENV')
 env = TEST_ENV.Clone()
@@ -34,8 +35,10 @@ MAIN_ENV = ImportVar('MAIN_ENV')
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
                               [env.File('ManyCubesPerfTest.cpp').abspath],  env.subst(
                                   '$PROGPREFIX') + 'ManyCubesPerfTest' + env.subst('$PROGSUFFIX'))
-executable = env.Program('ManyCubesPerfTest', 'ManyCubesPerfTest.cpp')
+env, executable = SetupBuildEnv(
+    env, "exec", 'ManyCubesPerfTest', [MAIN_ENV['BUILD_DIR'] + '/ManyCubesPerfTest.cpp'])
 targets = dict()
+
 
 targets['executable'] = executable
 targets['resources'] = []

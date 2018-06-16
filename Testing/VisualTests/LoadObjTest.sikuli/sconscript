@@ -19,6 +19,7 @@ from SCons.Script.SConscript import Return
 
 # project
 from BuildUtils import ImportVar
+from BuildUtils import SetupBuildEnv
 
 TEST_ENV = ImportVar('TEST_ENV')
 env = TEST_ENV.Clone()
@@ -36,7 +37,8 @@ MAIN_ENV = ImportVar('MAIN_ENV')
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
                               [env.File('LoadObjTest.cpp').abspath], env.subst(
                                   '$PROGPREFIX') + "LoadObjTest" + env.subst('$PROGSUFFIX'))
-prog = env.Program("LoadObjTest", [env.File('LoadObjTest.cpp').abspath])
+env, prog = SetupBuildEnv(env, "exec", "LoadObjTest", [
+                          MAIN_ENV['BUILD_DIR'] + '/LoadObjTest.cpp'])
 
 targets = dict()
 

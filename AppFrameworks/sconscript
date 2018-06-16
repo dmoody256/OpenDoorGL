@@ -27,11 +27,17 @@ from BuildUtils import SetupBuildEnv
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
+
 libType = "ReleaseBuild"
 debugFlag = ""
+debugLinkFlag = ""
 if MAIN_ENV['DEBUG_BUILD']:
     libType = 'DebugBuild'
-    debugFlag = "-g"
+    if "windows" in platform.system().lower():
+        debugFlag = "/Od"
+        debugLinkFlag = '/DEBUG:FULL'
+    else:
+        debugFlag = "-g"
 
 
 AddOption(
@@ -63,12 +69,18 @@ env.Append(CCFLAGS=[
     debugFlag,
 ])
 
-env.Append(CXXFLAGS=[
-    "-std=c++11",
-])
+if "windows" in platform.system().lower():
+    env.Append(CCFLAGS=[
+        "/EHsc",
+    ])
+else:
+    env.Append(CCFLAGS=[
+        "-std=c++11",
+    ])
+
 
 env.Append(LINKFLAGS=[
-    debugFlag,
+    debugLinkFlag,
 ])
 
 env.Append(LIBPATH=[
@@ -111,7 +123,7 @@ if GetOption('glfw3'):
     env.Append(CPPPATH=[
         "GLFW",
     ])
-sourceFiles = ["GLFW/odgl_GLFW3.cpp"]
+sourceFiles = [MAIN_ENV['BUILD_DIR'] + "/GLFW/odgl_GLFW3.cpp"]
 
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sourceFiles, env.subst(
     '$SHLIBPREFIX') + "OpenDoorGL-GLFW3" + env.subst('$SHLIBSUFFIX'))

@@ -11,7 +11,7 @@
                 "--debug_build",
                 "--keep-going",
                 "--unit",
-                "-Q",
+                "-Q"
             ],
             "problemMatcher": [],
             "group": {

@@ -1,4 +1,5 @@
 build/
+shared_build/
 Dependencies/include
 Dependencies/lib
 Testing/VisualTests/SikuliX/*

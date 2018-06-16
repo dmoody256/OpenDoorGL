@@ -18,6 +18,9 @@ Main SConstruct file for building the OpenDoorGL library along with tests.
 import sys
 import time
 import datetime
+import atexit
+
+start_time = time.time()
 
 # SCons
 import SCons.Action
@@ -190,24 +193,15 @@ UNIT_TEST_CALLBACK = SCons.Action.ActionFactory(
     lambda base_dir: ColorPrinter().InfoString('Running Unit Tests...')
 )
 
-STATUS_CALLBACK = SCons.Action.ActionFactory(
-    display_build_status,
-    lambda: ''
-)
+atexit.register(display_build_status, start_time)
 
 TEST_BINS = []
 for test in TESTS:
-
+    MAIN_ENV.Depends(TEST_NODE, test['executable'])
     TEST_BINS.append(MAIN_ENV.Install("build/bin", test['executable']))
     MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
 for resource in test['resources']:
     MAIN_ENV.Install("build/bin/resources", resource)
-
-
-STATUS_COMMAND = MAIN_ENV.Command(
-    'build_complete',
-    TEST_BINS,
-    STATUS_CALLBACK())
 
 if GetOption('run_unit'):
     UNIT_TEST_COMMAND = MAIN_ENV.Command(
@@ -217,8 +211,6 @@ if GetOption('run_unit'):
 
     MAIN_ENV.Depends(UNIT_TEST_COMMAND, CHMOD_COMMAND)
     MAIN_ENV.AlwaysBuild(UNIT_TEST_COMMAND)
-    if not GetOption('run_test'):
-        MAIN_ENV.Depends(STATUS_COMMAND, UNIT_TEST_COMMAND)
 
 if GetOption('run_test'):
     VISUAL_TEST_COMMAND = MAIN_ENV.Command(
@@ -230,7 +222,3 @@ if GetOption('run_test'):
     else:
         MAIN_ENV.Depends(VISUAL_TEST_COMMAND, CHMOD_COMMAND)
     MAIN_ENV.AlwaysBuild(VISUAL_TEST_COMMAND)
-    MAIN_ENV.Depends(STATUS_COMMAND, VISUAL_TEST_COMMAND)
-
-if not GetOption('run_unit') and not GetOption('run_test'):
-    MAIN_ENV.Depends(STATUS_COMMAND, CHMOD_COMMAND)
