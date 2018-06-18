@@ -16,9 +16,12 @@ Testing/VisualTests/SikuliX/*
 *.o
 *.os
 *.so
+*.obj
 *.a
 *.lib
 *.exp
+
+!LoadObjTest/LoadObjTest.obj
 
 # Packages #
 ############
