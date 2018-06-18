@@ -24,7 +24,7 @@ from BuildUtils import SetupBuildEnv
 TEST_ENV = ImportVar('TEST_ENV')
 
 env = TEST_ENV.Clone()
-
+env.VariantDir('build', '.', duplicate=0)
 debugFlag = ""
 if env['DEBUG_BUILD']:
     debugFlag = "-g"
@@ -36,10 +36,10 @@ env.Append(LIBS=[
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
-                              [env.File('ButtonTest.cpp').abspath], env.subst(
+                              ['build/ButtonTest.cpp'], env.subst(
                                   '$PROGPREFIX') + "ButtonTest" + env.subst('$PROGSUFFIX'))
 env, prog = SetupBuildEnv(env, "exec", "ButtonTest", [
-                          MAIN_ENV['BUILD_DIR'] + '/ButtonTest.cpp'])
+                          'build/ButtonTest.cpp'])
 
 
 targets = dict()

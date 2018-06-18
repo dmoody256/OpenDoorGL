@@ -465,13 +465,13 @@ GLFW_ENV.Append(GLFW_VERSION_FULL=str(GLFW_ENV['GLFW_VERSION_MAJOR']) + "." +
 #     message(STATUS "Using OSMesa for headless context creation")
 if "window" in platform.system().lower():
     GLFW_ENV.Append(CPPDEFINES=["_GLFW_WIN32", "_GLFW_BUILD_DLL"])
-    ColorPrinter().InfoPrint("Using Win32 for window creation")
+    ColorPrinter().InfoPrint(" Using Win32 for window creation")
 # elseif (APPLE)
 #     set(_GLFW_COCOA 1)
 #     message(STATUS "Using Cocoa for window creation")
 if "linux" in platform.system().lower():
     GLFW_ENV.Append(CPPDEFINES=["_GLFW_X11"])
-    ColorPrinter().InfoPrint("Using X11 for window creation")
+    ColorPrinter().InfoPrint(" Using X11 for window creation")
     #     set(_GLFW_X11 1)
     #     message(STATUS "Using X11 for window creation")
     # else()

@@ -23,7 +23,7 @@ from BuildUtils import SetupBuildEnv
 
 TEST_ENV = ImportVar('TEST_ENV')
 env = TEST_ENV.Clone()
-
+env.VariantDir('build', '.', duplicate=0)
 debugFlag = ""
 if env['DEBUG_BUILD']:
     debugFlag = "-g"
@@ -35,10 +35,10 @@ env.Append(LIBS=[
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
-                              [env.File('LoadObjTest.cpp').abspath], env.subst(
+                              ['build/LoadObjTest.cpp'], env.subst(
                                   '$PROGPREFIX') + "LoadObjTest" + env.subst('$PROGSUFFIX'))
 env, prog = SetupBuildEnv(env, "exec", "LoadObjTest", [
-                          MAIN_ENV['BUILD_DIR'] + '/LoadObjTest.cpp'])
+                          'build/LoadObjTest.cpp'])
 
 targets = dict()
 

@@ -40,7 +40,7 @@ env.Append(CPPPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
 ])
 
-MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, ['TranslateTest.hpp'], env.subst(
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, ['build/TranslateTest.hpp'], env.subst(
     '$PROGPREFIX') + 'test_translate' + env.subst('$PROGSUFFIX'))
 
 env, prog = SetupBuildEnv(env, "unit", 'test_translate',

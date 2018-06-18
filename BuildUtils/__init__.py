@@ -164,11 +164,11 @@ def display_build_status(start_time):
             print(pending_output)
 
     if status == 'failed':
-
-        print(printer.FAIL + "Build failed." + printer.ENDC)
+        print(printer.FAIL + "Build failed" + printer.ENDC +
+              " in %.3f seconds" % (time.time() - start_time))
     elif status == 'ok':
-        print(printer.OKGREEN + "Build succeeded." + printer.ENDC)
-    print("--- %s seconds ---" % (time.time() - start_time))
+        print(printer.OKGREEN + "Build succeeded" + printer.ENDC +
+              " in %.3f seconds" % (time.time() - start_time))
 
 
 class ColorPrinter():
@@ -176,7 +176,8 @@ class ColorPrinter():
     Utility class used for printing colored messages.
     """
 
-    def __init__(self):
+    def __init__(self, size=1):
+        self.size = size
         try:
             from colorama import init
             init()
@@ -202,6 +203,9 @@ class ColorPrinter():
                 self.FAIL = '\033[91m'
                 self.ENDC = '\033[0m'
 
+    def SetSize(self, size):
+        self.size = size
+
     def InfoPrint(self, message):
         """
         Prints a purple info message.
@@ -212,7 +216,7 @@ class ColorPrinter():
         """
         Prints a purple info message.
         """
-        return self.HEADER + "[   INFO] " + self.ENDC + message
+        return self.HEADER + "[   INFO]" + self.ENDC + message
 
     def ErrorPrint(self, message):
         """
@@ -220,7 +224,7 @@ class ColorPrinter():
         """
         print(self.FAIL + "[  ERROR] " + self.ENDC + message)
 
-    def CompilePrint(self, percent, message):
+    def CompilePrint(self, percent, build, message):
         """
         Prints a compiled message, including a green percent prefix.
         """
@@ -229,15 +233,17 @@ class ColorPrinter():
             percent_string = " " + percent_string
         if percent < 10:
             percent_string = " " + percent_string
-        print(self.OKGREEN
-              + "[" + percent_string + "%] "
-              + self.ENDC + message)
+        print_string = self.OKGREEN + \
+            "[" + percent_string + "%]" + self.OKBLUE + \
+            "[ " + build + " ] " + self.ENDC + message
+        print(print_string)
 
-    def LinkPrint(self, message):
+    def LinkPrint(self, build, message):
         """
         Prints a linked message, including a green link prefix.
         """
-        print(self.OKGREEN + "[   LINK] " + self.ENDC + message)
+        print(self.OKGREEN + "[   LINK]" + self.OKBLUE +
+              "[ " + build + " ] " + self.ENDC + message)
 
     def ConfigString(self, message):
         """
@@ -258,7 +264,6 @@ class ProgressCounter(object):
             self.count = 0.0
             self.progress_sources = dict()
             self.target = None
-
             for source in sources:
                 # print("Making key: " + os.path.splitext(source)[0])
                 self.progress_sources[os.path.splitext(source)[0]] = False
@@ -267,9 +272,12 @@ class ProgressCounter(object):
     def __init__(self):
         self.printer = ColorPrinter()
         self.progress_builders = []
+        self.target_name_size = 0
 
     def AddBuild(self, env, sources, target):
-
+        if self.target_name_size < len(target):
+            self.target_name_size = len(target)
+            # self.printer.SetSize(self.target_name_size)
         pathed_sources = [env.File(source).abspath.replace('\\', '/').replace(env['PROJECT_DIR'] + '/', '')
                           for source in sources]
         self.progress_builders.append(
@@ -280,14 +288,20 @@ class ProgressCounter(object):
 
         slashed_node = str(node).replace("\\", "/")
         for build in self.progress_builders:
-            # print(bin + ": "+str(node.get_state())+" - " + slashed_node)
-            if(slashed_node.endswith(build.target)):
+            # print(build.target + ": "+str(node.get_state())+" - " + slashed_node)
+            if(slashed_node.endswith("build/" + build.target)):
+
+                if(build.count == 0):
+                    self.printer.InfoPrint(
+                        self.printer.OKBLUE + "[ " + os.path.splitext(build.target)[0] + " ]" + self.printer.ENDC + " Building " + build.target)
+
                 filename = os.path.basename(slashed_node)
                 if(node.get_state() == 2):
-                    self.printer.LinkPrint("Linking " + filename)
+                    self.printer.LinkPrint(os.path.splitext(
+                        build.target)[0], "Linking " + filename)
                 else:
-                    self.printer.LinkPrint(
-                        "Skipping, already built " + filename)
+                    self.printer.LinkPrint(os.path.splitext(
+                        build.target)[0], "Skipping, already built " + filename)
 
         # TODO: make hanlding this file extensions better
         if(slashed_node.endswith(".obj")
@@ -302,7 +316,8 @@ class ProgressCounter(object):
                         build.progress_sources[slashed_node_file] = True
 
                         if(build.count == 0):
-                            self.printer.InfoPrint("Building " + build.target)
+                            self.printer.InfoPrint(
+                                self.printer.OKBLUE + "[ " + os.path.splitext(build.target)[0] + " ]" + self.printer.ENDC + " Building " + build.target)
 
                         build.count += 1
                         percent = build.count / \
@@ -311,10 +326,10 @@ class ProgressCounter(object):
 
                         if(node.get_state() == 2):
                             self.printer.CompilePrint(
-                                percent, "Compiling " + filename)
+                                percent, os.path.splitext(build.target)[0], "Compiling " + filename)
                         else:
                             self.printer.CompilePrint(
-                                percent, "Skipping, already built " + filename)
+                                percent, os.path.splitext(build.target)[0], "Skipping, already built " + filename)
                         break
                 except KeyError:
                     pass

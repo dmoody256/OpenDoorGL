@@ -24,7 +24,7 @@ from BuildUtils import SetupBuildEnv
 TEST_ENV = ImportVar('TEST_ENV')
 
 env = TEST_ENV.Clone()
-
+env.VariantDir('build', '.', duplicate=0)
 debugFlag = ""
 if env['DEBUG_BUILD']:
     debugFlag = "-g"
@@ -36,11 +36,11 @@ env.Append(LIBS=[
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
-                              [env.File('RedCubeTest.cpp').abspath], env.subst(
+                              ['build/RedCubeTest.cpp'], env.subst(
                                   '$PROGPREFIX') + "RedCubeTest" + env.subst('$PROGSUFFIX'))
 
 env, prog = SetupBuildEnv(env, "exec", "RedCubeTest", [
-                          MAIN_ENV['BUILD_DIR'] + '/RedCubeTest.cpp'])
+                          'build/RedCubeTest.cpp'])
 
 targets = dict()
 
