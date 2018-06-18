@@ -21,6 +21,9 @@ import SCons.Scanner
 from BuildUtils import ImportVar
 from BuildUtils import SetupBuildEnv
 
+import os
+
+MAIN_ENV = ImportVar('MAIN_ENV')
 TEST_ENV = ImportVar('TEST_ENV')
 env = TEST_ENV.Clone()
 
@@ -30,25 +33,30 @@ debugFlag = ""
 if env['DEBUG_BUILD']:
     debugFlag = "-g"
 
-env.Append(LIBS=[
+env.Append(
+    CPPPATH=[
+        MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
+    ],
+    LIBS=[
     "OpenDoorGL-GLFW3",
     "glfw3",
-])
-
-MAIN_ENV = ImportVar('MAIN_ENV')
-env.Append(CPPPATH=[
-    MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
-])
-
-MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, ['build/TranslateTest.hpp'], env.subst(
-    '$PROGPREFIX') + 'test_translate' + env.subst('$PROGSUFFIX'))
-
-env, prog = SetupBuildEnv(env, "unit", 'test_translate',
-                          ['build/TranslateTest.hpp'])
+    ],
+    CPPDEFINES=[
+        'UNIT_TEST'
+    ],
+)
 
 targets = dict()
-
-targets['executable'] = prog
+targets['executable'] = []
 targets['resources'] = []
+
+for test_header in os.listdir("TestHeaders"):
+
+    MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, ['build/' + test_header], env.subst(
+        '$PROGPREFIX') + os.path.splitext(test_header)[0] + env.subst('$PROGSUFFIX'))
+
+    env, prog = SetupBuildEnv(env, "unit", os.path.splitext(test_header)[0],
+                            ['build/'+test_header])
+    targets['executable'].append(prog)
 
 Return('targets')
