@@ -216,7 +216,7 @@ class ColorPrinter():
         """
         Prints a purple info message.
         """
-        return self.HEADER + "[   INFO]" + self.ENDC + message
+        return self.HEADER + "[ -INFO-]" + self.ENDC + message
 
     def ErrorPrint(self, message):
         """
@@ -242,7 +242,7 @@ class ColorPrinter():
         """
         Prints a linked message, including a green link prefix.
         """
-        print(self.OKGREEN + "[   LINK]" + self.OKBLUE +
+        print(self.OKGREEN + "[ LINK!!]" + self.OKBLUE +
               "[ " + build + " ] " + self.ENDC + message)
 
     def ConfigString(self, message):
