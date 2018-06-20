@@ -12,7 +12,11 @@ To build first install the dependencies:
 
 Then install SCons:
 
-```sudo pip install --egg SCons```
+```
+python -m pip install -U pip
+pip install -U wheel setuptools
+pip install SCons
+```
 
 Then run scons in the project directory:
 
