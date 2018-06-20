@@ -10,8 +10,8 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT ModelLoader
 {
 
-  public:
-    static Model *LoadOBJFile(const char *path);
+public:
+  static Model *LoadOBJFile(const char *path, bool init_gl = true);
 };
 
 } // namespace OpenDoorGL

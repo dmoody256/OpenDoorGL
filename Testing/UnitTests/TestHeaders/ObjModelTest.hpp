@@ -25,7 +25,7 @@ class ObjModelTest : public CxxTest::TestSuite
   public:
     void testLoadObj(void)
     {
-        TestModelObject *testObject = static_cast<TestModelObject *>(OpenDoorGL::ModelLoader::LoadOBJFile("resources/LoadObjTest.obj"));
+        TestModelObject *testObject = static_cast<TestModelObject *>(OpenDoorGL::ModelLoader::LoadOBJFile("resources/LoadObjTest.obj", false));
         std::vector<GLfloat> verts = testObject->getVertices();
         std::vector<glm::vec3> vecVerts;
         for (int i = 0; i < verts.size(); i += 3)

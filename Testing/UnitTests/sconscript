@@ -41,9 +41,6 @@ env.Append(
     "OpenDoorGL-GLFW3",
     "glfw3",
     ],
-    CPPDEFINES=[
-        'UNIT_TEST'
-    ],
 )
 
 targets = dict()

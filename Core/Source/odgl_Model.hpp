@@ -12,20 +12,25 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT Model : public GeometricObject
 {
 
-  public:
-    Model();
-    void SetNormals(int const numNormals, GLfloat const *normals);
-    void SetTextureCoords(int const numCoords, GLfloat const *textureCoords);
-    void SetVertices(int const numVerts, GLfloat const *vertices);
-    void SetTexture(Image *texture);
-    void draw(View *view);
+public:
+  Model();
+  ~Model();
+  Model(bool init_gl);
+  void SetNormals(int const numNormals, GLfloat const *normals);
+  void SetTextureCoords(int const numCoords, GLfloat const *textureCoords);
+  void SetVertices(int const numVerts, GLfloat const *vertices);
+  void SetTexture(Image *texture);
+  void draw(View *view);
 
-  protected:
-    Image *_texture;
-    GLuint _uniformV;
-    GLuint _uniformM;
-    GLuint _uniformSampler1;
-    GLuint _uniformLight;
+protected:
+  Image *_texture;
+  GLuint _uniformV;
+  GLuint _uniformM;
+  GLuint _uniformSampler1;
+  GLuint _uniformLight;
+
+private:
+  void InitGL();
 };
 
 } // namespace OpenDoorGL
