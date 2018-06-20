@@ -200,8 +200,8 @@ for test in TESTS:
     MAIN_ENV.Depends(TEST_NODE, test['executable'])
     TEST_BINS.append(MAIN_ENV.Install("build/bin", test['executable']))
     MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
-for resource in test['resources']:
-    MAIN_ENV.Install("build/bin/resources", resource)
+    for resource in test['resources']:
+        MAIN_ENV.Install("build/bin/resources", resource)
 
 if GetOption('run_unit'):
     UNIT_TEST_COMMAND = MAIN_ENV.Command(

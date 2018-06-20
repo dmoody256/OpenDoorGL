@@ -54,5 +54,6 @@ if len(failed_tests) > 0:
     print("failed " + str(len(failed_tests)) + " tests:")
     for test in failed_tests:
         print(test)
+    exit(1)
 else:
     print("failed 0 test.")
