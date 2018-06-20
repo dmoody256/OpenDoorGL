@@ -6,7 +6,7 @@
 namespace OpenDoorGL
 {
 
-Cube::Cube() : GeometricObject()
+Cube::Cube() : GeometricObject(true)
 {
 
     // Create and compile our GLSL program from the shaders

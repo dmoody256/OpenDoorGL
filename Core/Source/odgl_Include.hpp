@@ -26,7 +26,7 @@ namespace OpenDoorGL
 
 void CheckOpenGLError(const char *stmt, const char *fname, int line);
 
-#ifdef ODGL_DEBUG
+#if defined(ODGL_DEBUG) && !defined(UNIT_TEST)
 #define GL_CHECK(stmt)                               \
     do                                               \
     {                                                \

@@ -22,7 +22,8 @@ failed_tests = []
 passed_tests = []
 
 unittests = [
-    'test_translate'
+    'TranslateTest',
+    'ObjModelTest',
 ]
 
 for test in unittests:

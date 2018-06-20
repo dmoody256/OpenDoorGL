@@ -396,8 +396,10 @@ def SetupBuildEnv(env, prog_type, prog_name, source_files):
                 " > " + build_env['PROJECT_DIR'] + "/build/build_logs/" + prog_name + "_link.txt 2>&1")
     elif(prog_type == 'static' or prog_type == 'exec' or prog_type == 'unit'):
         if("Windows" in platform.system()):
-
-            combinedActions = env['LINKCOM'].list
+            try:
+                combinedActions = build_env['LINKCOM'].list
+            except AttributeError as e:
+                combinedActions = build_env['LINKCOM']
             new_actions = []
             for i in range(len(combinedActions)):
                 if(i == 0):

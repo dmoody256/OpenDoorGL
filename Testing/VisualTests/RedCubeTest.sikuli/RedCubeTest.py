@@ -22,7 +22,7 @@ if(res == None):
 else:
     print('INFO: Found match with score: ' + str(res.getScore()))
 
-if(res.getScore() < .999):
+if(res.getScore() < .98):
     print("FAIL: Match score " + str(res.getScore()) + " too low")
     exit(2)
 

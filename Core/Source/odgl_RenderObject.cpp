@@ -9,24 +9,25 @@
 
 #include "odgl_RenderObject.hpp"
 
-namespace OpenDoorGL{
+namespace OpenDoorGL
+{
 
-    RenderObject::RenderObject(){
-
-        _model = glm::mat4(1.0f);
-    }
-    
-    RenderObject::~RenderObject(){
-       
-    }
-
-    void RenderObject::Update(double time_passed){
-        
-
-    }
-    
-    void RenderObject::Translate(float x, float y, float z){
-        glm::vec3 trans(x,y,z);
-        _model = glm::translate(_model, trans);
-    }
+RenderObject::RenderObject() : _model(glm::mat4(1.0f)),
+                               _glInitialized(false)
+{
 }
+
+RenderObject::~RenderObject()
+{
+}
+
+void RenderObject::Update(double time_passed)
+{
+}
+
+void RenderObject::Translate(float x, float y, float z)
+{
+    glm::vec3 trans(x, y, z);
+    _model = glm::translate(_model, trans);
+}
+} // namespace OpenDoorGL

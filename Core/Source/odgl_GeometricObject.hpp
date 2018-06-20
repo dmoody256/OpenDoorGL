@@ -15,30 +15,34 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT GeometricObject : public RenderObject
 {
 
-  public:
-    GeometricObject();
-    ~GeometricObject();
+public:
+  GeometricObject();
+  GeometricObject(bool init_gl);
+  ~GeometricObject();
 
-    void draw(View view);
+  void draw(View view);
 
-    void setShadersFromString(const char *vert_shader, const char *frag_shader);
+  void setShadersFromString(const char *vert_shader, const char *frag_shader);
 
-  protected:
-    GLuint _vertexBuffer;
-    GLuint _colorBuffer;
-    GLuint _textureBuffer;
-    GLuint _normalBuffer;
+protected:
+  GLuint _vertexBuffer;
+  GLuint _colorBuffer;
+  GLuint _textureBuffer;
+  GLuint _normalBuffer;
 
-    std::vector<GLfloat> _vertices;
-    std::vector<GLfloat> _vertColors;
-    std::vector<GLfloat> _textureCoords;
-    std::vector<GLfloat> _normals;
+  std::vector<GLfloat> _vertices;
+  std::vector<GLfloat> _vertColors;
+  std::vector<GLfloat> _textureCoords;
+  std::vector<GLfloat> _normals;
 
-    GLuint _programID;
-    GLuint _uniformMVP;
+  GLuint _programID;
+  GLuint _uniformMVP;
 
-    std::string _vertShader;
-    std::string _fragShader;
+  std::string _vertShader;
+  std::string _fragShader;
+
+private:
+  void InitGL();
 };
 } // namespace OpenDoorGL
 
