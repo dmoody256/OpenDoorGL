@@ -18,41 +18,41 @@ import os
 import platform
 import subprocess
 
-failed_tests = []
-passed_tests = []
+FAILED_TESTS = []
+PASSED_TESTS = []
 
-unittests = [
+UNIT_TESTS = [
     'TranslateTest',
     'ObjModelTest',
 ]
 
-for test in unittests:
-    testenv = os.environ
+for test in UNIT_TESTS:
+    TEST_ENV = os.environ
     if "windows" in platform.system().lower():
         test_file = os.path.abspath("../build/bin") + "/" + test + '.exe'
     else:
-        testenv['LD_LIBRARY_PATH'] = '../lib'
+        TEST_ENV['LD_LIBRARY_PATH'] = '../lib'
         test_file = "./" + test
     proc = subprocess.Popen(
         test_file,
         cwd=os.path.abspath("../build/bin"),
         stderr=subprocess.STDOUT,
         stdout=subprocess.PIPE,
-        env=testenv
+        env=TEST_ENV
     )
     output = proc.communicate()[0]
     print(str(output.decode('utf-8')))
     if proc.returncode == 0:
-        passed_tests.append(test)
+        PASSED_TESTS.append(test)
     else:
-        failed_tests.append(test)
+        FAILED_TESTS.append(test)
 
-print("passed " + str(len(passed_tests)) + " tests.")
+print("passed " + str(len(PASSED_TESTS)) + " tests.")
 
 
-if len(failed_tests) > 0:
-    print("failed " + str(len(failed_tests)) + " tests:")
-    for test in failed_tests:
+if FAILED_TESTS:
+    print("failed " + str(len(FAILED_TESTS)) + " tests:")
+    for test in FAILED_TESTS:
         print(test)
     exit(1)
 else:

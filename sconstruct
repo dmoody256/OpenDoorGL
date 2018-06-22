@@ -20,14 +20,14 @@ import time
 import datetime
 import atexit
 
-start_time = time.time()
-
 # SCons
-import SCons.Action
+from SCons import Action
+
 from SCons.Environment import Environment
 from SCons.Script import SConscript
 from SCons.Script.Main import AddOption
 from SCons.Script.Main import GetOption
+from SCons.Script.Main import Progress
 
 # project
 from BuildUtils import get_num_cpus
@@ -37,6 +37,9 @@ from BuildUtils import run_unit_tests
 from BuildUtils import display_build_status
 from BuildUtils import ColorPrinter
 from BuildUtils import ProgressCounter
+
+
+START_TIME = time.time()
 
 AddOption(
     '--debug_build',
@@ -133,12 +136,15 @@ TESTS = SConscript(
 )
 
 
-def print_cmd_line(s, targets, sources, env):
-    with open(env['PROJECT_DIR'] + "/build/build_logs/build_" + datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d__%H_%M_%S') + ".log", "a") as f:
-        f.write(s + "\n")
+def print_cmd_line(output, _targets, _sources, env):
+    """ Write SCons output to a log file. """
+    with open(env['PROJECT_DIR'] + "/build/build_logs/build_"
+              + datetime.datetime.fromtimestamp(time.time()).strftime('%Y_%m_%d__%H_%M_%S')
+              + ".log", "a") as log_file:
+        log_file.write(output + "\n")
 
 
-if(GetOption('no_progress')):
+if GetOption('no_progress'):
     MAIN_ENV['PRINT_CMD_LINE_FUNC'] = print_cmd_line
 
 Progress(MAIN_ENV['PROGRESS'], interval=1)
@@ -173,7 +179,7 @@ for buildFile in FRAMEWORK_LIBS:
     else:
         MAIN_ENV.Install("build/lib", buildFile)
 
-CHMOD_CALLBACK = SCons.Action.ActionFactory(
+CHMOD_CALLBACK = Action.ActionFactory(
     chmod_build_dir,
     lambda: ColorPrinter().InfoString('Setting build to exec permissions')
 )
@@ -182,18 +188,18 @@ CHMOD_COMMAND = MAIN_ENV.Command('never_exists', 'build', CHMOD_CALLBACK())
 MAIN_ENV.Depends(CHMOD_COMMAND, FRAMEWORK_LIBS)
 MAIN_ENV.AlwaysBuild(CHMOD_COMMAND)
 
-VISUAL_TEST_CALLBACK = SCons.Action.ActionFactory(
+VISUAL_TEST_CALLBACK = Action.ActionFactory(
     run_visual_tests,
     lambda base_dir: ColorPrinter().InfoString(
         'Running Visual Tests... Please be Patient')
 )
 
-UNIT_TEST_CALLBACK = SCons.Action.ActionFactory(
+UNIT_TEST_CALLBACK = Action.ActionFactory(
     run_unit_tests,
     lambda base_dir: ColorPrinter().InfoString('Running Unit Tests...')
 )
 
-atexit.register(display_build_status, start_time)
+atexit.register(display_build_status, START_TIME)
 
 TEST_BINS = []
 for test in TESTS:

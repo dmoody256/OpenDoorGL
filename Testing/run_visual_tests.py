@@ -18,23 +18,23 @@ import os
 import platform
 import subprocess
 
-failed_tests = []
-passed_tests = []
+FAILED_TESTS = []
+PASSED_TESTS = []
 
 # Visual Tests
-SikuliPath = os.environ["SIKULI_DIR"]
+SIKULI_PATH = os.environ["SIKULI_DIR"]
 
-sikuli_command = [SikuliPath + "/runsikulix", "-r"]
+SIKULI_COMMAND = [SIKULI_PATH + "/runsikulix", "-r"]
 
-tests = [
+TESTS = [
     "RedCubeTest.sikuli",
     "StackedCubeTest.sikuli",
     "LoadObjTest.sikuli",
 ]
 
-for test in tests:
+for test in TESTS:
     test_command = []
-    test_command.extend(sikuli_command)
+    test_command.extend(SIKULI_COMMAND)
 
     test_file = "./" + test
     if "windows" in platform.system().lower():
@@ -50,18 +50,18 @@ for test in tests:
 
     if proc.returncode == 0:
         print("Passed Test " + test + ": " + os.linesep + str(output))
-        passed_tests.append(test)
+        PASSED_TESTS.append(test)
     else:
         print("Failed Test " + test + " with exit code: "
               + str(proc.returncode) + "output:")
         print(output)
-        failed_tests.append(test)
+        FAILED_TESTS.append(test)
 
-print("passed " + str(len(passed_tests)) + " tests:")
-print("failed " + str(len(failed_tests)) + " tests:")
+print("passed " + str(len(PASSED_TESTS)) + " tests:")
+print("failed " + str(len(FAILED_TESTS)) + " tests:")
 
-for test in failed_tests:
+for test in FAILED_TESTS:
     print(test)
 
-if failed_tests:
+if FAILED_TESTS:
     exit(1)

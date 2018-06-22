@@ -11,7 +11,7 @@
 # all copies or substantial portions of the Software.
 
 """
-SConcript for building different text modules.
+Sconcript for building different test modules.
 """
 
 # python
@@ -43,64 +43,67 @@ TEST_ENV['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 TEST_ENV['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
 if "windows" in platform.system().lower():
-    debugDefine = 'NDEBUG'
-    debugFlag = "/Z7"
-    debugOptimization = "/O2"
-    debug = '/DEBUG:NONE'
-    debugRuntime = "/MD"
+    DEBUG_DEFINE = 'NDEBUG'
+    DEBUG_FLAG = "/Z7"
+    DEBUG_OPT = "/O2"
+    DEBUG_LINK = '/DEBUG:NONE'
+    DEBUG_RUNTIME = "/MD"
 
     if TEST_ENV['DEBUG_BUILD']:
-        debugDefine = 'DEBUG'
-        debugOptimization = "/Od"
-        debugFlag = "/Z7"
-        debug = '/DEBUG:FULL'
-        debugRuntime = "/MDd"
+        DEBUG_DEFINE = 'DEBUG'
+        DEBUG_OPT = "/Od"
+        DEBUG_FLAG = "/Z7"
+        DEBUG_LINK = '/DEBUG:FULL'
+        DEBUG_RUNTIME = "/MDd"
 
 else:
-    debugDefine = 'NDEBUG'
-    debugFlag = "-g"
-    debugOptimization = "-O2"
-    debug = ''
-    debugRuntime = ""
+    DEBUG_DEFINE = 'NDEBUG'
+    DEBUG_FLAG = "-g"
+    DEBUG_OPT = "-O2"
+    DEBUG_LINK = ''
+    DEBUG_RUNTIME = ""
 
 if "windows" in platform.system().lower():
     TEST_ENV.Append(
-        CPPDEFINES=['NOMINMAX', "WIN32", debugDefine],
+        CPPDEFINES=['NOMINMAX', "WIN32", DEBUG_DEFINE],
         CCFLAGS=[
             "/analyze-",
             "/GS",
             "/Zc:wchar_t",
             "/W1",
-            debugFlag,
+            DEBUG_FLAG,
             "/Gm-",
-            debugOptimization,
+            DEBUG_OPT,
             "/WX-",
             '/FC',
             "/Zc:forScope",  # Force Conformance in for Loop Scope
             "/GR",           # Enable Run-Time Type Information
             "/Oy-",          # Disable Frame-Pointer Omission
-            debugRuntime,
+            DEBUG_RUNTIME,
             "/EHsc",
             "/nologo",
         ],
-        LINKFLAGS=[debug])
+        LINKFLAGS=[DEBUG_LINK])
 else:
     TEST_ENV.Append(CCFLAGS=[
         "-std=c++11",
-        debugFlag,
+        DEBUG_FLAG,
     ])
-TEST_ENV.Append(CPPPATH=[
-    MAIN_ENV['PROJECT_DIR'] + "/build/include",
-    MAIN_ENV['PROJECT_DIR'] + "/Testing",
-    MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
-    MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
-])
-TEST_ENV.Append(CPPDEFINES=[
-    "GLM_FORCE_RADIANS",
-])
-TEST_ENV.Append(LIBPATH=[
-    MAIN_ENV['PROJECT_DIR'] + "/build/lib",
-])
+
+TEST_ENV.Append(
+    CPPPATH=[
+        MAIN_ENV['PROJECT_DIR'] + "/build/include",
+        MAIN_ENV['PROJECT_DIR'] + "/Testing",
+        MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
+        MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
+    ],
+    CPPDEFINES=[
+        "GLM_FORCE_RADIANS",
+    ],
+    LIBPATH=[
+        MAIN_ENV['PROJECT_DIR'] + "/build/lib",
+    ]
+)
 
 if "windows" in platform.system().lower():
     TEST_ENV.Append(LIBS=[
@@ -115,13 +118,13 @@ else:
         "GLEW",
     ])
 
-tests = []
+TESTS = []
 for root, dirs, files in os.walk("./"):
     for file in files:
         if file.endswith("sconscript"):
             if root == "./":
                 continue
-            tests.append(
+            TESTS.append(
                 SConscript(
                     os.path.join(root, file),
                     duplicate=0,
@@ -129,4 +132,4 @@ for root, dirs, files in os.walk("./"):
                 )
             )
 
-Return('tests')
+Return('TESTS')

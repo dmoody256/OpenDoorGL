@@ -1,2 +1,5 @@
+[MASTER]
+init-hook='import sys; sys.path.append("C:/Python36/Lib/site-packages/scons-3.0.1") if sys.platform == "win32" else sys.path.append("/usr/local/lib/python/Lib/site-packages/scons-3.0.1")'
+
 [TYPECHECK]
 generated-members=Install,SharedLibrary
