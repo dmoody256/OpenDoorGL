@@ -94,7 +94,7 @@ GLuint Image::LoadDDSFromFile(const char *filepath)
     /* close the file pointer */
     fclose(fp);
 
-    unsigned int components = (fourCC == FOURCC_DXT1) ? 3 : 4;
+    //unsigned int components = (fourCC == FOURCC_DXT1) ? 3 : 4;
     unsigned int format;
     switch (fourCC)
     {
@@ -205,9 +205,9 @@ GLuint Image::LoadBMPFromFile(const char *filepath)
     // Some BMP files are misformatted, guess missing information
     if (imageSize == 0)
         imageSize = _width * _height * 3; // 3 : one byte for each Red, Green and Blue component
-    if (dataPos == 0)
-        dataPos = 54; // The BMP header is done that way
-    else if (dataPos != 54)
+    //if (dataPos == 0)
+    //    dataPos = 54; // The BMP header is done that way
+    if (dataPos != 54)
         fread(otherData, 1, dataPos - 54, file);
 
     // Create a buffer

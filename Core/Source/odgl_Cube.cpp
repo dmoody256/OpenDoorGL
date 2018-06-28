@@ -274,17 +274,17 @@ void Cube::draw(View *view)
 
     for (int i = 0; i < 6; i++)
     {
-        bool activeTexture = false;
-        if (_faceTextures[i] && _faceTextures[i]->GetTextureGPUHandle() != -1)
-        {
-            if (!activeTexture)
-            {
-                //glActiveTexture(GL_TEXTURE0);
-                //glUniform1i(_uniformTexture, GL_TEXTURE0);
-                activeTexture = true;
-            }
-            //glBindTexture(GL_TEXTURE_2D, _faceTextures[i]->GetTextureGPUHandle());
-        }
+        //bool activeTexture = false;
+        //if (_faceTextures[i] && _faceTextures[i]->GetTextureGPUHandle() != -1)
+        //{
+        //    if (!activeTexture)
+        //    {
+        //        //glActiveTexture(GL_TEXTURE0);
+        //        //glUniform1i(_uniformTexture, GL_TEXTURE0);
+        //        //activeTexture = true;
+        //    }
+        //    //glBindTexture(GL_TEXTURE_2D, _faceTextures[i]->GetTextureGPUHandle());
+        //}
         GL_CHECK(glDrawArrays(GL_TRIANGLES, i * 2 * 3, 2 * 3));
     }
 
