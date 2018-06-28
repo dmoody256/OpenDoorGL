@@ -65,10 +65,20 @@ AddOption(
     help='run unit tests after build'
 )
 
+AddOption(
+    '--analyze',
+    dest='run_analyzer',
+    action='store_true',
+    metavar='BOOL',
+    default=False,
+    help='run clang static anaylyzer'
+)
+
 MAIN_ENV = Environment(
     DEBUG_BUILD=GetOption('debug_build'),
     TARGET_ARCH='x86_64',
     RUN_TEST=GetOption('run_test'),
+    RUN_ANALYZER=GetOption('run_analyzer'),
 )
 MAIN_ENV['PROJECT_DIR'] = MAIN_ENV.Dir('.').abspath.replace('\\', '/')
 MAIN_ENV['BUILD_DIR'] = MAIN_ENV['PROJECT_DIR'] + "/build"
