@@ -2,8 +2,9 @@
 distro: trusty
 language: cpp
 install:
-  - sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev clang-3.9 gcovr
+  - sudo apt-get install -y git cmake python-pip python-markdown xorg-dev build-essential mesa-common-dev freeglut3-dev clang-3.9 gcovr
   - sudo python -m pip install -U pip
+  - sudo pip install -U Cheetah
   - sudo pip install -U setuptools
   - sudo pip install -U wheel
   - sudo pip install -U scons
