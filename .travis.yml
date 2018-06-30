@@ -22,5 +22,5 @@ script:
   - scons --unit --debug_build --coverage
   
 after_success:
-  - coveralls --exclude Testing --gcov-options '\-lp'
+  - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
   
