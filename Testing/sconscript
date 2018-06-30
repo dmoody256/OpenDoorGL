@@ -39,6 +39,13 @@ TEST_ENV = Environment(
     tools=['default', 'cxxtest']
 )
 
+if MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
+    TEST_ENV.Append(
+        CCFLAGS=["-fprofile-arcs", "-ftest-coverage" ],
+        LIBS=["gcov", "dl"],
+         LINKFLAGS=["-fprofile-arcs", "-ftest-coverage", "--coverage"]
+        )
+
 TEST_ENV['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 TEST_ENV['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
@@ -58,10 +65,17 @@ if "windows" in platform.system().lower():
 
 else:
     debugDefine = 'NDEBUG'
-    debugFlag = "-g"
-    debugOptimization = "-O2"
+    debugFlag = ""
+    debugOptimization = "-O3"
     debug = ''
     debugRuntime = ""
+
+    if TEST_ENV['DEBUG_BUILD']:
+        debugDefine = 'DEBUG'
+        debugFlag = "-g"
+        debugOptimization = "-O0"
+        debug = ''
+        debugRuntime = ""
 
 if "windows" in platform.system().lower():
     TEST_ENV.Append(
@@ -88,6 +102,7 @@ else:
     TEST_ENV.Append(CCFLAGS=[
         "-std=c++11",
         debugFlag,
+        debugOptimization,
     ])
 TEST_ENV.Append(CPPPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/build/include",

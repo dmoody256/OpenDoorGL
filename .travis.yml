@@ -2,12 +2,20 @@
 distro: trusty
 language: cpp
 install:
-  - sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev clang-3.9
+  - sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev clang-3.9 gcovr
+  - pip install -U pypiwin32
+  - pip install -U setuptools
+  - pip install -U wheel
+  - pip install -U scons
+  - pip install -U cpp-coveralls
   
 script:
-  - scons --keep-going --debug_build
-  - scons -c
-  - scons --unit -Q
+  - scons -Q
   - scons -c
   - scan-build-3.9 --status-bugs scons --analyze
+  - scons -c
+  - scons --unit --debug_build --coverage
+  
+after_success:
+  - coveralls --exclude Testing --gcov-options '\-lp'
   

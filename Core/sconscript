@@ -34,10 +34,15 @@ env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 env.VariantDir('build', 'Source', duplicate=0)
 
 if MAIN_ENV['RUN_ANALYZER']:
-    env["CC"] = os.getenv("CC") or env["CC"]
+    env["CCFLAGS"] = os.getenv("CC") or env["CC"]
     env["CXX"] = os.getenv("CXX") or env["CXX"]
     env["ENV"].update(x for x in os.environ.items() if x[0].startswith("CCC_"))
-    
+elif MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
+    env.Append(
+        CCFLAGS=["-fprofile-arcs", "-ftest-coverage" ],
+        LIBS=["gcov"],
+        LINKFLAGS=["-fprofile-arcs", "-ftest-coverage", "--coverage"]
+        )
 
 sourceFiles = [
     "build/odgl_Button.cpp",
@@ -78,15 +83,16 @@ env.Append(CPPDEFINES=[
 
 if "linux" in platform.system().lower():
     debugFlag = ""
+    compilerOpt = '-O3'
     if env['DEBUG_BUILD']:
         debugFlag = "-g"
-
+        compilerOpt = '-O0'
     env.Append(
         CPPPATH=[
             MAIN_ENV['PROJECT_DIR'] + "/build/include",
             MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
         ],
-        CCFLAGS=[debugFlag, '-fPIC', "-rdynamic"],
+        CCFLAGS=[debugFlag, compilerOpt, '-fPIC', "-rdynamic"],
         CXXFLAGS=["-std=c++11"],
         LDFLAGS=[debugFlag, "-rdynamic"],
         LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/"],

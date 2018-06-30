@@ -53,6 +53,13 @@ env = Environment()
 env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
+if MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
+    env.Append(
+        CCFLAGS=["-fprofile-arcs", "-ftest-coverage" ],
+        LIBS=["gcov"],
+        LINKFLAGS=["-fprofile-arcs", "-ftest-coverage", "--coverage"]
+        )
+
 env.Append(CPPPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks",
     MAIN_ENV['PROJECT_DIR'] + "/Core/Source",
