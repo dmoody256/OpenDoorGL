@@ -4,7 +4,6 @@ language: cpp
 install:
   - sudo apt-get install -y git cmake python3-pip python3-markdown xorg-dev build-essential mesa-common-dev freeglut3-dev clang-3.9 gcovr
   - sudo -H python3 -m pip install -U pip
-  - sudo -H pip3 install -U Cheetah
   - sudo -H pip3 install -U setuptools
   - sudo -H pip3 install -U wheel
   - sudo -H pip3 install -U scons
