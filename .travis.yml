@@ -3,11 +3,11 @@ distro: trusty
 language: cpp
 install:
   - sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev clang-3.9 gcovr
-  - python -m pip install -U pip
-  - pip install -U setuptools
-  - pip install -U wheel
-  - pip install -U scons
-  - pip install -U cpp-coveralls
+  - sudo python -m pip install -U pip
+  - sudo pip install -U setuptools
+  - sudo pip install -U wheel
+  - sudo pip install -U scons
+  - sudo pip install -U cpp-coveralls
   
 script:
   - scons -Q
