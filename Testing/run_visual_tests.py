@@ -36,15 +36,22 @@ for test in tests:
     test_command = []
     test_command.extend(sikuli_command)
 
+    testenv = os.environ
+
     test_file = "./" + test
     if "windows" in platform.system().lower():
         test_file += '.exe'
+    else:
+        testenv['LD_LIBRARY_PATH'] = '../lib'
+        testenv['DISPLAY'] = ':0'
+
     test_command.append(test_file)
     proc = subprocess.Popen(
         test_command,
         cwd=os.path.abspath("VisualTests"),
         stderr=subprocess.STDOUT,
-        stdout=subprocess.PIPE
+        stdout=subprocess.PIPE,
+        env=testenv
     )
     output = proc.communicate()[0]
 
