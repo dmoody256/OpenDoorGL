@@ -10,19 +10,19 @@ job 1:
   script: 
   - export DISPLAY=:0
   - scons -Q
-  - scons -c
 
 job 2:
   stage: static_analysis
   script:
   - export DISPLAY=:0
-  - scan-build-3.9 --status-bugs scons --analyze
   - scons -c 
+  - scan-build-3.9 --status-bugs scons --analyze
 
 job 3:
   stage: test
   script:
   - export DISPLAY=:0
+  - scons -c 
   - scons --unit --test --debug_build --coverage
 
 job 4:
