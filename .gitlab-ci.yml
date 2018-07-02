@@ -1,8 +1,11 @@
 visual_test:
     script:
     - export DISPLAY=:0
-    - export SIKULI_DIR=/Data/SikuliX
-    - scons
-    - chmod -R +x *
-    - cd Testing
-    - python run_tests.py
+    - scons -Q
+    - scons -c
+    - scan-build-3.9 --status-bugs scons --analyze
+    - scons -c
+    - scons --unit --debug_build --coverage
+  
+    after_success:
+    - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
