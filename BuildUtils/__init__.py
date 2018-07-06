@@ -519,11 +519,10 @@ def run_visual_tests(base_dir):
         printer = ColorPrinter()
         printer.InfoPrint(
             ' Need to download and install sikuli... please be extra patient...')
-        proc = subprocess.Popen(
-            args=[sys.executable, 'install_sikuliX.py'],
+        proc = subprocess.Popen([sys.executable, 'install_sikuliX.py'],
             cwd=base_dir+'/Testing/VisualTests',
             stdout=subprocess.PIPE,
-            shell=True)
+            shell=False)
         output, result = proc.communicate()
         if result:
             printer.InfoPrint(' Silkuli Installed!')
