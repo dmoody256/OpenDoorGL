@@ -4,6 +4,7 @@ stages:
 
 job 1:
   stage: build
+  script:
   - export DISPLAY=:0
   - scons -Q
   - scons -c 
