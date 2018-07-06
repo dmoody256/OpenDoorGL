@@ -23,6 +23,7 @@ import atexit
 import platform
 import subprocess
 import re
+import sys
 
 # scons
 from SCons.Script.SConscript import call_stack
@@ -514,13 +515,21 @@ def run_visual_tests(base_dir):
     """
     if('SIKULI_DIR' not in os.environ
        and not os.path.isdir(base_dir+'/Testing/VisualTests/SikuliX')):
+
+        printer = ColorPrinter()
+        printer.InfoPrint(
+            ' Need to download and install sikuli... please be extra patient...')
         proc = subprocess.Popen(
-            args=['./install_sikuliX.sh'],
+            args=[sys.executable, 'install_sikuliX.py'],
             cwd=base_dir+'/Testing/VisualTests',
             stdout=subprocess.PIPE,
             shell=True)
-        output = proc.communicate()[0]
-        print(output)
+        output, result = proc.communicate()
+        if result:
+            printer.InfoPrint(' Silkuli Installed!')
+        else:
+            printer.InfoPrint(' Silkuli Failed to install!:')
+            print(output)
 
     test_env = os.environ
     if 'SIKULI_DIR' not in os.environ:

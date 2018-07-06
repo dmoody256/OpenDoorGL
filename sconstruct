@@ -195,7 +195,7 @@ for buildFile in FRAMEWORK_LIBS:
 
 CHMOD_CALLBACK = SCons.Action.ActionFactory(
     chmod_build_dir,
-    lambda: ColorPrinter().InfoString('Setting build to exec permissions')
+    lambda: ColorPrinter().InfoString(' Setting build to exec permissions')
 )
 
 CHMOD_COMMAND = MAIN_ENV.Command('never_exists', 'build', CHMOD_CALLBACK())
@@ -205,12 +205,12 @@ MAIN_ENV.AlwaysBuild(CHMOD_COMMAND)
 VISUAL_TEST_CALLBACK = SCons.Action.ActionFactory(
     run_visual_tests,
     lambda base_dir: ColorPrinter().InfoString(
-        'Running Visual Tests... Please be Patient')
+        ' Running Visual Tests... Please be Patient')
 )
 
 UNIT_TEST_CALLBACK = SCons.Action.ActionFactory(
     run_unit_tests,
-    lambda base_dir: ColorPrinter().InfoString('Running Unit Tests...')
+    lambda base_dir: ColorPrinter().InfoString(' Running Unit Tests...')
 )
 
 atexit.register(display_build_status, start_time)
