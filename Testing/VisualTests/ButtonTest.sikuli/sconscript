@@ -13,6 +13,8 @@
 """
 SConcript for building the RedCube Visual test.
 """
+# python
+import platform
 
 # scons
 from SCons.Script.SConscript import Return
@@ -33,10 +35,15 @@ env.Append(
     LIBS=[
         "OpenDoorGL-GLFW3",
         "glfw3",
-        "pthread"
-    ],
-    LINKFLAGS=["-pthread"]
-)
+    ])
+
+if "linux" in platform.system().lower():
+    env.Append(
+        LIBS=[
+            "pthread"
+        ],
+        LINKFLAGS=["-pthread"]
+    )
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV,
