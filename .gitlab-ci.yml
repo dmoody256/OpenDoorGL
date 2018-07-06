@@ -1,31 +1,18 @@
-
 stages:
   - build
-  - static_analysis
-  - test
   - coverage
 
 job 1:
   stage: build
-  script: 
   - export DISPLAY=:0
   - scons -Q
-
-job 2:
-  stage: static_analysis
-  script:
-  - export DISPLAY=:0
   - scons -c 
   - scan-build-3.9 --status-bugs scons --analyze
 
-job 3:
-  stage: test
+job 2:
+  stage: coverage
   script:
   - export DISPLAY=:0
-  - scons -c 
   - scons --unit --test --debug_build --coverage
-
-job 4:
-  stage: coverage
-  script: coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
+  - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
   
