@@ -3,7 +3,7 @@ project:
   plan:
     key: OP
     name: OpenDoorGL
-# List of plan's stages
+# List of plan's stage
 stages:
 	#List of stage's jobs
   - jobs:
