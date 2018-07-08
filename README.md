@@ -5,7 +5,7 @@
 
 This is a simple OpenGL Rendering library I created for fun.
 
-# Build
+# Build 
 
 To build first install the dependencies:
 
