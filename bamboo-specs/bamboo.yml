@@ -3,11 +3,8 @@ project:
   plan:
     key: OP
     name: OpenDoorGL
-# List of plan's stage
 stages:
-	#List of stage's jobs
   - jobs:
-	  # Scripts which are going to be executed within this job
       - scripts:
           - scons -Q
           - scons -c
