@@ -1,0 +1,17 @@
+project:
+  key: OP
+  plan:
+    key: OP
+    name: OpenDoorGL
+# List of plan's stages
+stages:
+	#List of stage's jobs
+  - jobs:
+	  # Scripts which are going to be executed within this job
+      - scripts:
+          - scons -Q
+          - scons -c
+          - scan-build-3.9 --status-bugs scons --analyze
+          - scons -c
+          - scons --unit --debug_build --coverage
+          - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
