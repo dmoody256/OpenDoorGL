@@ -6,7 +6,7 @@ project:
 stages:
   - jobs:
       - scripts:
-          - scons -Q
+          - scons
           - scons -c
           - scan-build-3.9 --status-bugs scons --analyze
           - scons -c
