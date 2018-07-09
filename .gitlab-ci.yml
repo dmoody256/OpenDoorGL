@@ -13,6 +13,14 @@ job 2:
   stage: coverage
   script:
   - export DISPLAY=:0
+  - export CI_NAME=gitlab
+  - export CI_BUILD_NUMBER="$CI_JOB_ID"
+  - echo $CI_BUILD_NUMBER
+  - export CI_BUILD_URL="$CI_JOB_URL"
+  - echo $CI_BUILD_URL
+  - export CI_BRANCH="$CI_COMMIT_REF_NAME"
+  - echo $CI_BRANCH
+  - export CI=true
   - xhost +local:all
   - scons --unit --test --debug_build --coverage
   - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
