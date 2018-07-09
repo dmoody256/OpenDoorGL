@@ -11,7 +11,7 @@ import subprocess
 if not os.path.exists("SikuliX"):
     os.makedirs("SikuliX")
 
-url = 'https://launchpad.net/sikuli/sikulix/1.1.2/+download/sikulixsetup-1.1.1.jar'
+url = 'https://launchpad.net/sikuli/sikulix/1.1.1/+download/sikulixsetup-1.1.1.jar'
 response = pyurl.urlopen(url)
 
 with open("SikuliX/sikulixsetup-1.1.1.jar", 'wb') as f:
