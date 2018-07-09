@@ -23,5 +23,5 @@ job 2:
   - export CI=true
   - xhost +local:all
   - scons --unit --test --debug_build --coverage
-  - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
+  - coveralls --exclude Testing --exclude Dependencies --exclude /usr --exclude build --gcov-options '\-lp'
   
