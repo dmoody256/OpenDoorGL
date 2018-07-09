@@ -18,9 +18,9 @@ script:
   - scons -Q
   - scons -c
   - scan-build-3.9 --status-bugs scons --analyze
-  - scons -c
-  - scons --unit --debug_build --coverage
-  
-after_success:
-  - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
+#  - scons -c
+#  - scons --unit --debug_build --coverage
+#  
+#after_success:
+#  - coveralls --exclude Testing --exclude Dependencies --exclude build --gcov-options '\-lp'
   
