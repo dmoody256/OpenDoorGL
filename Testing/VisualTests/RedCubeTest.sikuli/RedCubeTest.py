@@ -17,6 +17,8 @@ type(Key.ESC)
 if(not waitVanish("1508297323827.png", 10)):
     p.kill()
 
+OdglTestFramework.EndTest(p)
+
 if(res == None):
     print("FAIL: No match found")
     out, err = p.communicate()
@@ -29,5 +31,3 @@ else:
 if(res.getScore() < .98):
     print("FAIL: Match score " + str(res.getScore()) + " too low")
     exit(2)
-
-OdglTestFramework.EndTest(p)

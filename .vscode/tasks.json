@@ -10,7 +10,8 @@
             "args": [
                 "--debug_build",
                 "--keep-going",
-                "--unit"
+                "--unit",
+                "--test"
             ],
             "problemMatcher": [],
             "group": {

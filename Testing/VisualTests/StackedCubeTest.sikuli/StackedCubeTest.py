@@ -16,12 +16,17 @@ type(Key.ESC)
 if(not waitVanish("1508387700265.png", 10)):
     p.kill()
 
+OdglTestFramework.EndTest(p)
+
 if(res == None):
     print("FAIL: No match found")
+    out, err = p.communicate()
+    print('Test app exited with error code: ' +
+          str(err) + ', and output: ' + out)
     exit(1)
+else:
+    print('INFO: Found match with score: ' + str(res.getScore()))
 
 if(res.getScore() < .98):
     print("FAIL: Match score " + str(res.getScore()) + " too low")
     exit(2)
-
-OdglTestFramework.EndTest(p)
