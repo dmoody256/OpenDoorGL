@@ -15,11 +15,8 @@ job 2:
   - export DISPLAY=:0
   - export CI_NAME=gitlab
   - export CI_BUILD_NUMBER="$CI_JOB_ID"
-  - echo $CI_BUILD_NUMBER
   - export CI_BUILD_URL="$CI_JOB_URL"
-  - echo $CI_BUILD_URL
-  - export CI_BRANCH="$CI_COMMIT_REF_NAME"
-  - echo $CI_BRANCH
+  - export TRAVIS_BRANCH="$CI_COMMIT_REF_NAME"
   - export CI=true
   - xhost +local:all
   - scons --unit --test --debug_build --coverage
