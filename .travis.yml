@@ -21,6 +21,6 @@ script:
   - scons --unit --debug_build --coverage
   
 after_success:
-  - gcovr -r --exclude-directories Testing  --exclude-directories Dependencies  --exclude-directories build  --exclude-directories usr .
+  - gcovr -r -e Testing -e Dependencies -e build -e usr .
 #  - coveralls --exclude Testing --exclude Dependencies --exclude build --exclude usr --gcov-options '\-lp'
   
