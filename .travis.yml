@@ -12,7 +12,8 @@ install:
   - sudo -H python3.6 -m pip install -U wheel
   - sudo -H python3.6 -m pip install -U scons
   - sudo -H python3.6 -m pip install -U cpp-coveralls
-  
+  - sudo -H python3.6 install -U gcovr
+
 script:
   - scons -Q
   - scons -c
@@ -21,6 +22,6 @@ script:
   - scons --unit --debug_build --coverage
   
 after_success:
-  - gcovr -r -e Testing -e Dependencies -e build -e usr .
+  - python3.6 -m gcovr -r -e Testing -e Dependencies -e build -e usr -s .
 #  - coveralls --exclude Testing --exclude Dependencies --exclude build --exclude usr --gcov-options '\-lp'
   

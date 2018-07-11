@@ -16,5 +16,6 @@ job 2:
   - export TRAVIS_BRANCH="$CI_COMMIT_REF_NAME"
   - xhost +local:all
   - scons --unit --test --debug_build --coverage
-  - coveralls --exclude Testing --exclude Dependencies --exclude /usr --exclude build --gcov-options '\-lp'
+  - python3.6 -m gcovr -r -e Testing -e Dependencies -e build -e usr -s .
+  - coveralls --exclude Testing --exclude Dependencies --exclude usr --exclude build --gcov-options '\-lp'
   
