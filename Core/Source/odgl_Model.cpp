@@ -58,7 +58,11 @@ void Model::SetTextureCoords(int const numCoords, GLfloat const *textureCoords)
 
 void Model::SetVertices(int const numVerts, GLfloat const *vertices)
 {
-
+    int test = 5;
+    if (test == 5)
+    {
+        test = 2;
+    }
     for (int i = 0; i < numVerts; i++)
     {
         _vertices.push_back(vertices[i]);
