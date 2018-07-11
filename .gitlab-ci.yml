@@ -17,6 +17,7 @@ job 2:
   - export CI_BUILD_NUMBER="$CI_JOB_ID"
   - export CI_BUILD_URL="$CI_JOB_URL"
   - export TRAVIS_BRANCH="$CI_COMMIT_REF_NAME"
+  - export TRAVIS_JOB_ID="$CI_JOB_ID"
   - export CI=true
   - xhost +local:all
   - scons --unit --test --debug_build --coverage
