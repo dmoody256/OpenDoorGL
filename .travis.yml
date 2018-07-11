@@ -22,6 +22,6 @@ script:
   - scons --unit --debug_build --coverage
   
 after_success:
-  - python3.6 -m gcovr -r -e Testing -e Dependencies -e build -e usr -s .
+  - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r .
 #  - coveralls --exclude Testing --exclude Dependencies --exclude build --exclude usr --gcov-options '\-lp'
   
