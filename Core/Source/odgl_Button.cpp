@@ -20,6 +20,7 @@ Button::Button()
 }
 Button::~Button()
 {
+    // testing change the source
     if (_buttonTexture)
     {
         GLuint texture = _buttonTexture->GetTextureGPUHandle();
