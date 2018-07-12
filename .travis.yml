@@ -12,7 +12,7 @@ install:
   - sudo -H python3.6 -m pip install -U wheel
   - sudo -H python3.6 -m pip install -U scons
   - sudo -H python3.6 -m pip install -U cpp-coveralls
-  - sudo -H python3.6 install -U gcovr
+  - sudo -H python3.6 -m pip install -U gcovr
 
 script:
   - scons -Q
