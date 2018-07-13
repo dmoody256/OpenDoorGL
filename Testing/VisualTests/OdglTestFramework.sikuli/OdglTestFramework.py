@@ -38,11 +38,9 @@ def EndTest(process, framerate=0.016):
 
     if(err):
         print("Test Failed: " + out.decode('utf-8'))
-        exit(process.returncode)
     else:
         if(framerateResults):
             print("Test Passed: Framerate = " +
                   str(float(framerateResults[0])))
         else:
             print("Test Passed: Framerate = " + out.decode('utf-8'))
-        exit(0)

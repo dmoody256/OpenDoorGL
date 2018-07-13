@@ -10,10 +10,10 @@ import OdglTestFramework
 dname = os.environ['TEST_BIN_DIR']
 p = OdglTestFramework.StartTest("LoadObjTest", dname)
 
-res = exists("1509078145523.png", 30)
+res = exists("1509078145523.png", 10)
 time.sleep(2)
 type(Key.ESC)
-if(not waitVanish("1509078145523.png", 10)):
+if(not waitVanish("1509078145523.png", 5)):
     p.kill()
 
 OdglTestFramework.EndTest(p)

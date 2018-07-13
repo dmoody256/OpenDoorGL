@@ -7,14 +7,14 @@ import time
 
 sys.path.append(os.path.abspath(getBundlePath() + "/.."))
 import OdglTestFramework
-dname = os.environ['TEST_BIN_DIR']
-
+#dname = os.environ['TEST_BIN_DIR']
+dname = "C:\\Users\\Daniel\\workspace\\OpenDoorGL\\build\\bin"
 p = OdglTestFramework.StartTest("RedCubeTest", dname)
 
-res = exists("1508297323827.png", 30)
+res = exists("1508297323827.png", 10)
 time.sleep(2)
 type(Key.ESC)
-if(not waitVanish("1508297323827.png", 10)):
+if(not waitVanish("1508297323827.png", 5)):
     p.kill()
 
 OdglTestFramework.EndTest(p)

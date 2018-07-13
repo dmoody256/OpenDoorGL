@@ -15,6 +15,7 @@ Script for running all the tests against the OpenDoorGL library.
 """
 
 import os
+import sys
 import platform
 import subprocess
 
@@ -25,41 +26,31 @@ passed_tests = []
 SikuliPath = os.environ["SIKULI_DIR"]
 
 
+# tests = [
+#    "RedCubeTest.sikuli",
+#    "StackedCubeTest.sikuli",
+#    "LoadObjTest.sikuli",
+# ]
+
 tests = [
-    "RedCubeTest.sikuli",
     "StackedCubeTest.sikuli",
-    "LoadObjTest.sikuli",
 ]
+passed_tests = []
 
 
 def run_tests(tests):
+
     failed_tests = []
-    passed_tests = []
 
     for test in tests:
 
-        testenv = os.environ
-
-        if "windows" in platform.system().lower():
-            test_file = test
-            sikuli_command = [SikuliPath + "/runsikulix.cmd", "-r"]
-        else:
-            test_file = "./" + test
-            testenv['LD_LIBRARY_PATH'] = '../lib'
-            testenv['DISPLAY'] = ':0'
-            sikuli_command = [SikuliPath + "/runsikulix", "-r"]
-
-        test_command = []
-        test_command.extend(sikuli_command)
-        test_command.append(test_file)
         print(os.path.abspath("VisualTests"))
-        print(test_command)
+
         proc = subprocess.Popen(
-            test_command,
-            cwd=os.path.abspath("VisualTests"),
+            [sys.executable, "run_test.py"],
+            cwd=os.path.abspath("VisualTests/" + test),
             stderr=subprocess.STDOUT,
-            stdout=subprocess.PIPE,
-            env=testenv
+            stdout=subprocess.PIPE
         )
         output = proc.communicate()[0].decode("utf-8")
 
