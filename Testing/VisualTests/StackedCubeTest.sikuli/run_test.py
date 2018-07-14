@@ -46,6 +46,9 @@ else:
 
 proc1 = StartTest("StackedCubeTest", testenv['TEST_BIN_DIR'])
 
+retry_count = 0
+
+
 test_command = []
 test_command.extend(sikuli_command)
 test_command.append(test_file)
