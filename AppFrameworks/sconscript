@@ -22,8 +22,8 @@ from SCons.Script.Main import GetOption
 from SCons.Script.SConscript import Return
 
 # project
-from BuildUtils import ImportVar
-from BuildUtils import SetupBuildEnv
+from BuildUtils.SconsUtils import ImportVar
+from BuildUtils.SconsUtils import SetupBuildEnv
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
@@ -55,10 +55,10 @@ env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
 if MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
     env.Append(
-        CCFLAGS=["-fprofile-arcs", "-ftest-coverage" ],
+        CCFLAGS=["-fprofile-arcs", "-ftest-coverage"],
         LIBS=["gcov"],
         LINKFLAGS=["-fprofile-arcs", "-ftest-coverage", "--coverage"]
-        )
+    )
 
 env.Append(CPPPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks",

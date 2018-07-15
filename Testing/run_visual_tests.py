@@ -20,6 +20,12 @@ import platform
 import subprocess
 import time
 
+sys.path.append(os.path.abspath(".."))
+
+from BuildUtils.ColorPrinter import ColorPrinter
+
+printer = ColorPrinter()
+
 
 def StartGraphicsApp(test, working_dir):
 
@@ -79,9 +85,9 @@ def RunTest(test):
     proc1.terminate()
 
     if("INFO: Passed!" in output.decode("utf-8")):
-        print(test + " Passed!")
+        printer.TestPassPrint(" " + test + " Passed!")
         return True
-    print(test + " Failed:")
+    printer.TestFailPrint(" " + test + " Failed!")
     print(output.decode("utf-8"))
     return False
 
@@ -101,11 +107,8 @@ for test in tests:
     else:
         failed_tests.append(test)
 
-print("passed " + str(len(passed_tests)) + " tests:")
-print("failed " + str(len(failed_tests)) + " tests:")
-
-for test in failed_tests:
-    print(test)
+printer.InfoPrint(" Passed " + str(len(passed_tests)) + " tests!")
+printer.InfoPrint(" Failed " + str(len(failed_tests)) + " tests!")
 
 if failed_tests:
     exit(1)

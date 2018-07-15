@@ -27,6 +27,4 @@ proc = subprocess.Popen(
     stdout=subprocess.PIPE
 )
 output, err = proc.communicate()
-if(err):
-    print(output.decode("utf-8"))
-exit(err)
+print(output.decode("utf-8"))
