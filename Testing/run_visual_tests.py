@@ -51,7 +51,7 @@ def RunTest(test):
     testenv = os.environ
     sikuli_test = test + ".sikuli"
 
-    relaunch_count = 3
+    relaunch_count = 20
     for i in range(relaunch_count):
         proc1 = StartGraphicsApp(test, testenv['TEST_BIN_DIR'])
         time.sleep(2)
@@ -77,13 +77,13 @@ def RunTest(test):
 
     output, err = proc.communicate()
     proc1.terminate()
-    print(output.decode("utf-8"))
-    if("FAIL" in output.decode("utf-8")):
-        return False
-    if("error" in output.decode("utf-8")):
-        return False
 
-    return True
+    if("INFO: Passed!" in output.decode("utf-8")):
+        print(test + " Passed!")
+        return True
+    print(test + " Failed:")
+    print(output.decode("utf-8"))
+    return False
 
 
 failed_tests = []
