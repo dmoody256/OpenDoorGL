@@ -5,7 +5,7 @@ stages:
 job 1:
   stage: build
   script:
-  - scons -Q
+  - scons
   - scons -c 
   - scan-build-3.9 --status-bugs scons --analyze
 
