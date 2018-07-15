@@ -124,4 +124,5 @@ def run_visual_tests(base_dir):
         cwd=base_dir+'/Testing',
         env=test_env
     )
-    output = proc.communicate()[0]
+    output, err = proc.communicate()
+    exit(proc.returncode)
