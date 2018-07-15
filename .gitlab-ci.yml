@@ -17,5 +17,5 @@ job 2:
   - xhost +local:all
   - scons --unit --test --debug_build --coverage
   - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r . 
-  - if [ -z ${COVERALLS_REPO_TOKEN+x} ]; then coveralls --exclude Testing --exclude Dependencies --exclude usr --exclude build --gcov-options '\-lp'; fi
+  - if [ -z ${COVERALLS_REPO_TOKEN+x} ] || -z "$COVERALLS_REPO_TOKEN" ]]; then echo Skipping Coveralls report; else coveralls --exclude Testing --exclude Dependencies --exclude usr --exclude build --gcov-options '\-lp'; fi
   
