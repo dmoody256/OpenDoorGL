@@ -125,4 +125,5 @@ def run_visual_tests(base_dir):
         env=test_env
     )
     output, err = proc.communicate()
-    exit(proc.returncode)
+    if not proc.returncode == 0:
+        exit(proc.returncode)
