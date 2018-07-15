@@ -20,8 +20,8 @@ import platform
 from SCons.Script.SConscript import Return
 
 # project
-from BuildUtils import ImportVar
-from BuildUtils import SetupBuildEnv
+from BuildUtils.SconsUtils import ImportVar
+from BuildUtils.SconsUtils import SetupBuildEnv
 
 TEST_ENV = ImportVar('TEST_ENV')
 
