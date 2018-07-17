@@ -17,5 +17,6 @@ job 2:
   - xhost +local:all
   - scons --unit --test --debug_build --coverage
   - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r .
-  - coveralls --exclude Testing --exclude Dependencies --exclude usr --exclude build --gcov-options '\-lp'
+     # Uploading report to CodeCov
+  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   
