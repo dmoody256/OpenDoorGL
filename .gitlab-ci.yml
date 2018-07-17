@@ -13,9 +13,8 @@ job 2:
   stage: coverage
   script:
   - export DISPLAY=:0
-  - export TRAVIS_BRANCH="$CI_COMMIT_REF_NAME"
   - xhost +local:all
   - scons -Q --unit --test --debug_build --coverage
   - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r . 
-     # Uploading report to CodeCov
-  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_REPO_TOKEN
+  
