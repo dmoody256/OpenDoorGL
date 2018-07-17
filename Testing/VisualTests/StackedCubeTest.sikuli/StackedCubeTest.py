@@ -1,5 +1,5 @@
 res = exists("1508387700265.png", 10)
-
+type(Key.ESC)
 if(res == None):
     print("FAIL: No match found")
     exit(1)
