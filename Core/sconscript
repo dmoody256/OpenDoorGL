@@ -23,8 +23,8 @@ from SCons.Environment import Environment
 from SCons.Script.SConscript import Return
 
 # project
-from BuildUtils import ImportVar
-from BuildUtils import SetupBuildEnv
+from BuildUtils.SconsUtils import ImportVar
+from BuildUtils.SconsUtils import SetupBuildEnv
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
@@ -39,10 +39,10 @@ if MAIN_ENV['RUN_ANALYZER']:
     env["ENV"].update(x for x in os.environ.items() if x[0].startswith("CCC_"))
 elif MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
     env.Append(
-        CCFLAGS=["-fprofile-arcs", "-ftest-coverage" ],
+        CCFLAGS=["-fprofile-arcs", "-ftest-coverage"],
         LIBS=["gcov"],
         LINKFLAGS=["-fprofile-arcs", "-ftest-coverage", "--coverage"]
-        )
+    )
 
 sourceFiles = [
     "build/odgl_Button.cpp",

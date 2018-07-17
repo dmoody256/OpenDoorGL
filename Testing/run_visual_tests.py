@@ -15,76 +15,100 @@ Script for running all the tests against the OpenDoorGL library.
 """
 
 import os
+import sys
 import platform
 import subprocess
+import time
+
+sys.path.append(os.path.abspath(".."))
+
+from BuildUtils.ColorPrinter import ColorPrinter
+
+printer = ColorPrinter()
+
+
+def StartGraphicsApp(test, working_dir):
+
+    my_env = os.environ.copy()
+    command = []
+
+    if "windows" in platform.system().lower():
+        command.append(working_dir + "/" + test + ".exe")
+    else:
+        if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
+            command.append("vglrun")
+        command.append("./" + test)
+        my_env["LD_LIBRARY_PATH"] = '../lib'
+
+    if "windows" in platform.system().lower():
+        proc = subprocess.Popen(command, cwd=working_dir, stderr=subprocess.STDOUT,
+                                stdout=subprocess.PIPE, env=my_env, shell=False, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    else:
+        proc = subprocess.Popen(command, cwd=working_dir, stderr=subprocess.STDOUT,
+                                stdout=subprocess.PIPE, env=my_env, shell=False)
+    return proc
+
+
+def RunTest(test):
+
+    # Visual Tests
+    SikuliPath = os.environ["SIKULI_DIR"]
+    dname = os.environ['TEST_BIN_DIR']
+    testenv = os.environ
+    sikuli_test = test + ".sikuli"
+
+    relaunch_count = 20
+    for i in range(relaunch_count):
+        proc1 = StartGraphicsApp(test, testenv['TEST_BIN_DIR'])
+        time.sleep(2)
+        if proc1.poll() == None:
+            break
+        if i == relaunch_count-1:
+            return False
+
+    if "windows" in platform.system().lower():
+        sikuli_command = [SikuliPath + "/runsikulix.cmd", "-r", sikuli_test]
+    else:
+        testenv['LD_LIBRARY_PATH'] = '../lib'
+        testenv['DISPLAY'] = ':0'
+        sikuli_command = [SikuliPath + "/runsikulix", "-r", "./" + sikuli_test]
+
+    proc = subprocess.Popen(
+        sikuli_command,
+        cwd=os.path.abspath("VisualTests"),
+        stderr=subprocess.STDOUT,
+        stdout=subprocess.PIPE,
+        env=testenv
+    )
+
+    output, err = proc.communicate()
+    proc1.terminate()
+
+    if("INFO: Passed!" in output.decode("utf-8")):
+        printer.TestPassPrint(" " + test + " Passed!")
+        return True
+    printer.TestFailPrint(" " + test + " Failed!")
+    print(output.decode("utf-8"))
+    return False
+
 
 failed_tests = []
 passed_tests = []
 
-# Visual Tests
-SikuliPath = os.environ["SIKULI_DIR"]
-
-
 tests = [
-    "RedCubeTest.sikuli",
-    "StackedCubeTest.sikuli",
-    "LoadObjTest.sikuli",
+    "RedCubeTest",
+    "StackedCubeTest",
+    "LoadObjTest"
 ]
 
+for test in tests:
+    if(RunTest(test)):
+        passed_tests.append(test)
+    else:
+        failed_tests.append(test)
 
-def run_tests(tests):
-    failed_tests = []
-    passed_tests = []
-
-    for test in tests:
-
-        testenv = os.environ
-
-        if "windows" in platform.system().lower():
-            test_file = test
-            sikuli_command = [SikuliPath + "/runsikulix.cmd", "-r"]
-        else:
-            test_file = "./" + test
-            testenv['LD_LIBRARY_PATH'] = '../lib'
-            testenv['DISPLAY'] = ':0'
-            sikuli_command = [SikuliPath + "/runsikulix", "-r"]
-
-        test_command = []
-        test_command.extend(sikuli_command)
-        test_command.append(test_file)
-        print(os.path.abspath("VisualTests"))
-        print(test_command)
-        proc = subprocess.Popen(
-            test_command,
-            cwd=os.path.abspath("VisualTests"),
-            stderr=subprocess.STDOUT,
-            stdout=subprocess.PIPE,
-            env=testenv
-        )
-        output = proc.communicate()[0].decode("utf-8")
-
-        if proc.returncode == 0:
-            print("Passed Test " + test + ": " + os.linesep + str(output))
-            passed_tests.append(test)
-        else:
-            print("Failed Test " + test + " with exit code: "
-                  + str(proc.returncode) + "output:")
-            print(output)
-            failed_tests.append(test)
-
-
-run_tests(tests)
-
-retry_count = 0
-while failed_tests and retry_count < 3:
-    run_tests(failed_tests)
-    retry_count += 1
-
-print("passed " + str(len(passed_tests)) + " tests:")
-print("failed " + str(len(failed_tests)) + " tests:")
-
-for test in failed_tests:
-    print(test)
+printer.InfoPrint(" Passed " + str(len(passed_tests)) + " tests!")
+printer.InfoPrint(" Failed " + str(len(failed_tests)) + " tests!")
 
 if failed_tests:
     exit(1)

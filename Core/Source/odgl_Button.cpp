@@ -20,7 +20,7 @@ Button::Button()
 }
 Button::~Button()
 {
-    // testing change the source
+
     if (_buttonTexture)
     {
         GLuint texture = _buttonTexture->GetTextureGPUHandle();
@@ -134,4 +134,4 @@ void Button::draw(View *view)
     GL_CHECK(glDisableVertexAttribArray(0));
     GL_CHECK(glDisableVertexAttribArray(1));
 }
-}
+} // namespace OpenDoorGL

@@ -34,9 +34,9 @@ from BuildUtils import get_num_cpus
 from BuildUtils import chmod_build_dir
 from BuildUtils import run_visual_tests
 from BuildUtils import run_unit_tests
-from BuildUtils import display_build_status
-from BuildUtils import ColorPrinter
-from BuildUtils import ProgressCounter
+from BuildUtils.SconsUtils import display_build_status
+from BuildUtils.ColorPrinter import ColorPrinter
+from BuildUtils.SconsUtils import ProgressCounter
 
 AddOption(
     '--debug_build',

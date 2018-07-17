@@ -18,8 +18,8 @@ SConcript for building the RedCube Visual test.
 from SCons.Script.SConscript import Return
 import SCons.Scanner
 # project
-from BuildUtils import ImportVar
-from BuildUtils import SetupBuildEnv
+from BuildUtils.SconsUtils import ImportVar
+from BuildUtils.SconsUtils import SetupBuildEnv
 
 import os
 
@@ -38,8 +38,8 @@ env.Append(
         MAIN_ENV['PROJECT_DIR'] + "/Dependencies/cxxtest/cxxtest",
     ],
     LIBS=[
-    "OpenDoorGL-GLFW3",
-    "glfw3",
+        "OpenDoorGL-GLFW3",
+        "glfw3",
     ],
 )
 
@@ -53,7 +53,7 @@ for test_header in os.listdir("TestHeaders"):
         '$PROGPREFIX') + os.path.splitext(test_header)[0] + env.subst('$PROGSUFFIX'))
 
     env, prog = SetupBuildEnv(env, "unit", os.path.splitext(test_header)[0],
-                            ['build/'+test_header])
+                              ['build/'+test_header])
     targets['executable'].append(prog)
 
 Return('targets')

@@ -5,7 +5,7 @@ stages:
 job 1:
   stage: build
   script:
-  - scons -Q
+  - scons
   - scons -c 
   - scan-build-3.9 --status-bugs scons --analyze
 
@@ -15,8 +15,7 @@ job 2:
   - export DISPLAY=:0
   - export TRAVIS_BRANCH="$CI_COMMIT_REF_NAME"
   - xhost +local:all
-  - scons --unit --test --debug_build --coverage
-  - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r .
+  - scons -Q --unit --test --debug_build --coverage
+  - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r . 
      # Uploading report to CodeCov
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
-  
