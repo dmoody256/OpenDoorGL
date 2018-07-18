@@ -1,14 +1,5 @@
-coverage:
-  status:
-    project:
-      default: off
-      core:
-        flags: core
-     
-
-flags:
-  # filter the folder(s) you wish to measure by that flag
-  core:
-    paths:
-      - Core
-      - AppFrameworks
+ignore:
+  - "Dependencies"  # ignore folders and all its contents
+  - "Testing"       # wildcards accepted
+  - "build"         # glob accepted
+  - "BuildUtils"  # regexp accepted

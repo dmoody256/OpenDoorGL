@@ -14,7 +14,7 @@ job 2:
   script:
   - export DISPLAY=:0
   - xhost +local:all
-  - scons --debug_build --unit --test  --coverage
-  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_REPO_TOKEN
+  - scons -Q --debug_build --unit --test --coverage
   - gcovr -f '.*/(Core/Source|AppFrameworks)'
+  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_REPO_TOKEN
   
