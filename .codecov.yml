@@ -1,0 +1,14 @@
+coverage:
+  status:
+    project:
+      default: off
+      core:
+        flags: core
+     
+
+flags:
+  # filter the folder(s) you wish to measure by that flag
+  core:
+    paths:
+      - Core
+      - AppFrameworks
