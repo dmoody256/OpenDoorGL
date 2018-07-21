@@ -13,9 +13,8 @@ class ODGL_DLLEXPORT Model : public GeometricObject
 {
 
 public:
-  Model();
   ~Model();
-  Model(bool init_gl);
+  Model(bool init_gl = true);
   void SetNormals(int const numNormals, GLfloat const *normals);
   void SetTextureCoords(int const numCoords, GLfloat const *textureCoords);
   void SetVertices(int const numVerts, GLfloat const *vertices);

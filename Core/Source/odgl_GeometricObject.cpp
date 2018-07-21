@@ -13,10 +13,6 @@
 
 namespace OpenDoorGL
 {
-GeometricObject::GeometricObject()
-    : RenderObject()
-{
-}
 
 GeometricObject::GeometricObject(bool init_gl)
     : RenderObject()

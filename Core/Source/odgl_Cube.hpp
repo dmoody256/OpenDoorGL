@@ -14,8 +14,7 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT Cube : public GeometricObject
 {
 public:
-  Cube();
-  Cube(bool initGL);
+  Cube(bool initGL = true);
   ~Cube();
 
   void setTexture(const char *filepath, float *uvcoords);

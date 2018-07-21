@@ -6,10 +6,6 @@
 namespace OpenDoorGL
 {
 
-Cube::Cube() : GeometricObject(false)
-{
-}
-
 Cube::Cube(bool initGL) : GeometricObject(initGL)
 {
 

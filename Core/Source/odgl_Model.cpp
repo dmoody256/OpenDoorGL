@@ -8,10 +8,6 @@
 namespace OpenDoorGL
 {
 
-Model::Model() : GeometricObject(false)
-{
-}
-
 Model::Model(bool init_gl) : GeometricObject(init_gl)
 {
     if (init_gl)

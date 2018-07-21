@@ -14,7 +14,7 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT Button : public GeometricObject
 {
 public:
-  Button();
+  Button(bool initGL = true);
   ~Button();
 
   void setTexture(const char *filepath);

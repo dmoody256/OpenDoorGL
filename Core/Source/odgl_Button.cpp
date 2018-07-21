@@ -6,12 +6,16 @@
 namespace OpenDoorGL
 {
 
-Button::Button()
+Button::Button(bool initGL)
+    : GeometricObject(initGL)
 {
-    // Create and compile our GLSL program from the shaders
-    _programID = ShaderManager::LoadShadersFromString(ShaderManager::getTextureVertShader(), ShaderManager::getTextureFragShader());
-    GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
-    GL_CHECK(_uniformTexture = glGetUniformLocation(_programID, "myTextureSampler"));
+    if (initGL)
+    {
+        // Create and compile our GLSL program from the shaders
+        _programID = ShaderManager::LoadShadersFromString(ShaderManager::getTextureVertShader(), ShaderManager::getTextureFragShader());
+        GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
+        GL_CHECK(_uniformTexture = glGetUniformLocation(_programID, "myTextureSampler"));
+    }
     _vertices.resize(2 * 3 * 3, 0);
     _textureCoords.resize(2 * 3 * 2, 0);
     _width = 0.0f;

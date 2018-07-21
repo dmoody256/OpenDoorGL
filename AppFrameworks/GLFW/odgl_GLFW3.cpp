@@ -130,6 +130,16 @@ bool GLFW3Window::CanCreateCoreProfile()
         return false;
     }
 
+    glfwMakeContextCurrent(window);
+
+    // Initialize GLEW
+    glewExperimental = true; // Needed for core profile
+    if (glewInit() != GLEW_OK)
+    {
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        return false;
+    }
+
     glfwTerminate();
     return true;
 }
