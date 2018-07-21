@@ -9,30 +9,36 @@
 #include "odgl_Include.hpp"
 #include "odgl_RenderObject.hpp"
 #include "odgl_GeometricObject.hpp"
+#include "odgl_Cube.hpp"
+#include "odgl_Model.hpp"
 
 namespace OpenDoorGL
 {
 
 class ODGL_DLLEXPORT Group : public RenderObject
 {
-  
-  public:
-    Group();
-    ~Group();
-    virtual void draw(View *view);
-    virtual void InsertObject(RenderObject *object);
-    virtual void InsertObject(GeometricObject *object);
-    virtual void Update(double time_passed);
 
-  protected:
+public:
+  Group();
+  ~Group();
+  virtual void draw(View *view);
+  virtual void InsertObject(RenderObject *object, bool checkType = true);
+  virtual void InsertObject(GeometricObject *object);
+  virtual void InsertObject(Cube *object);
+  virtual void InsertObject(Model *object);
+  virtual void Update(double time_passed);
 
-    enum ObjectType{
-      RenderObjectType,
-      GeometricObjectType,
-      UnknownType
-    };
+protected:
+  enum ObjectType
+  {
+    RenderObjectType,
+    GeometricObjectType,
+    CubeType,
+    ModelType,
+    UnknownType
+  };
 
-    std::vector<std::pair<ObjectType, RenderObject*> > objects;
+  std::vector<std::pair<ObjectType, RenderObject *>> objects;
 };
 } // namespace OpenDoorGL
 

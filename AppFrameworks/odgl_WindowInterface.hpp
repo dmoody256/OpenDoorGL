@@ -12,6 +12,7 @@ class ODGL_DLLEXPORT WindowInterface
 {
 public:
   virtual int InitWindow(const char *window_name, bool _vsyncEnabled = true) = 0;
+  virtual void CleanUp() = 0;
   virtual double RenderFrame() = 0;
   virtual double UpdateFrame() = 0;
   virtual bool AppRunning() = 0;

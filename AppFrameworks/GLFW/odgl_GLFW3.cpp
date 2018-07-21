@@ -79,13 +79,18 @@ int GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled)
 
     return 0;
 }
-GLFW3Window::~GLFW3Window()
-{
 
+void GLFW3Window::CleanUp()
+{
     delete topGroup;
     delete _currentView;
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
+}
+
+GLFW3Window::~GLFW3Window()
+{
+    CleanUp();
 }
 
 void GLFW3Window::SetView(View *view)

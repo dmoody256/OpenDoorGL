@@ -17,7 +17,7 @@ class ODGL_DLLEXPORT GLFW3Window : public WindowInterface
 public:
   ~GLFW3Window();
   int InitWindow(const char *window_name, bool _vsyncEnabled = true);
-
+  void CleanUp();
   double RenderFrame();
   double UpdateFrame();
 
