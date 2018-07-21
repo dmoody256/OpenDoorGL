@@ -10,7 +10,7 @@ This is a simple OpenGL Rendering library I created for fun.
 To build first install the dependencies:
 
 ```
-sudo apt-get install -y git cmake python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev
+sudo apt-get install -y git python-pip xorg-dev build-essential mesa-common-dev freeglut3-dev
 ```
 
 Then install SCons:
@@ -37,7 +37,15 @@ export LD_LIBRARY_PATH=../lib
 
 # Testing
 
-To run the graphics tests install SikuliX:
+You can run the unit tests by using the --unit option:
+
+```
+scons --unit
+```
+
+Unit test should be made to run in a headless environment or an environment without hardware accelerated graphics.
+
+To run the graphics tests, which require hardware accelerated graphics, install SikuliX:
 
 ```
 sudo apt-get install -y sikuli-ide
