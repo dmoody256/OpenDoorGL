@@ -6,13 +6,17 @@
 namespace OpenDoorGL
 {
 
-Cube::Cube() : GeometricObject(true)
+Cube::Cube() : GeometricObject(false)
+{
+}
+
+Cube::Cube(bool initGL) : GeometricObject(initGL)
 {
 
-    // Create and compile our GLSL program from the shaders
-    _programID = ShaderManager::LoadShadersFromString(ShaderManager::getColorVertShader(), ShaderManager::getColorFragShader());
-    GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
-
+    if (initGL)
+    {
+        InitGL();
+    }
     _vertices.resize(6 * 2 * 3 * 3, 0);
     _textureCoords.resize(6 * 2 * 3 * 2, 0);
 
@@ -20,6 +24,14 @@ Cube::Cube() : GeometricObject(true)
     {
         _faceTextures[i] = NULL;
     }
+}
+
+void Cube::InitGL()
+{
+    _glInitialized = true;
+    // Create and compile our GLSL program from the shaders
+    _programID = ShaderManager::LoadShadersFromString(ShaderManager::getColorVertShader(), ShaderManager::getColorFragShader());
+    GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
 }
 
 Cube::~Cube()
@@ -292,4 +304,4 @@ void Cube::draw(View *view)
     GL_CHECK(glDisableVertexAttribArray(1));
     GL_CHECK(glDisableVertexAttribArray(2));
 }
-}
+} // namespace OpenDoorGL

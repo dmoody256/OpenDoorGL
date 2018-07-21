@@ -15,6 +15,7 @@ class ODGL_DLLEXPORT Cube : public GeometricObject
 {
 public:
   Cube();
+  Cube(bool initGL);
   ~Cube();
 
   void setTexture(const char *filepath, float *uvcoords);
@@ -32,6 +33,9 @@ protected:
   float _size;
   Image *_faceTextures[6];
   GLuint _uniformTexture;
+
+private:
+  void InitGL();
 };
 } // namespace OpenDoorGL
 
