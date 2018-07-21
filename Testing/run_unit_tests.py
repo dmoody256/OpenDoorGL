@@ -20,11 +20,10 @@ import subprocess
 
 failed_tests = []
 passed_tests = []
+unittests = []
 
-unittests = [
-    'TranslateTest',
-    'ObjModelTest',
-]
+for test_header in os.listdir("UnitTests/TestHeaders"):
+    unittests.append(os.path.splitext(test_header)[0])
 
 for test in unittests:
     testenv = os.environ
