@@ -1,3 +1,4 @@
+#define ODGL_LOG_SCOPE
 
 #include <GLEW/glew.h>
 
@@ -5,6 +6,7 @@
 #include <vector>
 #include <string>
 
+#include "odgl_Logging.hpp"
 #include "odgl_Include.hpp"
 #include "odgl_GeometricObject.hpp"
 #include "odgl_ShaderManager.hpp"
@@ -27,8 +29,10 @@ GeometricObject::GeometricObject(bool init_gl)
 
 GeometricObject::~GeometricObject()
 {
-    if(_glInitialized)
+    ODGL_SCOPE();
+    if (_glInitialized)
     {
+        ODGL_INFO("Cleaning up OpenGL.");
         // Cleanup VBO and shader
         GL_CHECK(glDeleteBuffers(1, &_vertexBuffer));
         GL_CHECK(glDeleteBuffers(1, &_colorBuffer));
