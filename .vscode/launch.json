@@ -16,7 +16,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/build/bin/ButtonTest",
+            "program": "${workspaceRoot}/build/bin/RedCubeTest",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/build/bin",
@@ -27,7 +27,6 @@
                 }
             ],
             "externalConsole": true,
-            "miDebuggerPath": "${workspaceRoot}/.vscode/vglrun_debug.sh",
             "MIMode": "gdb",
             "setupCommands": [
                 {

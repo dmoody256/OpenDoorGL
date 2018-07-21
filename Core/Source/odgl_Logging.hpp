@@ -1,5 +1,5 @@
-#ifndef ODGL_LOGGING
-#define ODGL_LOGGING
+#ifndef ODGL_LOGGING_H
+#define ODGL_LOGGING_H
 
 #include <iostream>
 
