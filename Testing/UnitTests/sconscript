@@ -22,6 +22,7 @@ from BuildUtils.SconsUtils import ImportVar
 from BuildUtils.SconsUtils import SetupBuildEnv
 
 import os
+import platform
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 TEST_ENV = ImportVar('TEST_ENV')
