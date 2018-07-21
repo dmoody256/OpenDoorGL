@@ -1,3 +1,6 @@
+
+
+#include "odgl_Logging.hpp"
 #include "odgl_Model.hpp"
 #include "odgl_Include.hpp"
 #include "odgl_ShaderManager.hpp"
@@ -14,6 +17,16 @@ Model::Model(bool init_gl) : GeometricObject(init_gl)
     if (init_gl)
     {
         InitGL();
+    }
+}
+
+Model::~Model()
+{
+    ODGL_SCOPE();
+
+    if (_texture)
+    {
+        delete _texture;
     }
 }
 

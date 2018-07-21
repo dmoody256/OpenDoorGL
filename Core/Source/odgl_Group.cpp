@@ -29,6 +29,9 @@ Group::~Group()
         case ObjectType::CubeType:
             delete (Cube *)objects.at(i).second;
             break;
+        case ObjectType::ModelType:
+            delete (Model *)objects.at(i).second;
+            break;
         default:
             delete objects.at(i).second;
             break;
@@ -59,7 +62,14 @@ void Group::InsertObject(RenderObject *object, bool checkType)
                 return;
             }
 
-            objects.push_back(std::make_pair(ObjectType::CubeType, cubeObject));
+            Model *modelObject = dynamic_cast<Model *>(object);
+            if (modelObject)
+            {
+                objects.push_back(std::make_pair(ObjectType::ModelType, modelObject));
+                return;
+            }
+
+            objects.push_back(std::make_pair(ObjectType::CubeType, geomObject));
             return;
         }
     }
@@ -71,12 +81,17 @@ void Group::InsertObject(RenderObject *object, bool checkType)
 
 void Group::InsertObject(GeometricObject *object)
 {
-    objects.push_back(std::make_pair(ObjectType::GeometricObjectType, (RenderObject *)object));
+    objects.push_back(std::make_pair(ObjectType::GeometricObjectType, object));
 }
 
 void Group::InsertObject(Cube *object)
 {
-    objects.push_back(std::make_pair(ObjectType::CubeType, (Cube *)object));
+    objects.push_back(std::make_pair(ObjectType::CubeType, object));
+}
+
+void Group::InsertObject(Model *object)
+{
+    objects.push_back(std::make_pair(ObjectType::ModelType, object));
 }
 
 void Group::Update(double time_passed)

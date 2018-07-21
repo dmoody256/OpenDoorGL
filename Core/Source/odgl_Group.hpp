@@ -10,6 +10,7 @@
 #include "odgl_RenderObject.hpp"
 #include "odgl_GeometricObject.hpp"
 #include "odgl_Cube.hpp"
+#include "odgl_Model.hpp"
 
 namespace OpenDoorGL
 {
@@ -24,6 +25,7 @@ public:
   virtual void InsertObject(RenderObject *object, bool checkType = true);
   virtual void InsertObject(GeometricObject *object);
   virtual void InsertObject(Cube *object);
+  virtual void InsertObject(Model *object);
   virtual void Update(double time_passed);
 
 protected:
@@ -32,6 +34,7 @@ protected:
     RenderObjectType,
     GeometricObjectType,
     CubeType,
+    ModelType,
     UnknownType
   };
 
