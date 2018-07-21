@@ -11,10 +11,12 @@ namespace OpenDoorGL{
 
   
     Group::Group(){
-
+        
     }
     Group::~Group(){
-
+        for(int i = 0; i < objects.size(); i++){
+            delete objects.at(i);
+        }
     }
 
     void Group::draw(View* view){
