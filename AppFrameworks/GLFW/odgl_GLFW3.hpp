@@ -14,34 +14,36 @@ namespace OpenDoorGL
 
 class ODGL_DLLEXPORT GLFW3Window : public WindowInterface
 {
-  public:
-    ~GLFW3Window();
-    int InitWindow(const char *window_name, bool _vsyncEnabled = true);
+public:
+  ~GLFW3Window();
+  int InitWindow(const char *window_name, bool _vsyncEnabled = true);
 
-    double RenderFrame();
-    double UpdateFrame();
+  double RenderFrame();
+  double UpdateFrame();
 
-    bool AppRunning();
-    void SetView(View *view);
-    View *GetView();
-    void InsertObject(RenderObject *object);
+  bool AppRunning();
+  void SetView(View *view);
+  View *GetView();
+  void InsertObject(RenderObject *object);
 
-    void SetEnableFramerate(bool value);
-    bool GetEnableFramerate();
+  bool CanCreateCoreProfile();
 
-  protected:
-    void ComputeMatricesFromInputs();
-    GLFWwindow *window;
+  void SetEnableFramerate(bool value);
+  bool GetEnableFramerate();
 
-    double _inputTime;
-    double _renderTime;
-    double _framePrintTime;
-    double _startTime;
+protected:
+  void ComputeMatricesFromInputs();
+  GLFWwindow *window;
 
-    int _numFrames;
+  double _inputTime;
+  double _renderTime;
+  double _framePrintTime;
+  double _startTime;
 
-    bool _frameRateEnabled;
-    bool _vsyncEnabled;
+  int _numFrames;
+
+  bool _frameRateEnabled;
+  bool _vsyncEnabled;
 };
 
 } // namespace OpenDoorGL

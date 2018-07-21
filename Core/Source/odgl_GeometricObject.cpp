@@ -27,12 +27,15 @@ GeometricObject::GeometricObject(bool init_gl)
 
 GeometricObject::~GeometricObject()
 {
-    // Cleanup VBO and shader
-    GL_CHECK(glDeleteBuffers(1, &_vertexBuffer));
-    GL_CHECK(glDeleteBuffers(1, &_colorBuffer));
-    GL_CHECK(glDeleteBuffers(1, &_textureBuffer));
-    GL_CHECK(glDeleteBuffers(1, &_normalBuffer));
-    GL_CHECK(glDeleteProgram(_programID));
+    if(_glInitialized)
+    {
+        // Cleanup VBO and shader
+        GL_CHECK(glDeleteBuffers(1, &_vertexBuffer));
+        GL_CHECK(glDeleteBuffers(1, &_colorBuffer));
+        GL_CHECK(glDeleteBuffers(1, &_textureBuffer));
+        GL_CHECK(glDeleteBuffers(1, &_normalBuffer));
+        GL_CHECK(glDeleteProgram(_programID));
+    }
 }
 
 void GeometricObject::InitGL()
