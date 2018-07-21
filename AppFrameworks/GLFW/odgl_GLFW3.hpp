@@ -16,7 +16,7 @@ class ODGL_DLLEXPORT GLFW3Window : public WindowInterface
 {
 public:
   ~GLFW3Window();
-  int InitWindow(const char *window_name, bool _vsyncEnabled = true);
+  bool InitWindow(const char *window_name, bool _vsyncEnabled = true, unsigned int width = 1024, unsigned int height = 768);
   void CleanUp();
   double RenderFrame();
   double UpdateFrame();
@@ -44,6 +44,9 @@ protected:
 
   bool _frameRateEnabled;
   bool _vsyncEnabled;
+
+private:
+  bool CreateWindow(GLFWwindow *temp_window, const char *window_name, unsigned int width, unsigned int height);
 };
 
 } // namespace OpenDoorGL
