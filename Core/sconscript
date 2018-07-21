@@ -96,7 +96,7 @@ if "linux" in platform.system().lower():
         CXXFLAGS=["-std=c++11"],
         LDFLAGS=[debugFlag, "-rdynamic"],
         LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/"],
-        LIBS=["GL"]
+        LIBS=["GL", "GLU"]
     )
 elif platform == "darwin":
     print("XCode project not implemented yet")
