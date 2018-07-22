@@ -201,11 +201,11 @@ void GLFW3Window::ComputeMatricesFromInputs()
     }
 
     // Camera matrix
-    _currentView->view = glm::lookAt(
-        _currentView->position,             // Camera is here
-        _currentView->position + direction, // and looks here : at the same position, plus "direction"
-        up                                  // Head is up (set to 0,-1,0 to look upside-down)
-    );
+    //_currentView->view = glm::lookAt(
+    //    _currentView->position,             // Camera is here
+    //    _currentView->position + direction, // and looks here : at the same position, plus "direction"
+    //    up                                  // Head is up (set to 0,-1,0 to look upside-down)
+    //);
 
     // For the next frame, the "last time" will be "now"
     _inputTime = currentTime;
