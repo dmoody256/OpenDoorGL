@@ -96,9 +96,9 @@ failed_tests = []
 passed_tests = []
 tests = []
 
-for test_dir in os.listdir("VisualTests/TestHeaders"):
+for test_dir in os.listdir("VisualTests"):
     if(test_dir.endswith('.sikuli')):
-        tests.append(os.path.splitext(test_header)[0])
+        tests.append(os.path.splitext(test_dir)[0])
 
 for test in tests:
     if(RunTest(test)):

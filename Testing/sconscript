@@ -122,7 +122,8 @@ if "windows" in platform.system().lower():
         "OpenDoorGL",
         'OpenGL32',
         'user32',
-        'glew32'
+        'glew32',
+        'glu32'
     ])
 else:
     TEST_ENV.Append(LIBS=[

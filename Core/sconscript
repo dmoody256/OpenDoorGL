@@ -138,7 +138,7 @@ elif "win" in platform.system().lower():
         ],
         LINKFLAGS=[degug],
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
-        LIBS=['OpenGL32', 'user32', 'glew32']
+        LIBS=['OpenGL32', 'user32', 'glew32', 'glu32']
     )
 
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sourceFiles, env.subst(
