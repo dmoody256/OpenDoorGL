@@ -2,15 +2,13 @@
 
 namespace OpenDoorGL
 {
-
-int GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled)
+bool GLFW3Window::CreateWindow(GLFWwindow *temp_window, const char *window_name, unsigned int width, unsigned int height)
 {
-
     // Initialise GLFW
     if (!glfwInit())
     {
         fprintf(stderr, "Failed to initialize GLFW\n");
-        return -1;
+        return false;
     }
 
     glfwWindowHint(GLFW_SAMPLES, 4);
@@ -20,13 +18,14 @@ int GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-    window = glfwCreateWindow(1024, 768, window_name, NULL, NULL);
+    window = glfwCreateWindow(width, height, window_name, NULL, NULL);
     if (window == NULL)
     {
         fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
         glfwTerminate();
-        return -1;
+        return false;
     }
+
     glfwMakeContextCurrent(window);
 
     // Initialize GLEW
@@ -34,7 +33,18 @@ int GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled)
     if (glewInit() != GLEW_OK)
     {
         fprintf(stderr, "Failed to initialize GLEW\n");
-        return -1;
+        return false;
+    }
+
+    return true;
+}
+
+bool GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled, unsigned int width, unsigned int height)
+{
+
+    if (!CreateWindow(window, window_name, width, height))
+    {
+        return false;
     }
 
     GLuint VertexArrayID;
@@ -77,7 +87,7 @@ int GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled)
     _startTime = glfwGetTime();
     _numFrames = 0;
 
-    return 0;
+    return true;
 }
 
 void GLFW3Window::CleanUp()
@@ -108,38 +118,11 @@ void GLFW3Window::InsertObject(RenderObject *object)
 
 bool GLFW3Window::CanCreateCoreProfile()
 {
-    // Initialise GLFW
-    if (!glfwInit())
+    GLFWwindow *temp = nullptr;
+    if (!CreateWindow(temp, "test", 512, 512))
     {
-        fprintf(stderr, "Failed to initialize GLFW\n");
         return false;
     }
-
-    glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    // Open a window and create its OpenGL context
-    window = glfwCreateWindow(512, 512, "test", NULL, NULL);
-    if (window == NULL)
-    {
-        fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    // Initialize GLEW
-    glewExperimental = true; // Needed for core profile
-    if (glewInit() != GLEW_OK)
-    {
-        fprintf(stderr, "Failed to initialize GLEW\n");
-        return false;
-    }
-
     glfwTerminate();
     return true;
 }

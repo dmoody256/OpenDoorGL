@@ -94,12 +94,11 @@ def RunTest(test):
 
 failed_tests = []
 passed_tests = []
+tests = []
 
-tests = [
-    "RedCubeTest",
-    "StackedCubeTest",
-    "LoadObjTest"
-]
+for test_dir in os.listdir("VisualTests"):
+    if(test_dir.endswith('.sikuli')):
+        tests.append(os.path.splitext(test_dir)[0])
 
 for test in tests:
     if(RunTest(test)):

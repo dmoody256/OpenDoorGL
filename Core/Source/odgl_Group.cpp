@@ -32,6 +32,9 @@ Group::~Group()
         case ObjectType::ModelType:
             delete (Model *)objects.at(i).second;
             break;
+        case ObjectType::ButtonType:
+            delete (Button *)objects.at(i).second;
+            break;
         default:
             delete objects.at(i).second;
             break;
@@ -69,6 +72,13 @@ void Group::InsertObject(RenderObject *object, bool checkType)
                 return;
             }
 
+            Button *buttonObject = dynamic_cast<Button *>(object);
+            if (buttonObject)
+            {
+                objects.push_back(std::make_pair(ObjectType::ButtonType, buttonObject));
+                return;
+            }
+
             objects.push_back(std::make_pair(ObjectType::CubeType, geomObject));
             return;
         }
@@ -92,6 +102,11 @@ void Group::InsertObject(Cube *object)
 void Group::InsertObject(Model *object)
 {
     objects.push_back(std::make_pair(ObjectType::ModelType, object));
+}
+
+void Group::InsertObject(Button *object)
+{
+    objects.push_back(std::make_pair(ObjectType::ButtonType, object));
 }
 
 void Group::Update(double time_passed)
