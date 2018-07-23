@@ -38,8 +38,12 @@ TEST_ENV = Environment(
     toolpath=[CXXTEST_DIR + '/build_tools/SCons'],
     tools=['default', 'cxxtest']
 )
-
-if MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
+if MAIN_ENV['RUN_ANALYZER']:
+    TEST_ENV["CC"] = os.getenv("CC") or TEST_ENV["CC"]
+    TEST_ENV["CXX"] = os.getenv("CXX") or TEST_ENV["CXX"]
+    TEST_ENV["LINK"] = TEST_ENV["CXX"]
+    TEST_ENV["ENV"].update(x for x in os.environ.items() if x[0].startswith("CCC_"))
+elif MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
     TEST_ENV.Append(
         CCFLAGS=["-fprofile-arcs", "-ftest-coverage"],
         LIBS=["gcov", "dl"],

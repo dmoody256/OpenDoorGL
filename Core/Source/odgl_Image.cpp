@@ -69,7 +69,10 @@ GLuint Image::LoadDDSFromFile(const char *filepath)
 
     /* verify the type of file */
     char filecode[4];
-    fread(filecode, 1, 4, fp);
+    if (fread(filecode, 1, 4, fp) == 0)
+    {
+        printf("ERROR: Couldn't read the file code\n");
+    }
     if (strncmp(filecode, "DDS ", 4) != 0)
     {
         fclose(fp);
@@ -77,7 +80,10 @@ GLuint Image::LoadDDSFromFile(const char *filepath)
     }
 
     /* get the surface desc */
-    fread(&header, 124, 1, fp);
+    if (fread(&header, 124, 1, fp) == 0)
+    {
+        printf("ERROR: couldn't read the surface desc\n");
+    }
 
     _height = *(unsigned int *)&(header[8]);
     _width = *(unsigned int *)&(header[12]);
@@ -89,8 +95,11 @@ GLuint Image::LoadDDSFromFile(const char *filepath)
     unsigned int bufsize;
     /* how big is it going to be including all mipmaps? */
     bufsize = mipMapCount > 1 ? linearSize * 2 : linearSize;
-    buffer = (unsigned char *)malloc(bufsize * sizeof(unsigned char));
-    fread(buffer, 1, bufsize, fp);
+    buffer = new unsigned char[bufsize];
+    if (fread(buffer, 1, bufsize, fp) == 0)
+    {
+        printf("ERROR: coudln't read the number of mipmaps\n");
+    }
     /* close the file pointer */
     fclose(fp);
 
@@ -108,7 +117,7 @@ GLuint Image::LoadDDSFromFile(const char *filepath)
         format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
         break;
     default:
-        free(buffer);
+        delete[] buffer;
         return 0;
     }
 
@@ -140,7 +149,7 @@ GLuint Image::LoadDDSFromFile(const char *filepath)
             _height = 1;
     }
 
-    free(buffer);
+    delete[] buffer;
 
     return _textureID;
 }
@@ -208,13 +217,21 @@ GLuint Image::LoadBMPFromFile(const char *filepath)
     //if (dataPos == 0)
     //    dataPos = 54; // The BMP header is done that way
     if (dataPos != 54)
-        fread(otherData, 1, dataPos - 54, file);
+    {
+        if (fread(otherData, 1, dataPos - 54, file) == 0)
+        {
+            printf("ERROR: couldnt read the data position\n");
+        }
+    }
 
     // Create a buffer
     data = new unsigned char[imageSize];
 
     // Read the actual data from the file into the buffer
-    fread(data, 1, imageSize, file);
+    if (fread(data, 1, imageSize, file) == 0)
+    {
+        printf("ERROR: couldnt read the image data\n");
+    }
 
     // Everything is in memory now, the file can be closed.
     fclose(file);
