@@ -14,6 +14,7 @@ SConscript for building windowing frameworks.
 """
 
 import platform
+import os
 
 # scons
 from SCons.Environment import Environment
@@ -54,8 +55,9 @@ env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
 if MAIN_ENV['RUN_ANALYZER']:
-    env["CCFLAGS"] = os.getenv("CC") or env["CC"]
+    env["CC"] = os.getenv("CC") or env["CC"]
     env["CXX"] = os.getenv("CXX") or env["CXX"]
+    env["SHLINK"] = env["CXX"]
     env["ENV"].update(x for x in os.environ.items() if x[0].startswith("CCC_"))
 elif MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
     env.Append(

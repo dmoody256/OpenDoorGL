@@ -41,20 +41,29 @@ Model *ModelLoader::LoadOBJFile(const char *path, bool init_gl)
         if (strcmp(lineHeader, "v") == 0)
         {
             glm::vec3 vertex;
-            fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+            if (fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z) != 3)
+            {
+                printf("ERROR: read the wrong number of vertives.\n");
+            }
             temp_vertices.push_back(vertex);
         }
         else if (strcmp(lineHeader, "vt") == 0)
         {
             glm::vec2 uv;
-            fscanf(file, "%f %f\n", &uv.x, &uv.y);
+            if (fscanf(file, "%f %f\n", &uv.x, &uv.y) != 2)
+            {
+                printf("ERROR: read the wrong number of texture coords.\n");
+            }
             uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture, which are inverted. Remove if you want to use TGA or BMP loaders.
             temp_uvs.push_back(uv);
         }
         else if (strcmp(lineHeader, "vn") == 0)
         {
             glm::vec3 normal;
-            fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
+            if (fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z) != 3)
+            {
+                printf("ERROR: read the wrong number of normals.\n");
+            }
             temp_normals.push_back(normal);
         }
         else if (strcmp(lineHeader, "f") == 0)
@@ -82,7 +91,10 @@ Model *ModelLoader::LoadOBJFile(const char *path, bool init_gl)
         {
             // Probably a comment, eat up the rest of the line
             char stupidBuffer[1000];
-            fgets(stupidBuffer, 1000, file);
+            if (fgets(stupidBuffer, 1000, file) == NULL)
+            {
+                printf("WARN: fgets returned NULL while eating up the rest of the line\n");
+            }
         }
     }
 
