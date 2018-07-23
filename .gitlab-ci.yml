@@ -16,5 +16,5 @@ job 2:
   - xhost +local:all
   - scons -Q --debug_build --unit --test --coverage
   - gcovr -f '.*/(Core/Source|AppFrameworks)'
-  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_REPO_TOKEN
+  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_REPO_TOKEN > /dev/null
   
