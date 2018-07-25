@@ -1,3 +1,8 @@
+#define ODGL_LOG_SCOPE
+
+#include <deque>
+
+#include "odgl_Logging.hpp"
 #include "odgl_GLFW3.hpp"
 #include "odgl_Cube.hpp"
 #include "odgl_View.hpp"
@@ -12,10 +17,29 @@ static double prevTime = 0;
 static int blockNumber = 0;
 static int frameCounter = 0;
 static double FPSTimer = 0;
+static std::deque<double> averageFPS;
 static View *testView;
+
+double getAverageFps(const std::deque<double> &fps)
+{
+    double average = 0;
+    for (int i = 0; i < fps.size(); i++)
+    {
+        average += fps.at(i);
+    }
+    if (fps.size() > 0)
+    {
+        return average / (double)fps.size();
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 void TestGroup::Update(double time_passed)
 {
+    //ODGL_SCOPE();
     double deltaTime = time_passed - lastTime;
 
     float blockSpeed = 0.0001;
@@ -34,16 +58,23 @@ void TestGroup::Update(double time_passed)
         blockNumber++;
         lastTime = time_passed;
     }
-    if (deltaTime > 0.0167)
-    {
-        std::cout << "Got to " << blockNumber << " before 60Hz was hit" << std::endl;
-        exit(0);
-    }
+
     if (FPSTimer > 1)
     {
-        std::cout << frameCounter << " FPS" << std::endl;
+        if (averageFPS.size() > 5)
+        {
+            averageFPS.pop_front();
+        }
+        averageFPS.push_back(frameCounter);
+        double currentAverage = getAverageFps(averageFPS);
+        std::cout << currentAverage << " FPS" << std::endl;
         frameCounter = 0;
         FPSTimer = 0;
+        if (averageFPS.size() >= 5 && currentAverage < 10)
+        {
+            std::cout << "Got to " << blockNumber << " before 60Hz was hit" << std::endl;
+            exit(0);
+        }
     }
     else
     {

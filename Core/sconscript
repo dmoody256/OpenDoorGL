@@ -71,6 +71,7 @@ headerFiles = [
     "Source/odgl_Model.hpp",
     "Source/odgl_ModelLoader.hpp",
     "Source/odgl_Include.hpp",
+    "Source/odgl_Logging.hpp",
 ]
 
 if env['DEBUG_BUILD']:

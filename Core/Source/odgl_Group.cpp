@@ -82,11 +82,21 @@ void Group::InsertObject(RenderObject *object, bool checkType)
             objects.push_back(std::make_pair(ObjectType::CubeType, geomObject));
             return;
         }
+        else
+        {
+            Group *groupObject = dynamic_cast<Group *>(object);
+            if (groupObject)
+            {
+                objects.push_back(std::make_pair(ObjectType::GroupType, groupObject));
+                return;
+            }
+        }
     }
     else
     {
         objects.push_back(std::make_pair(ObjectType::RenderObjectType, object));
     }
+    // TODO: ERROR logging here
 }
 
 void Group::InsertObject(GeometricObject *object)

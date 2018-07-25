@@ -38,6 +38,7 @@ protected:
     CubeType,
     ModelType,
     ButtonType,
+    GroupType,
     UnknownType
   };
 
