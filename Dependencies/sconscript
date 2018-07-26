@@ -974,7 +974,9 @@ else:
     targets['libs'].append(GLFW_LIBS)
     targets['libs'].append(GLEW_SHARED_LIB)
 
-targets['bins'] = [CPPCHECK_EXEC, Dir('cppcheck/cfg')]
+targets['bins'] = []
+if MAIN_ENV['RUN_ANALYZER']:
+    targets['bins'] += [CPPCHECK_EXEC, Dir('cppcheck/cfg')]
 
 Return('targets')
 """
