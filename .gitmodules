@@ -10,3 +10,6 @@
 	path = Dependencies/cxxtest
 	url = https://github.com/CxxTest/cxxtest.git
 	ignore = dirty
+[submodule "Dependencies/cppcheck"]
+	path = Dependencies/cppcheck
+	url = https://github.com/danmar/cppcheck.git
