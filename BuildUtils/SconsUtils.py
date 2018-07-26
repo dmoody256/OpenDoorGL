@@ -32,6 +32,7 @@ from SCons import Action
 from SCons.Script import Main
 from SCons.Environment import Environment
 from SCons.Script.Main import GetOption
+from SCons.Errors import BuildError
 
 
 from BuildUtils.ColorPrinter import ColorPrinter
@@ -102,13 +103,6 @@ def build_status():
     return (status, failures_message)
 
 
-def highlight_word(line, word, color):
-    """
-    Highlights the word in the passed line if its present.
-    """
-    return line.replace(word, color + word + ColorPrinter().ENDC)
-
-
 def display_build_status(start_time):
     """Display the build status.  Called by atexit.
     Here you could do all kinds of complicated things."""
@@ -134,9 +128,9 @@ def display_build_status(start_time):
         found_info = False
         for line in compileOutput:
             if('error' in line or 'warning' in line or "note" in line):
-                line = highlight_word(line, "error", printer.FAIL)
-                line = highlight_word(line, "warning", printer.WARNING)
-                line = highlight_word(line, "note", printer.OKBLUE)
+                line = printer.highlight_word(line, "error", printer.FAIL)
+                line = printer.highlight_word(line, "warning", printer.WARNING)
+                line = printer.highlight_word(line, "note", printer.OKBLUE)
                 found_info = True
             pending_output += line + os.linesep
         if found_info:
@@ -159,9 +153,9 @@ def display_build_status(start_time):
         found_info = False
         for line in linkOutput:
             if('error' in line or 'warning' in line or "note" in line):
-                line = highlight_word(line, "error", printer.FAIL)
-                line = highlight_word(line, "warning", printer.WARNING)
-                line = highlight_word(line, "note", printer.OKBLUE)
+                line = printer.highlight_word(line, "error", printer.FAIL)
+                line = printer.highlight_word(line, "warning", printer.WARNING)
+                line = printer.highlight_word(line, "note", printer.OKBLUE)
                 found_info = True
             pending_output += line + os.linesep
         if found_info:
@@ -470,3 +464,75 @@ def run_visual_tests(base_dir):
     )
     output = proc.communicate()[0]
     print(output)
+
+def cppcheck_command(base_dir):
+    """
+    Callback function to run the test script.
+    """
+    printer = ColorPrinter()
+    def execute():
+        proc = subprocess.Popen(
+            ['./cppcheck', 
+                '--enable=all', 
+                '--suppress=*:../include/glm*', 
+                '-I../include', 
+                '-DGLM_FORCE_RADIANS',
+                '-DODGL_LIBRARAY_BUILD',
+                '../../Core'
+            ],
+            cwd=base_dir+'/build/bin',
+            stderr=subprocess.STDOUT,
+            stdout=subprocess.PIPE,
+            universal_newlines=True
+        )
+        for stdout_line in iter(proc.stdout.readline, ""):
+            yield stdout_line 
+        proc.stdout.close()
+        return_code = proc.wait()
+        if return_code:
+            raise subprocess.CalledProcessError(return_code, cmd)
+
+    style = ' (style) '
+    performance = ' (performance) '
+    portability = ' (portability) '
+    warning = ' (warning) '
+    error = ' (error) '
+    information = ' (information) '
+    
+    errors = 0
+    warnings = 0
+    noncritical = 0
+
+    for output in execute():
+        if(output.startswith('[')):
+            
+            output = output.strip()
+
+            if(style in output):
+                noncritical+=1
+                output = printer.highlight_word(output, ' (style) ', printer.OKBLUE)
+            elif(performance in output):
+                noncritical+=1
+                output = printer.highlight_word(output, ' (performance) ', printer.OKBLUE)
+            elif(portability in output):
+                noncritical+=1
+                output = printer.highlight_word(output, ' (portability) ', printer.OKBLUE)
+            elif(warning in output):
+                warnings+=1
+                output = printer.highlight_word(output, ' (warning) ', printer.WARNING)
+            elif(error in output):
+                errors+=1
+                output = printer.highlight_word(output, ' (error) ', printer.FAIL)
+            else:
+                noncritical+=1
+            
+            printer.CppCheckPrint(' ' + output)
+    
+    printer.InfoPrint(' Cppcheck finished, findings:')
+    printer.InfoPrint('     Non-Critical: ' + str(noncritical))
+    printer.InfoPrint('     Warnings:     ' + str(warnings))
+    printer.InfoPrint('     Errors:       ' + str(errors))
+
+    # TODO: enable once all cppcheck errors are cleaned up
+    #if(noncritical + warnings + errors > 0):
+    #    return BuildError(errstr='Cppcheck Failed!')

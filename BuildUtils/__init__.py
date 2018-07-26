@@ -87,6 +87,7 @@ def run_unit_tests(base_dir):
     # print(output)
 
 
+
 def run_visual_tests(base_dir):
     """
     Callback function to run the test script.

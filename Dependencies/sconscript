@@ -34,10 +34,18 @@ from BuildUtils.SconsUtils import SetupBuildEnv
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
+
+
 # TODO: make this python and not command line
-output = subprocess.check_output(["git", "submodule", "init"])
-output = subprocess.check_output(["git", "submodule", "update"])
-# output = subprocess.check_output(["./runCmake.sh"])
+output = subprocess.check_output(["git", "submodule", "update", 
+                                    "--init", "glfw"])
+output = subprocess.check_output(["git", "submodule", "update", 
+                                    "--init", "cxxtest"])
+output = subprocess.check_output(["git", "submodule", "update", 
+                                    "--init", "glm"])
+if MAIN_ENV['RUN_ANALYZER']:
+    output = subprocess.check_output(["git", "submodule", "update", 
+                                        "--init", "cppcheck"])
 
 libType = "ReleaseBuild"
 libPostfix = ""
@@ -95,6 +103,37 @@ AddOption(
     default=False,
     help='Build the GLFW documentation'
 )
+
+if MAIN_ENV['RUN_ANALYZER']:
+    CPPCHECK_ENV = Environment(
+        PROJECT_DIR=MAIN_ENV['PROJECT_DIR'],
+        BUILD_DIR=MAIN_ENV['BUILD_DIR']
+    )
+
+    CPPCHECK_ENV.VariantDir('build/cli', 'cppcheck/cli', duplicate=0)
+    CPPCHECK_ENV.VariantDir('build/lib', 'cppcheck/lib', duplicate=0)
+    CPPCHECK_ENV.VariantDir('build/externals/tinyxml', 'cppcheck/externals/tinyxml', duplicate=0)
+    CPPCHECK_ENV.VariantDir('build/externals/simplecpp', 'cppcheck/externals/simplecpp', duplicate=0)
+
+    cpp_check_source = []
+    cpp_check_source += glob.glob('cppcheck/cli/*.cpp')
+    cpp_check_source += glob.glob('cppcheck/lib/*.cpp')
+    cpp_check_source += glob.glob('cppcheck/externals/tinyxml/*.cpp')
+    cpp_check_source.append('cppcheck/externals/simplecpp/simplecpp.cpp')
+
+    CPPCHECK_ENV.Append(CPPPATH=[
+        'cppcheck/externals/simplecpp',
+        'cppcheck/externals/tinyxml',
+        'cppcheck/lib',
+    ])
+
+    CPPCHECK_ENV.Append(CCFLAGS=[
+        '-std=c++11'
+    ])
+
+    MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, cpp_check_source, CPPCHECK_ENV.subst(
+        '$PROGPREFIX') + "cppcheck" + CPPCHECK_ENV.subst('$PROGSUFFIX'))
+    CPPCHECK_ENV, CPPCHECK_EXEC = SetupBuildEnv(CPPCHECK_ENV, "exec", "cppcheck", cpp_check_source)
 
 GLEW_ENV = Environment(
     UTILITIES=not GetOption('utilities'),
@@ -934,6 +973,8 @@ if "window" in platform.system().lower():
 else:
     targets['libs'].append(GLFW_LIBS)
     targets['libs'].append(GLEW_SHARED_LIB)
+
+targets['bins'] = [CPPCHECK_EXEC, Dir('cppcheck/cfg')]
 
 Return('targets')
 """

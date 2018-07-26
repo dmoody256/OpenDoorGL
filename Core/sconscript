@@ -79,7 +79,6 @@ if env['DEBUG_BUILD']:
 
 env.Append(CPPDEFINES=[
     "GLM_FORCE_RADIANS",
-    "ODGL_DEBUG",
     "ODGL_LIBRARAY_BUILD",
 ])
 

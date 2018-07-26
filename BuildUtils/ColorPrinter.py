@@ -36,11 +36,23 @@ class ColorPrinter():
     def SetSize(self, size):
         self.size = size
 
+    def highlight_word(self, line, word, color):
+        """
+        Highlights the word in the passed line if its present.
+        """
+        return line.replace(word, color + word + self.ENDC)
+
     def InfoPrint(self, message):
         """
         Prints a purple info message.
         """
         print(self.InfoString(message))
+
+    def CppCheckPrint(self, message):
+        """
+        Prints a purple info message.
+        """
+        print(self.HEADER + "[CPPCHK!]" + self.ENDC + message)
 
     def InfoString(self, message):
         """
