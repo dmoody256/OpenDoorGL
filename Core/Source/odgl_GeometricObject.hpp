@@ -16,7 +16,8 @@ class ODGL_DLLEXPORT GeometricObject : public RenderObject
 {
 
 public:
-  GeometricObject(bool init_gl = true);
+  GeometricObject();
+  explicit GeometricObject(bool init_gl);
   ~GeometricObject();
 
   void draw(View view);

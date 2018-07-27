@@ -24,20 +24,19 @@ Group::~Group()
             delete objects.at(i).second;
             break;
         case ObjectType::GeometricObjectType:
-            delete (GeometricObject *)objects.at(i).second;
+            delete static_cast<GeometricObject *>(objects.at(i).second);
             break;
         case ObjectType::CubeType:
-            delete (Cube *)objects.at(i).second;
+            delete static_cast<Cube *>(objects.at(i).second);
             break;
         case ObjectType::ModelType:
-            delete (Model *)objects.at(i).second;
+            delete static_cast<Model *>(objects.at(i).second);
             break;
         case ObjectType::ButtonType:
-            delete (Button *)objects.at(i).second;
+            delete static_cast<Button *>(objects.at(i).second);
             break;
         default:
             delete objects.at(i).second;
-            break;
         }
     }
 }

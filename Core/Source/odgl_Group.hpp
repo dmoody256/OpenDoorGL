@@ -22,13 +22,13 @@ class ODGL_DLLEXPORT Group : public RenderObject
 public:
   Group();
   ~Group();
-  virtual void draw(View *view);
+  virtual void draw(View *view) override;
   virtual void InsertObject(RenderObject *object, bool checkType = true);
   virtual void InsertObject(GeometricObject *object);
   virtual void InsertObject(Cube *object);
   virtual void InsertObject(Button *object);
   virtual void InsertObject(Model *object);
-  virtual void Update(double time_passed);
+  virtual void Update(double time_passed) override;
 
 protected:
   enum ObjectType

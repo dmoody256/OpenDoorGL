@@ -16,20 +16,24 @@ class ODGL_DLLEXPORT GLFW3Window : public WindowInterface
 {
 public:
   ~GLFW3Window();
-  bool InitWindow(const char *window_name, bool _vsyncEnabled = true, unsigned int width = 1024, unsigned int height = 768);
-  void CleanUp();
-  double RenderFrame();
-  double UpdateFrame();
+  bool InitWindow(
+      const char *window_name,
+      bool _vsyncEnabled = true,
+      unsigned int width = 1024,
+      unsigned int height = 768) override;
+  void CleanUp() override;
+  double RenderFrame() override;
+  double UpdateFrame() override;
 
-  bool AppRunning();
-  void SetView(View *view);
-  View *GetView();
-  void InsertObject(RenderObject *object);
+  bool AppRunning() override;
+  void SetView(View *view) override;
+  View *GetView() override;
+  void InsertObject(RenderObject *object) override;
 
-  bool CanCreateCoreProfile();
+  bool CanCreateCoreProfile() override;
 
-  void SetEnableFramerate(bool value);
-  bool GetEnableFramerate();
+  void SetEnableFramerate(bool value) override;
+  bool GetEnableFramerate() override;
 
 protected:
   void ComputeMatricesFromInputs();

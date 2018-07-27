@@ -14,14 +14,23 @@
 namespace OpenDoorGL
 {
 
-GeometricObject::GeometricObject(bool init_gl)
-    : RenderObject()
+GeometricObject::GeometricObject()
+    : GeometricObject(true)
 {
-    if (init_gl)
+}
+
+GeometricObject::GeometricObject(bool init_gl)
+    : RenderObject(),
+      _programID(0),
+      _uniformMVP(0)
+{
     {
-        InitGL();
+        if (init_gl)
+        {
+            InitGL();
+        }
     }
-} // namespace OpenDoorGL
+}
 
 GeometricObject::~GeometricObject()
 {

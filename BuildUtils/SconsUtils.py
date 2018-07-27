@@ -475,10 +475,13 @@ def cppcheck_command(base_dir):
             ['./cppcheck', 
                 '--enable=all', 
                 '--suppress=*:../include/glm*', 
+                '--suppress=*:../../Testing*', 
                 '-I../include', 
                 '-DGLM_FORCE_RADIANS',
                 '-DODGL_LIBRARAY_BUILD',
-                '../../Core'
+                '../../Core',
+                '../../AppFrameworks',
+                '../../Testing'
             ],
             cwd=base_dir+'/build/bin',
             stderr=subprocess.STDOUT,

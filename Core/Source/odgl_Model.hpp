@@ -14,12 +14,13 @@ class ODGL_DLLEXPORT Model : public GeometricObject
 
 public:
   ~Model();
-  Model(bool init_gl = true);
+  Model();
+  explicit Model(bool init_gl);
   void SetNormals(int const numNormals, GLfloat const *normals);
   void SetTextureCoords(int const numCoords, GLfloat const *textureCoords);
   void SetVertices(int const numVerts, GLfloat const *vertices);
   void SetTexture(Image *texture);
-  void draw(View *view);
+  void draw(View *view) override;
 
 protected:
   Image *_texture;

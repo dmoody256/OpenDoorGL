@@ -14,7 +14,8 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT Button : public GeometricObject
 {
 public:
-  Button(bool initGL = true);
+  Button();
+  explicit Button(bool initGL);
   ~Button();
 
   void setTexture(const char *filepath);
@@ -23,7 +24,7 @@ public:
   float getWidth();
   float getHeight();
 
-  void draw(View *view);
+  void draw(View *view) override;
 
 protected:
   float _width;

@@ -10,22 +10,22 @@ namespace OpenDoorGL
 
 class ODGL_DLLEXPORT Image
 {
-  public:
-    Image();
-    Image(const char *filepath);
-    ~Image();
+public:
+  Image();
+  explicit Image(const char *filepath);
+  ~Image();
 
-    GLuint LoadImageFromFile(const char *filePath);
-    GLuint LoadBMPFromFile(const char *filePath);
-    GLuint LoadDDSFromFile(const char *filepath);
+  GLuint LoadImageFromFile(const char *filePath);
+  GLuint LoadBMPFromFile(const char *filePath);
+  GLuint LoadDDSFromFile(const char *filepath);
 
-    GLuint GetTextureGPUHandle();
+  GLuint GetTextureGPUHandle();
 
-  private:
-    GLuint _textureID;
+private:
+  GLuint _textureID;
 
-    int _height;
-    int _width;
+  int _height;
+  int _width;
 };
 
 } // namespace OpenDoorGL

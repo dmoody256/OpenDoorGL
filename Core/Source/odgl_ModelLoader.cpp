@@ -32,7 +32,7 @@ Model *ModelLoader::LoadOBJFile(const char *path, bool init_gl)
 
         char lineHeader[128];
         // read the first word of the line
-        int res = fscanf(file, "%s", lineHeader);
+        int res = fscanf(file, "%127s", lineHeader);
         if (res == EOF)
             break; // EOF = End Of File. Quit the loop.
 
@@ -70,7 +70,7 @@ Model *ModelLoader::LoadOBJFile(const char *path, bool init_gl)
         {
             std::string vertex1, vertex2, vertex3;
             unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+            int matches = fscanf(file, "%10u/%10u/%10u %10u/%10u/%10u %10u/%10u/%10u\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
             if (matches != 9)
             {
                 printf("File can't be read by our simple parser :-( Try exporting with other options\n");

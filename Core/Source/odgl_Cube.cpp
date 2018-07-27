@@ -6,7 +6,15 @@
 namespace OpenDoorGL
 {
 
-Cube::Cube(bool initGL) : GeometricObject(initGL)
+Cube::Cube()
+    : Cube(true)
+{
+}
+
+Cube::Cube(bool initGL)
+    : GeometricObject(initGL),
+      _size(0),
+      _uniformTexture(0)
 {
 
     if (initGL)
