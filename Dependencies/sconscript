@@ -133,9 +133,10 @@ if MAIN_ENV['RUN_ANALYZER']:
             '-std=c++11'
         ])
     elif "windows" in platform.system().lower():
-        CPPCHECK_ENV.Append(CCFLAGS=[
-            '/EHsc'
-        ])
+        CPPCHECK_ENV.Append(
+            CCFLAGS=['/EHsc'],
+            LIBS=['shlwapi']
+        )
 
     MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, cpp_check_source, CPPCHECK_ENV.subst(
         '$PROGPREFIX') + "cppcheck" + CPPCHECK_ENV.subst('$PROGSUFFIX'))
