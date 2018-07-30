@@ -54,17 +54,19 @@ env = Environment()
 env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 
-if MAIN_ENV['RUN_ANALYZER']:
-    env["CC"] = os.getenv("CC") or env["CC"]
-    env["CXX"] = os.getenv("CXX") or env["CXX"]
-    env["SHLINK"] = env["CXX"]
-    env["ENV"].update(x for x in os.environ.items() if x[0].startswith("CCC_"))
-elif MAIN_ENV['RUN_GCOV'] and "linux" in platform.system().lower():
-    env.Append(
-        CCFLAGS=["-fprofile-arcs", "-ftest-coverage"],
-        LIBS=["gcov"],
-        LINKFLAGS=["-fprofile-arcs", "-ftest-coverage", "--coverage"]
-    )
+if "linux" in platform.system().lower():
+    if MAIN_ENV['RUN_ANALYZER']:
+        env["CC"] = os.getenv("CC") or env["CC"]
+        env["CXX"] = os.getenv("CXX") or env["CXX"]
+        env["SHLINK"] = env["CXX"]
+        env["ENV"].update(x for x in os.environ.items()
+                          if x[0].startswith("CCC_"))
+    elif MAIN_ENV['RUN_GCOV']:
+        env.Append(
+            CCFLAGS=["-fprofile-arcs", "-ftest-coverage"],
+            LIBS=["gcov"],
+            LINKFLAGS=["-fprofile-arcs", "-ftest-coverage", "--coverage"]
+        )
 
 env.Append(CPPPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/AppFrameworks",

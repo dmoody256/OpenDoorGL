@@ -6,7 +6,7 @@
 
 namespace OpenDoorGL
 {
-
+#if defined(ODGL_DEBUG)
 void CheckOpenGLError(const char *stmt, const char *fname, int line)
 {
     GLenum err = glGetError();
@@ -16,4 +16,5 @@ void CheckOpenGLError(const char *stmt, const char *fname, int line)
         abort();
     }
 }
+#endif
 } // namespace OpenDoorGL

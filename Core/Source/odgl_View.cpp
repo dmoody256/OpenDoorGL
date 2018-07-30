@@ -1,29 +1,21 @@
 #include "odgl_View.hpp"
 
+namespace OpenDoorGL
+{
 
-namespace OpenDoorGL{
-
-    View::View(){
-        // Initial position : on +Z
-        position = glm::vec3( 0, 0, 5 ); 
-        // Initial horizontal angle : toward -Z
-        horizontalAngle = 3.14f;
-        // Initial vertical angle : none
-        verticalAngle = 0.0f;
-        // Initial Field of View
-        initialFoV = 45.0f;
-
-        speed = 3.0f; // 3 units / second
-        mouseSpeed = 0.005f;
-        _orthographic = false;
-    }
-
-    View::~View(){
-
-
-    }
-
-
-
-
+View::View()
+    : position(glm::vec3(0, 0, 5)),
+      horizontalAngle(3.14f),
+      verticalAngle(0.0f),
+      initialFoV(45.0f),
+      speed(3.0f),
+      mouseSpeed(0.005f),
+      _orthographic(false)
+{
 }
+
+View::~View()
+{
+}
+
+} // namespace OpenDoorGL

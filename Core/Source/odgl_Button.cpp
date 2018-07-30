@@ -6,6 +6,11 @@
 namespace OpenDoorGL
 {
 
+Button::Button()
+    : Button(true)
+{
+}
+
 Button::Button(bool initGL)
     : GeometricObject(initGL)
 {

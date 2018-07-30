@@ -301,8 +301,8 @@ def SetupBuildEnv(env, prog_type, prog_name, source_files):
             new_actions = []
             for i in range(len(combinedActions)):
                 if(i == 0):
-                    new_actions.append(Action.Action('${TEMPFILE("$SHLINK $SHLINKFLAGS $_SHLINK_TARGETS $_LIBDIRFLAGS $_LIBFLAGS $_PDB $_SHLINK_SOURCES 2>&1 > \\\"' +
-                                                     build_env['PROJECT_DIR'] + '/build/build_logs/' + prog_name + '_link.txt\\\"", "$SHLINKCOMSTR")}', '$SHLINKCOMSTR'))
+                    new_actions.append(Action.Action('${TEMPFILE("$SHLINK $SHLINKFLAGS $_SHLINK_TARGETS $_LIBDIRFLAGS $_LIBFLAGS $_PDB $_SHLINK_SOURCES", "$SHLINKCOMSTR")} 2>&1 > \"' +
+                                                     build_env['PROJECT_DIR'] + '/build/build_logs/' + prog_name + '_link.txt\"'))
                 else:
                     new_actions.append(combinedActions[i])
             build_env['SHLINKCOM'] = new_actions
@@ -320,8 +320,8 @@ def SetupBuildEnv(env, prog_type, prog_name, source_files):
             new_actions = []
             for i in range(len(combinedActions)):
                 if(i == 0):
-                    new_actions.append(Action.Action('${TEMPFILE("$LINK $LINKFLAGS /OUT:$TARGET.windows $_LIBDIRFLAGS $_LIBFLAGS $_PDB $SOURCES.windows 2>&1 > \\\"' +
-                                                     build_env['PROJECT_DIR'] + '/build/build_logs/' + prog_name + '_link.txt\\\"", "$LINKCOMSTR")}', '$LINKCOMSTR'))
+                    new_actions.append(Action.Action('${TEMPFILE("$LINK $LINKFLAGS /OUT:$TARGET.windows $_LIBDIRFLAGS $_LIBFLAGS $_PDB $SOURCES.windows", "$LINKCOMSTR")} 2>&1 > \"' +
+                                                     build_env['PROJECT_DIR'] + '/build/build_logs/' + prog_name + '_link.txt\"'))
                 else:
                     new_actions.append(combinedActions[i])
 
@@ -465,28 +465,38 @@ def run_visual_tests(base_dir):
     output = proc.communicate()[0]
     print(output)
 
+
 def cppcheck_command(base_dir):
     """
     Callback function to run the test script.
     """
     printer = ColorPrinter()
+    if "windows" in platform.system().lower():
+        cppcheck_exec = base_dir+'/build/bin/cppcheck.exe'
+    else:
+        cppcheck_exec = './cppcheck'
+
     def execute():
+
         proc = subprocess.Popen(
-            ['./cppcheck', 
-                '--enable=all', 
-                '--suppress=*:../include/glm*', 
-                '-I../include', 
+            [cppcheck_exec,
+                '--enable=all',
+                '--suppress=*:../include/glm*',
+                '--suppress=*:../../Testing*',
+                '-I../include',
                 '-DGLM_FORCE_RADIANS',
                 '-DODGL_LIBRARAY_BUILD',
-                '../../Core'
-            ],
+                '../../Core',
+                '../../AppFrameworks',
+                '../../Testing'
+             ],
             cwd=base_dir+'/build/bin',
             stderr=subprocess.STDOUT,
             stdout=subprocess.PIPE,
             universal_newlines=True
         )
         for stdout_line in iter(proc.stdout.readline, ""):
-            yield stdout_line 
+            yield stdout_line
         proc.stdout.close()
         return_code = proc.wait()
         if return_code:
@@ -498,41 +508,45 @@ def cppcheck_command(base_dir):
     warning = ' (warning) '
     error = ' (error) '
     information = ' (information) '
-    
+
     errors = 0
     warnings = 0
     noncritical = 0
 
     for output in execute():
-        if(output.startswith('[')):
-            
-            output = output.strip()
+        output = output.strip()
+        if(output.startswith('[') or output.endswith(r'% done')):
 
             if(style in output):
-                noncritical+=1
-                output = printer.highlight_word(output, ' (style) ', printer.OKBLUE)
+                noncritical += 1
+                output = printer.highlight_word(
+                    output, ' (style) ', printer.OKBLUE)
             elif(performance in output):
-                noncritical+=1
-                output = printer.highlight_word(output, ' (performance) ', printer.OKBLUE)
+                noncritical += 1
+                output = printer.highlight_word(
+                    output, ' (performance) ', printer.OKBLUE)
             elif(portability in output):
-                noncritical+=1
-                output = printer.highlight_word(output, ' (portability) ', printer.OKBLUE)
+                noncritical += 1
+                output = printer.highlight_word(
+                    output, ' (portability) ', printer.OKBLUE)
             elif(warning in output):
-                warnings+=1
-                output = printer.highlight_word(output, ' (warning) ', printer.WARNING)
+                warnings += 1
+                output = printer.highlight_word(
+                    output, ' (warning) ', printer.WARNING)
             elif(error in output):
-                errors+=1
-                output = printer.highlight_word(output, ' (error) ', printer.FAIL)
-            else:
-                noncritical+=1
-            
+                errors += 1
+                output = printer.highlight_word(
+                    output, ' (error) ', printer.FAIL)
+            elif(information in output):
+                noncritical += 1
+
             printer.CppCheckPrint(' ' + output)
-    
+
     printer.InfoPrint(' Cppcheck finished, findings:')
     printer.InfoPrint('     Non-Critical: ' + str(noncritical))
     printer.InfoPrint('     Warnings:     ' + str(warnings))
     printer.InfoPrint('     Errors:       ' + str(errors))
 
     # TODO: enable once all cppcheck errors are cleaned up
-    #if(noncritical + warnings + errors > 0):
+    # if(noncritical + warnings + errors > 0):
     #    return BuildError(errstr='Cppcheck Failed!')
