@@ -537,7 +537,7 @@ def cppcheck_command(base_dir):
                 errors += 1
                 output = printer.highlight_word(
                     output, ' (error) ', printer.FAIL)
-            else:
+            elif(information in output):
                 noncritical += 1
 
             printer.CppCheckPrint(' ' + output)
