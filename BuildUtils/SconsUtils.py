@@ -514,9 +514,8 @@ def cppcheck_command(base_dir):
     noncritical = 0
 
     for output in execute():
-        if(output.startswith('[')):
-
-            output = output.strip()
+        output = output.strip()
+        if(output.startswith('[') or output.endswith(r'% done')):
 
             if(style in output):
                 noncritical += 1
