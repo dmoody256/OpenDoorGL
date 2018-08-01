@@ -87,6 +87,31 @@ def run_unit_tests(base_dir):
     # print(output)
 
 
+def convertShadersToHeaders(shaderHeader, shaderFiles):
+
+    with open(shaderHeader, 'w') as header:
+        header.write('''#ifndef ODGL_SHADERS_H
+#define ODGL_SHADERS_H
+
+#include "odgl_Include.hpp"
+
+#include <string>
+
+namespace OpenDoorGL
+{
+    ''')
+        for shader in shaderFiles:
+            with open(shader) as f:
+                lines = f.readlines()
+            header.write('static const std::string ' +
+                         os.path.splitext(os.path.basename(shader))[0] + "_" + os.path.splitext(os.path.basename(shader))[1][1:] + ' = ')
+            for line in lines:
+                line = line.strip()
+                header.write('"' + line + '\\n"\n')
+            header.write(';\n\n')
+
+        header.write("}\n#endif\n")
+
 
 def run_visual_tests(base_dir):
     """

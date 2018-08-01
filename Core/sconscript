@@ -17,6 +17,7 @@ SConscript for building the core OpenDoorGL library.a
 # python
 import os
 import platform
+import glob
 
 # scons
 from SCons.Environment import Environment
@@ -25,6 +26,7 @@ from SCons.Script.SConscript import Return
 # project
 from BuildUtils.SconsUtils import ImportVar
 from BuildUtils.SconsUtils import SetupBuildEnv
+from BuildUtils import convertShadersToHeaders
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
@@ -60,6 +62,8 @@ sourceFiles = [
     "build/odgl_ModelLoader.cpp",
     "build/odgl_Include.cpp",
 ]
+
+convertShadersToHeaders('Source/odgl_Shaders.hpp', glob.glob("Shaders/*"))
 
 headerFiles = [
     "Source/odgl_Button.hpp",
