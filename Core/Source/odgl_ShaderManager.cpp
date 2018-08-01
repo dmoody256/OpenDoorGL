@@ -39,6 +39,15 @@ const char *ShaderManager::getTextureVertShader()
     return texture_vert.c_str();
 }
 
+const char *ShaderManager::getButtonVertShader()
+{
+    return button_vert.c_str();
+}
+const char *ShaderManager::getButtonFragShader()
+{
+    return button_frag.c_str();
+}
+
 GLuint ShaderManager::LoadShadersFromString(const char *vertShader, const char *fragShader)
 {
     GLint Result = GL_FALSE;

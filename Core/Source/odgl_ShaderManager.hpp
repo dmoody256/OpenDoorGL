@@ -22,6 +22,8 @@ public:
   static const char *getTextureFragShader();
   static const char *GetTextureModelVertShader();
   static const char *GetTextureModelFragShader();
+  static const char *getButtonVertShader();
+  static const char *getButtonFragShader();
 
 private:
 };

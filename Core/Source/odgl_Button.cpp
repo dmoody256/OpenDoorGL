@@ -17,7 +17,7 @@ Button::Button(bool initGL)
     if (initGL)
     {
         // Create and compile our GLSL program from the shaders
-        _programID = ShaderManager::LoadShadersFromString(ShaderManager::getTextureVertShader(), ShaderManager::getTextureFragShader());
+        _programID = ShaderManager::LoadShadersFromString(ShaderManager::getButtonVertShader(), ShaderManager::getButtonFragShader());
         GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
         GL_CHECK(_uniformTexture = glGetUniformLocation(_programID, "myTextureSampler"));
     }
