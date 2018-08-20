@@ -15,4 +15,4 @@
 	url = https://github.com/danmar/cppcheck.git
 [submodule "Dependencies/Simple-OpenGL-Image-Library"]
 	path = Dependencies/Simple-OpenGL-Image-Library
-	url = https://github.com/kbranigan/Simple-OpenGL-Image-Library.git
+	url = https://github.com/dmoody256/Simple-OpenGL-Image-Library.git
