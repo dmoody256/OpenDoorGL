@@ -169,6 +169,8 @@ for header in DEPEND_LIBS['headers']['GLEW']:
     MAIN_ENV.Install("build/include/GLEW", header)
 for header in DEPEND_LIBS['headers']['GLFW']:
     MAIN_ENV.Install("build/include/GLFW", header)
+for header in DEPEND_LIBS['headers']['SOIL']:
+    MAIN_ENV.Install("build/include/SOIL", header)
 
 TEST_NODE = MAIN_ENV.Install("build/include", 'Dependencies/glm/glm')
 
@@ -180,14 +182,17 @@ for lib in DEPEND_LIBS['libs']:
 
 for bin in DEPEND_LIBS['bins']:
     MAIN_ENV.Install("build/bin", bin)
-   
+
 for buildFile in CORE_LIBS:
     if str(buildFile).endswith(".hpp"):
         MAIN_ENV.Install("build/include", buildFile)
     elif str(buildFile).endswith(".dll"):
         MAIN_ENV.Install("build/bin", buildFile)
+    elif 'Textures' in str(buildFile):
+        MAIN_ENV.Install("build/bin/resources", buildFile)
     else:
         MAIN_ENV.Install("build/lib", buildFile)
+
 
 for buildFile in FRAMEWORK_LIBS:
     if str(buildFile).endswith(".hpp"):
@@ -230,14 +235,14 @@ for test in TESTS:
 if MAIN_ENV['RUN_ANALYZER']:
     CPPCHECK_CALLBACK = SCons.Action.ActionFactory(
         cppcheck_command,
-        lambda base_dir: ColorPrinter().InfoString(' Analyzing code with Cppcheck, this will take a while...')
+        lambda base_dir: ColorPrinter().InfoString(
+            ' Analyzing code with Cppcheck, this will take a while...')
     )
-    
+
     CPPCHECK_COMMAND = MAIN_ENV.Command(
         'cppcheck_target',
         'build',
         CPPCHECK_CALLBACK(MAIN_ENV['PROJECT_DIR']))
-    
 
 
 if GetOption('run_unit'):

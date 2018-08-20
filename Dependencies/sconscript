@@ -143,6 +143,41 @@ if MAIN_ENV['RUN_ANALYZER']:
     CPPCHECK_ENV, CPPCHECK_EXEC = SetupBuildEnv(
         CPPCHECK_ENV, "exec", "cppcheck", cpp_check_source)
 
+
+SOIL_ENV = Environment(
+    PROJECT_DIR=MAIN_ENV['PROJECT_DIR'],
+    BUILD_DIR=MAIN_ENV['BUILD_DIR']
+)
+
+SOIL_ENV.VariantDir(
+   'build/src', 'Simple-OpenGL-Image-Library/src', duplicate=0)
+
+soil_source = []
+soil_source += glob.glob('Simple-OpenGL-Image-Library/src/*.c')
+
+SOIL_ENV.Append(CPPPATH=[
+    'Simple-OpenGL-Image-Library/src'
+])
+
+if "linux" in platform.system().lower():
+    SOIL_ENV.Append(CCFLAGS=[
+        '-std=c++11'
+    ])
+elif "windows" in platform.system().lower():
+    SOIL_ENV.Append(
+        CPPDEFINES=['SOIL_EXPORT_LIBRARY'],
+        CCFLAGS=['/EHsc'],
+        LIBS=['OpenGL32']
+    )
+
+
+
+MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, soil_source, SOIL_ENV.subst(
+    '$SHLIBPREFIX') + "soil" + SOIL_ENV.subst('$SHLIBPSUFFIX'))
+SOIL_ENV, SOIL_LIB = SetupBuildEnv(
+    SOIL_ENV, "shared", "soil", soil_source)
+
+
 GLEW_ENV = Environment(
     UTILITIES=not GetOption('utilities'),
     REGAL=GetOption('regal'),
@@ -966,6 +1001,7 @@ targets = dict()
 targets['headers'] = dict()
 targets['headers']['GLFW'] = []
 targets['headers']['GLEW'] = []
+targets['headers']['SOIL'] = []
 
 for header in publicHeaders:
     targets['headers']['GLEW'].append(GLEW_ENV.File(header))
@@ -973,14 +1009,18 @@ for header in publicHeaders:
 targets['headers']['GLFW'].append(GLEW_ENV.File("glfw/include/GLFW/glfw3.h"))
 targets['headers']['GLFW'].append(
     GLEW_ENV.File("glfw/include/GLFW/glfw3native.h"))
+targets['headers']['SOIL'].append(SOIL_ENV.File(
+    'Simple-OpenGL-Image-Library/src/SOIL.h'))
 
 targets['libs'] = []
 if "window" in platform.system().lower():
     targets['libs'].extend(GLFW_LIBS)
     targets['libs'].extend(GLEW_SHARED_LIB)
+    targets['libs'].extend(SOIL_LIB)
 else:
     targets['libs'].append(GLFW_LIBS)
     targets['libs'].append(GLEW_SHARED_LIB)
+    targets['libs'].append(SOIL_LIB)
 
 targets['bins'] = []
 if MAIN_ENV['RUN_ANALYZER']:

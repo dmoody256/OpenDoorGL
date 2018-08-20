@@ -103,7 +103,7 @@ if "linux" in platform.system().lower():
         CXXFLAGS=["-std=c++11"],
         LDFLAGS=[debugFlag, "-rdynamic"],
         LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/"],
-        LIBS=["GL", "GLU"]
+        LIBS=["GL", "GLU", 'soil']
     )
 elif platform == "darwin":
     print("XCode project not implemented yet")
@@ -113,12 +113,14 @@ elif "win" in platform.system().lower():
     debugFlag = "/O2"
     degug = '/DEBUG:NONE'
     debugRuntime = "/MD"
+    odglDebug = ''
 
     if env['DEBUG_BUILD']:
         degugDefine = 'DEBUG'
         debugFlag = "/Od"
         degug = '/DEBUG:FULL'
         debugRuntime = "/MDd"
+        env.Append(CPPDEFINES=['ODGL_DEBUG'])
 
     env.Append(
         CPPPATH=[
@@ -145,7 +147,7 @@ elif "win" in platform.system().lower():
         ],
         LINKFLAGS=[degug],
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
-        LIBS=['OpenGL32', 'user32', 'glew32', 'glu32']
+        LIBS=['OpenGL32', 'user32', 'glew32', 'glu32', 'soil']
     )
 
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sourceFiles, env.subst(
@@ -161,6 +163,9 @@ else:
 
 for file in headerFiles:
     targets.append(env.File(file))
+
+for texture in glob.glob("Textures/*"):
+    targets.append(env.File(texture))
 
 # env = ConfigPlatformIDE(env, sourceFiles, headerFiles, [], prog)
 #    def ConfigPlatformIDE(env, sourceFiles, headerFiles, resources, program):
