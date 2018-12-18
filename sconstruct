@@ -180,7 +180,7 @@ for lib in DEPEND_LIBS['libs']:
 
 for bin in DEPEND_LIBS['bins']:
     MAIN_ENV.Install("build/bin", bin)
-   
+
 for buildFile in CORE_LIBS:
     if str(buildFile).endswith(".hpp"):
         MAIN_ENV.Install("build/include", buildFile)
@@ -230,14 +230,14 @@ for test in TESTS:
 if MAIN_ENV['RUN_ANALYZER']:
     CPPCHECK_CALLBACK = SCons.Action.ActionFactory(
         cppcheck_command,
-        lambda base_dir: ColorPrinter().InfoString(' Analyzing code with Cppcheck, this will take a while...')
+        lambda base_dir: ColorPrinter().InfoString(
+            ' Analyzing code with Cppcheck, this will take a while...')
     )
-    
+
     CPPCHECK_COMMAND = MAIN_ENV.Command(
         'cppcheck_target',
         'build',
         CPPCHECK_CALLBACK(MAIN_ENV['PROJECT_DIR']))
-    
 
 
 if GetOption('run_unit'):
@@ -259,3 +259,8 @@ if GetOption('run_test'):
     else:
         MAIN_ENV.Depends(VISUAL_TEST_COMMAND, CHMOD_COMMAND)
     MAIN_ENV.AlwaysBuild(VISUAL_TEST_COMMAND)
+
+build_bin = MAIN_ENV.Dir('build/bin')
+build_lib = MAIN_ENV.Dir('build/lib')
+build_include = MAIN_ENV.Dir('build/include')
+Return(['build_bin', 'build_lib', 'build_include'])
