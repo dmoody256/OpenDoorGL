@@ -264,3 +264,8 @@ if GetOption('run_test'):
     else:
         MAIN_ENV.Depends(VISUAL_TEST_COMMAND, CHMOD_COMMAND)
     MAIN_ENV.AlwaysBuild(VISUAL_TEST_COMMAND)
+
+build_bin = MAIN_ENV.Dir('build/bin')
+build_lib = MAIN_ENV.Dir('build/lib')
+build_include = MAIN_ENV.Dir('build/include')
+Return(['build_bin', 'build_lib', 'build_include'])
