@@ -42,6 +42,8 @@ output = subprocess.check_output(["git", "submodule", "update",
                                   "--init", "cxxtest"])
 output = subprocess.check_output(["git", "submodule", "update",
                                   "--init", "glm"])
+output = subprocess.check_output(["git", "submodule", "update",
+                                  "--init", "Simple-OpenGL-Image-Library"])
 if MAIN_ENV['RUN_ANALYZER']:
     output = subprocess.check_output(["git", "submodule", "update",
                                       "--init", "cppcheck"])
@@ -143,14 +145,15 @@ if MAIN_ENV['RUN_ANALYZER']:
     CPPCHECK_ENV, CPPCHECK_EXEC = SetupBuildEnv(
         CPPCHECK_ENV, "exec", "cppcheck", cpp_check_source)
 
-
+# SOIL
+#################################################################################
 SOIL_ENV = Environment(
     PROJECT_DIR=MAIN_ENV['PROJECT_DIR'],
     BUILD_DIR=MAIN_ENV['BUILD_DIR']
 )
 
 SOIL_ENV.VariantDir(
-   'build/src', 'Simple-OpenGL-Image-Library/src', duplicate=0)
+    'build/src', 'Simple-OpenGL-Image-Library/src', duplicate=0)
 
 soil_source = []
 soil_source += glob.glob('Simple-OpenGL-Image-Library/src/*.c')
@@ -171,13 +174,13 @@ elif "windows" in platform.system().lower():
     )
 
 
-
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, soil_source, SOIL_ENV.subst(
     '$SHLIBPREFIX') + "soil" + SOIL_ENV.subst('$SHLIBPSUFFIX'))
 SOIL_ENV, SOIL_LIB = SetupBuildEnv(
     SOIL_ENV, "shared", "soil", soil_source)
 
-
+# GLEW
+##############################################################
 GLEW_ENV = Environment(
     UTILITIES=not GetOption('utilities'),
     REGAL=GetOption('regal'),

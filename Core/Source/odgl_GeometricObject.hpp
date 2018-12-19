@@ -35,6 +35,11 @@ protected:
   std::vector<GLfloat> _textureCoords;
   std::vector<GLfloat> _normals;
 
+  GLuint _uniformV;
+  GLuint _uniformM;
+  GLuint _uniformSampler1;
+  GLuint _uniformLight;
+
   GLuint _programID;
   GLuint _uniformMVP;
 

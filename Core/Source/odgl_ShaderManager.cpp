@@ -48,6 +48,15 @@ const char *ShaderManager::getButtonFragShader()
     return button_frag.c_str();
 }
 
+const char *ShaderManager::getColorLightVertShader()
+{
+    return colorlight_vert.c_str();
+}
+const char *ShaderManager::getColorLightFragShader()
+{
+    return colorlight_frag.c_str();
+}
+
 GLuint ShaderManager::LoadShadersFromString(const char *vertShader, const char *fragShader)
 {
     GLint Result = GL_FALSE;

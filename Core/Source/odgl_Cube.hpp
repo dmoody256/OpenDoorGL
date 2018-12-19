@@ -15,7 +15,7 @@ class ODGL_DLLEXPORT Cube : public GeometricObject
 {
 public:
   Cube();
-  explicit Cube(bool initGL);
+  explicit Cube(bool initGL, bool lightEnabled = false);
   ~Cube();
 
   void setTexture(const char *filepath, float *uvcoords);
@@ -33,6 +33,11 @@ protected:
   float _size;
   Image *_faceTextures[6];
   GLuint _uniformTexture;
+  GLuint _uniformCubeColor;
+  bool lightEnabled;
+  unsigned char _R;
+  unsigned char _G;
+  unsigned char _B;
 
 private:
   void InitGL();
