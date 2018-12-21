@@ -28,6 +28,24 @@ import sys
 
 from BuildUtils.ColorPrinter import ColorPrinter
 
+def build_OpenDoorGL(debug_build=True):
+
+    ODGL_build = ['scons', '-Q']
+    if debug_build:
+        ODGL_build.append('--debug_build')
+
+    p = subprocess.Popen(
+        ODGL_build, 
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.STDOUT, 
+        cwd=os.getcwd() + "/OpenDoorGL", 
+        universal_newlines=True)
+    while p.poll() is None:
+        l = p.stdout.readline().strip() # This blocks until it receives a newline.
+        print(l)
+    # When the subprocess terminates there might be unconsumed output 
+    # that still needs to be processed.
+    print(p.stdout.read().strip())
 
 def get_num_cpus():
     """
