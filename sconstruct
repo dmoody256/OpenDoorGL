@@ -19,6 +19,7 @@ import sys
 import time
 import datetime
 import atexit
+import os
 
 start_time = time.time()
 
@@ -138,7 +139,6 @@ CORE_LIBS = SConscript(
     'Core/sconscript',
     exports='MAIN_ENV',
     duplicate=0,
-
 )
 
 FRAMEWORK_LIBS = SConscript(
@@ -171,8 +171,10 @@ for header in DEPEND_LIBS['headers']['GLFW']:
     MAIN_ENV.Install("build/include/GLFW", header)
 for header in DEPEND_LIBS['headers']['SOIL']:
     MAIN_ENV.Install("build/include/SOIL", header)
-
-TEST_NODE = MAIN_ENV.Install("build/include", 'Dependencies/glm/glm')
+for root, dirs, files in os.walk(str(DEPEND_LIBS['headers']['GLM']), topdown=False):
+    for name in files:
+        install_dir = root.replace(str(DEPEND_LIBS['headers']['GLM']), '')
+        MAIN_ENV.Install("build/include/glm" + install_dir, os.path.join(root, name))
 
 for lib in DEPEND_LIBS['libs']:
     if str(lib).endswith(".dll"):
@@ -226,7 +228,6 @@ atexit.register(display_build_status, start_time)
 
 TEST_BINS = []
 for test in TESTS:
-    MAIN_ENV.Depends(TEST_NODE, test['executable'])
     TEST_BINS.append(MAIN_ENV.Install("build/bin", test['executable']))
     MAIN_ENV.Depends(CHMOD_COMMAND, test['executable'])
     for resource in test['resources']:

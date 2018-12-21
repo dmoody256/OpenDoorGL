@@ -2,6 +2,7 @@ build/
 shared_build/
 Dependencies/include
 Dependencies/lib
+Core/Source/odgl_Shaders.hpp
 Testing/VisualTests/SikuliX/*
 .sconsign.dblite
 *.html

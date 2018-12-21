@@ -102,7 +102,7 @@ if "linux" in platform.system().lower():
         CCFLAGS=[debugFlag, compilerOpt, '-fPIC', "-rdynamic"],
         CXXFLAGS=["-std=c++11"],
         LDFLAGS=[debugFlag, "-rdynamic"],
-        LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/"],
+        LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/", MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
         LIBS=["GL", "GLU", 'soil']
     )
 elif platform == "darwin":

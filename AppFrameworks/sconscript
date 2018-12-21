@@ -90,7 +90,7 @@ else:
     debugFlag = "-g"
     env.Append(
         CPPDEFINES=['ODGL_DEBUG'],
-        CCFLAGS=['-O0'],
+        CCFLAGS=['-O0', '-std=c++11'],
     )
 
 

@@ -1005,6 +1005,7 @@ targets['headers'] = dict()
 targets['headers']['GLFW'] = []
 targets['headers']['GLEW'] = []
 targets['headers']['SOIL'] = []
+targets['headers']['GLM'] = Dir("glm/glm")
 
 for header in publicHeaders:
     targets['headers']['GLEW'].append(GLEW_ENV.File(header))
