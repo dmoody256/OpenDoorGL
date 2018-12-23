@@ -1,7 +1,7 @@
 #version 330 core
 
 // Interpolated values from the vertex shaders
-in vec2 UV;
+in vec3 fragColor;
 in vec3 Position_worldspace;
 in vec3 Normal_cameraspace;
 in vec3 EyeDirection_cameraspace;
@@ -11,9 +11,9 @@ in vec3 LightDirection_cameraspace;
 out vec3 color;
 
 // Values that stay constant for the whole mesh.
-uniform vec3 cubeColor;
 uniform mat4 MV;
 uniform vec3 LightPosition_worldspace;
+uniform vec3 cubeColor;
 
 void main(){
     // Light emission properties
@@ -23,8 +23,8 @@ void main(){
     
     // Material properties
     vec3 MaterialDiffuseColor = cubeColor;
-    vec3 MaterialAmbientColor = vec3(0.3,0.3,0.3) * MaterialDiffuseColor;
-    vec3 MaterialSpecularColor = vec3(0.0,0.0,0.0);
+    vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
+    vec3 MaterialSpecularColor = vec3(0.1,0.1,0.1);
 
     // Distance to the light
     float distance = length( LightPosition_worldspace - Position_worldspace );
