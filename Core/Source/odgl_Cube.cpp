@@ -331,15 +331,18 @@ void Cube::draw(View *view)
     // in the "MVP" uniform
     glm::mat4 MVP = view->proj * view->view * _model;
     GL_CHECK(glUniformMatrix4fv(_uniformMVP, 1, GL_FALSE, &MVP[0][0]));
-
+    if (lights.size() == 0)
+    {
+        lightEnabled = false;
+    }
     if (lightEnabled)
     {
         // Send our transformation to the currently bound shader,
         // in the "MVP" uniform
-        GL_CHECK(glUniformMatrix4fv(_uniformM, 1, GL_FALSE, &view->proj[0][0]));
+        GL_CHECK(glUniformMatrix4fv(_uniformM, 1, GL_FALSE, &_model[0][0]));
         GL_CHECK(glUniformMatrix4fv(_uniformV, 1, GL_FALSE, &view->view[0][0]));
 
-        GL_CHECK(glUniform3f(_uniformLight, lightPos_x, lightPos_y, lightPos_z));
+        GL_CHECK(glUniform3f(_uniformLight, lights.at(0)->position.x, lights.at(0)->position.y, lights.at(0)->position.z));
 
         GL_CHECK(glUniform3f(_uniformCubeColor, _R, _G, _B));
     }

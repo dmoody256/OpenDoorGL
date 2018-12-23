@@ -30,7 +30,7 @@ from BuildUtils import convertShadersToHeaders
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
-env = Environment(DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'])
+env = Environment(DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'], INSTALLSTR='')
 env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 env.VariantDir('build', 'Source', duplicate=0)
@@ -104,7 +104,8 @@ if "linux" in platform.system().lower():
         CCFLAGS=[debugFlag, compilerOpt, '-fPIC', "-rdynamic"],
         CXXFLAGS=["-std=c++11"],
         LDFLAGS=[debugFlag, "-rdynamic"],
-        LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/", MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
+        LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/",
+                 MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
         LIBS=["GL", "GLU", 'soil']
     )
 elif platform == "darwin":

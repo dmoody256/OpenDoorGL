@@ -103,14 +103,14 @@ def build_status():
     return (status, failures_message)
 
 
-def display_build_status(start_time):
+def display_build_status(odgl_dir, start_time):
     """Display the build status.  Called by atexit.
     Here you could do all kinds of complicated things."""
     status, _unused_failures_message = build_status()
 
     printer = ColorPrinter()
 
-    for filename in glob.glob('build/build_logs/*_compile.txt'):
+    for filename in glob.glob(odgl_dir + '/build/build_logs/*_compile.txt'):
         compileOutput = []
 
         f = open(filename, "r")
@@ -136,7 +136,7 @@ def display_build_status(start_time):
         if found_info:
             print(pending_output)
 
-    for filename in glob.glob('build/build_logs/*_link.txt'):
+    for filename in glob.glob(odgl_dir + '/build/build_logs/*_link.txt'):
         linkOutput = []
         f = open(filename, "r")
         tempList = f.read().splitlines()

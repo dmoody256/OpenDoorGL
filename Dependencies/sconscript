@@ -34,19 +34,23 @@ from BuildUtils.SconsUtils import SetupBuildEnv
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
-
 # TODO: make this python and not command line
-output = subprocess.check_output(["git", "submodule", "update",
-                                  "--init", "glfw"])
-output = subprocess.check_output(["git", "submodule", "update",
-                                  "--init", "cxxtest"])
-output = subprocess.check_output(["git", "submodule", "update",
-                                  "--init", "glm"])
-output = subprocess.check_output(["git", "submodule", "update",
-                                  "--init", "Simple-OpenGL-Image-Library"])
-if MAIN_ENV['RUN_ANALYZER']:
+if not os.path.exists('glfw/.git'):
     output = subprocess.check_output(["git", "submodule", "update",
-                                      "--init", "cppcheck"])
+                                      "--init", "glfw"])
+if not os.path.exists('cxxtest/.git'):
+    output = subprocess.check_output(["git", "submodule", "update",
+                                      "--init", "cxxtest"])
+if not os.path.exists('glm/.git'):
+    output = subprocess.check_output(["git", "submodule", "update",
+                                      "--init", "glm"])
+if not os.path.exists('Simple-OpenGL-Image-Library/.git'):
+    output = subprocess.check_output(["git", "submodule", "update",
+                                      "--init", "Simple-OpenGL-Image-Library"])
+if MAIN_ENV['RUN_ANALYZER']:
+    if not os.path.exists('cppcheck/.git'):
+        output = subprocess.check_output(["git", "submodule", "update",
+                                          "--init", "cppcheck"])
 
 libType = "ReleaseBuild"
 libPostfix = ""

@@ -8,7 +8,7 @@
 	ignore = dirty
 [submodule "Dependencies/cxxtest"]
 	path = Dependencies/cxxtest
-	url = https://github.com/CxxTest/cxxtest.git
+	url = https://gitlab.com/dmoody256/cxxtest
 	ignore = dirty
 [submodule "Dependencies/cppcheck"]
 	path = Dependencies/cppcheck
