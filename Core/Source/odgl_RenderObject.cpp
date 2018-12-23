@@ -1,4 +1,5 @@
 //#define ODGL_LOG_SCOPE
+#define _USE_MATH_DEFINES
 
 #include <GLEW/glew.h>
 
@@ -7,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <math.h>
 
 #include "odgl_Logging.hpp"
 #include "odgl_RenderObject.hpp"
@@ -33,4 +35,21 @@ void RenderObject::Translate(float x, float y, float z)
     glm::vec3 trans(x, y, z);
     _model = glm::translate(_model, trans);
 }
+
+void RenderObject::Rotate(float degrees, float x, float y, float z)
+{
+    glm::vec3 trans(x, y, z);
+    _model = glm::rotate(_model, (float)(degrees / 90.0f * M_PI), trans);
+}
+
+void RenderObject::Rotate(float degrees, float x, float y, float z, float pivot_x, float pivot_y, float pivot_z)
+{
+    glm::vec3 trans(x, y, z);
+    glm::vec3 pivot_vec(pivot_x, pivot_y, pivot_z);
+    glm::vec3 pivot_back_vec(-pivot_x, -pivot_y, -pivot_z);
+    _model = glm::translate(_model, pivot_vec);
+    _model = glm::rotate(_model, (float)(degrees / 90.0f * M_PI), trans);
+    _model = glm::translate(_model, pivot_back_vec);
+}
+
 } // namespace OpenDoorGL

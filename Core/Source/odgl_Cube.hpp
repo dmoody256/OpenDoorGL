@@ -7,6 +7,7 @@
 #include "odgl_Include.hpp"
 #include "odgl_GeometricObject.hpp"
 #include "odgl_Image.hpp"
+#include "odgl_Light.hpp"
 
 namespace OpenDoorGL
 {
@@ -27,7 +28,10 @@ public:
   void setSize(float size);
   float getSize();
 
+  glm::vec3 getPosition();
+
   void draw(View *view) override;
+  std::vector<Light *> lights;
 
 protected:
   float _size;
