@@ -14,12 +14,13 @@ out vec3 color;
 uniform mat4 MV;
 uniform vec3 LightPosition_worldspace;
 uniform vec3 cubeColor;
+uniform vec3 LightColor;
+uniform float LightPower;
 
 void main(){
     // Light emission properties
     // You probably want to put them as uniforms
-    vec3 LightColor = vec3(1,1,1);
-    float LightPower = 50.0f;
+    
     
     // Material properties
     vec3 MaterialDiffuseColor = cubeColor;

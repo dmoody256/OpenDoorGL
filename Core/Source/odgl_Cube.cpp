@@ -16,7 +16,8 @@ Cube::Cube(bool initGL, bool lightEnabled)
       _size(0),
       _uniformTexture(0),
       _uniformCubeColor(0),
-      lightEnabled(lightEnabled)
+      lightEnabled(lightEnabled),
+      _outline(true)
 {
 
     if (initGL)
@@ -44,6 +45,8 @@ void Cube::InitGL()
         GL_CHECK(_uniformM = glGetUniformLocation(_programID, "M"));
         GL_CHECK(_uniformCubeColor = glGetUniformLocation(_programID, "cubeColor"));
         GL_CHECK(_uniformLight = glGetUniformLocation(_programID, "LightPosition_worldspace"));
+        GL_CHECK(_uniformLightColor = glGetUniformLocation(_programID, "LightColor"));
+        GL_CHECK(_uniformLightPower = glGetUniformLocation(_programID, "LightPower"));
     }
     else
     {
@@ -96,6 +99,11 @@ void Cube::setTextureToFace(const char *filepath, float *uvcoords, int faceID)
     GL_CHECK(glBufferData(GL_ARRAY_BUFFER, _textureCoords.size() * sizeof(float), &_textureCoords.at(0), GL_STATIC_DRAW));
 }
 
+void Cube::setOutline(bool enabled)
+{
+    _outline = enabled;
+}
+
 void Cube::setSize(float size)
 {
     _size = size;
@@ -103,28 +111,95 @@ void Cube::setSize(float size)
     _normals.resize(0, 0);
 
     // Near Lower Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
+    float nearsize = 2.0f;
+    // 1
+    // | ^
+    // |  \ 
+    // \/  \ 
+    // 2--->3
+    //
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(-size / nearsize);
+    _vertices.push_back(size / nearsize);
+    _vertices.push_back(-size / nearsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(-size / nearsize);
+    _vertices.push_back(-size / nearsize);
+    _vertices.push_back(-size / nearsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(size / nearsize);
+    _vertices.push_back(-size / nearsize);
+    _vertices.push_back(-size / nearsize);
 
     // Near Upper Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
+    // 3<---2
+    //  \   ^
+    //   \  |
+    //    \ |
+    //     >1
+    //
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(size / nearsize);
+    _vertices.push_back(-size / nearsize);
+    _vertices.push_back(-size / nearsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(size / nearsize);
+    _vertices.push_back(size / nearsize);
+    _vertices.push_back(-size / nearsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(-size / nearsize);
+    _vertices.push_back(size / nearsize);
+    _vertices.push_back(-size / nearsize);
 
     // Near Face normals
+    for (int i = 0; i < 6; i++)
+    {
+        _normals.push_back(0.0f);
+        _normals.push_back(0.0f);
+        _normals.push_back(-1.0f);
+    }
+
+    // Far Lower Triangle
+    float farsize = 2.0f;
+    // 1
+    // | ^
+    // |  \ 
+    // \/  \ 
+    // 2--->3
+    //
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(size / farsize);
+    _vertices.push_back(size / farsize);
+    _vertices.push_back(size / farsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(size / farsize);
+    _vertices.push_back(-size / farsize);
+    _vertices.push_back(size / farsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(-size / farsize);
+    _vertices.push_back(-size / farsize);
+    _vertices.push_back(size / farsize);
+
+    // Far Upper Triangle
+    // 3<---2
+    //  \   ^
+    //   \  |
+    //    \ |
+    //     >1
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(-size / farsize);
+    _vertices.push_back(-size / farsize);
+    _vertices.push_back(size / farsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(-size / farsize);
+    _vertices.push_back(size / farsize);
+    _vertices.push_back(size / farsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(size / farsize);
+    _vertices.push_back(size / farsize);
+    _vertices.push_back(size / farsize);
+
+    // Far Face Normals
     for (int i = 0; i < 6; i++)
     {
         _normals.push_back(0.0f);
@@ -133,26 +208,45 @@ void Cube::setSize(float size)
     }
 
     // Right Lower Triangle
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
+    float rightsize = 2.0f;
+    // 1
+    // | ^
+    // |  \ 
+    // \/  \ 
+    // 2--->3
+    //
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(-size / rightsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(-size / rightsize);
+    _vertices.push_back(-size / rightsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(-size / rightsize);
+    _vertices.push_back(size / rightsize);
 
     // Right Upper Triangle
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
+    // 3<---2
+    //  \   ^
+    //   \  |
+    //    \ |
+    //     >1
+    //
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(-size / rightsize);
+    _vertices.push_back(size / rightsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(size / rightsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(size / rightsize);
+    _vertices.push_back(-size / rightsize);
 
     // Right Face Normals
     for (int i = 0; i < 6; i++)
@@ -162,60 +256,46 @@ void Cube::setSize(float size)
         _normals.push_back(0.0f);
     }
 
-    // Far Lower Triangle
-
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-
-    // Far Upper Triangle
-    float farsize = 2.0f;
-
-    _vertices.push_back(size / farsize);
-    _vertices.push_back(size / farsize);
-    _vertices.push_back(size / farsize);
-    _vertices.push_back(-size / farsize);
-    _vertices.push_back(-size / farsize);
-    _vertices.push_back(size / farsize);
-    _vertices.push_back(-size / farsize);
-    _vertices.push_back(size / farsize);
-    _vertices.push_back(size / farsize);
-
-    // Far Face Normals
-    for (int i = 0; i < 6; i++)
-    {
-        _normals.push_back(0.0f);
-        _normals.push_back(0.0f);
-        _normals.push_back(-1.0f);
-    }
-
     // Left Lower Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
+    float leftsize = 2.0f;
+    // 1
+    // | ^
+    // |  \ 
+    // \/  \ 
+    // 2--->3
+    //
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(size / leftsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(size / leftsize);
+    _vertices.push_back(size / leftsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(size / leftsize);
+    _vertices.push_back(-size / leftsize);
 
-    // Left Upper Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
+    // Right Upper Triangle
+    // 3<---2
+    //  \   ^
+    //   \  |
+    //    \ |
+    //     >1
+    //
+    // Vert 1 /////////////////////////////
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(size / leftsize);
+    _vertices.push_back(-size / leftsize);
+    // Vert 2 /////////////////////////////
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(-size / leftsize);
+    // Vert 3 /////////////////////////////
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(-size / leftsize);
+    _vertices.push_back(size / leftsize);
 
     // Left Face Normals
     for (int i = 0; i < 6; i++)
@@ -226,26 +306,27 @@ void Cube::setSize(float size)
     }
 
     // Top Lower Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
+    float topsize = 2.0f;
+    _vertices.push_back(-size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(-size / topsize);
+    _vertices.push_back(-size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
 
     // Top Upper Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
+    _vertices.push_back(-size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(-size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(size / topsize);
+    _vertices.push_back(-size / topsize);
 
     for (int i = 0; i < 6; i++)
     {
@@ -255,26 +336,27 @@ void Cube::setSize(float size)
     }
 
     // Bot Lower Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
+    float botsize = 2.0f;
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(size / botsize);
+    _vertices.push_back(size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(size / botsize);
 
     // Bot Upper Triangle
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
-    _vertices.push_back(-size / 2.0f);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(size / botsize);
+    _vertices.push_back(size / botsize);
+    _vertices.push_back(-size / botsize);
+    _vertices.push_back(-size / botsize);
 
     for (int i = 0; i < 6; i++)
     {
@@ -331,20 +413,27 @@ void Cube::draw(View *view)
     // in the "MVP" uniform
     glm::mat4 MVP = view->proj * view->view * _model;
     GL_CHECK(glUniformMatrix4fv(_uniformMVP, 1, GL_FALSE, &MVP[0][0]));
-    if (lights.size() == 0)
-    {
-        lightEnabled = false;
-    }
+
     if (lightEnabled)
     {
         // Send our transformation to the currently bound shader,
         // in the "MVP" uniform
         GL_CHECK(glUniformMatrix4fv(_uniformM, 1, GL_FALSE, &_model[0][0]));
         GL_CHECK(glUniformMatrix4fv(_uniformV, 1, GL_FALSE, &view->view[0][0]));
-
-        GL_CHECK(glUniform3f(_uniformLight, lights.at(0)->position.x, lights.at(0)->position.y, lights.at(0)->position.z));
-
-        GL_CHECK(glUniform3f(_uniformCubeColor, _R, _G, _B));
+        if (lights.size() == 0)
+        {
+            GL_CHECK(glUniform3f(_uniformLight, 0, 0, 0));
+            GL_CHECK(glUniform3f(_uniformCubeColor, 0, 0, 0));
+            GL_CHECK(glUniform3f(_uniformLightColor, 0, 0, 0));
+            GL_CHECK(glUniform1f(_uniformLightPower, 0));
+        }
+        else
+        {
+            GL_CHECK(glUniform3f(_uniformLight, lights.at(0)->position.x, lights.at(0)->position.y, lights.at(0)->position.z));
+            GL_CHECK(glUniform3f(_uniformCubeColor, _R, _G, _B));
+            GL_CHECK(glUniform3f(_uniformLightColor, lights.at(0)->color.x, lights.at(0)->color.y, lights.at(0)->color.z));
+            GL_CHECK(glUniform1f(_uniformLightPower, lights.at(0)->power));
+        }
     }
 
     // 1rst attribute buffer : vertices
@@ -400,9 +489,22 @@ void Cube::draw(View *view)
         //}
         GL_CHECK(glDrawArrays(GL_TRIANGLES, i * 2 * 3, 2 * 3));
     }
+    if (_outline)
+    {
+        GL_CHECK(glUniform3f(_uniformCubeColor, 0.0f, 0.0f, 0.0f));
+
+        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 0, 3));
+        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 3, 3));
+        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 6, 3));
+        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 9, 3));
+        GL_CHECK(glDrawArrays(GL_LINES, 13, 2));
+        GL_CHECK(glDrawArrays(GL_LINES, 16, 2));
+        GL_CHECK(glDrawArrays(GL_LINES, 19, 2));
+        GL_CHECK(glDrawArrays(GL_LINES, 22, 2));
+    }
 
     GL_CHECK(glDisableVertexAttribArray(0));
     GL_CHECK(glDisableVertexAttribArray(1));
     GL_CHECK(glDisableVertexAttribArray(2));
-}
+} // namespace OpenDoorGL
 } // namespace OpenDoorGL

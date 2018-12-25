@@ -28,6 +28,7 @@ public:
   void setSize(float size);
   float getSize();
 
+  void setOutline(bool enabled);
   glm::vec3 getPosition();
 
   void draw(View *view) override;
@@ -38,7 +39,10 @@ protected:
   Image *_faceTextures[6];
   GLuint _uniformTexture;
   GLuint _uniformCubeColor;
+  GLuint _uniformLightColor;
+  GLuint _uniformLightPower;
   bool lightEnabled;
+  bool _outline;
   unsigned char _R;
   unsigned char _G;
   unsigned char _B;
