@@ -1,7 +1,9 @@
-#include "odgl_Include.hpp"
 #include "odgl_Cube.hpp"
+
 #include "odgl_Image.hpp"
 #include "odgl_ShaderManager.hpp"
+#include "odgl_Light.hpp"
+#include "odgl_View.hpp"
 
 namespace OpenDoorGL
 {
@@ -39,11 +41,11 @@ void Cube::InitGL()
     // Create and compile our GLSL program from the shaders
     if (lightEnabled)
     {
-        _programID = ShaderManager::LoadShadersFromString(ShaderManager::getColorLightVertShader(), ShaderManager::getColorLightFragShader());
-        GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
+        _programID = ShaderManager::LoadShadersFromString(
+            ShaderManager::getColorLightVertShader(),
+            ShaderManager::getColorLightFragShader());
         GL_CHECK(_uniformV = glGetUniformLocation(_programID, "V"));
         GL_CHECK(_uniformM = glGetUniformLocation(_programID, "M"));
-        GL_CHECK(_uniformCubeColor = glGetUniformLocation(_programID, "cubeColor"));
         GL_CHECK(_uniformLight = glGetUniformLocation(_programID, "LightPosition_worldspace"));
         GL_CHECK(_uniformLightColor = glGetUniformLocation(_programID, "LightColor"));
         GL_CHECK(_uniformLightPower = glGetUniformLocation(_programID, "LightPower"));
@@ -51,8 +53,9 @@ void Cube::InitGL()
     else
     {
         _programID = ShaderManager::LoadShadersFromString(ShaderManager::getColorVertShader(), ShaderManager::getColorFragShader());
-        GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
     }
+    GL_CHECK(_uniformCubeColor = glGetUniformLocation(_programID, "cubeColor"));
+    GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
 }
 
 Cube::~Cube()
@@ -376,23 +379,6 @@ void Cube::setColor(float R, float G, float B)
     _R = R;
     _G = G;
     _B = B;
-    for (int i = 0; i < 36; i++)
-    {
-        if (lightEnabled)
-        {
-            _vertColors.push_back(R * i / 36);
-            _vertColors.push_back(G * i / 36);
-            _vertColors.push_back(B * i / 36);
-        }
-        else
-        {
-            _vertColors.push_back(R);
-            _vertColors.push_back(G);
-            _vertColors.push_back(B);
-        }
-    }
-    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer));
-    GL_CHECK(glBufferData(GL_ARRAY_BUFFER, _vertColors.size() * sizeof(float), &_vertColors.at(0), GL_STATIC_DRAW));
 }
 void Cube::setColorToFace(float R, float G, float B)
 {
@@ -413,6 +399,7 @@ void Cube::draw(View *view)
     // in the "MVP" uniform
     glm::mat4 MVP = view->proj * view->view * _model;
     GL_CHECK(glUniformMatrix4fv(_uniformMVP, 1, GL_FALSE, &MVP[0][0]));
+    GL_CHECK(glUniform3f(_uniformCubeColor, _R, _G, _B));
 
     if (lightEnabled)
     {
@@ -423,14 +410,12 @@ void Cube::draw(View *view)
         if (lights.size() == 0)
         {
             GL_CHECK(glUniform3f(_uniformLight, 0, 0, 0));
-            GL_CHECK(glUniform3f(_uniformCubeColor, 0, 0, 0));
             GL_CHECK(glUniform3f(_uniformLightColor, 0, 0, 0));
             GL_CHECK(glUniform1f(_uniformLightPower, 0));
         }
         else
         {
             GL_CHECK(glUniform3f(_uniformLight, lights.at(0)->position.x, lights.at(0)->position.y, lights.at(0)->position.z));
-            GL_CHECK(glUniform3f(_uniformCubeColor, _R, _G, _B));
             GL_CHECK(glUniform3f(_uniformLightColor, lights.at(0)->color.x, lights.at(0)->color.y, lights.at(0)->color.z));
             GL_CHECK(glUniform1f(_uniformLightPower, lights.at(0)->power));
         }
@@ -448,25 +433,13 @@ void Cube::draw(View *view)
         (void *)0 // array buffer offset
         ));
 
-    // 2nd attribute buffer : colors
-    GL_CHECK(glEnableVertexAttribArray(1));
-    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer));
-    GL_CHECK(glVertexAttribPointer(
-        1,        // attribute. No particular reason for 1, but must match the layout in the shader.
-        3,        // size
-        GL_FLOAT, // type
-        GL_FALSE, // normalized?
-        0,        // stride
-        (void *)0 // array buffer offset
-        ));
-
     if (lightEnabled)
     {
         // 3rd attribute buffer : normals
-        GL_CHECK(glEnableVertexAttribArray(2));
+        GL_CHECK(glEnableVertexAttribArray(1));
         GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _normalBuffer));
         GL_CHECK(glVertexAttribPointer(
-            2,        // attribute
+            1,        // attribute
             3,        // size
             GL_FLOAT, // type
             GL_FALSE, // normalized?
@@ -474,6 +447,7 @@ void Cube::draw(View *view)
             (void *)0 // array buffer offset
             ));
     }
+
     for (int i = 0; i < 6; i++)
     {
         //bool activeTexture = false;
@@ -505,6 +479,5 @@ void Cube::draw(View *view)
 
     GL_CHECK(glDisableVertexAttribArray(0));
     GL_CHECK(glDisableVertexAttribArray(1));
-    GL_CHECK(glDisableVertexAttribArray(2));
 } // namespace OpenDoorGL
 } // namespace OpenDoorGL

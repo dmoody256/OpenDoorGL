@@ -1,6 +1,5 @@
 import platform
-
-import SCons
+import os
 
 
 class ColorPrinter():
@@ -101,6 +100,14 @@ class ColorPrinter():
         Prints a test result message.
         """
         print(self.OKGREEN + "[ PASS!!]" + self.ENDC + message)
+
+    def TestResultPrint(self, message):
+        """
+        Prints a test result message.
+        """
+        results_lines = message.split(os.linesep)
+        for line in results_lines:
+            print(self.OKBLUE + "[RESULTS] " + self.ENDC + line)
 
     def TestFailPrint(self, message):
         """

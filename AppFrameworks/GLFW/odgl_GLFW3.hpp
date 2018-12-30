@@ -15,7 +15,9 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT GLFW3Window : public WindowInterface
 {
 public:
+  GLFW3Window();
   ~GLFW3Window();
+
   bool InitWindow(
       const char *window_name,
       bool _vsyncEnabled = true,

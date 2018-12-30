@@ -347,7 +347,7 @@ def SetupBuildEnv(env, prog_type, prog_name, source_files):
 
     elif(prog_type == 'unit'):
         prog = build_env.CxxTest(
-            build_env['BUILD_DIR'] + "/" + prog_name, header_files)
+            build_env['BUILD_DIR'] + "/" + prog_name, header_files, CXXTEST_RUNNER="ErrorPrinter", CXXTEST_OPTS="--world="+prog_name)
 
     if not os.path.exists(build_env['PROJECT_DIR'] + "/build/build_logs"):
         os.makedirs(build_env['PROJECT_DIR'] + "/build/build_logs")

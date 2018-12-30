@@ -2,6 +2,25 @@
 
 namespace OpenDoorGL
 {
+
+GLFW3Window::GLFW3Window()
+    : WindowInterface(),
+      window(nullptr),
+      _inputTime(0),
+      _renderTime(0),
+      _framePrintTime(0),
+      _startTime(0),
+      _numFrames(0),
+      _frameRateEnabled(false),
+      _vsyncEnabled(true)
+{
+}
+
+GLFW3Window::~GLFW3Window()
+{
+    CleanUp();
+}
+
 bool GLFW3Window::CreateWindow(GLFWwindow *temp_window, const char *window_name, unsigned int width, unsigned int height)
 {
     // Initialise GLFW
@@ -96,11 +115,6 @@ void GLFW3Window::CleanUp()
     delete _currentView;
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
-}
-
-GLFW3Window::~GLFW3Window()
-{
-    CleanUp();
 }
 
 void GLFW3Window::SetView(View *view)

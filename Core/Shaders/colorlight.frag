@@ -1,7 +1,6 @@
 #version 330 core
 
 // Interpolated values from the vertex shaders
-in vec3 fragColor;
 in vec3 Position_worldspace;
 in vec3 Normal_cameraspace;
 in vec3 EyeDirection_cameraspace;
@@ -49,7 +48,7 @@ void main(){
     // clamped to 0
     //  - Looking into the reflection -> 1
     //  - Looking elsewhere -> < 1
-    float cosAlpha = clamp( dot( E,R ), 0,1 );
+    float cosAlpha = clamp( dot( E,R ), 0,1);
     
     color = 
         // Ambient : simulates indirect lighting

@@ -6,11 +6,12 @@
 
 #include "odgl_Include.hpp"
 #include "odgl_GeometricObject.hpp"
-#include "odgl_Image.hpp"
-#include "odgl_Light.hpp"
 
 namespace OpenDoorGL
 {
+class Light;
+class View;
+class Image;
 
 class ODGL_DLLEXPORT Cube : public GeometricObject
 {

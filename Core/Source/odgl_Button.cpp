@@ -3,6 +3,8 @@
 #include "odgl_Include.hpp"
 #include "odgl_Button.hpp"
 #include "odgl_Image.hpp"
+#include "odgl_Group.hpp"
+#include "odgl_View.hpp"
 #include "odgl_ShaderManager.hpp"
 
 namespace OpenDoorGL

@@ -26,35 +26,6 @@ import re
 import sys
 
 
-from BuildUtils.ColorPrinter import ColorPrinter
-
-
-def build_OpenDoorGL(debug_build=True):
-
-    if "linux" in platform.system().lower():
-        ODGL_build = ['scons']
-    elif "windows" in platform.system().lower():
-        ODGL_build = ['scons.bat']
-    ODGL_build.append('-Q')
-
-    if debug_build:
-        ODGL_build.append('--debug_build')
-
-    p = subprocess.Popen(
-        ODGL_build,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        cwd=os.getcwd() + "/OpenDoorGL",
-        universal_newlines=True)
-    while p.poll() is None:
-        # This blocks until it receives a newline.
-        l = p.stdout.readline().strip()
-        print(l)
-    # When the subprocess terminates there might be unconsumed output
-    # that still needs to be processed.
-    print(p.stdout.read().strip())
-
-
 def get_num_cpus():
     """
     Function to get the number of CPUs the system has.
@@ -103,6 +74,10 @@ def run_unit_tests(base_dir):
 
     test_env = os.environ
     test_env['TEST_BIN_DIR'] = base_dir+'/build/bin'
+    if 'PYTHONPATH' in test_env:
+        test_env['PYTHONPATH'] = test_env['PYTHONPATH'] + os.pathsep + base_dir
+    else:
+        test_env['PYTHONPATH'] = base_dir
 
     proc = subprocess.Popen(
         args=['python', 'run_unit_tests.py'],

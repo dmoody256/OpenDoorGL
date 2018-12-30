@@ -33,6 +33,8 @@ def StartGraphicsApp(test, working_dir):
     command = []
 
     if "windows" in platform.system().lower():
+        command.append("python")
+        command.append("windows_workaround.py")
         command.append(working_dir + "/" + test + ".exe")
     else:
         if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
@@ -41,8 +43,8 @@ def StartGraphicsApp(test, working_dir):
         my_env["LD_LIBRARY_PATH"] = '../lib'
 
     if "windows" in platform.system().lower():
-        proc = subprocess.Popen(command, cwd=working_dir, stderr=subprocess.STDOUT,
-                                stdout=subprocess.PIPE, env=my_env, shell=False, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+        proc = subprocess.Popen(command, stderr=subprocess.STDOUT,
+                                stdout=subprocess.PIPE)
     else:
         proc = subprocess.Popen(command, cwd=working_dir, stderr=subprocess.STDOUT,
                                 stdout=subprocess.PIPE, env=my_env, shell=False)
