@@ -25,6 +25,8 @@ import subprocess
 import re
 import sys
 
+from BuildUtils.ColorPrinter import ColorPrinter
+
 
 def get_num_cpus():
     """

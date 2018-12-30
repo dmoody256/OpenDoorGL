@@ -480,7 +480,6 @@ def cppcheck_command(base_dir):
 
         proc = subprocess.Popen(
             [cppcheck_exec,
-                '-j8'
                 '--enable=all',
                 '--suppress=*:../include/glm*',
                 '--suppress=*:../../Testing*',
