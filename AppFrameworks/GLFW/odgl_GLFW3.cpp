@@ -4,8 +4,7 @@ namespace OpenDoorGL
 {
 
 GLFW3Window::GLFW3Window()
-    : WindowInterface(),
-      window(nullptr),
+    : window(nullptr),
       _inputTime(0),
       _renderTime(0),
       _framePrintTime(0),

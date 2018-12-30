@@ -166,11 +166,7 @@ SOIL_ENV.Append(CPPPATH=[
     'Simple-OpenGL-Image-Library/src'
 ])
 
-if "linux" in platform.system().lower():
-    SOIL_ENV.Append(CCFLAGS=[
-        '-std=c++11'
-    ])
-elif "windows" in platform.system().lower():
+if "windows" in platform.system().lower():
     SOIL_ENV.Append(
         CPPDEFINES=['SOIL_EXPORT_LIBRARY'],
         CCFLAGS=['/EHsc'],

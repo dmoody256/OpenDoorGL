@@ -19,7 +19,10 @@ Cube::Cube(bool initGL, bool lightEnabled)
       _uniformTexture(0),
       _uniformCubeColor(0),
       lightEnabled(lightEnabled),
-      _outline(true)
+      _outline(true),
+      _R(0),
+      _G(0),
+      _B(0)
 {
 
     if (initGL)

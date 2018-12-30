@@ -21,6 +21,10 @@ GeometricObject::GeometricObject()
 
 GeometricObject::GeometricObject(bool init_gl)
     : RenderObject(),
+      _uniformV(0),
+      _uniformM(0),
+      _uniformSampler1(0),
+      _uniformLight(0),
       _programID(0),
       _uniformMVP(0)
 {
