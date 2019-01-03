@@ -487,9 +487,8 @@ void Cube::draw(View *view)
                 (void *)0 // array buffer offset
                 ));
         }
-        a
 
-            for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++)
         {
             //bool activeTexture = false;
             //if (_faceTextures[i] && _faceTextures[i]->GetTextureGPUHandle() != -1)
