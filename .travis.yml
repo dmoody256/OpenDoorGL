@@ -20,11 +20,12 @@ install:
   - sudo -H python3.6 -m pip install -U gcovr
 
 script:
-  - /usr/bin/env python3.6 scons -Q
-  - /usr/bin/env python3.6 scons -c
-  - scan-build-3.9 --status-bugs /usr/bin/env python3.6 scons --analyze
-  - /usr/bin/env python3.6 scons -c
-  - /usr/bin/env python3.6 scons --unit --debug_build --coverage
+  - export SCONS=$(which scons)
+  - /usr/bin/env python3.6 ${SCONS} -Q
+  - /usr/bin/env python3.6 ${SCONS} -c
+  - scan-build-3.9 --status-bugs /usr/bin/env python3.6 ${SCONS} --analyze
+  - /usr/bin/env python3.6 ${SCONS} -c
+  - /usr/bin/env python3.6 ${SCONS} --unit --debug_build --coverage
   
 after_success:
   - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r .
