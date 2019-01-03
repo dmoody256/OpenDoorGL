@@ -12,22 +12,22 @@ install:
   - wget https://bootstrap.pypa.io/get-pip.py
   - sudo -H python3.6 get-pip.py
   - sudo apt-get install -y git xorg-dev build-essential mesa-common-dev freeglut3-dev clang-3.9 gcovr
-  - sudo -H python3.6 -m pip install -U pip
-  - sudo -H python3.6 -m pip install -U setuptools
-  - sudo -H python3.6 -m pip install -U wheel
-  - sudo -H python3.6 -m pip install -U scons
-  - sudo -H python3.6 -m pip install -U cpp-coveralls
-  - sudo -H python3.6 -m pip install -U gcovr
-
+  - python3.6 -m pip install --user -U pip
+  - python3.6 -m pip install --user -U setuptools
+  - python3.6 -m pip install --user -U wheel
+  - python3.6 -m pip install --user -U cpp-coveralls
+  - python3.6 -m pip install --user -U gcovr
+  - python3.6 -m pip install --user -U scons
+  
 script:
-  - python3.6 -m scons -Q
-  - python3.6 -m scons -c
-  - scan-build-3.9 --status-bugs python3.6 -m scons --analyze
-  - python3.6 -m scons -c
-  - python3.6 -m scons --unit --debug_build --coverage
+  - env python3.6 $HOME/.local/bin/scons -v
+  - env python3.6 $HOME/.local/bin/scons -Q
+  - env python3.6 $HOME/.local/bin/scons -c
+  - scan-build-3.9 --status-bugs env python3.6 $HOME/.local/bin/scons --analyze
+  - env python3.6 $HOME/.local/bin/scons -c
+  - env python3.6 $HOME/.local/bin/scons --unit --debug_build --coverage
   
 after_success:
   - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r .
 # using gitlab coverage becuase of no OpenGL context in travis
 #  - coveralls --exclude Testing --exclude Dependencies --exclude build --exclude usr --gcov-options '\-lp'
-  
