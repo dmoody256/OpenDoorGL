@@ -20,7 +20,7 @@ install:
   - sudo -H python3.6 -m pip install -U gcovr
   
 script:
-  - virtualenv-3.6 venv3
+  - python3.6 -m virtualenv venv3
   - venv3/bin/pip install -U pip
   - venv3/bin/pip install -U setuptools
   - venv3/bin/pip install -U wheel
