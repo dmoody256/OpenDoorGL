@@ -1,4 +1,5 @@
 import platform
+import os
 
 
 class ColorPrinter():
@@ -6,8 +7,11 @@ class ColorPrinter():
     Utility class used for printing colored messages.
     """
 
+    warned = False
+
     def __init__(self, size=1):
         self.size = size
+
         try:
             from colorama import init
             init()
@@ -19,6 +23,10 @@ class ColorPrinter():
             self.ENDC = '\033[0m'
         except ImportError:
             if "windows" in platform.system().lower():
+                if not ColorPrinter.warned:
+                    print(
+                        "[!WARN!!] Failed to import colorama, build output will be uncolored.")
+                    ColorPrinter.warned = True
                 self.HEADER = ''
                 self.OKBLUE = ''
                 self.OKGREEN = ''
@@ -92,6 +100,14 @@ class ColorPrinter():
         Prints a test result message.
         """
         print(self.OKGREEN + "[ PASS!!]" + self.ENDC + message)
+
+    def TestResultPrint(self, message):
+        """
+        Prints a test result message.
+        """
+        results_lines = message.split(os.linesep)
+        for line in results_lines:
+            print(self.OKBLUE + "[RESULTS] " + self.ENDC + line)
 
     def TestFailPrint(self, message):
         """

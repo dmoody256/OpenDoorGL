@@ -17,6 +17,7 @@ SConscript for building the core OpenDoorGL library.a
 # python
 import os
 import platform
+import glob
 
 # scons
 from SCons.Environment import Environment
@@ -25,10 +26,11 @@ from SCons.Script.SConscript import Return
 # project
 from BuildUtils.SconsUtils import ImportVar
 from BuildUtils.SconsUtils import SetupBuildEnv
+from BuildUtils import convertShadersToHeaders
 
 MAIN_ENV = ImportVar('MAIN_ENV')
 
-env = Environment(DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'])
+env = Environment(DEBUG_BUILD=MAIN_ENV['DEBUG_BUILD'], INSTALLSTR='')
 env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
 env.VariantDir('build', 'Source', duplicate=0)
@@ -52,20 +54,25 @@ sourceFiles = [
     "build/odgl_Cube.cpp",
     "build/odgl_RenderObject.cpp",
     "build/odgl_View.cpp",
+    "build/odgl_Light.cpp",
     "build/odgl_ShaderManager.cpp",
     "build/odgl_Image.cpp",
     "build/odgl_GeometricObject.cpp",
     "build/odgl_Group.cpp",
     "build/odgl_Model.cpp",
     "build/odgl_ModelLoader.cpp",
+    "build/odgl_Vector.cpp",
     "build/odgl_Include.cpp",
 ]
+
+convertShadersToHeaders('Source/odgl_Shaders.hpp', glob.glob("Shaders/*"))
 
 headerFiles = [
     "Source/odgl_Button.hpp",
     "Source/odgl_Cube.hpp",
     "Source/odgl_RenderObject.hpp",
     "Source/odgl_View.hpp",
+    "Source/odgl_Light.hpp",
     "Source/odgl_ShaderManager.hpp",
     "Source/odgl_Image.hpp",
     "Source/odgl_GeometricObject.hpp",
@@ -74,6 +81,7 @@ headerFiles = [
     "Source/odgl_ModelLoader.hpp",
     "Source/odgl_Include.hpp",
     "Source/odgl_Logging.hpp",
+    "Source/odgl_Vector.hpp",
 ]
 
 if env['DEBUG_BUILD']:
@@ -98,8 +106,9 @@ if "linux" in platform.system().lower():
         CCFLAGS=[debugFlag, compilerOpt, '-fPIC', "-rdynamic"],
         CXXFLAGS=["-std=c++11"],
         LDFLAGS=[debugFlag, "-rdynamic"],
-        LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/"],
-        LIBS=["GL", "GLU"]
+        LIBPATH=["/usr/lib/gnome-settings-daemon-3.0/",
+                 MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
+        LIBS=["GL", "GLU", 'soil']
     )
 elif platform == "darwin":
     print("XCode project not implemented yet")
@@ -109,12 +118,14 @@ elif "win" in platform.system().lower():
     debugFlag = "/O2"
     degug = '/DEBUG:NONE'
     debugRuntime = "/MD"
+    odglDebug = ''
 
     if env['DEBUG_BUILD']:
         degugDefine = 'DEBUG'
         debugFlag = "/Od"
         degug = '/DEBUG:FULL'
         debugRuntime = "/MDd"
+        env.Append(CPPDEFINES=['ODGL_DEBUG'])
 
     env.Append(
         CPPPATH=[
@@ -141,7 +152,7 @@ elif "win" in platform.system().lower():
         ],
         LINKFLAGS=[degug],
         LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
-        LIBS=['OpenGL32', 'user32', 'glew32', 'glu32']
+        LIBS=['OpenGL32', 'user32', 'glew32', 'glu32', 'soil']
     )
 
 MAIN_ENV['PROGRESS'].AddBuild(MAIN_ENV, sourceFiles, env.subst(
@@ -157,6 +168,9 @@ else:
 
 for file in headerFiles:
     targets.append(env.File(file))
+
+for texture in glob.glob("Textures/*"):
+    targets.append(env.File(texture))
 
 # env = ConfigPlatformIDE(env, sourceFiles, headerFiles, [], prog)
 #    def ConfigPlatformIDE(env, sourceFiles, headerFiles, resources, program):

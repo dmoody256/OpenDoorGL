@@ -6,16 +6,19 @@
 
 #include "odgl_Include.hpp"
 #include "odgl_GeometricObject.hpp"
-#include "odgl_Image.hpp"
 
 namespace OpenDoorGL
 {
+class Light;
+class View;
+class Image;
+class Vector;
 
 class ODGL_DLLEXPORT Cube : public GeometricObject
 {
 public:
   Cube();
-  explicit Cube(bool initGL);
+  explicit Cube(bool initGL, bool lightEnabled = false);
   ~Cube();
 
   void setTexture(const char *filepath, float *uvcoords);
@@ -27,12 +30,30 @@ public:
   void setSize(float size);
   float getSize();
 
+  void setOutline(bool enabled);
+  Vector getPosition();
+
+  Vector getCenterPoint() override;
+
+  Vector getMaxBounds() override;
+  Vector getMinBounds() override;
+
   void draw(View *view) override;
+  std::vector<Light *> lights;
+  bool lightEnabled;
 
 protected:
   float _size;
   Image *_faceTextures[6];
   GLuint _uniformTexture;
+  GLuint _uniformCubeColor;
+  GLuint _uniformLightColor;
+  GLuint _uniformLightPower;
+
+  bool _outline;
+  unsigned char _R;
+  unsigned char _G;
+  unsigned char _B;
 
 private:
   void InitGL();

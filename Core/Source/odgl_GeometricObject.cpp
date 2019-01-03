@@ -10,7 +10,7 @@
 #include "odgl_Include.hpp"
 #include "odgl_GeometricObject.hpp"
 #include "odgl_ShaderManager.hpp"
-
+#include "odgl_Vector.hpp"
 namespace OpenDoorGL
 {
 
@@ -21,6 +21,10 @@ GeometricObject::GeometricObject()
 
 GeometricObject::GeometricObject(bool init_gl)
     : RenderObject(),
+      _uniformV(0),
+      _uniformM(0),
+      _uniformSampler1(0),
+      _uniformLight(0),
       _programID(0),
       _uniformMVP(0)
 {
@@ -45,6 +49,41 @@ GeometricObject::~GeometricObject()
         GL_CHECK(glDeleteBuffers(1, &_normalBuffer));
         GL_CHECK(glDeleteProgram(_programID));
     }
+}
+
+Vector GeometricObject::getMaxBounds()
+{
+    return Vector(0.0f, 0.0f, 0.0f);
+}
+Vector GeometricObject::getMinBounds()
+{
+    return Vector(0.0f, 0.0f, 0.0f);
+}
+
+float GeometricObject::getMinX()
+{
+    return getMinBounds().getX();
+}
+float GeometricObject::getMinY()
+{
+    return getMinBounds().getY();
+}
+
+float GeometricObject::getMinZ()
+{
+    return getMinBounds().getZ();
+}
+float GeometricObject::getMaxX()
+{
+    return getMaxBounds().getX();
+}
+float GeometricObject::getMaxY()
+{
+    return getMaxBounds().getY();
+}
+float GeometricObject::getMaxZ()
+{
+    return getMaxBounds().getZ();
 }
 
 void GeometricObject::InitGL()

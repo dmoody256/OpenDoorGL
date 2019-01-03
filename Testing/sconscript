@@ -123,9 +123,12 @@ TEST_ENV.Append(LIBPATH=[
     MAIN_ENV['PROJECT_DIR'] + "/build/lib",
 ])
 
+TEST_ENV.Append(LIBS=[
+    "OpenDoorGL",
+    'soil',
+])
 if "windows" in platform.system().lower():
     TEST_ENV.Append(LIBS=[
-        "OpenDoorGL",
         'OpenGL32',
         'user32',
         'glew32',
@@ -133,7 +136,6 @@ if "windows" in platform.system().lower():
     ])
 else:
     TEST_ENV.Append(LIBS=[
-        "OpenDoorGL",
         "GLEW",
         "GLU"
     ])

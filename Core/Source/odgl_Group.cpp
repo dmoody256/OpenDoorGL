@@ -1,15 +1,35 @@
+#define _USE_MATH_DEFINES
 
 #include <GLEW/glew.h>
 
 #include <vector>
 #include <string>
+#include <iostream>
+#include <math.h>
+
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "odgl_Group.hpp"
+#include "odgl_GeometricObject.hpp"
+#include "odgl_Cube.hpp"
+#include "odgl_Model.hpp"
+#include "odgl_Button.hpp"
+#include "odgl_Vector.hpp"
+
+namespace
+{
+float getMidPoint(float min, float max)
+{
+    return ((max - min) / 2.0f) + min;
+}
+} // namespace
 
 namespace OpenDoorGL
 {
 
 Group::Group()
+    : minBounds(0.0f, 0.0f, 0.0f),
+      maxBounds(0.0f, 0.0f, 0.0f)
 {
 }
 
@@ -49,73 +69,158 @@ void Group::draw(View *view)
     }
 }
 
-void Group::InsertObject(RenderObject *object, bool checkType)
+void Group::Rotate(float degrees, float x, float y, float z)
 {
+
+    glm::vec3 trans(x, y, z);
+    glm::vec3 center(getCenterPoint().getX(), getCenterPoint().getY(), getCenterPoint().getZ());
+    _model = glm::translate(_model, center);
+    _model = glm::rotate(_model, (float)(degrees / 90.0f * M_PI), trans);
+    _model = glm::translate(_model, -center);
+}
+
+bool Group::removeObject(RenderObject *object)
+{
+    for (int i = 0; i < objects.size(); i++)
+    {
+        if (objects.at(i).second == object)
+        {
+            // found the object, remove it and unset the parent
+            objects.erase(objects.begin() + i);
+            return object->unsetParent();
+        }
+    }
+    // object was not in the group to begin with
+    return true;
+}
+
+bool Group::containsObject(RenderObject *object)
+{
+    for (int i = 0; i < objects.size(); i++)
+    {
+        if (objects.at(i).second == object)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+Vector Group::getCenterPoint()
+{
+    return Vector(
+        getMidPoint(minBounds.getX(), maxBounds.getX()),
+        getMidPoint(minBounds.getY(), maxBounds.getY()),
+        getMidPoint(minBounds.getZ(), maxBounds.getZ()));
+}
+
+void Group::updateBoundingBox()
+{
+    for (int i = 0; i < objects.size(); i++)
+    {
+        GeometricObject *obj = dynamic_cast<GeometricObject *>(objects.at(i).second);
+        if (obj != nullptr)
+        {
+            Vector bounds = obj->getMinBounds();
+            if (bounds.getX() < minBounds.getX())
+            {
+                minBounds.setX(bounds.getX());
+            }
+            if (bounds.getY() < minBounds.getY())
+            {
+                minBounds.setY(bounds.getY());
+            }
+            if (bounds.getZ() < minBounds.getZ())
+            {
+                minBounds.setZ(bounds.getZ());
+            }
+
+            bounds = obj->getMaxBounds();
+            if (bounds.getX() > maxBounds.getX())
+            {
+                maxBounds.setX(bounds.getX());
+            }
+            if (bounds.getY() > maxBounds.getY())
+            {
+                maxBounds.setY(bounds.getY());
+            }
+            if (bounds.getZ() > maxBounds.getZ())
+            {
+                maxBounds.setZ(bounds.getZ());
+            }
+        }
+    }
+}
+
+bool Group::InsertObject(RenderObject *object, bool checkType)
+{
+    if (object == nullptr)
+    {
+        return false;
+    }
+
     if (checkType)
     {
-        GeometricObject *geomObject = dynamic_cast<GeometricObject *>(object);
-        if (geomObject)
+        if (dynamic_cast<GeometricObject *>(object))
         {
-
-            Cube *cubeObject = dynamic_cast<Cube *>(object);
-            if (cubeObject)
+            if (dynamic_cast<Cube *>(object))
             {
-                objects.push_back(std::make_pair(ObjectType::CubeType, cubeObject));
-                return;
+                return InsertObject(object, ObjectType::CubeType);
             }
 
-            Model *modelObject = dynamic_cast<Model *>(object);
-            if (modelObject)
+            if (dynamic_cast<Model *>(object))
             {
-                objects.push_back(std::make_pair(ObjectType::ModelType, modelObject));
-                return;
+                return InsertObject(object, ObjectType::ModelType);
             }
 
-            Button *buttonObject = dynamic_cast<Button *>(object);
-            if (buttonObject)
+            if (dynamic_cast<Button *>(object))
             {
-                objects.push_back(std::make_pair(ObjectType::ButtonType, buttonObject));
-                return;
+                return InsertObject(object, ObjectType::ButtonType);
             }
 
-            objects.push_back(std::make_pair(ObjectType::CubeType, geomObject));
-            return;
+            return InsertObject(object, ObjectType::GeometricObjectType);
         }
         else
         {
-            Group *groupObject = dynamic_cast<Group *>(object);
-            if (groupObject)
+            if (dynamic_cast<Group *>(object))
             {
-                objects.push_back(std::make_pair(ObjectType::GroupType, groupObject));
-                return;
+                return InsertObject(object, ObjectType::GroupType);
             }
         }
     }
-    else
+
+    return InsertObject(object, ObjectType::RenderObjectType);
+}
+
+bool Group::InsertObject(RenderObject *object, enum ObjectType objectType)
+{
+    objects.push_back(std::make_pair(objectType, object));
+    if (object->setParent(this))
     {
-        objects.push_back(std::make_pair(ObjectType::RenderObjectType, object));
+        updateBoundingBox();
+        return true;
     }
-    // TODO: ERROR logging here
+    return false;
+} // namespace OpenDoorGL
+
+bool Group::InsertObject(Cube *object)
+{
+    return InsertObject(object, ObjectType::CubeType);
 }
 
-void Group::InsertObject(GeometricObject *object)
+bool Group::InsertObject(Model *object)
 {
-    objects.push_back(std::make_pair(ObjectType::GeometricObjectType, object));
+    return InsertObject(object, ObjectType::ModelType);
 }
 
-void Group::InsertObject(Cube *object)
+bool Group::InsertObject(Button *object)
 {
-    objects.push_back(std::make_pair(ObjectType::CubeType, object));
+    return InsertObject(object, ObjectType::ButtonType);
 }
 
-void Group::InsertObject(Model *object)
+bool Group::InsertObject(Group *object)
 {
-    objects.push_back(std::make_pair(ObjectType::ModelType, object));
-}
-
-void Group::InsertObject(Button *object)
-{
-    objects.push_back(std::make_pair(ObjectType::ButtonType, object));
+    return InsertObject(object, ObjectType::GroupType);
 }
 
 void Group::Update(double time_passed)

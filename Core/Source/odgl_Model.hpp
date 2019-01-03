@@ -24,10 +24,6 @@ public:
 
 protected:
   Image *_texture;
-  GLuint _uniformV;
-  GLuint _uniformM;
-  GLuint _uniformSampler1;
-  GLuint _uniformLight;
 
 private:
   void InitGL();

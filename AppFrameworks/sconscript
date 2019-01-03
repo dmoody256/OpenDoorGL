@@ -29,18 +29,6 @@ from BuildUtils.SconsUtils import SetupBuildEnv
 MAIN_ENV = ImportVar('MAIN_ENV')
 
 
-libType = "ReleaseBuild"
-debugFlag = ""
-debugLinkFlag = ""
-if MAIN_ENV['DEBUG_BUILD']:
-    libType = 'DebugBuild'
-    if "windows" in platform.system().lower():
-        debugFlag = "/Od"
-        debugLinkFlag = '/DEBUG:FULL'
-    else:
-        debugFlag = "-g"
-
-
 AddOption(
     '--glfw3',
     dest='glfw3',
@@ -53,6 +41,58 @@ AddOption(
 env = Environment()
 env['PROJECT_DIR'] = MAIN_ENV['PROJECT_DIR']
 env['BUILD_DIR'] = MAIN_ENV['BUILD_DIR']
+
+libType = "ReleaseBuild"
+
+if "windows" in platform.system().lower():
+
+    degugDefine = 'NDEBUG'
+    debugFlag = "/O2"
+    degug = '/DEBUG:NONE'
+    debugRuntime = "/MD"
+
+    if MAIN_ENV['DEBUG_BUILD']:
+        degugDefine = 'DEBUG'
+        debugFlag = "/Od"
+        degug = '/DEBUG:FULL'
+        debugRuntime = "/MDd"
+        env.Append(CPPDEFINES=['ODGL_DEBUG'])
+
+    env.Append(
+        CPPPATH=[
+            MAIN_ENV['PROJECT_DIR'] + "/build/include",
+            MAIN_ENV['PROJECT_DIR'] + "/Dependencies/glm",
+        ],
+        CPPDEFINES=['NOMINMAX', "WIN32", degugDefine],
+        CCFLAGS=[
+            "/analyze-",
+            "/GS",
+            "/Zc:wchar_t",
+            "/W1",
+            "/Z7",
+            "/Gm-",
+            debugFlag,
+            "/WX-",
+            '/FC',
+            "/Zc:forScope",  # Force Conformance in for Loop Scope
+            "/GR",           # Enable Run-Time Type Information
+            "/Oy-",          # Disable Frame-Pointer Omission
+            debugRuntime,
+            "/EHsc",
+            "/nologo",
+        ],
+        LINKFLAGS=[degug],
+        LIBPATH=[MAIN_ENV['PROJECT_DIR'] + "/build/lib"],
+    )
+
+    LINKFLAGS = [degug],
+else:
+    debugFlag = "-g"
+    env.Append(
+        CPPDEFINES=['ODGL_DEBUG'],
+        CCFLAGS=['-O0', '-std=c++11'],
+    )
+
 
 if "linux" in platform.system().lower():
     if MAIN_ENV['RUN_ANALYZER']:
@@ -77,25 +117,6 @@ env.Append(CPPPATH=[
 
 env.Append(CPPDEFINES=[
     "ODGL_LIBRARAY_BUILD"
-])
-
-
-env.Append(CCFLAGS=[
-    debugFlag,
-])
-
-if "windows" in platform.system().lower():
-    env.Append(CCFLAGS=[
-        "/EHsc",
-    ])
-else:
-    env.Append(CCFLAGS=[
-        "-std=c++11",
-    ])
-
-
-env.Append(LINKFLAGS=[
-    debugLinkFlag,
 ])
 
 env.Append(LIBPATH=[

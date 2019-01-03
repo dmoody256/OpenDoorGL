@@ -20,11 +20,12 @@ import platform
 import subprocess
 import time
 
-sys.path.append(os.path.abspath(".."))
-
-from BuildUtils.ColorPrinter import ColorPrinter
-
-printer = ColorPrinter()
+try:
+    from BuildUtils.ColorPrinter import ColorPrinter
+    printer = ColorPrinter()
+except:
+    printer = None
+    pass
 
 
 def StartGraphicsApp(test, working_dir):
@@ -33,6 +34,8 @@ def StartGraphicsApp(test, working_dir):
     command = []
 
     if "windows" in platform.system().lower():
+        command.append("python")
+        command.append("windows_workaround.py")
         command.append(working_dir + "/" + test + ".exe")
     else:
         if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
@@ -41,8 +44,8 @@ def StartGraphicsApp(test, working_dir):
         my_env["LD_LIBRARY_PATH"] = '../lib'
 
     if "windows" in platform.system().lower():
-        proc = subprocess.Popen(command, cwd=working_dir, stderr=subprocess.STDOUT,
-                                stdout=subprocess.PIPE, env=my_env, shell=False, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+        proc = subprocess.Popen(command, stderr=subprocess.STDOUT,
+                                stdout=subprocess.PIPE)
     else:
         proc = subprocess.Popen(command, cwd=working_dir, stderr=subprocess.STDOUT,
                                 stdout=subprocess.PIPE, env=my_env, shell=False)
@@ -84,11 +87,19 @@ def RunTest(test):
     output, err = proc.communicate()
     proc1.terminate()
 
-    if("INFO: Passed!" in output.decode("utf-8")):
-        printer.TestPassPrint(" " + test + " Passed!")
-        return True
-    printer.TestFailPrint(" " + test + " Failed!")
+    if printer:
+        if("INFO: Passed!" in output.decode("utf-8")):
+            printer.TestPassPrint(" " + test + " Passed!")
+            return True
+        printer.TestFailPrint(" " + test + " Failed!")
+    else:
+        if("INFO: Passed!" in output.decode("utf-8")):
+            print(" " + test + " Passed!")
+            return True
+        print(" " + test + " Failed!")
+
     print(output.decode("utf-8"))
+
     return False
 
 
@@ -106,8 +117,12 @@ for test in tests:
     else:
         failed_tests.append(test)
 
-printer.InfoPrint(" Passed " + str(len(passed_tests)) + " tests!")
-printer.InfoPrint(" Failed " + str(len(failed_tests)) + " tests!")
+if printer:
+    printer.InfoPrint(" Passed " + str(len(passed_tests)) + " tests!")
+    printer.InfoPrint(" Failed " + str(len(failed_tests)) + " tests!")
+else:
+    print(" Passed " + str(len(passed_tests)) + " tests!")
+    print(" Failed " + str(len(failed_tests)) + " tests!")
 
 if failed_tests:
     exit(1)

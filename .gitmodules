@@ -8,8 +8,11 @@
 	ignore = dirty
 [submodule "Dependencies/cxxtest"]
 	path = Dependencies/cxxtest
-	url = https://github.com/CxxTest/cxxtest.git
+	url = https://gitlab.com/dmoody256/cxxtest
 	ignore = dirty
 [submodule "Dependencies/cppcheck"]
 	path = Dependencies/cppcheck
 	url = https://github.com/danmar/cppcheck.git
+[submodule "Dependencies/Simple-OpenGL-Image-Library"]
+	path = Dependencies/Simple-OpenGL-Image-Library
+	url = https://github.com/dmoody256/Simple-OpenGL-Image-Library.git

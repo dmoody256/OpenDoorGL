@@ -2,6 +2,24 @@
 
 namespace OpenDoorGL
 {
+
+GLFW3Window::GLFW3Window()
+    : window(nullptr),
+      _inputTime(0),
+      _renderTime(0),
+      _framePrintTime(0),
+      _startTime(0),
+      _numFrames(0),
+      _frameRateEnabled(false),
+      _vsyncEnabled(true)
+{
+}
+
+GLFW3Window::~GLFW3Window()
+{
+    CleanUp();
+}
+
 bool GLFW3Window::CreateWindow(GLFWwindow *temp_window, const char *window_name, unsigned int width, unsigned int height)
 {
     // Initialise GLFW
@@ -21,7 +39,7 @@ bool GLFW3Window::CreateWindow(GLFWwindow *temp_window, const char *window_name,
     window = glfwCreateWindow(width, height, window_name, NULL, NULL);
     if (window == NULL)
     {
-        fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
+        fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible.\n");
         glfwTerminate();
         return false;
     }
@@ -39,13 +57,21 @@ bool GLFW3Window::CreateWindow(GLFWwindow *temp_window, const char *window_name,
     return true;
 }
 
-bool GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled, unsigned int width, unsigned int height)
+bool GLFW3Window::InitWindow(
+    const char *window_name,
+    bool _vsyncEnabled,
+    unsigned int width,
+    unsigned int height,
+    unsigned int xpos,
+    unsigned int ypos)
 {
 
     if (!CreateWindow(window, window_name, width, height))
     {
         return false;
     }
+
+    glfwSetWindowPos(window, xpos, ypos);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -96,11 +122,6 @@ void GLFW3Window::CleanUp()
     delete _currentView;
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
-}
-
-GLFW3Window::~GLFW3Window()
-{
-    CleanUp();
 }
 
 void GLFW3Window::SetView(View *view)

@@ -1,6 +1,10 @@
+#include "SOIL/SOIL.h"
+
 #include "odgl_Include.hpp"
 #include "odgl_Button.hpp"
 #include "odgl_Image.hpp"
+#include "odgl_Group.hpp"
+#include "odgl_View.hpp"
 #include "odgl_ShaderManager.hpp"
 
 namespace OpenDoorGL
@@ -17,30 +21,46 @@ Button::Button(bool initGL)
     if (initGL)
     {
         // Create and compile our GLSL program from the shaders
-        _programID = ShaderManager::LoadShadersFromString(ShaderManager::getTextureVertShader(), ShaderManager::getTextureFragShader());
+        _programID = ShaderManager::LoadShadersFromString(ShaderManager::getButtonVertShader(), ShaderManager::getButtonFragShader());
         GL_CHECK(_uniformMVP = glGetUniformLocation(_programID, "MVP"));
         GL_CHECK(_uniformTexture = glGetUniformLocation(_programID, "myTextureSampler"));
     }
     _vertices.resize(2 * 3 * 3, 0);
+    _vertColors.resize(6 * 3, 0);
     _textureCoords.resize(2 * 3 * 2, 0);
     _width = 0.0f;
     _height = 0.0f;
-    _buttonTexture = NULL;
+    _buttonTexture = 0;
 }
+
 Button::~Button()
 {
 
     if (_buttonTexture)
     {
-        GLuint texture = _buttonTexture->GetTextureGPUHandle();
-        GL_CHECK(glDeleteTextures(1, &texture));
-        delete _buttonTexture;
+        GL_CHECK(glDeleteTextures(1, &_buttonTexture));
     }
+}
+
+void Button::setColor(const unsigned char R, const unsigned char G, const unsigned char B, const unsigned char A)
+{
+    for (int i = 0; i < 18; i += 3)
+    {
+        _vertColors.at(i) = R;
+        _vertColors.at(i + 1) = G;
+        _vertColors.at(i + 2) = B;
+    }
+    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer));
+    GL_CHECK(glBufferData(GL_ARRAY_BUFFER, _vertColors.size() * sizeof(float), &_vertColors.at(0), GL_STATIC_DRAW));
 }
 
 void Button::setTexture(const char *filepath)
 {
-    _buttonTexture = new Image(filepath);
+    _buttonTexture = SOIL_load_OGL_texture(
+        "resources/ButtonGradient.png",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+        SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
 
     _textureCoords.at(0) = 0;
     _textureCoords.at(1) = 0;
@@ -132,9 +152,21 @@ void Button::draw(View *view)
         (void *)0 // array buffer offset
         ));
 
+    // 2nd attribute buffer : colors
+    GL_CHECK(glEnableVertexAttribArray(2));
+    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer));
+    GL_CHECK(glVertexAttribPointer(
+        2,        // attribute. No particular reason for 1, but must match the layout in the shader.
+        3,        // size
+        GL_FLOAT, // type
+        GL_FALSE, // normalized?
+        0,        // stride
+        (void *)0 // array buffer offset
+        ));
+
     // Bind our texture in Texture Unit 0
     GL_CHECK(glActiveTexture(GL_TEXTURE0));
-    GL_CHECK(glBindTexture(GL_TEXTURE_2D, _buttonTexture->GetTextureGPUHandle()));
+    GL_CHECK(glBindTexture(GL_TEXTURE_2D, _buttonTexture));
     // Set our "myTextureSampler" sampler to use Texture Unit 0
     GL_CHECK(glUniform1i(_uniformTexture, 0));
 
@@ -142,5 +174,6 @@ void Button::draw(View *view)
 
     GL_CHECK(glDisableVertexAttribArray(0));
     GL_CHECK(glDisableVertexAttribArray(1));
+    GL_CHECK(glDisableVertexAttribArray(2));
 }
 } // namespace OpenDoorGL

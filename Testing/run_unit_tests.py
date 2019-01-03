@@ -18,6 +18,8 @@ import os
 import platform
 import subprocess
 
+from BuildUtils.ColorPrinter import ColorPrinter
+
 failed_tests = []
 passed_tests = []
 unittests = []
@@ -40,19 +42,37 @@ for test in unittests:
         env=testenv
     )
     output = proc.communicate()[0]
-    print(str(output.decode('utf-8')))
+    output_lines = output.decode('utf-8').strip().split(os.linesep)
+    printer = None
+    try:
+        from BuildUtils.ColorPrinter import ColorPrinter
+        printer = ColorPrinter()
+        if str(output_lines[-1]).strip().endswith(".OK!"):
+            printer.TestPassPrint(" " + output_lines[0])
+        else:
+            printer.TestFailPrint(" " + output.decode('utf-8').strip())
+    except:
+        print(output.decode('utf-8').strip())
+        pass
+
     if proc.returncode == 0:
         passed_tests.append(test)
     else:
         failed_tests.append(test)
 
-print("passed " + str(len(passed_tests)) + " tests.")
+results_string = "Passed " + str(len(passed_tests)) + " tests." + os.linesep
+if len(failed_tests) > 0:
+    results_string += "Failed " + \
+        str(len(failed_tests)) + " tests:" + os.linesep
+    for test in failed_tests:
+        results_string += test + os.linesep
+else:
+    results_string += "Failed 0 test." + os.linesep
 
+if printer:
+    printer.TestResultPrint(results_string.strip())
+else:
+    print(results_string.strip())
 
 if len(failed_tests) > 0:
-    print("failed " + str(len(failed_tests)) + " tests:")
-    for test in failed_tests:
-        print(test)
     exit(1)
-else:
-    print("failed 0 test.")

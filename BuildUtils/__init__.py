@@ -25,7 +25,6 @@ import subprocess
 import re
 import sys
 
-
 from BuildUtils.ColorPrinter import ColorPrinter
 
 
@@ -77,6 +76,10 @@ def run_unit_tests(base_dir):
 
     test_env = os.environ
     test_env['TEST_BIN_DIR'] = base_dir+'/build/bin'
+    if 'PYTHONPATH' in test_env:
+        test_env['PYTHONPATH'] = test_env['PYTHONPATH'] + os.pathsep + base_dir
+    else:
+        test_env['PYTHONPATH'] = base_dir
 
     proc = subprocess.Popen(
         args=['python', 'run_unit_tests.py'],
@@ -86,6 +89,31 @@ def run_unit_tests(base_dir):
     output = proc.communicate()[0]
     # print(output)
 
+
+def convertShadersToHeaders(shaderHeader, shaderFiles):
+
+    with open(shaderHeader, 'w') as header:
+        header.write('''#ifndef ODGL_SHADERS_H
+#define ODGL_SHADERS_H
+
+#include "odgl_Include.hpp"
+
+#include <string>
+
+namespace OpenDoorGL
+{
+    ''')
+        for shader in shaderFiles:
+            with open(shader) as f:
+                lines = f.readlines()
+            header.write('static const std::string ' +
+                         os.path.splitext(os.path.basename(shader))[0] + "_" + os.path.splitext(os.path.basename(shader))[1][1:] + ' = ')
+            for line in lines:
+                line = line.strip()
+                header.write('"' + line + '\\n"\n')
+            header.write(';\n\n')
+
+        header.write("}\n#endif\n")
 
 
 def run_visual_tests(base_dir):

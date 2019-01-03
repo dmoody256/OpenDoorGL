@@ -22,14 +22,12 @@ class ODGL_DLLEXPORT ShaderManager
     static const char *getTextureFragShader();
     static const char *GetTextureModelVertShader();
     static const char *GetTextureModelFragShader();
+    static const char *getButtonVertShader();
+    static const char *getButtonFragShader();
+    static const char *getColorLightVertShader();
+    static const char *getColorLightFragShader();
 
   private:
-    static std::string colorVertShader;
-    static std::string colorFragShader;
-    static std::string textureVertShader;
-    static std::string textureFragShader;
-    static std::string textureModelVertShader;
-    static std::string textureModelFragShader;
 };
 
 } // namespace OpenDoorGL

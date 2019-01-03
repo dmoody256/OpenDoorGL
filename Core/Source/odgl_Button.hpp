@@ -21,6 +21,8 @@ public:
   void setTexture(const char *filepath);
   void setSize(float width, float height);
 
+  void setColor(const unsigned char R, const unsigned char G, const unsigned char B, const unsigned char A);
+
   float getWidth();
   float getHeight();
 
@@ -29,7 +31,7 @@ public:
 protected:
   float _width;
   float _height;
-  Image *_buttonTexture;
+  GLuint _buttonTexture;
   GLuint _uniformTexture;
 };
 } // namespace OpenDoorGL
