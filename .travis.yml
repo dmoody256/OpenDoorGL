@@ -25,6 +25,7 @@ script:
   - venv3/bin/pip install -U setuptools
   - venv3/bin/pip install -U wheel
   - venv3/bin/pip install -U scons
+  - venv3/bin/scons -v
   - venv3/bin/scons -Q
   - venv3/bin/scons -c
   - scan-build-3.9 --status-bugs venv3/bin/scons --analyze
