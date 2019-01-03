@@ -17,6 +17,7 @@ install:
   - python3.6 -m pip install --user -U wheel
   - python3.6 -m pip install --user -U cpp-coveralls
   - python3.6 -m pip install --user -U gcovr
+  - python3.6 -m pip install --user -U scons
   
 script:
   - env python3.6 $HOME/.local/bin/scons -v
