@@ -15,17 +15,21 @@ install:
   - sudo -H python3.6 -m pip install -U pip
   - sudo -H python3.6 -m pip install -U setuptools
   - sudo -H python3.6 -m pip install -U wheel
-  - sudo -H python3.6 -m pip install -U scons
+  - sudo -H python3.6 -m pip install -U virtualenv
   - sudo -H python3.6 -m pip install -U cpp-coveralls
   - sudo -H python3.6 -m pip install -U gcovr
-
+  
 script:
-  - export SCONS=$(which scons)
-  - /usr/bin/env python3.6 ${SCONS} -Q
-  - /usr/bin/env python3.6 ${SCONS} -c
-  - scan-build-3.9 --status-bugs /usr/bin/env python3.6 ${SCONS} --analyze
-  - /usr/bin/env python3.6 ${SCONS} -c
-  - /usr/bin/env python3.6 ${SCONS} --unit --debug_build --coverage
+  - virtualenv-3.6 venv3
+  - venv3/bin/pip install -U pip
+  - venv3/bin/pip install -U setuptools
+  - venv3/bin/pip install -U wheel
+  - venv3/bin/pip install -U scons
+  - venv3/bin/scons -Q
+  - venv3/bin/scons -c
+  - scan-build-3.9 --status-bugs venv3/bin/scons --analyze
+  - venv3/bin/scons -c
+  - venv3/bin/scons --unit --debug_build --coverage
   
 after_success:
   - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r .
