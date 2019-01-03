@@ -22,7 +22,9 @@ public:
       const char *window_name,
       bool _vsyncEnabled = true,
       unsigned int width = 1024,
-      unsigned int height = 768) override;
+      unsigned int height = 768,
+      unsigned int xpos = 0,
+      unsigned int ypos = 0) override;
   void CleanUp() override;
   double RenderFrame() override;
   double UpdateFrame() override;

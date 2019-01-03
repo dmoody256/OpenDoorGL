@@ -12,6 +12,7 @@ namespace OpenDoorGL
 class Light;
 class View;
 class Image;
+class Vector;
 
 class ODGL_DLLEXPORT Cube : public GeometricObject
 {
@@ -30,10 +31,16 @@ public:
   float getSize();
 
   void setOutline(bool enabled);
-  glm::vec3 getPosition();
+  Vector getPosition();
+
+  Vector getCenterPoint() override;
+
+  Vector getMaxBounds() override;
+  Vector getMinBounds() override;
 
   void draw(View *view) override;
   std::vector<Light *> lights;
+  bool lightEnabled;
 
 protected:
   float _size;
@@ -42,7 +49,7 @@ protected:
   GLuint _uniformCubeColor;
   GLuint _uniformLightColor;
   GLuint _uniformLightPower;
-  bool lightEnabled;
+
   bool _outline;
   unsigned char _R;
   unsigned char _G;

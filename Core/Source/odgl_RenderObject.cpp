@@ -14,6 +14,7 @@
 #include "odgl_Logging.hpp"
 #include "odgl_RenderObject.hpp"
 #include "odgl_Group.hpp"
+#include "odgl_Vector.hpp"
 
 namespace OpenDoorGL
 {
@@ -21,7 +22,9 @@ namespace OpenDoorGL
 RenderObject::RenderObject()
     : _model(glm::mat4(1.0f)),
       _glInitialized(false),
-      parent(nullptr)
+      parent(nullptr),
+      visible(true),
+      dirty(false)
 {
 }
 
@@ -32,6 +35,16 @@ RenderObject::~RenderObject()
 void RenderObject::Update(double time_passed)
 {
     ODGL_SCOPE();
+}
+
+glm::mat4 RenderObject::getModel()
+{
+    return _model;
+}
+
+Vector RenderObject::getCenterPoint()
+{
+    return Vector(0.0f, 0.0f, 0.0f);
 }
 
 bool RenderObject::unsetParent()
@@ -81,6 +94,11 @@ bool RenderObject::setParent(Group *parent)
 
 } // namespace OpenDoorGL
 
+void RenderObject::setVisible(bool visible)
+{
+    this->visible = visible;
+}
+
 Group *RenderObject::getParent()
 {
     return this->parent;
@@ -90,22 +108,36 @@ void RenderObject::Translate(float x, float y, float z)
 {
     glm::vec3 trans(x, y, z);
     _model = glm::translate(_model, trans);
+    if (parent != nullptr)
+    {
+        parent->updateBoundingBox();
+    }
+    dirty = true;
 }
 
 void RenderObject::Rotate(float degrees, float x, float y, float z)
 {
     glm::vec3 trans(x, y, z);
     _model = glm::rotate(_model, (float)(degrees / 90.0f * M_PI), trans);
+    if (parent != nullptr)
+    {
+        parent->updateBoundingBox();
+    }
+    dirty = true;
 }
 
 void RenderObject::Rotate(float degrees, float x, float y, float z, float pivot_x, float pivot_y, float pivot_z)
 {
     glm::vec3 trans(x, y, z);
     glm::vec3 pivot_vec(pivot_x, pivot_y, pivot_z);
-    glm::vec3 pivot_back_vec(-pivot_x, -pivot_y, -pivot_z);
     _model = glm::translate(_model, pivot_vec);
     _model = glm::rotate(_model, (float)(degrees / 90.0f * M_PI), trans);
-    _model = glm::translate(_model, pivot_back_vec);
+    _model = glm::translate(_model, -pivot_vec);
+    if (parent != nullptr)
+    {
+        parent->updateBoundingBox();
+    }
+    dirty = true;
 }
 
 } // namespace OpenDoorGL

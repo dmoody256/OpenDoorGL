@@ -11,7 +11,13 @@ namespace OpenDoorGL
 class ODGL_DLLEXPORT WindowInterface
 {
 public:
-  virtual bool InitWindow(const char *window_name, bool _vsyncEnabled = true, unsigned int width = 1024, unsigned int height = 768) = 0;
+  virtual bool InitWindow(
+      const char *window_name,
+      bool _vsyncEnabled = true,
+      unsigned int width = 1024,
+      unsigned int height = 768,
+      unsigned int xpos = 0,
+      unsigned int ypos = 0) = 0;
   virtual void CleanUp() = 0;
   virtual double RenderFrame() = 0;
   virtual double UpdateFrame() = 0;

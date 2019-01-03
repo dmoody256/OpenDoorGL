@@ -24,6 +24,16 @@ public:
 
   void setShadersFromString(const char *vert_shader, const char *frag_shader);
 
+  virtual Vector getMaxBounds();
+  virtual Vector getMinBounds();
+
+  virtual float getMinX();
+  virtual float getMinY();
+  virtual float getMinZ();
+  virtual float getMaxX();
+  virtual float getMaxY();
+  virtual float getMaxZ();
+
 protected:
   GLuint _vertexBuffer;
   GLuint _colorBuffer;

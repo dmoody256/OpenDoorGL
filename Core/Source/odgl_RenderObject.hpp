@@ -10,6 +10,7 @@ namespace OpenDoorGL
 
 class View;
 class Group;
+class Vector;
 
 class ODGL_DLLEXPORT RenderObject
 {
@@ -28,10 +29,18 @@ public:
   bool unsetParent();
   Group *getParent();
 
+  glm::mat4 getModel();
+
+  void setVisible(bool visible);
+
+  virtual Vector getCenterPoint();
+
 protected:
   glm::mat4 _model;
   bool _glInitialized;
   Group *parent;
+  bool visible;
+  bool dirty;
 };
 } // namespace OpenDoorGL
 

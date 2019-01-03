@@ -61,6 +61,7 @@ sourceFiles = [
     "build/odgl_Group.cpp",
     "build/odgl_Model.cpp",
     "build/odgl_ModelLoader.cpp",
+    "build/odgl_Vector.cpp",
     "build/odgl_Include.cpp",
 ]
 
@@ -80,6 +81,7 @@ headerFiles = [
     "Source/odgl_ModelLoader.hpp",
     "Source/odgl_Include.hpp",
     "Source/odgl_Logging.hpp",
+    "Source/odgl_Vector.hpp",
 ]
 
 if env['DEBUG_BUILD']:

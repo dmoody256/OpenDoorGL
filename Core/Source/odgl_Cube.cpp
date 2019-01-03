@@ -4,6 +4,10 @@
 #include "odgl_ShaderManager.hpp"
 #include "odgl_Light.hpp"
 #include "odgl_View.hpp"
+#include "odgl_Vector.hpp"
+#include "odgl_Group.hpp"
+
+#include <glm/gtc/type_ptr.hpp>
 
 namespace OpenDoorGL
 {
@@ -20,9 +24,9 @@ Cube::Cube(bool initGL, bool lightEnabled)
       _uniformCubeColor(0),
       lightEnabled(lightEnabled),
       _outline(true),
-      _R(0),
-      _G(0),
-      _B(0)
+      _R(0.0f),
+      _G(0.0f),
+      _B(0.0f)
 {
 
     if (initGL)
@@ -72,6 +76,30 @@ Cube::~Cube()
             delete _faceTextures[i];
         }
     }
+}
+
+Vector Cube::getCenterPoint()
+{
+
+    const float *data = (const float *)glm::value_ptr(_model);
+    return Vector(data[12], data[13], data[14]);
+}
+
+Vector Cube::getMaxBounds()
+{
+    const float *data = (const float *)glm::value_ptr(_model);
+    return Vector(
+        data[12] + (_size / 2.0f),
+        data[13] + (_size / 2.0f),
+        data[14] + (_size / 2.0f));
+}
+Vector Cube::getMinBounds()
+{
+    const float *data = (const float *)glm::value_ptr(_model);
+    return Vector(
+        data[12] - (_size / 2.0f),
+        data[13] - (_size / 2.0f),
+        data[14] - (_size / 2.0f));
 }
 
 void Cube::setTexture(const char *filepath, float *uvcoords)
@@ -396,91 +424,102 @@ void Cube::draw(View *view)
 {
 
     // Use our shader
-    GL_CHECK(glUseProgram(_programID));
-
-    // Send our transformation to the currently bound shader,
-    // in the "MVP" uniform
-    glm::mat4 MVP = view->proj * view->view * _model;
-    GL_CHECK(glUniformMatrix4fv(_uniformMVP, 1, GL_FALSE, &MVP[0][0]));
-    GL_CHECK(glUniform3f(_uniformCubeColor, _R, _G, _B));
-
-    if (lightEnabled)
+    if (visible)
     {
+
+        glm::mat4 renderModel;
+        if (parent)
+        {
+            renderModel = parent->getModel() * _model;
+        }
+
+        GL_CHECK(glUseProgram(_programID));
+
         // Send our transformation to the currently bound shader,
         // in the "MVP" uniform
-        GL_CHECK(glUniformMatrix4fv(_uniformM, 1, GL_FALSE, &_model[0][0]));
-        GL_CHECK(glUniformMatrix4fv(_uniformV, 1, GL_FALSE, &view->view[0][0]));
-        if (lights.size() == 0)
-        {
-            GL_CHECK(glUniform3f(_uniformLight, 0, 0, 0));
-            GL_CHECK(glUniform3f(_uniformLightColor, 0, 0, 0));
-            GL_CHECK(glUniform1f(_uniformLightPower, 0));
-        }
-        else
-        {
-            GL_CHECK(glUniform3f(_uniformLight, lights.at(0)->position.x, lights.at(0)->position.y, lights.at(0)->position.z));
-            GL_CHECK(glUniform3f(_uniformLightColor, lights.at(0)->color.x, lights.at(0)->color.y, lights.at(0)->color.z));
-            GL_CHECK(glUniform1f(_uniformLightPower, lights.at(0)->power));
-        }
-    }
+        glm::mat4 MVP = view->proj * view->view * renderModel;
+        GL_CHECK(glUniformMatrix4fv(_uniformMVP, 1, GL_FALSE, &MVP[0][0]));
+        GL_CHECK(glUniform3f(_uniformCubeColor, _R, _G, _B));
 
-    // 1rst attribute buffer : vertices
-    GL_CHECK(glEnableVertexAttribArray(0));
-    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer));
-    GL_CHECK(glVertexAttribPointer(
-        0,        // attribute. No particular reason for 0, but must match the layout in the shader.
-        3,        // size
-        GL_FLOAT, // type
-        GL_FALSE, // normalized?
-        0,        // stride
-        (void *)0 // array buffer offset
-        ));
+        if (lightEnabled)
+        {
+            // Send our transformation to the currently bound shader,
+            // in the "MVP" uniform
+            GL_CHECK(glUniformMatrix4fv(_uniformM, 1, GL_FALSE, &renderModel[0][0]));
+            GL_CHECK(glUniformMatrix4fv(_uniformV, 1, GL_FALSE, &view->view[0][0]));
+            if (lights.size() == 0)
+            {
+                GL_CHECK(glUniform3f(_uniformLight, 0, 0, 0));
+                GL_CHECK(glUniform3f(_uniformLightColor, 0, 0, 0));
+                GL_CHECK(glUniform1f(_uniformLightPower, 0));
+            }
+            else
+            {
+                GL_CHECK(glUniform3f(_uniformLight, lights.at(0)->position.x, lights.at(0)->position.y, lights.at(0)->position.z));
+                GL_CHECK(glUniform3f(_uniformLightColor, lights.at(0)->color.x, lights.at(0)->color.y, lights.at(0)->color.z));
+                GL_CHECK(glUniform1f(_uniformLightPower, lights.at(0)->power));
+            }
+        }
 
-    if (lightEnabled)
-    {
-        // 3rd attribute buffer : normals
-        GL_CHECK(glEnableVertexAttribArray(1));
-        GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _normalBuffer));
+        // 1rst attribute buffer : vertices
+        GL_CHECK(glEnableVertexAttribArray(0));
+        GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer));
         GL_CHECK(glVertexAttribPointer(
-            1,        // attribute
+            0,        // attribute. No particular reason for 0, but must match the layout in the shader.
             3,        // size
             GL_FLOAT, // type
             GL_FALSE, // normalized?
             0,        // stride
             (void *)0 // array buffer offset
             ));
-    }
 
-    for (int i = 0; i < 6; i++)
-    {
-        //bool activeTexture = false;
-        //if (_faceTextures[i] && _faceTextures[i]->GetTextureGPUHandle() != -1)
-        //{
-        //    if (!activeTexture)
-        //    {
-        //        //glActiveTexture(GL_TEXTURE0);
-        //        //glUniform1i(_uniformTexture, GL_TEXTURE0);
-        //        //activeTexture = true;
-        //    }
-        //    //glBindTexture(GL_TEXTURE_2D, _faceTextures[i]->GetTextureGPUHandle());
-        //}
-        GL_CHECK(glDrawArrays(GL_TRIANGLES, i * 2 * 3, 2 * 3));
-    }
-    if (_outline)
-    {
-        GL_CHECK(glUniform3f(_uniformCubeColor, 0.0f, 0.0f, 0.0f));
+        if (lightEnabled)
+        {
+            // 3rd attribute buffer : normals
+            GL_CHECK(glEnableVertexAttribArray(1));
+            GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, _normalBuffer));
+            GL_CHECK(glVertexAttribPointer(
+                1,        // attribute
+                3,        // size
+                GL_FLOAT, // type
+                GL_FALSE, // normalized?
+                0,        // stride
+                (void *)0 // array buffer offset
+                ));
+        }
+        a
 
-        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 0, 3));
-        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 3, 3));
-        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 6, 3));
-        GL_CHECK(glDrawArrays(GL_LINE_STRIP, 9, 3));
-        GL_CHECK(glDrawArrays(GL_LINES, 13, 2));
-        GL_CHECK(glDrawArrays(GL_LINES, 16, 2));
-        GL_CHECK(glDrawArrays(GL_LINES, 19, 2));
-        GL_CHECK(glDrawArrays(GL_LINES, 22, 2));
-    }
+            for (int i = 0; i < 6; i++)
+        {
+            //bool activeTexture = false;
+            //if (_faceTextures[i] && _faceTextures[i]->GetTextureGPUHandle() != -1)
+            //{
+            //    if (!activeTexture)
+            //    {
+            //        //glActiveTexture(GL_TEXTURE0);
+            //        //glUniform1i(_uniformTexture, GL_TEXTURE0);
+            //        //activeTexture = true;
+            //    }
+            //    //glBindTexture(GL_TEXTURE_2D, _faceTextures[i]->GetTextureGPUHandle());
+            //}
+            GL_CHECK(glDrawArrays(GL_TRIANGLES, i * 2 * 3, 2 * 3));
+        }
+        if (_outline)
+        {
+            GL_CHECK(glUniform3f(_uniformCubeColor, 0.0f, 0.0f, 0.0f));
 
-    GL_CHECK(glDisableVertexAttribArray(0));
-    GL_CHECK(glDisableVertexAttribArray(1));
+            GL_CHECK(glDrawArrays(GL_LINE_STRIP, 0, 3));
+            GL_CHECK(glDrawArrays(GL_LINE_STRIP, 3, 3));
+            GL_CHECK(glDrawArrays(GL_LINE_STRIP, 6, 3));
+            GL_CHECK(glDrawArrays(GL_LINE_STRIP, 9, 3));
+            GL_CHECK(glDrawArrays(GL_LINES, 13, 2));
+            GL_CHECK(glDrawArrays(GL_LINES, 16, 2));
+            GL_CHECK(glDrawArrays(GL_LINES, 19, 2));
+            GL_CHECK(glDrawArrays(GL_LINES, 22, 2));
+        }
+
+        GL_CHECK(glDisableVertexAttribArray(0));
+        GL_CHECK(glDisableVertexAttribArray(1));
+    }
 } // namespace OpenDoorGL
 } // namespace OpenDoorGL

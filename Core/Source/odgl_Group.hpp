@@ -8,6 +8,7 @@
 
 #include "odgl_Include.hpp"
 #include "odgl_RenderObject.hpp"
+#include "odgl_Vector.hpp"
 
 namespace OpenDoorGL
 {
@@ -17,6 +18,7 @@ class Button;
 class Model;
 class Group;
 class GeometricObject;
+class Vector;
 
 class ODGL_DLLEXPORT Group : public RenderObject
 {
@@ -36,6 +38,9 @@ public:
   bool InsertObject(Group *object);
 
   bool removeObject(RenderObject *object);
+  void updateBoundingBox();
+
+  Vector getCenterPoint() override;
 
   void Update(double time_passed) override;
   void Rotate(float degrees, float x, float y, float z) override;
@@ -56,6 +61,9 @@ protected:
   };
 
   std::vector<std::pair<ObjectType, RenderObject *>> objects;
+
+  Vector minBounds;
+  Vector maxBounds;
 
 private:
   bool InsertObject(RenderObject *object, enum ObjectType objectType);

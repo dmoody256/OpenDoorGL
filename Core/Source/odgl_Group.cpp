@@ -1,18 +1,35 @@
+#define _USE_MATH_DEFINES
 
 #include <GLEW/glew.h>
 
 #include <vector>
 #include <string>
+#include <iostream>
+#include <math.h>
+
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "odgl_Group.hpp"
 #include "odgl_GeometricObject.hpp"
 #include "odgl_Cube.hpp"
 #include "odgl_Model.hpp"
 #include "odgl_Button.hpp"
+#include "odgl_Vector.hpp"
+
+namespace
+{
+float getMidPoint(float min, float max)
+{
+    return ((max - min) / 2.0f) + min;
+}
+} // namespace
+
 namespace OpenDoorGL
 {
 
 Group::Group()
+    : minBounds(0.0f, 0.0f, 0.0f),
+      maxBounds(0.0f, 0.0f, 0.0f)
 {
 }
 
@@ -54,10 +71,12 @@ void Group::draw(View *view)
 
 void Group::Rotate(float degrees, float x, float y, float z)
 {
-    for (int i = 0; i < objects.size(); i++)
-    {
-        objects.at(i).second->Rotate(degrees, x, y, z);
-    }
+
+    glm::vec3 trans(x, y, z);
+    glm::vec3 center(getCenterPoint().getX(), getCenterPoint().getY(), getCenterPoint().getZ());
+    _model = glm::translate(_model, center);
+    _model = glm::rotate(_model, (float)(degrees / 90.0f * M_PI), trans);
+    _model = glm::translate(_model, -center);
 }
 
 bool Group::removeObject(RenderObject *object)
@@ -85,6 +104,52 @@ bool Group::containsObject(RenderObject *object)
         }
     }
     return false;
+}
+
+Vector Group::getCenterPoint()
+{
+    return Vector(
+        getMidPoint(minBounds.getX(), maxBounds.getX()),
+        getMidPoint(minBounds.getY(), maxBounds.getY()),
+        getMidPoint(minBounds.getZ(), maxBounds.getZ()));
+}
+
+void Group::updateBoundingBox()
+{
+    for (int i = 0; i < objects.size(); i++)
+    {
+        GeometricObject *obj = dynamic_cast<GeometricObject *>(objects.at(i).second);
+        if (obj != nullptr)
+        {
+            Vector bounds = obj->getMinBounds();
+            if (bounds.getX() < minBounds.getX())
+            {
+                minBounds.setX(bounds.getX());
+            }
+            if (bounds.getY() < minBounds.getY())
+            {
+                minBounds.setY(bounds.getY());
+            }
+            if (bounds.getZ() < minBounds.getZ())
+            {
+                minBounds.setZ(bounds.getZ());
+            }
+
+            bounds = obj->getMaxBounds();
+            if (bounds.getX() > maxBounds.getX())
+            {
+                maxBounds.setX(bounds.getX());
+            }
+            if (bounds.getY() > maxBounds.getY())
+            {
+                maxBounds.setY(bounds.getY());
+            }
+            if (bounds.getZ() > maxBounds.getZ())
+            {
+                maxBounds.setZ(bounds.getZ());
+            }
+        }
+    }
 }
 
 bool Group::InsertObject(RenderObject *object, bool checkType)
@@ -130,13 +195,13 @@ bool Group::InsertObject(RenderObject *object, bool checkType)
 bool Group::InsertObject(RenderObject *object, enum ObjectType objectType)
 {
     objects.push_back(std::make_pair(objectType, object));
-    return object->setParent(this);
-}
-
-bool Group::InsertObject(GeometricObject *object)
-{
-    return InsertObject(object, ObjectType::GeometricObjectType);
-}
+    if (object->setParent(this))
+    {
+        updateBoundingBox();
+        return true;
+    }
+    return false;
+} // namespace OpenDoorGL
 
 bool Group::InsertObject(Cube *object)
 {

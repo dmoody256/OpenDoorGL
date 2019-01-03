@@ -57,13 +57,21 @@ bool GLFW3Window::CreateWindow(GLFWwindow *temp_window, const char *window_name,
     return true;
 }
 
-bool GLFW3Window::InitWindow(const char *window_name, bool _vsyncEnabled, unsigned int width, unsigned int height)
+bool GLFW3Window::InitWindow(
+    const char *window_name,
+    bool _vsyncEnabled,
+    unsigned int width,
+    unsigned int height,
+    unsigned int xpos,
+    unsigned int ypos)
 {
 
     if (!CreateWindow(window, window_name, width, height))
     {
         return false;
     }
+
+    glfwSetWindowPos(window, xpos, ypos);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);

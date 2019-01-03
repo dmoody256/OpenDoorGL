@@ -112,13 +112,16 @@ def display_build_status(odgl_dir, start_time):
 
     for filename in glob.glob(odgl_dir + '/build/build_logs/*_compile.txt'):
         compileOutput = []
-
+        sourcefile = os.path.basename(filename).replace("_compile.txt", "")
         f = open(filename, "r")
+
         tempList = f.read().splitlines()
         if tempList:
+            if("windows" in platform.system().lower() and len(tempList) == 1):
+                continue
             compileOutput += [
                 printer.OKBLUE
-                + os.path.basename(filename).replace("_compile.txt", "")
+                + sourcefile
                 + ":"
                 + printer.ENDC
             ]
@@ -126,8 +129,9 @@ def display_build_status(odgl_dir, start_time):
 
         pending_output = os.linesep
         found_info = False
+
         for line in compileOutput:
-            if('error' in line or 'warning' in line or "note" in line):
+            if(('error' in line or 'warning' in line or "note" in line) and not line.startswith(sourcefile)):
                 line = printer.highlight_word(line, "error", printer.FAIL)
                 line = printer.highlight_word(line, "warning", printer.WARNING)
                 line = printer.highlight_word(line, "note", printer.OKBLUE)
@@ -138,12 +142,15 @@ def display_build_status(odgl_dir, start_time):
 
     for filename in glob.glob(odgl_dir + '/build/build_logs/*_link.txt'):
         linkOutput = []
+        sourcefile = os.path.basename(filename).replace("_link.txt", "")
         f = open(filename, "r")
         tempList = f.read().splitlines()
         if tempList:
+            if("windows" in platform.system().lower() and len(tempList) == 1):
+                continue
             linkOutput += [
                 printer.OKBLUE
-                + os.path.basename(filename).replace("_link.txt", "")
+                + sourcefile
                 + ":"
                 + printer.ENDC
             ]
@@ -152,7 +159,7 @@ def display_build_status(odgl_dir, start_time):
         pending_output = os.linesep
         found_info = False
         for line in linkOutput:
-            if('error' in line or 'warning' in line or "note" in line):
+            if(('error' in line or 'warning' in line or "note" in line) and not line.startswith(sourcefile)):
                 line = printer.highlight_word(line, "error", printer.FAIL)
                 line = printer.highlight_word(line, "warning", printer.WARNING)
                 line = printer.highlight_word(line, "note", printer.OKBLUE)
