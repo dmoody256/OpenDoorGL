@@ -20,11 +20,11 @@ install:
   - sudo -H python3.6 -m pip install -U gcovr
 
 script:
-  - scons -Q
-  - scons -c
-  - scan-build-3.9 --status-bugs scons --analyze
-  - scons -c
-  - scons --unit --debug_build --coverage
+  - python3.6 -m scons -Q
+  - python3.6 -m scons -c
+  - scan-build-3.9 --status-bugs python3.6 -m scons --analyze
+  - python3.6 -m scons -c
+  - python3.6 -m scons --unit --debug_build --coverage
   
 after_success:
   - python3.6 -m gcovr -e Testing -e Dependencies -e build -e usr -s -r .
