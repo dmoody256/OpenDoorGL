@@ -11,20 +11,28 @@ import subprocess
 if not os.path.exists("SikuliX"):
     os.makedirs("SikuliX")
 
-url = 'https://launchpad.net/sikuli/sikulix/1.1.1/+download/sikulixsetup-1.1.1.jar'
+url = 'https://launchpad.net/sikuli/sikulix/2.0.4/+download/sikulixide-2.0.4.jar'
 response = pyurl.urlopen(url)
 
-with open("SikuliX/sikulixsetup-1.1.1.jar", 'wb') as f:
+with open("SikuliX/sikulix.jar", 'wb') as f:
     jarFile = bytearray(response.read())
     f.write(jarFile)
 
-install_sikuli = ["java", "-jar", "sikulixsetup-1.1.1.jar", "options", "1.1"]
+url = 'https://repo1.maven.org/maven2/org/python/jython-standalone/2.7.1/jython-standalone-2.7.1.jar'
+response = pyurl.urlopen(url)
 
-proc = subprocess.Popen(
-    install_sikuli,
-    cwd=os.path.abspath("SikuliX"),
-    stderr=subprocess.STDOUT,
-    stdout=subprocess.PIPE
-)
-output, err = proc.communicate()
-print(output.decode("utf-8"))
+with open("SikuliX/jython-standalone-2.7.1.jar", 'wb') as f:
+    jarFile = bytearray(response.read())
+    f.write(jarFile)
+    
+
+##install_sikuli = ["java", "-jar", "sikulixsetup-1.1.1.jar", "options", "1.1"]
+
+#proc = subprocess.Popen(
+#    install_sikuli,
+#    cwd=os.path.abspath("SikuliX"),
+#    stderr=subprocess.STDOUT,
+#    stdout=subprocess.PIPE
+#)
+#output, err = proc.communicate()
+#print(output.decode("utf-8"))

@@ -132,12 +132,12 @@ def run_visual_tests(base_dir):
                                 stdout=subprocess.PIPE,
                                 shell=False)
         output, result = proc.communicate()
-        output = output.decode("utf-8")
-        if 'RunSetup: ... SikuliX Setup seems to have ended successfully ;-)' in output:
+        
+        if 'RunSetup: ... SikuliX Setup seems to have ended successfully ;-)' in str(output):
             printer.InfoPrint(' Silkuli Installed!')
         else:
             printer.InfoPrint(' Silkuli Failed to install!:')
-            print(output.decode("utf-8"))
+            print(output)
 
     test_env = os.environ
     if 'SIKULI_DIR' not in os.environ:

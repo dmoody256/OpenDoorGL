@@ -6,28 +6,25 @@ stages:
 job 1:
   stage: build
   script:
-  - scons --debug=time
-  - scons -c 
-  - scons --debug_build 
-  - scons -c
-  - scons --unit
-
+    - scons --debug=time
+    - scons -c
+    - scons --debug_build
+    - scons -c
+    - scons --unit
 
 job 2:
   stage: test
   script:
-  - export DISPLAY=:0
-  - xhost +local:all
-  - scons -Q --test
+    - export DISPLAY=:0
+    - xhost +local:all
+    - scons -Q --test
 
 job 3:
   stage: coverage
   script:
-  - scan-build-3.9 --status-bugs scons --analyze
-  - export DISPLAY=:0
-  - xhost +local:all
-  - scons -Q --debug_build --unit --test --coverage
-  - gcovr -f '.*/(Core/Source|AppFrameworks)'
-  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_REPO_TOKEN > /dev/null
-  
-
+    - scan-build-9 --status-bugs scons --analyze
+    - export DISPLAY=:0
+    - xhost +local:all
+    - scons -Q --debug_build --unit --test --coverage
+    - gcovr -f '.*/(Core/Source|AppFrameworks)'
+    - bash <(curl -s https://codecov.io/bash) -t $CODECOV_REPO_TOKEN > /dev/null

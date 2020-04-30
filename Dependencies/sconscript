@@ -131,6 +131,7 @@ if MAIN_ENV['RUN_ANALYZER']:
     CPPCHECK_ENV.Append(CPPPATH=[
         'cppcheck/externals/simplecpp',
         'cppcheck/externals/tinyxml',
+        'cppcheck/externals',
         'cppcheck/lib',
     ])
 

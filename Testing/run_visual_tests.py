@@ -38,9 +38,10 @@ def StartGraphicsApp(test, working_dir):
         command.append("windows_workaround.py")
         command.append(working_dir + "/" + test + ".exe")
     else:
-        if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
-            command.append("vglrun")
+        #if(os.path.isfile("/opt/VirtualGL/bin/vglrun")):
+        #    command.append("vglrun")
         command.append("./" + test)
+        my_env['DISPLAY'] = ':0'
         my_env["LD_LIBRARY_PATH"] = '../lib'
 
     if "windows" in platform.system().lower():
@@ -70,15 +71,15 @@ def RunTest(test):
             return False
 
     if "windows" in platform.system().lower():
-        sikuli_command = [SikuliPath + "/runsikulix.cmd", "-r", sikuli_test]
+        sikuli_command = ['java', '-jar', SikuliPath + "/sikulix.jar", "-r", sikuli_test]
     else:
         testenv['LD_LIBRARY_PATH'] = '../lib'
         testenv['DISPLAY'] = ':0'
-        sikuli_command = [SikuliPath + "/runsikulix", "-r", "./" + sikuli_test]
+        sikuli_command = ['java', '-jar', SikuliPath + "/sikulix.jar", "-r", "../" + sikuli_test]
 
     proc = subprocess.Popen(
         sikuli_command,
-        cwd=os.path.abspath("VisualTests"),
+        cwd=os.path.abspath("VisualTests/SikuliX"),
         stderr=subprocess.STDOUT,
         stdout=subprocess.PIPE,
         env=testenv
@@ -88,17 +89,17 @@ def RunTest(test):
     proc1.terminate()
 
     if printer:
-        if("INFO: Passed!" in output.decode("utf-8")):
+        if("INFO: Passed!" in output):
             printer.TestPassPrint(" " + test + " Passed!")
             return True
         printer.TestFailPrint(" " + test + " Failed!")
     else:
-        if("INFO: Passed!" in output.decode("utf-8")):
+        if("INFO: Passed!" in output):
             print(" " + test + " Passed!")
             return True
         print(" " + test + " Failed!")
 
-    print(output.decode("utf-8"))
+    print(output)
 
     return False
 
